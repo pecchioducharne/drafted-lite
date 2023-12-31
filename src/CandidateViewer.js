@@ -14,8 +14,6 @@ const CandidateViewer = () => {
   const [showNavPopup, setShowNavPopup] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 
-  const profileValueStyle = { fontWeight: "normal" };
-
   const emailDraft = () => {
     const { email, firstName, lastName } = candidates[currentIndex];
     const mailto = `mailto:${email}?subject=You've Been Drafted!&body=Dear ${firstName} ${lastName},`;
