@@ -1,0 +1,372 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.profile-dashboard {
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    color: #333;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 800px;
+    margin: 30px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+}
+
+.draft-button {
+    background-color: #00BF63;
+    /* YouTube Red */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-section {
+    display: flex;
+    justify-content: space-between; /* Aligns children to the edges */
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 20px;
+}
+
+.centered-name {
+    position: absolute; /* Absolute positioning */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Adjust spacing as needed */
+    color: #00ab59;
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.university {
+    font-weight: 600;
+    color: #666;
+    font-size: 1em;
+}
+
+.info-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Two columns, the first one narrower */
+    gap: 20px;
+    align-items: center; /* Aligns items vertically in the center */
+}
+
+.profile-field {
+    display: contents; /* Makes the container 'invisible', showing only children */
+}
+
+.profile-field strong {
+    grid-column: 1; /* Places the label in the first column */
+    color: #333;
+    font-weight: 600;
+    text-align: left; /* Left-align the description */
+}
+
+.profile-value {
+    color: black;
+    text-align: left; /* Left-align the value */
+    font-weight: normal; /* Change from bold to normal */
+}
+
+.profile-value {
+    color: black;
+    text-align: left; /* Left-align the value */
+    font-weight: normal; /* Change from bold to normal */
+}
+
+.profile-dashboard .profile-field .profile-value {
+    font-weight: normal;
+}
+
+
+.profile-field .profile-value {
+    font-weight: normal; /* Change font-weight to normal */
+}
+
+.profile-field .profile-value {
+    font-weight: normal; /* Change font-weight to normal */
+}
+
+.profile-dashboard .profile-field .profile-value {
+    font-weight: normal; /* or 400 for regular font weight */
+}
+
+.profile-dashboard .profile-value a {
+    font-weight: normal;
+}
+
+
+.field-label {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.edit-button {
+    padding: 4px 8px;
+    background-color: #00BF63;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.video-resumes {
+    margin-top: 50px;
+}
+
+.video-resumes strong {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    font-size: 1.4em;
+}
+
+.video-section {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-container iframe,
+.video-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.video-container.iframe-container {
+    padding-top: 56.25%;
+}
+
+.record-button {
+    background-color: #00BF63;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    display: block;
+    width: 50%;
+    margin-top: 10px;
+}
+.record-button:hover {
+    background-color: #009950;
+}
+
+.button-group,
+.navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.navigation-spacer {
+    width: 100px; /* Adjust the width to match your button size */
+}
+
+.join-message {
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    color: #00BF63; /* Adjust the color as per your design */
+    text-align: center;
+    margin-top: 10px; /* Spacing above the message */
+}
+
+.join-message a {
+    color: inherit; /* Inherits the green color from the parent */
+    text-decoration: none; /* Removes underline from the link */
+}
+
+.join-message a:hover {
+    text-decoration: underline; /* Optional: Adds underline on hover */
+}
+
+.button-group button,
+.navigation-button {
+    background-color: #00BF63; /* Adjust color as needed */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    margin: 0 10px; /* Spacing around buttons */
+}
+
+.navigation-button, .bg-customGreen {
+    /* ... other styles ... */
+    border-radius: 14px; /* Rounded edges like the View Resume button */
+}
+
+.bg-customGreen {
+    /* existing styles */
+    border-radius: 14px; /* Ensuring it's the same as the View Resume button */
+}
+
+.center-container {
+    display: flex;
+    justify-content: center; /* Centers the child horizontally */
+    align-items: center; /* Centers the child vertically, if needed */
+    width: 100%; /* Ensures the container takes the full width */
+}
+
+.profile-value a {
+    color: #00BF63; /* Same green as the buttons */
+    text-decoration: none; /* Optional: Removes underline from links */
+}
+
+.profile-value a:hover {
+    color: #009950; /* Darker green for hover, adjust as needed */
+}
+
+.bg-gray-400 {
+    background-color: #4a5568; /* Example color, adjust as needed */
+    color: white;
+    border: none;
+    border-radius: 14px; /* Rounded edges as the Draft button */
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+
+.bg-gray-400:hover {
+    background-color: #2d3748; /* Darker shade for hover, adjust as needed */
+}
+
+.resume-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    height: 80%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+}
+
+.resume-iframe {
+    flex-grow: 1;
+    border: none;
+    border-radius: 8px 8px 0 0;
+}
+
+.close-resume {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 0 8px 8px;
+    cursor: pointer;
+}
+
+.video-resume-container {
+    margin-top: 20px;
+    width: 100%;
+    height: 500px;
+    /* Larger video player */
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.verified-icon {
+    width: 32px;
+    /* Adjust size as needed */
+    height: auto;
+}
+
+.nav-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    /* Other styling as needed */
+}
+
+.navigate-pro-link {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .navigate-pro-link a {
+    color: #00BF63;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .navigate-pro-link a:hover {
+    text-decoration: underline;
+  }
+
+  .nav-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    font-family: 'Poppins', sans-serif;
+    color: black;
+    text-align: left; /* Aligns text to the left */
+  }
+  
+  .nav-popup h2,
+  .nav-popup p,
+  .nav-popup ul {
+    text-align: left; /* Ensure all text inside the popup is left-aligned */
+  }
