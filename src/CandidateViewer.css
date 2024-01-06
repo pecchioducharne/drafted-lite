@@ -395,3 +395,33 @@
 .nav-popup button.navigation-button:hover {
     background-color: #00BF63;
 }
+
+@media only screen and (max-width: 600px) {
+    .header-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navigation-button {
+        margin: 10px 0; /* Add space between buttons when stacked */
+    }
+
+    .name {
+        text-align: center;
+        font-size: 1.5em; /* Adjust font size for smaller screens */
+    }
+
+    .info-section {
+        grid-template-columns: 1fr; /* Stack information vertically */
+    }
+
+    .video-resume-container {
+        height: auto; /* Adjust video container height for mobile */
+    }
+
+    /* Add other responsive styles as needed */
+}
+
+.profile-value a {
+    word-break: break-all; /* Breaks the link to prevent overflow */
+}

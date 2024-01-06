@@ -16,7 +16,7 @@ const CandidateViewer = () => {
 
   const emailDraft = () => {
     const { email, firstName, lastName } = candidates[currentIndex];
-    const mailto = `mailto:${email}?subject=You've Been Drafted!&body=Dear ${firstName} ${lastName},`;
+    const mailto = `mailto:${email}?subject=You've Been Drafted!&body=Hi ${firstName},%0D%0A%0D%0AWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.%0D%0A%0D%0ATime:%0D%0ADay:%0D%0AZoom / Hangout link:%0D%0A%0D%0ALet us know if this works. Looking forward!%0D%0A%0D%0ABest,%0D%0A%0D%0A[Your Name]`;
     window.location.href = mailto;
   };
 
