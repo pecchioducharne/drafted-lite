@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <br></br>
       <h1>
-        drafted<span style={{ color: "#53ad7a" }}> lite</span>
+        drafted<span style={{ color: "#53ad7a" }}> beta</span>
         <span style={{ color: "black" }}>.</span>
       </h1>
       <CandidateViewer email={candidateEmail} />
