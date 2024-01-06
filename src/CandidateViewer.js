@@ -228,7 +228,7 @@ const CandidateViewer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Want to discover more candidates? Join Drafted
+          Want to discover more candidates and filter by university, major, and grad year?<br></br>Join Drafted
         </a>
       </div>
       {showResume && (
