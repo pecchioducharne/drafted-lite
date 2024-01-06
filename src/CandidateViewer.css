@@ -363,10 +363,35 @@
     font-family: 'Poppins', sans-serif;
     color: black;
     text-align: left; /* Aligns text to the left */
-  }
-  
-  .nav-popup h2,
-  .nav-popup p,
-  .nav-popup ul {
-    text-align: left; /* Ensure all text inside the popup is left-aligned */
-  }
+    font-size: 0.9em; /* Slightly smaller font size */
+}
+
+.nav-popup h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.nav-popup ul {
+    padding-left: 20px; /* Adds indent to list */
+    list-style: none; /* Removes default list styling */
+}
+
+.nav-popup li::before {
+    content: "• ";
+    color: #00BF63; /* Custom bullet color */
+    font-weight: bold;
+}
+
+.nav-popup button.navigation-button {
+    background-color: #00BF63;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.nav-popup button.navigation-button:hover {
+    background-color: #00BF63;
+}

@@ -103,23 +103,31 @@ const CandidateViewer = () => {
       {showNavPopup && (
         <div className="nav-popup">
           <h2>Welcome to Drafted!</h2>
+          <br></br>
           <p>We make it easy and fun to find your next hire.</p>
           <ul>
+          <br></br>
             <li>
-              <strong>Enter:</strong> Draft candidate...
+              <strong>Enter:</strong> Draft candidate, creates email thread to
+              schedule first interview.
             </li>
             <li>
-              <strong>Shift:</strong> See candidate resume...
+              <strong>Shift:</strong> View candidate resume.
             </li>
             <li>
-              <strong>Right arrow:</strong> Navigate to next candidate...
+              <strong>Right arrow:</strong> See next candidate.
             </li>
             <li>
-              <strong>Left arrow:</strong> Navigate to previous candidate...
+              <strong>Left arrow:</strong> See previous candidate.
             </li>
           </ul>
           <br></br>
-          <button className="navigation-button" onClick={() => setShowNavPopup(false)}>Close</button>
+          <button
+            className="navigation-button"
+            onClick={() => setShowNavPopup(false)}
+          >
+            Close
+          </button>
         </div>
       )}
       <div className="header-section">
