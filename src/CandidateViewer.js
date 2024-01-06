@@ -145,7 +145,7 @@ const CandidateViewer = () => {
       </div>
       <div className="navigate-pro-link">
         <a href="#" onClick={() => setShowNavPopup(true)}>
-          Navigate Like a Pro
+          Keyboard Shortcuts
         </a>
       </div>
       <div className="video-resume-container">
