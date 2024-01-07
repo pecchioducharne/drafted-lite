@@ -193,6 +193,11 @@
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    min-width: 120px; /* Adjust this value as needed */
+    text-align: center; /* Center the text in the button */
+    flex: 1; /* Makes the buttons share the available space equally */
+    text-align: center; /* Centers the text in the button */
+    margin: 5px; /* Optional: Adjust for spacing around the buttons */
 }
 
 .navigation-spacer {
@@ -227,6 +232,12 @@
     font-family: 'Poppins', sans-serif;
     font-weight: bold;
     margin: 0 10px; /* Spacing around buttons */
+    width: 120px; /* Fixed width */
+    padding: 10px 20px; /* Equal padding for both buttons */
+    margin: 0 5px; /* Equal margin for both buttons */
+    box-sizing: border-box; /* Include padding and border in the width */
+    text-align: center;
+    flex: none; /* Remove flex-grow to avoid automatic resizing */
 }
 
 .navigation-button, .bg-customGreen {
@@ -270,6 +281,13 @@
 
 .bg-gray-400:hover {
     background-color: #2d3748; /* Darker shade for hover, adjust as needed */
+}
+
+.bg-gray-400, .bg-customGreen {
+    padding: 10px 20px; /* Equal padding */
+    margin: 5px 0; /* Equal vertical margin */
+    box-sizing: border-box; /* Include padding and border in the width */
+    width: auto; /* Default width */
 }
 
 .resume-popup {
@@ -396,6 +414,19 @@
     background-color: #00BF63;
 }
 
+.header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.navigation-buttons-container {
+    display: flex;
+    justify-content: center; /* Center both buttons */
+    gap: 10px; /* Space between buttons */
+}
+  
+
 @media only screen and (max-width: 600px) {
     .header-section {
         flex-direction: column;
@@ -403,8 +434,25 @@
     }
 
     .navigation-button {
-        margin: 10px 0; /* Add space between buttons when stacked */
+        margin: 5px; /* Adjust spacing for mobile */
+        flex-grow: 1;
     }
+
+    .navigation-buttons-container {
+        display: flex;
+        justify-content: space-around; /* This will space out the buttons evenly */
+    }
+
+    .bg-gray-400, .bg-customGreen {
+        width: 100% !important; /* Full width on mobile, force override */
+        margin: 5px 0 !important; /* Adjust vertical margin, remove horizontal margin, force override */
+    }
+
+    .bg-customGreen {
+        width: 103% !important; /* Full width on mobile, force override */
+        margin: 5px 0 !important; /* Adjust vertical margin, remove horizontal margin, force override */
+    }
+    
 
     .name {
         text-align: center;

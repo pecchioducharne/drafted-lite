@@ -106,7 +106,7 @@ const CandidateViewer = () => {
           <br></br>
           <p>We make it easy and fun to find your next hire.</p>
           <ul>
-          <br></br>
+            <br></br>
             <li>
               <strong>Enter:</strong> Draft candidate, creates email thread to
               schedule first interview.
@@ -131,25 +131,23 @@ const CandidateViewer = () => {
         </div>
       )}
       <div className="header-section">
-        {currentIndex > 0 ? (
-          <button className="navigation-button" onClick={handleBack}>
-            Previous
-          </button>
-        ) : (
-          <div className="navigation-spacer"></div> /* Empty spacer for alignment */
-        )}
-
+        <div className="navigation-buttons-container">
+          {currentIndex > 0 && (
+            <button className="navigation-button" onClick={handleBack}>
+              Previous
+            </button>
+          )}
+          {currentIndex < candidates.length - 1 && (
+            <button className="navigation-button" onClick={handleNext}>
+              Next
+            </button>
+          )}
+        </div>
+        <br></br>
         <h1 className="name">
           {`${candidate.firstName} ${candidate.lastName}`}
           <img src={verifiedIcon} alt="Verified" className="verified-icon" />
         </h1>
-        {currentIndex < candidates.length - 1 ? (
-          <button className="navigation-button" onClick={handleNext}>
-            Next
-          </button>
-        ) : (
-          <div className="navigation-spacer"></div> /* Empty spacer for alignment */
-        )}
       </div>
       <div className="navigate-pro-link">
         <a href="#" onClick={() => setShowNavPopup(true)}>
@@ -228,7 +226,8 @@ const CandidateViewer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Want to discover more candidates and filter by university, major, and grad year?<br></br>Join Drafted
+          Want to discover more candidates and filter by university, major, and
+          grad year?<br></br>Join Drafted
         </a>
       </div>
       {showResume && (
