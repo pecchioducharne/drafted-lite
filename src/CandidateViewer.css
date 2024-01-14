@@ -48,6 +48,7 @@
 .name {
     display: flex;
     align-items: center;
+    margin-top: 60px;
     gap: 8px; /* Adjust spacing as needed */
     color: #00ab59;
     margin: 0;
@@ -421,6 +422,7 @@
 }
   
 .navigation-buttons-container {
+    margin-bottom: 20px;
     display: flex;
     justify-content: center; /* Center both buttons */
     gap: 10px; /* Space between buttons */
