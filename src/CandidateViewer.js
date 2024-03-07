@@ -14,10 +14,11 @@ const CandidateViewer = () => {
   const [showResume, setShowResume] = useState(false);
   const [showNavPopup, setShowNavPopup] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [showGridView, setShowGridView] = useState(false); // New state to manage grid view
 
   useEffect(() => {
     const fetchCandidates = async () => {
-      const querySnapshot = await getDocs(collection(db, "early-bucket"));
+      const querySnapshot = await getDocs(collection(db, "drafted-accounts"));
       const candidatesData = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
@@ -39,7 +40,6 @@ const CandidateViewer = () => {
           handleBack();
           break;
         case "Enter":
-          // Prevent default action to avoid triggering the search when other keys are pressed
           if (document.activeElement.className.includes('search-bar')) {
             e.preventDefault();
             executeSearch();
@@ -60,18 +60,24 @@ const CandidateViewer = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [currentIndex, showResume]);
+  }, [currentIndex, showResume, showGridView]); // Add showGridView to dependencies
 
   const executeSearch = () => {
     const lowerQuery = searchQuery.toLowerCase();
     const filtered = candidates.filter(
       (candidate) =>
-        candidate.university.toLowerCase().includes(lowerQuery) ||
+        (candidate.university.toLowerCase().includes(lowerQuery) ||
         candidate.major.toLowerCase().includes(lowerQuery) ||
-        candidate.graduationYear.toString().toLowerCase().includes(lowerQuery)
+        candidate.graduationYear.toString().toLowerCase().includes(lowerQuery)) &&
+        (candidate.video1 != "" && candidate.video2 != "" && candidate.video3 != "")
     );
     setFilteredCandidates(filtered);
-    setCurrentIndex(0); // Reset to the first candidate in filtered results
+    setShowGridView(true); // Show grid view after search
+  };
+
+  const handleCandidateSelect = (index) => {
+    setCurrentIndex(index);
+    setShowGridView(false); // Go back to normal view when a candidate is selected
   };
 
   const handleNext = () => {
@@ -108,6 +114,38 @@ const CandidateViewer = () => {
       setCurrentVideoIndex(0);
     }
   };
+
+  // Show grid view of candidates with videos
+  if (showGridView) {
+    return (
+      <div className="candidates-grid">
+        {filteredCandidates.map((candidate, index) => {
+          // Filter and select the first available video URL
+          const videoUrls = [candidate.video1, candidate.video2, candidate.video3].filter(Boolean);
+          return (
+            <div key={candidate.id} className="candidate-card" onClick={() => handleCandidateSelect(index)}>
+              {videoUrls.length > 0 ? (
+                <ReactPlayer
+                  url={videoUrls[0]} // Use the first available video URL
+                  width="100%"
+                  height="100%"
+                  controls
+                  className="candidate-video"
+                />
+              ) : (
+                <div className="no-video-placeholder">No Video Available</div> // Placeholder in case there's no video
+              )}
+              <div className="candidate-info">
+                <h3>{candidate.firstName} {candidate.lastName}</h3>
+                <p>{candidate.university}</p>
+                <p>{candidate.major} - {candidate.graduationYear}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   if (filteredCandidates.length === 0) {
     return <div>Loading...</div>;
