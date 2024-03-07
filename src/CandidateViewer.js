@@ -23,12 +23,19 @@ const CandidateViewer = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setCandidates(candidatesData);
-      setFilteredCandidates(candidatesData); // Initially, all candidates are shown
+      
+      // Filter candidates to include only those with all 3 videos completed
+      const candidatesWithAllVideos = candidatesData.filter(candidate => 
+        candidate.video1 && candidate.video2 && candidate.video3
+      );
+  
+      setCandidates(candidatesWithAllVideos); // Store filtered list of candidates
+      setFilteredCandidates(candidatesWithAllVideos); // By default, show only candidates with all videos
     };
-
+  
     fetchCandidates();
   }, []);
+  
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -40,7 +47,7 @@ const CandidateViewer = () => {
           handleBack();
           break;
         case "Enter":
-          if (document.activeElement.className.includes('search-bar')) {
+          if (document.activeElement.className.includes("search-bar")) {
             e.preventDefault();
             executeSearch();
           } else {
@@ -67,9 +74,14 @@ const CandidateViewer = () => {
     const filtered = candidates.filter(
       (candidate) =>
         (candidate.university.toLowerCase().includes(lowerQuery) ||
-        candidate.major.toLowerCase().includes(lowerQuery) ||
-        candidate.graduationYear.toString().toLowerCase().includes(lowerQuery)) &&
-        (candidate.video1 != "" && candidate.video2 != "" && candidate.video3 != "")
+          candidate.major.toLowerCase().includes(lowerQuery) ||
+          candidate.graduationYear
+            .toString()
+            .toLowerCase()
+            .includes(lowerQuery)) &&
+        candidate.video1 != "" &&
+        candidate.video2 != "" &&
+        candidate.video3 != ""
     );
     setFilteredCandidates(filtered);
     setShowGridView(true); // Show grid view after search
@@ -105,15 +117,13 @@ const CandidateViewer = () => {
   };
 
   const handleVideoEnd = () => {
-    if (
-      currentVideoIndex <
-      (filteredCandidates[currentIndex]?.videoUrls?.length ?? 0) - 1
-    ) {
-      setCurrentVideoIndex(currentVideoIndex + 1);
+    // Check if there's another video to play
+    if (currentVideoIndex < videoUrls.length) {
+      setCurrentVideoIndex(currentVideoIndex + 1); // Move to the next video
     } else {
-      setCurrentVideoIndex(0);
+      setCurrentVideoIndex(0); // Optionally loop back to the first video
     }
-  };
+  };  
 
   // Show grid view of candidates with videos
   if (showGridView) {
@@ -121,9 +131,17 @@ const CandidateViewer = () => {
       <div className="candidates-grid">
         {filteredCandidates.map((candidate, index) => {
           // Filter and select the first available video URL
-          const videoUrls = [candidate.video1, candidate.video2, candidate.video3].filter(Boolean);
+          const videoUrls = [
+            candidate.video1,
+            candidate.video2,
+            candidate.video3,
+          ].filter(Boolean);
           return (
-            <div key={candidate.id} className="candidate-card" onClick={() => handleCandidateSelect(index)}>
+            <div
+              key={candidate.id}
+              className="candidate-card"
+              onClick={() => handleCandidateSelect(index)}
+            >
               {videoUrls.length > 0 ? (
                 <ReactPlayer
                   url={videoUrls[0]} // Use the first available video URL
@@ -136,9 +154,13 @@ const CandidateViewer = () => {
                 <div className="no-video-placeholder">No Video Available</div> // Placeholder in case there's no video
               )}
               <div className="candidate-info">
-                <h3>{candidate.firstName} {candidate.lastName}</h3>
+                <h3>
+                  {candidate.firstName} {candidate.lastName}
+                </h3>
                 <p>{candidate.university}</p>
-                <p>{candidate.major} - {candidate.graduationYear}</p>
+                <p>
+                  {candidate.major} - {candidate.graduationYear}
+                </p>
               </div>
             </div>
           );
@@ -156,7 +178,7 @@ const CandidateViewer = () => {
     candidate.video1,
     candidate.video2,
     candidate.video3,
-  ].filter((url) => url);
+  ].filter((url) => url); // This will exclude falsy values, including empty strings
 
   return (
     <div className="profile-dashboard">
@@ -167,9 +189,11 @@ const CandidateViewer = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-bar"
-          onKeyDown={(e) => e.key === 'Enter' && executeSearch()}
+          onKeyDown={(e) => e.key === "Enter" && executeSearch()}
         />
-        <button onClick={executeSearch} className="navigation-button">Search</button>
+        <button onClick={executeSearch} className="navigation-button">
+          Search
+        </button>
       </div>
       {showNavPopup && (
         <div className="nav-popup">
@@ -179,7 +203,8 @@ const CandidateViewer = () => {
           <ul>
             <br></br>
             <li>
-              <strong>Enter:</strong> Draft candidate, creates email thread to schedule first interview.
+              <strong>Enter:</strong> Draft candidate, creates email thread to
+              schedule first interview.
             </li>
             <li>
               <strong>Shift:</strong> View candidate resume.
@@ -192,7 +217,10 @@ const CandidateViewer = () => {
             </li>
           </ul>
           <br></br>
-          <button className="navigation-button" onClick={() => setShowNavPopup(false)}>
+          <button
+            className="navigation-button"
+            onClick={() => setShowNavPopup(false)}
+          >
             Close
           </button>
         </div>
@@ -225,9 +253,10 @@ const CandidateViewer = () => {
       <div className="video-resume-container">
         {videoUrls.length > 0 ? (
           <ReactPlayer
+            key={`${candidate.id}-${currentVideoIndex}`}
             url={videoUrls[currentVideoIndex]}
-            playing
-            controls
+            playing={true}
+            controls={true}
             onEnded={handleVideoEnd}
             width="100%"
             height="100%"
@@ -290,7 +319,8 @@ const CandidateViewer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Want to discover more candidates and filter by university, major, and grad year?<br></br>Join Drafted
+          Want to discover more candidates and filter by university, major, and
+          grad year?<br></br>Join Drafted
         </a>
       </div>
       {showResume && (
