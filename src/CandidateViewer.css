@@ -48,6 +48,10 @@
     border-radius: 14px; /* Rounds the corners of the input field */
 }
 
+.search-bar-container {
+    position: relative; /* Ensures the dropdown aligns directly below the search bar */
+  }
+
 .centered-name {
     position: absolute; /* Absolute positioning */
     left: 50%;
@@ -155,6 +159,43 @@
     padding-top: 56.25%; /* 16:9 Aspect Ratio */
     overflow: hidden;
 }
+
+.suggestions {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    position: absolute;
+    width: 100%; /* Set width to match the search bar */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    border: 1px solid #ccc;
+    border-top: none; /* Removes the top border to blend with the search input */
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 100; /* Ensures the dropdown is above other content */
+    max-height: 200px; /* Limit the height of the dropdown */
+    overflow-y: auto; /* Enables scrolling for many suggestions */
+    top: 100%; /* Position the dropdown right below the search bar */
+    left: 0; /* Align the dropdown with the left edge of the search bar */
+  }
+  
+  .suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee; /* Light border for each item */
+  }
+  
+  .suggestion-item:last-child {
+    border-bottom: none; /* Removes border for the last item */
+    border-bottom-right-radius: 14px;
+    border-bottom-left-radius: 14px; /* Rounded corners for the last item */
+  }
+  
+  .suggestion-item:hover {
+    background-color: #f7f7f7; /* Slight highlight on hover */
+  }
+  
 
 .react-player {
     position: absolute;

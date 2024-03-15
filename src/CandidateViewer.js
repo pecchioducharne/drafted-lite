@@ -15,6 +15,7 @@ const CandidateViewer = () => {
   const [showResume, setShowResume] = useState(false);
   const [showNavPopup, setShowNavPopup] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [suggestions, setSuggestions] = useState([]);
   const [showGridView, setShowGridView] = useState(false); // New state to manage grid view
   const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
 
@@ -92,6 +93,77 @@ const CandidateViewer = () => {
     setShowGridView(true); // Show grid view after search
   };
 
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (query.length > 1) {
+      // Collect all unique universities and majors
+      const universities = new Set();
+      const majors = new Set();
+      candidates.forEach((candidate) => {
+        if (candidate.university.toLowerCase().includes(query.toLowerCase())) {
+          universities.add(candidate.university);
+        }
+        if (candidate.major.toLowerCase().includes(query.toLowerCase())) {
+          majors.add(candidate.major);
+        }
+      });
+
+      // Convert the sets to arrays and combine them for suggestions
+      const universitySuggestions = Array.from(universities);
+      const majorSuggestions = Array.from(majors);
+      const combinedSuggestions = [
+        ...universitySuggestions,
+        ...majorSuggestions,
+      ].slice(0, 5); // Limit to 5 suggestions
+
+      setSuggestions(combinedSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionSelect = (suggestion) => {
+    // Set the search query to the selected suggestion
+    setSearchQuery(suggestion);
+    setSuggestions([]); // Clear suggestions
+
+    // Filter candidates based on the selected suggestion
+    const lowerSuggestion = suggestion.toLowerCase();
+    const filtered = candidates.filter(
+      (candidate) =>
+        candidate.university.toLowerCase().includes(lowerSuggestion) ||
+        candidate.major.toLowerCase().includes(lowerSuggestion) ||
+        candidate.graduationYear
+          .toString()
+          .toLowerCase()
+          .includes(lowerSuggestion)
+    );
+
+    // Update the state to reflect the filtered candidates and show the grid view
+    setFilteredCandidates(filtered);
+    setShowGridView(true);
+  };
+
+  const executeSearchWithQuery = (query) => {
+    const lowerQuery = query.toLowerCase();
+    const filtered = candidates.filter(
+      (candidate) =>
+        (candidate.university.toLowerCase().includes(lowerQuery) ||
+          candidate.major.toLowerCase().includes(lowerQuery) ||
+          candidate.graduationYear
+            .toString()
+            .toLowerCase()
+            .includes(lowerQuery)) &&
+        candidate.video1 !== "" &&
+        candidate.video2 !== "" &&
+        candidate.video3 !== ""
+    );
+    setFilteredCandidates(filtered);
+    setShowGridView(true); // Show grid view after search
+  };
+
   const handleCandidateSelect = (index) => {
     setCurrentIndex(index);
     setShowGridView(false); // Go back to normal view when a candidate is selected
@@ -133,46 +205,61 @@ const CandidateViewer = () => {
   // Show grid view of candidates with videos
   if (showGridView) {
     return (
-        <div>
-            <button
-                className="navigation-button"
-                onClick={() => setShowGridView(false)}
-                style={{ margin: "10px" }}
-            >
-                Back
-            </button>
-            <div className="candidates-grid">
-                {filteredCandidates.map((candidate, index) => {
-                    const videoUrls = [candidate.video1, candidate.video2, candidate.video3].filter(Boolean);
-                    return (
-                        <div key={candidate.id} className="candidate-card" onClick={() => handleCandidateSelect(index)}>
-                            <div className="video-wrapper"> {/* Added this wrapper */}
-                                {videoUrls.length > 0 ? (
-                                    <ReactPlayer
-                                        url={videoUrls[0]}
-                                        width="100%"
-                                        height="100%"
-                                        controls
-                                        light={logo}
-                                        className="candidate-video"
-                                    />
-                                ) : (
-                                    <div className="no-video-placeholder">No Video Available</div>
-                                )}
-                            </div>
-                            <div className="candidate-info">
-                                <h3>{candidate.firstName} {candidate.lastName}</h3>
-                                <p>{candidate.university}</p>
-                                <p>{candidate.major} - {candidate.graduationYear}</p>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
+      <div>
+        <button
+          className="navigation-button"
+          onClick={() => setShowGridView(false)}
+          style={{ margin: "10px" }}
+        >
+          Back
+        </button>
+        <div className="candidates-grid">
+          {filteredCandidates.map((candidate, index) => {
+            const videoUrls = [
+              candidate.video1,
+              candidate.video2,
+              candidate.video3,
+            ].filter(Boolean);
+            return (
+              <div
+                key={candidate.id}
+                className="candidate-card"
+                onClick={() => handleCandidateSelect(index)}
+              >
+                <div className="video-wrapper">
+                  {" "}
+                  {/* Added this wrapper */}
+                  {videoUrls.length > 0 ? (
+                    <ReactPlayer
+                      url={videoUrls[0]}
+                      width="100%"
+                      height="100%"
+                      controls
+                      light={logo}
+                      className="candidate-video"
+                    />
+                  ) : (
+                    <div className="no-video-placeholder">
+                      No Video Available
+                    </div>
+                  )}
+                </div>
+                <div className="candidate-info">
+                  <h3>
+                    {candidate.firstName} {candidate.lastName}
+                  </h3>
+                  <p>{candidate.university}</p>
+                  <p>
+                    {candidate.major} - {candidate.graduationYear}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
         </div>
+      </div>
     );
-}
-
+  }
 
   if (filteredCandidates.length === 0) {
     return <div>Loading...</div>;
@@ -192,10 +279,23 @@ const CandidateViewer = () => {
           type="text"
           placeholder="Search by university, major, grad year..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearchChange}
           className="search-bar"
-          onKeyDown={(e) => e.key === "Enter" && executeSearch()}
         />
+        {suggestions.length > 0 && (
+          <ul className="suggestions">
+            {suggestions.map((suggestion, index) => (
+              <li
+                key={index}
+                onClick={() => handleSuggestionSelect(suggestion)}
+                className="suggestion-item"
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
+        {/* Search Button */}
         <button onClick={executeSearch} className="navigation-button">
           Search
         </button>
