@@ -193,6 +193,21 @@ const CandidateViewer = () => {
     setShowResume(!showResume);
   };
 
+  const handleVideoSelect = (candidateIndex, videoUrl) => {
+    const selectedCandidate = filteredCandidates[candidateIndex];
+    const selectedVideoIndex = [
+      selectedCandidate.video1,
+      selectedCandidate.video2,
+      selectedCandidate.video3,
+    ].indexOf(videoUrl);
+
+    setCurrentIndex(candidateIndex);
+    setCurrentVideoIndex(selectedVideoIndex);
+
+    // Scroll to the top of the page to bring the main viewer into view
+    window.scrollTo(0, 0);
+  };
+
   const handleVideoEnd = () => {
     // Check if there's another video to play
     if (currentVideoIndex < videoUrls.length) {
@@ -271,6 +286,10 @@ const CandidateViewer = () => {
     candidate.video2,
     candidate.video3,
   ].filter((url) => url); // This will exclude falsy values, including empty strings
+
+  const otherVideos = filteredCandidates.filter(
+    (_, idx) => idx !== currentIndex
+  );
 
   return (
     <div className="profile-dashboard">
@@ -356,22 +375,15 @@ const CandidateViewer = () => {
         </a>
       </div>
       <div className="video-resume-container">
-        {videoUrls.length > 0 ? (
+        {videoUrls[currentVideoIndex] && (
           <ReactPlayer
-            key={`${candidate.id}-${currentVideoIndex}`}
+            key={currentVideoIndex}
             url={videoUrls[currentVideoIndex]}
             playing={true}
             controls={true}
-            light={logo} // Add this line, similarly replace `candidate.previewImage`
-            onEnded={handleVideoEnd}
+            light={logo}
             width="100%"
             height="100%"
-          />
-        ) : (
-          <img
-            src={recordGif}
-            alt="Default GIF"
-            style={{ width: "100%", height: "auto", borderRadius: "8px" }}
           />
         )}
       </div>
@@ -437,6 +449,52 @@ const CandidateViewer = () => {
           Want to discover more candidates and filter by university, major, and
           grad year?<br></br>Join Drafted
         </a>
+      </div>
+      <div className="candidates-grid" style={{ marginTop: "20px" }}>
+        {filteredCandidates.map((otherCandidate, candidateIndex) => {
+          // Skip if no videos or if it's the currently displayed candidate
+          if (
+            (!otherCandidate.video1 &&
+              !otherCandidate.video2 &&
+              !otherCandidate.video3) ||
+            candidateIndex === currentIndex
+          ) {
+            return null;
+          }
+
+          const videoUrls = [
+            otherCandidate.video1,
+            otherCandidate.video2,
+            otherCandidate.video3,
+          ].filter(Boolean);
+
+          return videoUrls.map((videoUrl, videoIndex) => (
+            <div
+              key={`${candidateIndex}-${videoIndex}`}
+              className="candidate-card"
+              onClick={() => handleVideoSelect(candidateIndex, videoUrl)}
+            >
+              <div className="video-wrapper">
+                <ReactPlayer
+                  url={videoUrl}
+                  width="100%"
+                  height="100%"
+                  controls
+                  light={logo}
+                />
+              </div>
+              <div className="candidate-info">
+                <h3>
+                  {otherCandidate.firstName} {otherCandidate.lastName}
+                </h3>
+                <p>{otherCandidate.university}</p>
+                <p>
+                  {otherCandidate.major} - {otherCandidate.graduationYear}
+                </p>
+              </div>
+            </div>
+          ));
+        })}
       </div>
       {showResume && (
         <div className="resume-popup">
