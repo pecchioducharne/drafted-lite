@@ -164,9 +164,18 @@ const CandidateViewer = () => {
     setShowGridView(true); // Show grid view after search
   };
 
-  const handleCandidateSelect = (index) => {
-    setCurrentIndex(index);
+  const handleCandidateSelect = (candidateIndex, videoUrl = null) => {
+    setCurrentIndex(candidateIndex);
+    
+    // If a videoUrl is provided, find its index in the candidate's videos and set it as currentVideoIndex
+    if (videoUrl) {
+      const selectedCandidate = filteredCandidates[candidateIndex];
+      const videoIndex = [selectedCandidate.video1, selectedCandidate.video2, selectedCandidate.video3].indexOf(videoUrl);
+      if (videoIndex !== -1) setCurrentVideoIndex(videoIndex);
+    }
+  
     setShowGridView(false); // Go back to normal view when a candidate is selected
+    window.scrollTo(0, 0); // Scroll to top to bring the main viewer into view
   };
 
   const handleNext = () => {
@@ -193,19 +202,21 @@ const CandidateViewer = () => {
     setShowResume(!showResume);
   };
 
-  const handleVideoSelect = (candidateIndex, videoUrl) => {
-    const selectedCandidate = filteredCandidates[candidateIndex];
-    const selectedVideoIndex = [
-      selectedCandidate.video1,
-      selectedCandidate.video2,
-      selectedCandidate.video3,
-    ].indexOf(videoUrl);
-
-    setCurrentIndex(candidateIndex);
-    setCurrentVideoIndex(selectedVideoIndex);
-
-    // Scroll to the top of the page to bring the main viewer into view
-    window.scrollTo(0, 0);
+  const handleVideoSelect = (videoUrl) => {
+    // Find the candidate and video index based on the videoUrl
+    const candidateIndex = filteredCandidates.findIndex(candidate => 
+      candidate.video1 === videoUrl || candidate.video2 === videoUrl || candidate.video3 === videoUrl
+    );
+  
+    if (candidateIndex !== -1) {
+      const selectedCandidate = filteredCandidates[candidateIndex];
+      const videoIndex = [selectedCandidate.video1, selectedCandidate.video2, selectedCandidate.video3].indexOf(videoUrl);
+  
+      setCurrentIndex(candidateIndex);
+      setCurrentVideoIndex(videoIndex);
+      setShowGridView(false); // Switch back to the main viewer
+      window.scrollTo(0, 0); // Scroll to the top to bring the main viewer into view
+    }
   };
 
   const handleVideoEnd = () => {
@@ -250,7 +261,7 @@ const CandidateViewer = () => {
                       width="100%"
                       height="100%"
                       controls
-                      light={logo}
+                      //{logo}
                       className="candidate-video"
                     />
                   ) : (
@@ -290,6 +301,21 @@ const CandidateViewer = () => {
   const otherVideos = filteredCandidates.filter(
     (_, idx) => idx !== currentIndex
   );
+
+  const uniqueVideoUrls = new Set();
+  filteredCandidates.forEach((candidate) => {
+    if (candidate.video1) uniqueVideoUrls.add(candidate.video1);
+    if (candidate.video2) uniqueVideoUrls.add(candidate.video2);
+    if (candidate.video3) uniqueVideoUrls.add(candidate.video3);
+  });
+
+  filteredCandidates.forEach((candidate) => {
+    [candidate.video1, candidate.video2, candidate.video3].forEach(
+      (videoUrl) => {
+        if (videoUrl) uniqueVideoUrls.add(videoUrl);
+      }
+    );
+  });
 
   return (
     <div className="profile-dashboard">
@@ -381,7 +407,7 @@ const CandidateViewer = () => {
             url={videoUrls[currentVideoIndex]}
             playing={true}
             controls={true}
-            light={logo}
+            //light={logo}
             width="100%"
             height="100%"
           />
@@ -451,28 +477,27 @@ const CandidateViewer = () => {
         </a>
       </div>
       <div className="candidates-grid" style={{ marginTop: "20px" }}>
-        {filteredCandidates.map((otherCandidate, candidateIndex) => {
+        {filteredCandidates.map((candidate, candidateIndex) => {
           // Skip if no videos or if it's the currently displayed candidate
           if (
-            (!otherCandidate.video1 &&
-              !otherCandidate.video2 &&
-              !otherCandidate.video3) ||
+            (!candidate.video1 && !candidate.video2 && !candidate.video3) ||
             candidateIndex === currentIndex
           ) {
             return null;
           }
 
-          const videoUrls = [
-            otherCandidate.video1,
-            otherCandidate.video2,
-            otherCandidate.video3,
-          ].filter(Boolean);
+          // Choose the first non-null video for display in the grid
+          const videoUrl = [
+            candidate.video1,
+            candidate.video2,
+            candidate.video3,
+          ].find((url) => url !== "");
 
-          return videoUrls.map((videoUrl, videoIndex) => (
+          return (
             <div
-              key={`${candidateIndex}-${videoIndex}`}
+              key={candidate.id}
               className="candidate-card"
-              onClick={() => handleVideoSelect(candidateIndex, videoUrl)}
+              onClick={() => handleCandidateSelect(candidateIndex, videoUrl)}
             >
               <div className="video-wrapper">
                 <ReactPlayer
@@ -480,20 +505,20 @@ const CandidateViewer = () => {
                   width="100%"
                   height="100%"
                   controls
-                  light={logo}
+                  //light={logo}
                 />
               </div>
               <div className="candidate-info">
                 <h3>
-                  {otherCandidate.firstName} {otherCandidate.lastName}
+                  {candidate.firstName} {candidate.lastName}
                 </h3>
-                <p>{otherCandidate.university}</p>
+                <p>{candidate.university}</p>
                 <p>
-                  {otherCandidate.major} - {otherCandidate.graduationYear}
+                  {candidate.major} - {candidate.graduationYear}
                 </p>
               </div>
             </div>
-          ));
+          );
         })}
       </div>
       {showResume && (
