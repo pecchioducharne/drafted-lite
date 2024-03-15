@@ -5,6 +5,7 @@ import "./CandidateViewer.css";
 import recordGif from "./record.gif";
 import ReactPlayer from "react-player";
 import verifiedIcon from "./verified.png";
+import logo from "./logo.svg";
 
 const CandidateViewer = () => {
   const [candidates, setCandidates] = useState([]);
@@ -15,6 +16,7 @@ const CandidateViewer = () => {
   const [showNavPopup, setShowNavPopup] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [showGridView, setShowGridView] = useState(false); // New state to manage grid view
+  const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -23,22 +25,32 @@ const CandidateViewer = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      
+
       // Filter candidates to include only those with all 3 videos completed
-      const candidatesWithAllVideos = candidatesData.filter(candidate => 
-        candidate.video1 && candidate.video2 && candidate.video3
+      const candidatesWithAllVideos = candidatesData.filter(
+        (candidate) => candidate.video1 && candidate.video2 && candidate.video3
       );
-  
+
       setCandidates(candidatesWithAllVideos); // Store filtered list of candidates
       setFilteredCandidates(candidatesWithAllVideos); // By default, show only candidates with all videos
     };
-  
+
     fetchCandidates();
   }, []);
-  
 
   useEffect(() => {
     const handleKeyPress = (e) => {
+      // Directly check if the focused element is an input (i.e., the search bar)
+      if (document.activeElement.tagName === "INPUT") {
+        if (e.key === "Enter") {
+          e.preventDefault(); // Prevent the default "Enter" action (e.g., form submission)
+          e.stopPropagation(); // Stop the event from propagating further
+          executeSearch(); // Execute the search function
+          return; // Exit the function to ensure no further processing
+        }
+      }
+
+      // Handle other key presses
       switch (e.key) {
         case "ArrowRight":
           handleNext();
@@ -46,17 +58,10 @@ const CandidateViewer = () => {
         case "ArrowLeft":
           handleBack();
           break;
-        case "Enter":
-          if (document.activeElement.className.includes("search-bar")) {
-            e.preventDefault();
-            executeSearch();
-          } else {
-            emailDraft();
-          }
-          break;
         case "Shift":
           setShowResume(!showResume);
           break;
+        // The "Enter" case for emailDraft is removed to prevent it from being called here
         default:
           break;
       }
@@ -67,7 +72,7 @@ const CandidateViewer = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [currentIndex, showResume, showGridView]); // Add showGridView to dependencies
+  }, [currentIndex, showResume, showGridView]); // Dependencies
 
   const executeSearch = () => {
     const lowerQuery = searchQuery.toLowerCase();
@@ -123,51 +128,51 @@ const CandidateViewer = () => {
     } else {
       setCurrentVideoIndex(0); // Optionally loop back to the first video
     }
-  };  
+  };
 
   // Show grid view of candidates with videos
   if (showGridView) {
     return (
-      <div className="candidates-grid">
-        {filteredCandidates.map((candidate, index) => {
-          // Filter and select the first available video URL
-          const videoUrls = [
-            candidate.video1,
-            candidate.video2,
-            candidate.video3,
-          ].filter(Boolean);
-          return (
-            <div
-              key={candidate.id}
-              className="candidate-card"
-              onClick={() => handleCandidateSelect(index)}
+        <div>
+            <button
+                className="navigation-button"
+                onClick={() => setShowGridView(false)}
+                style={{ margin: "10px" }}
             >
-              {videoUrls.length > 0 ? (
-                <ReactPlayer
-                  url={videoUrls[0]} // Use the first available video URL
-                  width="100%"
-                  height="100%"
-                  controls
-                  className="candidate-video"
-                />
-              ) : (
-                <div className="no-video-placeholder">No Video Available</div> // Placeholder in case there's no video
-              )}
-              <div className="candidate-info">
-                <h3>
-                  {candidate.firstName} {candidate.lastName}
-                </h3>
-                <p>{candidate.university}</p>
-                <p>
-                  {candidate.major} - {candidate.graduationYear}
-                </p>
-              </div>
+                Back
+            </button>
+            <div className="candidates-grid">
+                {filteredCandidates.map((candidate, index) => {
+                    const videoUrls = [candidate.video1, candidate.video2, candidate.video3].filter(Boolean);
+                    return (
+                        <div key={candidate.id} className="candidate-card" onClick={() => handleCandidateSelect(index)}>
+                            <div className="video-wrapper"> {/* Added this wrapper */}
+                                {videoUrls.length > 0 ? (
+                                    <ReactPlayer
+                                        url={videoUrls[0]}
+                                        width="100%"
+                                        height="100%"
+                                        controls
+                                        light={logo}
+                                        className="candidate-video"
+                                    />
+                                ) : (
+                                    <div className="no-video-placeholder">No Video Available</div>
+                                )}
+                            </div>
+                            <div className="candidate-info">
+                                <h3>{candidate.firstName} {candidate.lastName}</h3>
+                                <p>{candidate.university}</p>
+                                <p>{candidate.major} - {candidate.graduationYear}</p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
-          );
-        })}
-      </div>
+        </div>
     );
-  }
+}
+
 
   if (filteredCandidates.length === 0) {
     return <div>Loading...</div>;
@@ -185,7 +190,7 @@ const CandidateViewer = () => {
       <div className="search-bar-container">
         <input
           type="text"
-          placeholder="Search by University, Major, Grad Year..."
+          placeholder="Search by university, major, grad year..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-bar"
@@ -257,6 +262,7 @@ const CandidateViewer = () => {
             url={videoUrls[currentVideoIndex]}
             playing={true}
             controls={true}
+            light={logo} // Add this line, similarly replace `candidate.previewImage`
             onEnded={handleVideoEnd}
             width="100%"
             height="100%"
@@ -295,14 +301,23 @@ const CandidateViewer = () => {
           <strong>Graduation Year</strong>
           <p className="profile-value">{candidate.graduationYear}</p>
         </div>
+        <div className="profile-field">
+          <strong>Resume</strong>
+          <button
+            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded button-wide" // button-wide class applied
+            onClick={handleToggleResume}
+          >
+            View Resume
+          </button>
+        </div>
       </div>
       <div className="navigation-buttons"></div>
-      <button
+      {/* <button
         className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded button-wide"
         onClick={handleToggleResume}
       >
         View Resume
-      </button>
+      </button> */}
       <div className="button-group">
         <button
           className="bg-customGreen hover:bg-customGreenDark text-white font-bold py-2 px-4 rounded button-wide"

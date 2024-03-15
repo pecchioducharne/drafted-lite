@@ -39,6 +39,15 @@
     padding-bottom: 20px;
 }
 
+.search-bar {
+    width: 100%; /* This will make the search bar stretch to the full width of its parent container */
+    max-width: 600px; /* Adjust this value based on your design needs and to ensure the placeholder text fits */
+    padding: 8px 12px; /* Provides some internal spacing for text */
+    margin: 0 auto; /* Centers the search bar if its width is less than the parent container's width */
+    border: 1px solid #ccc; /* Example border, adjust as needed */
+    border-radius: 14px; /* Rounds the corners of the input field */
+}
+
 .centered-name {
     position: absolute; /* Absolute positioning */
     left: 50%;
@@ -140,6 +149,20 @@
     font-size: 1.4em;
 }
 
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+}
+
+.react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
 .video-section {
     margin-bottom: 30px;
     display: flex;
@@ -188,6 +211,35 @@
 .record-button:hover {
     background-color: #009950;
 }
+
+.candidates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.candidate-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.react-player {
+    width: 100%;
+    height: auto; /* Adjust this based on the aspect ratio you want */
+}
+
+
+.button-wide {
+    width: 150px; /* Set a specific width */
+    display: inline-block; /* Ensure buttons respect the width setting */
+    text-align: center; /* Center the button text */
+}
+
 
 .button-group,
 .navigation-buttons {
