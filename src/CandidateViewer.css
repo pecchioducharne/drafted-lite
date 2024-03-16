@@ -4,16 +4,122 @@
 
 
 .profile-dashboard {
-    font-family: 'Poppins', sans-serif;
-    background-color: white;
-    color: #333;
-    border-radius: 10px;
-    padding: 30px;
-    max-width: 800px;
-    margin: 30px auto;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+
+.main-and-other-videos-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  
+  .main-video-profile-container {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .video-resume-container {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .other-videos-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 300px;
+    height: auto;
+    overflow-y: auto;
+  }
+  
+  .other-videos-container .candidate-card {
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  
+  .other-videos-container .react-player {
+    width: 100%;
+    height: auto;
+  }
+  
+  .info-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .profile-field {
+    display: contents;
+  }
+  
+  .profile-field strong {
+    grid-column: 1;
+    color: #333;
+    font-weight: 600;
+    text-align: left;
+  }
+  
+  .profile-value {
+    color: black;
+    text-align: left;
+    font-weight: normal;
+  }
+  
+  
+  /* Ensure the .candidate-card class has appropriate styling for smaller size */
+  .candidate-card {
+    /* Add any necessary adjustments here */
+  }
+  
+
+.filter-title {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Positions the text and icon on opposite ends */
+  }
+  
+  .filter-title:hover {
+    background-color: #f0f0f0; /* Subtle background change on hover */
+  }
+  
+  .filter-icon {
+    transition: transform 0.3s ease; /* Smooth rotation animation */
+  }
+  
+  .filter-icon.expanded {
+    transform: rotate(180deg); /* Flips the icon when the category is expanded */
+  }
+  
+  .apply-filters-btn {
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px; /* Space from the filter options */
+    display: block; /* Ensure it takes up the full width */
+    width: 100%; /* Makes the button extend to the full width of its container */
+    text-align: center; /* Centers the text within the button */
+  }
+  
 
 .filter-container {
     display: flex;
@@ -90,8 +196,13 @@
 }
 
 .search-bar-container {
-    position: relative; /* Ensures the dropdown aligns directly below the search bar */
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Ensures the container takes the full width */
+  padding: 20px 0; /* Adds some vertical padding */
+}
+
 
 .centered-name {
     position: absolute; /* Absolute positioning */

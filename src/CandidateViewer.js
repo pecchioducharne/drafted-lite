@@ -6,6 +6,7 @@ import recordGif from "./record.gif";
 import ReactPlayer from "react-player";
 import verifiedIcon from "./verified.png";
 import logo from "./logo.svg";
+import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Import Chevron icons from 'react-icons'
 
 const CandidateViewer = () => {
   const [candidates, setCandidates] = useState([]);
@@ -24,6 +25,8 @@ const CandidateViewer = () => {
     graduationYear: [],
   });
 
+  const [openFilterCategories, setOpenFilterCategories] = useState([]); // Now an array to track multiple open categories
+
   const FilterOptions = ({ title, options, selectedOptions, onSelect }) => {
     const handleSelect = (option) => {
       const isSelected = selectedOptions.includes(option);
@@ -34,22 +37,43 @@ const CandidateViewer = () => {
       }
     };
 
+    // Check if this filter category is open
+    const showOptions = openFilterCategories.includes(title);
+
     return (
       <div className="filter-option-section">
-        <div className="filter-title">{title}</div>
-        <div className="options-container">
-          {options.map((option, index) => (
-            <div
-              key={index}
-              className={`option-item ${
-                selectedOptions.includes(option) ? "selected" : ""
-              }`}
-              onClick={() => handleSelect(option)}
-            >
-              {option}
-            </div>
-          ))}
+        <div
+          className="filter-title"
+          onClick={() => {
+            setOpenFilterCategories((current) =>
+              current.includes(title)
+                ? current.filter((category) => category !== title)
+                : [...current, title]
+            );
+          }}
+        >
+          {title}
+          {showOptions ? (
+            <FiChevronUp className="filter-icon" />
+          ) : (
+            <FiChevronDown className="filter-icon" />
+          )}
         </div>
+        {showOptions && (
+          <div className="options-container">
+            {options.map((option, index) => (
+              <div
+                key={index}
+                className={`option-item ${
+                  selectedOptions.includes(option) ? "selected" : ""
+                }`}
+                onClick={() => handleSelect(option)}
+              >
+                {option}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   };
@@ -438,18 +462,17 @@ const CandidateViewer = () => {
             ))}
           </ul>
         )}
-        {/* Search Button */}
-        <button onClick={executeSearch} className="navigation-button">
+        <br></br>
+        {/* <button onClick={executeSearch} className="navigation-button">
           Search
-        </button>
+        </button> */}
       </div>
+
       {showNavPopup && (
         <div className="nav-popup">
           <h2>Welcome to Drafted!</h2>
-          <br></br>
           <p>We make it easy and fun to find your next hire.</p>
           <ul>
-            <br></br>
             <li>
               <strong>Enter:</strong> Draft candidate, creates email thread to
               schedule first interview.
@@ -464,7 +487,6 @@ const CandidateViewer = () => {
               <strong>Left arrow:</strong> See previous candidate.
             </li>
           </ul>
-          <br></br>
           <button
             className="navigation-button"
             onClick={() => setShowNavPopup(false)}
@@ -473,156 +495,145 @@ const CandidateViewer = () => {
           </button>
         </div>
       )}
-      <br></br>
-      <div className="header-section">
-        <div className="navigation-buttons-container">
-          {currentIndex > 0 && (
-            <button className="navigation-button" onClick={handleBack}>
-              Previous
-            </button>
-          )}
-          {currentIndex < filteredCandidates.length - 1 && (
-            <button className="navigation-button" onClick={handleNext}>
-              Next
-            </button>
-          )}
-        </div>
-        <br></br>
-        <h1 className="name">
-          {candidate.firstName} {candidate.lastName}
-          <img src={verifiedIcon} alt="Verified" className="verified-icon" />
-        </h1>
-      </div>
-      <div className="navigate-pro-link">
-        <a href="#" onClick={() => setShowNavPopup(true)}>
-          Keyboard Shortcuts
-        </a>
-      </div>
-      <div className="video-resume-container">
-        {videoUrls[currentVideoIndex] && (
-          <ReactPlayer
-            key={currentVideoIndex}
-            url={videoUrls[currentVideoIndex]}
-            playing={true}
-            controls={true}
-            //light={logo}
-            width="100%"
-            height="100%"
-          />
-        )}
-      </div>
-      <br></br>
-      <div className="info-section">
-        <div className="profile-field">
-          <strong>University</strong>
-          <p className="profile-value">{candidate.university}</p>
-        </div>
-        <div className="profile-field">
-          <strong>Major</strong>
-          <p className="profile-value">{candidate.major}</p>
-        </div>
-        <div className="profile-field">
-          <strong>LinkedIn</strong>
-          <p className="profile-value">
-            <a
-              href={candidate.linkedInURL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {candidate.linkedInURL}
-            </a>
-          </p>
-        </div>
-        <div className="profile-field">
-          <strong>Graduation Year</strong>
-          <p className="profile-value">{candidate.graduationYear}</p>
-        </div>
-        <div className="profile-field">
-          <strong>Resume</strong>
-          <button
-            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded button-wide" // button-wide class applied
-            onClick={handleToggleResume}
-          >
-            View Resume
-          </button>
-        </div>
-      </div>
-      <div className="navigation-buttons"></div>
-      {/* <button
-        className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded button-wide"
-        onClick={handleToggleResume}
-      >
-        View Resume
-      </button> */}
-      <div className="button-group">
-        <button
-          className="bg-customGreen hover:bg-customGreenDark text-white font-bold py-2 px-4 rounded button-wide"
-          style={{ borderRadius: "14px" }}
-          onClick={emailDraft}
-        >
-          Draft
-        </button>
-      </div>
-      <br></br>
-      <div className="join-message">
-        <a
-          href="https://drafted-recruiter.webflow.io/sign-up"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Want to discover more candidates and filter by university, major, and
-          grad year?<br></br>Join Drafted
-        </a>
-      </div>
-      <div className="candidates-grid" style={{ marginTop: "20px" }}>
-        {filteredCandidates.map((candidate, candidateIndex) => {
-          // Skip if no videos or if it's the currently displayed candidate
-          if (
-            (!candidate.video1 && !candidate.video2 && !candidate.video3) ||
-            candidateIndex === currentIndex
-          ) {
-            return null;
-          }
 
-          // Choose the first non-null video for display in the grid
-          const videoUrl = [
-            candidate.video1,
-            candidate.video2,
-            candidate.video3,
-          ].find((url) => url !== "");
-
-          return (
-            <div
-              key={candidate.id}
-              className="candidate-card"
-              onClick={() => handleCandidateSelect(candidateIndex, videoUrl)}
+      <div className="main-and-other-videos-container">
+        <div className="main-video-profile-container">
+          <div className="video-resume-container">
+            {videoUrls[currentVideoIndex] && (
+              <ReactPlayer
+                key={currentVideoIndex}
+                url={videoUrls[currentVideoIndex]}
+                playing={true}
+                controls={true}
+                width="100%"
+                height="100%"
+              />
+            )}
+          </div>
+          <div className="info-section">
+            <div className="profile-field">
+              <strong>University:</strong> {candidate.university}
+            </div>
+            <div className="profile-field">
+              <strong>Major:</strong> {candidate.major}
+            </div>
+            <div className="profile-field">
+              <strong>LinkedIn:</strong>{" "}
+              <a href={candidate.linkedInURL} target="_blank">
+                {candidate.linkedInURL}
+              </a>
+            </div>
+            <div className="profile-field">
+              <strong>Graduation Year:</strong> {candidate.graduationYear}
+            </div>
+            <div className="profile-field">
+              <strong>Resume:</strong>
+              <button
+                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                onClick={handleToggleResume}
+              >
+                View Resume
+              </button>
+            </div>
+          </div>
+          <div className="button-group">
+            <button
+              className="bg-customGreen hover:bg-customGreenDark text-white font-bold py-2 px-4 rounded"
+              onClick={emailDraft}
             >
-              <div className="video-wrapper">
+              Draft
+            </button>
+          </div>
+        </div>
+        <div className="other-videos-container">
+          {filteredCandidates.map((candidate, candidateIndex) => {
+            if (
+              (!candidate.video1 && !candidate.video2 && !candidate.video3) ||
+              candidateIndex === currentIndex
+            ) {
+              return null;
+            }
+
+            const videoUrl = [
+              candidate.video1,
+              candidate.video2,
+              candidate.video3,
+            ].find((url) => url);
+
+            return (
+              <div
+                key={candidate.id}
+                className="candidate-card"
+                onClick={() => handleCandidateSelect(candidateIndex, videoUrl)}
+              >
                 <ReactPlayer
                   url={videoUrl}
                   width="100%"
                   height="100%"
                   controls
-                  //light={logo}
                 />
+                <div className="candidate-info">
+                  <h3>
+                    {candidate.firstName} {candidate.lastName}
+                  </h3>
+                  <p>{candidate.university}</p>
+                  <p>
+                    {candidate.major} - {candidate.graduationYear}
+                  </p>
+                </div>
               </div>
-              <div className="candidate-info">
-                <h3>
-                  {candidate.firstName} {candidate.lastName}
-                </h3>
-                <p>{candidate.university}</p>
-                <p>
-                  {candidate.major} - {candidate.graduationYear}
-                </p>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
+
+      {/* <div className="info-section">
+        <div className="profile-field">
+          <strong>University:</strong> {candidate.university}
+        </div>
+        <div className="profile-field">
+          <strong>Major:</strong> {candidate.major}
+        </div>
+        <div className="profile-field">
+          <strong>LinkedIn:</strong>{" "}
+          <a href={candidate.linkedInURL} target="_blank">
+            {candidate.linkedInURL}
+          </a>
+        </div>
+        <div className="profile-field">
+          <strong>Graduation Year:</strong> {candidate.graduationYear}
+        </div>
+        <div className="profile-field">
+          <strong>Resume:</strong>
+          <button
+            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+            onClick={handleToggleResume}
+          >
+            View Resume
+          </button>
+        </div>
+      </div> */}
+
+      {/* <div className="button-group">
+        <button
+          className="bg-customGreen hover:bg-customGreenDark text-white font-bold py-2 px-4 rounded"
+          onClick={emailDraft}
+        >
+          Draft
+        </button>
+      </div> */}
+
+      <div className="join-message">
+        <a href="https://drafted-recruiter.webflow.io/sign-up" target="_blank">
+          Want to discover more candidates and filter by university, major, and
+          grad year? Join Drafted
+        </a>
+      </div>
+
       {showResume && (
         <div className="resume-popup">
           <iframe
-            src={candidate.resume} // Ensure this property is correctly populated in the candidate object
+            src={candidate.resume}
             title="Resume"
             className="resume-iframe"
           ></iframe>
