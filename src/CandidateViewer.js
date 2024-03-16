@@ -99,6 +99,8 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {  con
     fetchCandidates();
   }, []);
 
+  
+
   useEffect(() => {
     setShowGridView(initialShowGridView);
   }, [initialShowGridView]); // Re-run this effect when initialShowGridView changes
