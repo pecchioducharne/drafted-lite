@@ -8,16 +8,17 @@ import verifiedIcon from "./verified.png";
 import logo from "./logo.svg";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Import Chevron icons from 'react-icons'
 
-const CandidateViewer = () => {
-  const [candidates, setCandidates] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+
+
+const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {  const [searchQuery, setSearchQuery] = useState("");
   const [filteredCandidates, setFilteredCandidates] = useState([]);
+  const [candidates, setCandidates] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showResume, setShowResume] = useState(false);
   const [showNavPopup, setShowNavPopup] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
-  const [showGridView, setShowGridView] = useState(false); // New state to manage grid view
+  const [showGridView, setShowGridView] = useState(initialShowGridView);
   const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
   const [filters, setFilters] = useState({
     university: [],
@@ -99,6 +100,10 @@ const CandidateViewer = () => {
   }, []);
 
   useEffect(() => {
+    setShowGridView(initialShowGridView);
+  }, [initialShowGridView]); // Re-run this effect when initialShowGridView changes
+
+  useEffect(() => {
     executeSearch();
   }, [filters]); // Add filters as a dependency
 
@@ -178,6 +183,10 @@ const CandidateViewer = () => {
 
     setFilteredCandidates(newFilteredCandidates);
     setShowGridView(true); // Show grid view after search
+  };
+
+  const handleLogoClick = () => {
+    executeSearch(); // Call with no arguments defaults to an empty string
   };
 
   const handleSearchChange = (e) => {
@@ -623,12 +632,12 @@ const CandidateViewer = () => {
         </button>
       </div> */}
 
-      <div className="join-message">
+      {/* <div className="join-message">
         <a href="https://drafted-recruiter.webflow.io/sign-up" target="_blank">
           Want to discover more candidates and filter by university, major, and
           grad year? Join Drafted
         </a>
-      </div>
+      </div> */}
 
       {showResume && (
         <div className="resume-popup">
