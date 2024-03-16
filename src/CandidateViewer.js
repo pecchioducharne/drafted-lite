@@ -18,6 +18,41 @@ const CandidateViewer = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [showGridView, setShowGridView] = useState(false); // New state to manage grid view
   const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
+  const [filters, setFilters] = useState({
+    university: [],
+    major: [],
+    graduationYear: [],
+  });
+
+  const FilterOptions = ({ title, options, selectedOptions, onSelect }) => {
+    const handleSelect = (option) => {
+      const isSelected = selectedOptions.includes(option);
+      if (isSelected) {
+        onSelect(selectedOptions.filter((o) => o !== option));
+      } else {
+        onSelect([...selectedOptions, option]);
+      }
+    };
+
+    return (
+      <div className="filter-option-section">
+        <div className="filter-title">{title}</div>
+        <div className="options-container">
+          {options.map((option, index) => (
+            <div
+              key={index}
+              className={`option-item ${
+                selectedOptions.includes(option) ? "selected" : ""
+              }`}
+              onClick={() => handleSelect(option)}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -38,6 +73,10 @@ const CandidateViewer = () => {
 
     fetchCandidates();
   }, []);
+
+  useEffect(() => {
+    executeSearch();
+  }, [filters]); // Add filters as a dependency
 
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -75,21 +114,45 @@ const CandidateViewer = () => {
     };
   }, [currentIndex, showResume, showGridView]); // Dependencies
 
+  const uniqueUniversities = [
+    ...new Set(candidates.map((candidate) => candidate.university)),
+  ];
+  const uniqueMajors = [
+    ...new Set(candidates.map((candidate) => candidate.major)),
+  ];
+  const uniqueGraduationYears = [
+    ...new Set(
+      candidates.map((candidate) => candidate.graduationYear.toString())
+    ),
+  ];
+
   const executeSearch = () => {
     const lowerQuery = searchQuery.toLowerCase();
-    const filtered = candidates.filter(
-      (candidate) =>
-        (candidate.university.toLowerCase().includes(lowerQuery) ||
-          candidate.major.toLowerCase().includes(lowerQuery) ||
-          candidate.graduationYear
-            .toString()
-            .toLowerCase()
-            .includes(lowerQuery)) &&
-        candidate.video1 != "" &&
-        candidate.video2 != "" &&
-        candidate.video3 != ""
-    );
-    setFilteredCandidates(filtered);
+
+    const newFilteredCandidates = candidates.filter((candidate) => {
+      const matchesQuery =
+        candidate.university.toLowerCase().includes(lowerQuery) ||
+        candidate.major.toLowerCase().includes(lowerQuery) ||
+        candidate.graduationYear.toString().toLowerCase().includes(lowerQuery);
+
+      const matchesUniversity =
+        !filters.university.length ||
+        filters.university.includes(candidate.university);
+      const matchesMajor =
+        !filters.major.length || filters.major.includes(candidate.major);
+      const matchesGraduationYear =
+        !filters.graduationYear.length ||
+        filters.graduationYear.includes(candidate.graduationYear.toString());
+
+      return (
+        matchesQuery &&
+        matchesUniversity &&
+        matchesMajor &&
+        matchesGraduationYear
+      );
+    });
+
+    setFilteredCandidates(newFilteredCandidates);
     setShowGridView(true); // Show grid view after search
   };
 
@@ -166,14 +229,18 @@ const CandidateViewer = () => {
 
   const handleCandidateSelect = (candidateIndex, videoUrl = null) => {
     setCurrentIndex(candidateIndex);
-    
+
     // If a videoUrl is provided, find its index in the candidate's videos and set it as currentVideoIndex
     if (videoUrl) {
       const selectedCandidate = filteredCandidates[candidateIndex];
-      const videoIndex = [selectedCandidate.video1, selectedCandidate.video2, selectedCandidate.video3].indexOf(videoUrl);
+      const videoIndex = [
+        selectedCandidate.video1,
+        selectedCandidate.video2,
+        selectedCandidate.video3,
+      ].indexOf(videoUrl);
       if (videoIndex !== -1) setCurrentVideoIndex(videoIndex);
     }
-  
+
     setShowGridView(false); // Go back to normal view when a candidate is selected
     window.scrollTo(0, 0); // Scroll to top to bring the main viewer into view
   };
@@ -204,14 +271,21 @@ const CandidateViewer = () => {
 
   const handleVideoSelect = (videoUrl) => {
     // Find the candidate and video index based on the videoUrl
-    const candidateIndex = filteredCandidates.findIndex(candidate => 
-      candidate.video1 === videoUrl || candidate.video2 === videoUrl || candidate.video3 === videoUrl
+    const candidateIndex = filteredCandidates.findIndex(
+      (candidate) =>
+        candidate.video1 === videoUrl ||
+        candidate.video2 === videoUrl ||
+        candidate.video3 === videoUrl
     );
-  
+
     if (candidateIndex !== -1) {
       const selectedCandidate = filteredCandidates[candidateIndex];
-      const videoIndex = [selectedCandidate.video1, selectedCandidate.video2, selectedCandidate.video3].indexOf(videoUrl);
-  
+      const videoIndex = [
+        selectedCandidate.video1,
+        selectedCandidate.video2,
+        selectedCandidate.video3,
+      ].indexOf(videoUrl);
+
       setCurrentIndex(candidateIndex);
       setCurrentVideoIndex(videoIndex);
       setShowGridView(false); // Switch back to the main viewer
@@ -232,6 +306,30 @@ const CandidateViewer = () => {
   if (showGridView) {
     return (
       <div>
+        <div className="filter-container">
+          <FilterOptions
+            title="University"
+            options={uniqueUniversities}
+            selectedOptions={filters.university}
+            onSelect={(selected) =>
+              setFilters({ ...filters, university: selected })
+            }
+          />
+          <FilterOptions
+            title="Major"
+            options={uniqueMajors}
+            selectedOptions={filters.major}
+            onSelect={(selected) => setFilters({ ...filters, major: selected })}
+          />
+          <FilterOptions
+            title="Graduation Year"
+            options={uniqueGraduationYears}
+            selectedOptions={filters.graduationYear}
+            onSelect={(selected) =>
+              setFilters({ ...filters, graduationYear: selected })
+            }
+          />
+        </div>
         <button
           className="navigation-button"
           onClick={() => setShowGridView(false)}

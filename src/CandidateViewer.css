@@ -15,6 +15,47 @@
     flex-wrap: wrap;
 }
 
+.filter-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f3f2ef;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-option-section {
+    flex: 1;
+    padding: 0 10px;
+  }
+  
+  .filter-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .option-item {
+    padding: 5px 15px;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+  }
+  
+  .option-item.selected {
+    background-color: #0073b1;
+    color: #ffffff;
+    border-color: #0073b1;
+  }
+  
+
 .draft-button {
     background-color: #00BF63;
     /* YouTube Red */
