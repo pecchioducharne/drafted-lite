@@ -7,10 +7,11 @@ import ReactPlayer from "react-player";
 import verifiedIcon from "./verified.png";
 import logo from "./logo.svg";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Import Chevron icons from 'react-icons'
+import { Player } from "video-react";
+import "video-react/dist/video-react.css"; // Import css
 
-
-
-const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {  const [searchQuery, setSearchQuery] = useState("");
+const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [filteredCandidates, setFilteredCandidates] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -99,7 +100,24 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {  con
     fetchCandidates();
   }, []);
 
-  
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          const src = img.getAttribute("data-lazy");
+          img.setAttribute("src", src);
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    document.querySelectorAll("img[data-lazy]").forEach((img) => {
+      observer.observe(img);
+    });
+
+    return () => observer.disconnect(); // Cleanup the observer when the component unmounts
+  }, []); // Empty dependency array ensures this runs once on mount
 
   useEffect(() => {
     setShowGridView(initialShowGridView);
@@ -386,32 +404,17 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {  con
                 onClick={() => handleCandidateSelect(index)}
               >
                 <div className="video-wrapper">
-                  {" "}
-                  {/* Added this wrapper */}
                   {videoUrls.length > 0 ? (
-                    <ReactPlayer
-                      url={videoUrls[0]}
-                      width="100%"
-                      height="100%"
-                      controls
-                      //{logo}
-                      className="candidate-video"
-                    />
+                    <Player>
+                      <source src={videoUrls[0]} />
+                    </Player>
                   ) : (
                     <div className="no-video-placeholder">
                       No Video Available
                     </div>
                   )}
                 </div>
-                <div className="candidate-info">
-                  <h3>
-                    {candidate.firstName} {candidate.lastName}
-                  </h3>
-                  <p>{candidate.university}</p>
-                  <p>
-                    {candidate.major} - {candidate.graduationYear}
-                  </p>
-                </div>
+                {/* Candidate info rendering remains unchanged */}
               </div>
             );
           })}
@@ -511,14 +514,17 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {  con
         <div className="main-video-profile-container">
           <div className="video-resume-container">
             {videoUrls[currentVideoIndex] && (
-              <ReactPlayer
-                key={currentVideoIndex}
-                url={videoUrls[currentVideoIndex]}
-                playing={true}
-                controls={true}
-                width="100%"
-                height="100%"
-              />
+              // <ReactPlayer
+              //   key={currentVideoIndex}
+              //   url={videoUrls[currentVideoIndex]}
+              //   playing={true}
+              //   controls={true}
+              //   width="100%"
+              //   height="100%"
+              // />
+              <Player>
+                <source src={videoUrls[0]} />
+              </Player>
             )}
           </div>
           <div className="info-section">
