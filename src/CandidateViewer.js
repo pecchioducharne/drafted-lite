@@ -9,6 +9,7 @@ import logo from "./logo.svg";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Import Chevron icons from 'react-icons'
 import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // Import css
+import home from "./home.png";
 
 const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -79,6 +80,10 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
       </div>
     );
   };
+
+  useEffect(() => {
+    setShowGridView(initialShowGridView);
+  }, [initialShowGridView]);
 
   useEffect(() => {
     const fetchCandidates = async () => {
@@ -207,6 +212,12 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
 
   const handleLogoClick = () => {
     executeSearch(); // Call with no arguments defaults to an empty string
+  };
+
+  const handleHomeButtonClick = () => {
+    setSearchQuery(""); // Reset search query
+    setFilters({ university: [], major: [], graduationYear: [] }); // Reset all filters
+    executeSearch(); // Execute search with reset state to return to "home page" view
   };
 
   const handleSearchChange = (e) => {
@@ -355,6 +366,34 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
     }
   };
 
+  const handleUniversityClick = (university) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      university: [university], // Set the filter to include only the clicked university
+      major: [], // Optionally clear other filters, or keep them according to your needs
+    }));
+    setShowGridView(true); // Switch back to grid view to show filtered results
+  };
+
+  const handleMajorClick = (major) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      major: [major], // Set the filter to include only the clicked major
+      university: [], // Optionally clear other filters, or keep them according to your needs
+    }));
+    setShowGridView(true); // Switch back to grid view to show filtered results
+  };
+
+  const handleGradYearClick = (gradYear) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      graduationYear: [gradYear], // Adjust this logic as needed
+      university: [],
+      major: [],
+    }));
+    setShowGridView(true);
+  };
+
   // Show grid view of candidates with videos
   if (showGridView) {
     return (
@@ -383,41 +422,57 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
             }
           />
         </div>
-        <button
+        {/* <button
           className="navigation-button"
           onClick={() => setShowGridView(false)}
           style={{ margin: "10px" }}
         >
           Back
-        </button>
+        </button> */}
         <div className="candidates-grid">
-          {filteredCandidates.map((candidate, index) => {
-            const videoUrls = [
-              candidate.video1,
-              candidate.video2,
-              candidate.video3,
-            ].filter(Boolean);
-            return (
-              <div
-                key={candidate.id}
-                className="candidate-card"
-                onClick={() => handleCandidateSelect(index)}
-              >
-                <div className="video-wrapper">
-                  {videoUrls.length > 0 ? (
-                    <Player>
-                      <source src={videoUrls[0]} />
-                    </Player>
-                  ) : (
-                    <div className="no-video-placeholder">
-                      No Video Available
-                    </div>
-                  )}
-                </div>
-                {/* Candidate info rendering remains unchanged */}
+          {filteredCandidates.map((candidate, index) => (
+            <div
+              key={candidate.id}
+              className="candidate-card"
+              onClick={() => handleCandidateSelect(index)}
+            >
+              <div className="video-wrapper">
+                {candidate.video1 ? (
+                  <Player>
+                    <source src={candidate.video1} />
+                  </Player>
+                ) : (
+                  <div className="no-video-placeholder">No Video Available</div>
+                )}
               </div>
-            );
-          })}
+              <div className="candidate-details">
+                <h4 className="candidate-name">
+                  {candidate.firstName} {candidate.lastName}
+                </h4>
+                <p
+                  className="candidate-university clickable-text"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleUniversityClick(candidate.university);
+                  }}
+                >
+                  {candidate.university}
+                </p>
+                <p
+                  className="candidate-major clickable-text"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMajorClick(candidate.major);
+                  }}
+                >
+                  {candidate.major}
+                </p>
+                <p className="candidate-grad-year">
+                  Grad Year: {candidate.graduationYear}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -455,7 +510,20 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
 
   return (
     <div className="profile-dashboard">
-      <div className="search-bar-container">
+      <div className="search-container">
+        <img
+          src={home} // Use the imported home icon
+          alt="Home"
+          className="home-icon"
+          onClick={handleHomeButtonClick}
+          style={{
+            cursor: "pointer",
+            marginRight: "10px", // Reduced margin to bring it closer to the search bar
+            width: "32px", // Small icon size
+            height: "32px", // Match the height with the width
+            alignSelf: "center", // Center the icon vertically within the container
+          }}
+        />
         <input
           type="text"
           placeholder="Search by university, major, grad year..."

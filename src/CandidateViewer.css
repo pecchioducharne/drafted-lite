@@ -187,22 +187,37 @@
 }
 
 .search-bar {
-    width: 100%; /* This will make the search bar stretch to the full width of its parent container */
-    max-width: 600px; /* Adjust this value based on your design needs and to ensure the placeholder text fits */
-    padding: 8px 12px; /* Provides some internal spacing for text */
-    margin: 0 auto; /* Centers the search bar if its width is less than the parent container's width */
-    border: 1px solid #ccc; /* Example border, adjust as needed */
-    border-radius: 14px; /* Rounds the corners of the input field */
-}
+    flex-grow: 1; /* Allow the search bar to fill the available space */
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 14px;
+  }
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: auto; /* Adjust this as needed */
+    margin-bottom: 10px;
+    min-width: 770px;
+    max-width: 1200px; /* Set a max-width for the container */
+    padding: 0 20px; /* Optional: Add padding for visual spacing */
+  }
+
 
 .search-bar-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%; /* Ensures the container takes the full width */
-  padding: 20px 0; /* Adds some vertical padding */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the items horizontally */
+    padding: 20px 0; /* Adds vertical padding without affecting horizontal spacing */
 }
 
+.home-icon {
+    margin-right: 100px; /* Adjust the right margin for spacing between the icon and the search bar */
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+  }
 
 .centered-name {
     position: absolute; /* Absolute positioning */
@@ -412,13 +427,63 @@
     padding: 20px;
 }
 
+/* Define a class for clickable text elements */
+.clickable-text {
+    cursor: pointer; /* Changes the cursor to a pointer to indicate clickability */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+  }
+  
+  /* Change the color and add an underline on hover */
+  .clickable-text:hover {
+    color: #0056b3; /* Slightly darker color for emphasis */
+    text-decoration: underline; /* Adds an underline to indicate it's clickable */
+  }
+
 .candidate-card {
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #f9f9f9;
     border-radius: 8px;
-    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .candidate-card:hover {
+  transform: translateY(-5px);
+}
+
+.candidate-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.candidate-university {
+  font-size: 1em;
+  color: #0073b1;
+  margin-bottom: 5px;
+}
+
+.candidate-grad-year {
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Additional styling for the video wrapper to make it more cohesive with the card design */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  margin-bottom: 15px; /* Space between the video and the text details */
+}
+
+.video-wrapper .Player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .react-player {
