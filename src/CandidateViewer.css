@@ -320,13 +320,6 @@
     font-size: 1.4em;
 }
 
-.video-wrapper {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    overflow: hidden;
-}
-
 .suggestions {
     list-style-type: none;
     padding: 0;
@@ -435,7 +428,7 @@
   
   /* Change the color and add an underline on hover */
   .clickable-text:hover {
-    color: #0056b3; /* Slightly darker color for emphasis */
+    color: #00BF63; /* Slightly darker color for emphasis */
     text-decoration: underline; /* Adds an underline to indicate it's clickable */
   }
 
@@ -454,37 +447,53 @@
 
 .candidate-name {
   font-size: 1.2em;
-  font-weight: bold;
+  font-weight: 700;
   margin-bottom: 5px;
   color: #333;
 }
 
 .candidate-university {
   font-size: 1em;
-  color: #0073b1;
+  font-weight: 600;
+  color: #00BF63;
   margin-bottom: 5px;
 }
 
+.candidate-major {
+    font-size: 1em;
+    font-weight: 500;
+    color: black;
+    margin-bottom: 5px;
+  }
+
 .candidate-grad-year {
   font-size: 0.9em;
+  font-weight: 500;
   color: #666;
 }
 
+
 /* Additional styling for the video wrapper to make it more cohesive with the card design */
 .video-wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio */
-  margin-bottom: 15px; /* Space between the video and the text details */
-}
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    /* 16:9 Aspect Ratio */
+    padding-top: 56.25%;
+  }
 
-.video-wrapper .Player {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
+  .react-player, .Player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the video covers the area, might crop some parts */
+  }
+
+  .candidate-details {
+    padding: 15px;
+  }
 
 .react-player {
     width: 100%;
