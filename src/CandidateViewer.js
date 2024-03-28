@@ -9,6 +9,7 @@ import logo from "./logo.svg";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Import Chevron icons from 'react-icons'
 import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // Import css
+import { LazyLoadComponent } from "react-lazy-load-image-component";
 import home from "./home.png";
 
 const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
@@ -437,13 +438,25 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
               onClick={() => handleCandidateSelect(index)}
             >
               <div className="video-wrapper">
-                {candidate.video1 ? (
-                  <Player>
-                    <source src={candidate.video1} />
-                  </Player>
-                ) : (
-                  <div className="no-video-placeholder">No Video Available</div>
-                )}
+                <LazyLoadComponent
+                  placeholder={
+                    <img
+                      src={recordGif}
+                      alt="Loading..."
+                      className="loading-gif"
+                    />
+                  } // Use the imported GIF as a placeholder
+                >
+                  {candidate.video1 ? (
+                    <Player>
+                      <source src={candidate.video1} />
+                    </Player>
+                  ) : (
+                    <div className="no-video-placeholder">
+                      No Video Available
+                    </div>
+                  )}
+                </LazyLoadComponent>
               </div>
               <div className="candidate-details">
                 <h4 className="candidate-name">
