@@ -430,35 +430,23 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
         >
           Back
         </button> */}
-        <div className="candidates-grid">
-          {filteredCandidates.map((candidate, index) => (
-            <div
-              key={candidate.id}
-              className="candidate-card"
-              onClick={() => handleCandidateSelect(index)}
-            >
-              <div className="video-wrapper">
-                <LazyLoadComponent
-                  placeholder={
-                    <img
-                      src={recordGif}
-                      alt="Loading..."
-                      className="loading-gif"
-                    />
-                  } // Use the imported GIF as a placeholder
-                >
-                  {candidate.video1 ? (
-                    <Player>
-                      <source src={candidate.video1} />
-                    </Player>
-                  ) : (
-                    <div className="no-video-placeholder">
-                      No Video Available
-                    </div>
-                  )}
-                </LazyLoadComponent>
-              </div>
-              <div className="candidate-details">
+<div className="candidates-grid">
+  {filteredCandidates.map((candidate, index) => (
+    <div key={candidate.id} className="candidate-card" onClick={() => handleCandidateSelect(index)}>
+      <div className="video-wrapper">
+        <LazyLoadComponent
+          placeholder={<img src={recordGif} alt="Loading..." className="loading-gif" />}
+        >
+          {candidate.video1 ? (
+            <Player>
+              <source src={candidate.video1} />
+            </Player>
+          ) : (
+            <div className="no-video-placeholder">No Video Available</div>
+          )}
+        </LazyLoadComponent>
+      </div>
+      <div className="candidate-details">
                 <h4 className="candidate-name">
                   {candidate.firstName} {candidate.lastName}
                 </h4>

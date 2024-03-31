@@ -476,23 +476,27 @@
 /* Additional styling for the video wrapper to make it more cohesive with the card design */
 .video-wrapper {
     position: relative;
-    overflow: hidden;
-    width: 100%;
-    /* 16:9 Aspect Ratio */
-    padding-top: 56.25%;
+    width: 100%; /* Full width of the card */
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    background-color: #000; /* Fallback color */
+    overflow: hidden; /* Hide the parts of the video that are outside the container */
   }
 
-  .react-player, .Player {
+  .react-player, .Player video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the video covers the area, might crop some parts */
+    object-fit: cover; /* Cover the container, cropping the video as necessary */
   }
 
   .candidate-details {
-    padding: 15px;
+    background-color: #f9f9f9; /* Light background color for contrast */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside the card */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-bottom: 20px; /* Space between cards */
   }
 
 .react-player {
