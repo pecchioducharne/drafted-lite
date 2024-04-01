@@ -6,6 +6,7 @@ import recordGif from "./record.gif";
 import ReactPlayer from "react-player";
 import verifiedIcon from "./verified.png";
 import logo from "./logo.svg";
+import cover from "./cover-drafted.jpeg";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Import Chevron icons from 'react-icons'
 import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // Import css
@@ -295,19 +296,27 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   const handleCandidateSelect = (candidateIndex, videoUrl = null) => {
     setCurrentIndex(candidateIndex);
 
-    // If a videoUrl is provided, find its index in the candidate's videos and set it as currentVideoIndex
     if (videoUrl) {
-      const selectedCandidate = filteredCandidates[candidateIndex];
-      const videoIndex = [
-        selectedCandidate.video1,
-        selectedCandidate.video2,
-        selectedCandidate.video3,
-      ].indexOf(videoUrl);
-      if (videoIndex !== -1) setCurrentVideoIndex(videoIndex);
+      const selectedCandidateVideos = [
+        filteredCandidates[candidateIndex].video1,
+        filteredCandidates[candidateIndex].video2,
+        filteredCandidates[candidateIndex].video3,
+      ];
+
+      // Find the index of the video URL in the candidate's video list
+      const videoIndex = selectedCandidateVideos.indexOf(videoUrl);
+
+      // Update the currentVideoIndex if the video is found
+      if (videoIndex !== -1) {
+        setCurrentVideoIndex(videoIndex);
+      }
+    } else {
+      // Reset to the first video if no specific video URL is provided
+      setCurrentVideoIndex(0);
     }
 
-    setShowGridView(false); // Go back to normal view when a candidate is selected
-    window.scrollTo(0, 0); // Scroll to top to bring the main viewer into view
+    setShowGridView(false); // Switch to detailed view
+    window.scrollTo(0, 0); // Scroll to top
   };
 
   const handleNext = () => {
@@ -396,78 +405,49 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   };
 
   // Show grid view of candidates with videos
+  // Show grid view of candidates with videos
   if (showGridView) {
     return (
       <div>
-        <div className="filter-container">
-          <FilterOptions
-            title="University"
-            options={uniqueUniversities}
-            selectedOptions={filters.university}
-            onSelect={(selected) =>
-              setFilters({ ...filters, university: selected })
-            }
-          />
-          <FilterOptions
-            title="Major"
-            options={uniqueMajors}
-            selectedOptions={filters.major}
-            onSelect={(selected) => setFilters({ ...filters, major: selected })}
-          />
-          <FilterOptions
-            title="Graduation Year"
-            options={uniqueGraduationYears}
-            selectedOptions={filters.graduationYear}
-            onSelect={(selected) =>
-              setFilters({ ...filters, graduationYear: selected })
-            }
-          />
-        </div>
-        {/* <button
-          className="navigation-button"
-          onClick={() => setShowGridView(false)}
-          style={{ margin: "10px" }}
-        >
-          Back
-        </button> */}
-<div className="candidates-grid">
-  {filteredCandidates.map((candidate, index) => (
-    <div key={candidate.id} className="candidate-card" onClick={() => handleCandidateSelect(index)}>
-      <div className="video-wrapper">
-        <LazyLoadComponent
-          placeholder={<img src={recordGif} alt="Loading..." className="loading-gif" />}
-        >
-          {candidate.video1 ? (
-            <Player>
-              <source src={candidate.video1} />
-            </Player>
-          ) : (
-            <div className="no-video-placeholder">No Video Available</div>
-          )}
-        </LazyLoadComponent>
-      </div>
-      <div className="candidate-details">
+        <div className="filter-container">{/* Filter Options */}</div>
+        <div className="candidates-grid">
+          {filteredCandidates.map((candidate, index) => (
+            <div
+              key={candidate.id}
+              className="candidate-card" // Ensure this class is consistent with the styling of cards in the other videos section
+              onClick={() => handleCandidateSelect(index)}
+            >
+              <div className="video-wrapper">
+                {/* LazyLoadComponent might be replaced or enhanced with a cover image logic */}
+                <LazyLoadComponent
+                  placeholder={
+                    <img src={cover} alt="Cover" className="cover-image" />
+                  }
+                >
+                  {candidate.video1 ? (
+                    <ReactPlayer
+                      url={candidate.video1}
+                      width="100%"
+                      height="100%"
+                      controls
+                      light={cover} // Use the cover image as a light placeholder
+                      playIcon={<img src={cover} alt="Play" />} // Optional: customize the play icon with the cover image
+                    />
+                  ) : (
+                    <img
+                      src={cover}
+                      alt="No Video Available"
+                      className="no-video-image"
+                    />
+                  )}
+                </LazyLoadComponent>
+              </div>
+              <div className="candidate-details">
                 <h4 className="candidate-name">
                   {candidate.firstName} {candidate.lastName}
                 </h4>
-                <p
-                  className="candidate-university clickable-text"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleUniversityClick(candidate.university);
-                  }}
-                >
-                  {candidate.university}
-                </p>
-                <p
-                  className="candidate-major clickable-text"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleMajorClick(candidate.major);
-                  }}
-                >
-                  {candidate.major}
-                </p>
+                <p className="candidate-university">{candidate.university}</p>
+                <p className="candidate-major">{candidate.major}</p>
                 <p className="candidate-grad-year">
                   Grad Year: {candidate.graduationYear}
                 </p>
@@ -633,18 +613,15 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
         </div>
         <div className="other-videos-container">
           {filteredCandidates.map((candidate, candidateIndex) => {
-            if (
-              (!candidate.video1 && !candidate.video2 && !candidate.video3) ||
-              candidateIndex === currentIndex
-            ) {
-              return null;
-            }
+            if (candidateIndex === currentIndex) return null; // Skip the current main video
 
             const videoUrl = [
               candidate.video1,
               candidate.video2,
               candidate.video3,
             ].find((url) => url);
+
+            if (!videoUrl) return null; // Skip if no video is available
 
             return (
               <div
@@ -657,14 +634,19 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                   width="100%"
                   height="100%"
                   controls
+                  light={cover} // Use the cover image as a light placeholder
+                  playIcon={
+                    <img src={cover} alt="Play" className="cover-play-icon" />
+                  } // Customize the play icon with the cover image
                 />
-                <div className="candidate-info">
-                  <h3>
+                <div className="candidate-details">
+                  <h4 className="candidate-name">
                     {candidate.firstName} {candidate.lastName}
-                  </h3>
-                  <p>{candidate.university}</p>
-                  <p>
-                    {candidate.major} - {candidate.graduationYear}
+                  </h4>
+                  <p className="candidate-university">{candidate.university}</p>
+                  <p className="candidate-major">{candidate.major}</p>
+                  <p className="candidate-grad-year">
+                    Grad Year: {candidate.graduationYear}
                   </p>
                 </div>
               </div>

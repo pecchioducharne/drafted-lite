@@ -4,444 +4,504 @@
 
 
 .profile-dashboard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 
 .main-and-other-videos-container {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: flex-start;
-  }
-  
-  .main-video-profile-container {
-    flex-grow: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .video-resume-container {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .other-videos-container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    max-width: 300px;
-    height: auto;
-    overflow-y: auto;
-  }
-  
-  .other-videos-container .candidate-card {
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
-  
-  .other-videos-container .react-player {
-    width: 100%;
-    height: auto;
-  }
-  
-  .info-section {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px;
-    align-items: center;
-  }
-  
-  .profile-field {
-    display: contents;
-  }
-  
-  .profile-field strong {
-    grid-column: 1;
-    color: #333;
-    font-weight: 600;
-    text-align: left;
-  }
-  
-  .profile-value {
-    color: black;
-    text-align: left;
-    font-weight: normal;
-  }
-  
-  
-  /* Ensure the .candidate-card class has appropriate styling for smaller size */
-  .candidate-card {
-    /* Add any necessary adjustments here */
-  }
-  
-
-.filter-title {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Positions the text and icon on opposite ends */
-  }
-  
-  .filter-title:hover {
-    background-color: #f0f0f0; /* Subtle background change on hover */
-  }
-  
-  .filter-icon {
-    transition: transform 0.3s ease; /* Smooth rotation animation */
-  }
-  
-  .filter-icon.expanded {
-    transform: rotate(180deg); /* Flips the icon when the category is expanded */
-  }
-  
-  .apply-filters-btn {
-    background-color: #0073b1;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 20px; /* Space from the filter options */
-    display: block; /* Ensure it takes up the full width */
-    width: 100%; /* Makes the button extend to the full width of its container */
-    text-align: center; /* Centers the text within the button */
-  }
-  
-
-.filter-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f3f2ef;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-  
-  .filter-option-section {
-    flex: 1;
-    padding: 0 10px;
-  }
-  
-  .filter-title {
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  
-  .options-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .option-item {
-    padding: 5px 15px;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    cursor: pointer;
-    user-select: none; /* Prevent text selection */
-  }
-  
-  .option-item.selected {
-    background-color: #0073b1;
-    color: #ffffff;
-    border-color: #0073b1;
-  }
-  
-
-.draft-button {
-    background-color: #00BF63;
-    /* YouTube Red */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: flex-start;
 }
 
-.header-section {
-    display: flex;
-    justify-content: space-between; /* Aligns children to the edges */
-    align-items: center;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 20px;
+.main-video-profile-container {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  /* Added padding for better spacing */
 }
 
-.search-bar {
-    flex-grow: 1; /* Allow the search bar to fill the available space */
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 14px;
-  }
-
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: auto; /* Adjust this as needed */
-    margin-bottom: 10px;
-    min-width: 770px;
-    max-width: 1200px; /* Set a max-width for the container */
-    padding: 0 20px; /* Optional: Add padding for visual spacing */
-  }
-
-
-.search-bar-container {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center the items horizontally */
-    padding: 20px 0; /* Adds vertical padding without affecting horizontal spacing */
+.video-resume-container {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  /* Increased padding for better framing of the video */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Increased video size for better visibility */
+  height: 450px;
+  /* Adjust the height as needed */
 }
 
-.home-icon {
-    margin-right: 100px; /* Adjust the right margin for spacing between the icon and the search bar */
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-  }
-
-.centered-name {
-    position: absolute; /* Absolute positioning */
-    left: 50%;
-    transform: translateX(-50%);
+.other-videos-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  height: auto;
+  overflow-y: auto;
 }
 
-.name {
-    display: flex;
-    align-items: center;
-    margin-top: 60px;
-    gap: 8px; /* Adjust spacing as needed */
-    color: #00ab59;
-    margin: 0;
-    font-size: 1.8em;
+.other-videos-container .candidate-card {
+  margin-bottom: 10px;
+  overflow: hidden;
 }
 
-.university {
-    font-weight: 600;
-    color: #666;
-    font-size: 1em;
+.other-videos-container .react-player {
+  width: 100%;
+  height: auto;
 }
 
 .info-section {
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* Two columns, the first one narrower */
-    gap: 20px;
-    align-items: center; /* Aligns items vertically in the center */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* Improved layout for information */
+  gap: 20px;
+  /* Increased gap for better separation */
+  margin-top: 20px;
+  /* Added space between the video and info section */
 }
 
 .profile-field {
-    display: contents; /* Makes the container 'invisible', showing only children */
+  display: flex;
+  /* Changed display to flex for better alignment */
+  margin-bottom: 10px;
+  /* Added margin for spacing between fields */
 }
 
 .profile-field strong {
-    grid-column: 1; /* Places the label in the first column */
-    color: #333;
-    font-weight: 600;
-    text-align: left; /* Left-align the description */
+  min-width: 150px;
+  /* Added min-width for consistent alignment */
+  color: #333;
+  font-weight: 600;
 }
 
 .profile-value {
-    color: black;
-    text-align: left; /* Left-align the value */
-    font-weight: normal; /* Change from bold to normal */
+  color: black;
+  flex-grow: 1;
+  /* Allows content to fill available space */
+}
+
+.filter-title {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Positions the text and icon on opposite ends */
+}
+
+.filter-title:hover {
+  background-color: #f0f0f0;
+  /* Subtle background change on hover */
+}
+
+.filter-icon {
+  transition: transform 0.3s ease;
+  /* Smooth rotation animation */
+}
+
+.filter-icon.expanded {
+  transform: rotate(180deg);
+  /* Flips the icon when the category is expanded */
+}
+
+.apply-filters-btn {
+  background-color: #0073b1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+  /* Space from the filter options */
+  display: block;
+  /* Ensure it takes up the full width */
+  width: 100%;
+  /* Makes the button extend to the full width of its container */
+  text-align: center;
+  /* Centers the text within the button */
+}
+
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f3f2ef;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-option-section {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.filter-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.option-item {
+  padding: 5px 15px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+  user-select: none;
+  /* Prevent text selection */
+}
+
+.option-item.selected {
+  background-color: #0073b1;
+  color: #ffffff;
+  border-color: #0073b1;
+}
+
+
+.draft-button {
+  background-color: #00BF63;
+  /* YouTube Red */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  /* Aligns children to the edges */
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  /* Allow the search bar to fill the available space */
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 14px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  /* Adjust this as needed */
+  margin-bottom: 10px;
+  min-width: 770px;
+  max-width: 1200px;
+  /* Set a max-width for the container */
+  padding: 0 20px;
+  /* Optional: Add padding for visual spacing */
+}
+
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Center the items horizontally */
+  padding: 20px 0;
+  /* Adds vertical padding without affecting horizontal spacing */
+}
+
+.home-icon {
+  margin-right: 100px;
+  /* Adjust the right margin for spacing between the icon and the search bar */
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+}
+
+.centered-name {
+  position: absolute;
+  /* Absolute positioning */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.name {
+  display: flex;
+  align-items: center;
+  margin-top: 60px;
+  gap: 8px;
+  /* Adjust spacing as needed */
+  color: #00ab59;
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.university {
+  font-weight: 600;
+  color: #666;
+  font-size: 1em;
+}
+
+.info-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  /* Two columns, the first one narrower */
+  gap: 20px;
+  align-items: center;
+  /* Aligns items vertically in the center */
+}
+
+.profile-field {
+  display: contents;
+  /* Makes the container 'invisible', showing only children */
+}
+
+.profile-field strong {
+  grid-column: 1;
+  /* Places the label in the first column */
+  color: #333;
+  font-weight: 600;
+  text-align: left;
+  /* Left-align the description */
 }
 
 .profile-value {
-    color: black;
-    text-align: left; /* Left-align the value */
-    font-weight: normal; /* Change from bold to normal */
+  color: black;
+  text-align: left;
+  /* Left-align the value */
+  font-weight: normal;
+  /* Change from bold to normal */
+}
+
+.profile-value {
+  color: black;
+  text-align: left;
+  /* Left-align the value */
+  font-weight: normal;
+  /* Change from bold to normal */
 }
 
 .profile-dashboard .profile-field .profile-value {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 
 .profile-field .profile-value {
-    font-weight: normal; /* Change font-weight to normal */
+  font-weight: normal;
+  /* Change font-weight to normal */
 }
 
 .profile-field .profile-value {
-    font-weight: normal; /* Change font-weight to normal */
+  font-weight: normal;
+  /* Change font-weight to normal */
 }
 
 .profile-dashboard .profile-field .profile-value {
-    font-weight: normal; /* or 400 for regular font weight */
+  font-weight: normal;
+  /* or 400 for regular font weight */
 }
 
 .profile-dashboard .profile-value a {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 
 .field-label {
-    display: flex;
-    align-items: center;
-    gap: 0;
+  display: flex;
+  align-items: center;
+  gap: 0;
 }
 
 .edit-button {
-    padding: 4px 8px;
-    background-color: #00BF63;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    flex-shrink: 0;
+  padding: 4px 8px;
+  background-color: #00BF63;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .video-resumes {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 .video-resumes strong {
-    display: block;
-    margin-bottom: 0.5em;
-    font-weight: 600;
-    font-size: 1.4em;
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  font-size: 1.4em;
 }
 
 .suggestions {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    background: #fff;
-    position: absolute;
-    width: 100%; /* Set width to match the search bar */
-    box-sizing: border-box; /* Include padding and border in the width calculation */
-    border: 1px solid #ccc;
-    border-top: none; /* Removes the top border to blend with the search input */
-    border-bottom-right-radius: 14px;
-    border-bottom-left-radius: 14px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    z-index: 100; /* Ensures the dropdown is above other content */
-    max-height: 200px; /* Limit the height of the dropdown */
-    overflow-y: auto; /* Enables scrolling for many suggestions */
-    top: 100%; /* Position the dropdown right below the search bar */
-    left: 0; /* Align the dropdown with the left edge of the search bar */
-  }
-  
-  .suggestion-item {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-bottom: 1px solid #eee; /* Light border for each item */
-  }
-  
-  .suggestion-item:last-child {
-    border-bottom: none; /* Removes border for the last item */
-    border-bottom-right-radius: 14px;
-    border-bottom-left-radius: 14px; /* Rounded corners for the last item */
-  }
-  
-  .suggestion-item:hover {
-    background-color: #f7f7f7; /* Slight highlight on hover */
-  }
-  
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  position: absolute;
+  width: 100%;
+  /* Set width to match the search bar */
+  box-sizing: border-box;
+  /* Include padding and border in the width calculation */
+  border: 1px solid #ccc;
+  border-top: none;
+  /* Removes the top border to blend with the search input */
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  /* Ensures the dropdown is above other content */
+  max-height: 200px;
+  /* Limit the height of the dropdown */
+  overflow-y: auto;
+  /* Enables scrolling for many suggestions */
+  top: 100%;
+  /* Position the dropdown right below the search bar */
+  left: 0;
+  /* Align the dropdown with the left edge of the search bar */
+}
+
+.suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  /* Light border for each item */
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+  /* Removes border for the last item */
+  border-bottom-right-radius: 14px;
+  border-bottom-left-radius: 14px;
+  /* Rounded corners for the last item */
+}
+
+.suggestion-item:hover {
+  background-color: #f7f7f7;
+  /* Slight highlight on hover */
+}
+
 
 .react-player {
-    position: absolute;
-    top: 0;
-    left: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 
 .video-section {
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .video-container {
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    overflow: hidden;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-container iframe,
 .video-container img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 .video-container.iframe-container {
-    padding-top: 56.25%;
+  padding-top: 56.25%;
 }
 
 .record-button {
-    background-color: #00BF63;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-align: center;
-    display: block;
-    width: 50%;
-    margin-top: 10px;
+  background-color: #00BF63;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  display: block;
+  width: 50%;
+  margin-top: 10px;
 }
+
 .record-button:hover {
-    background-color: #009950;
+  background-color: #009950;
 }
 
 .candidates-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
 /* Define a class for clickable text elements */
 .clickable-text {
-    cursor: pointer; /* Changes the cursor to a pointer to indicate clickability */
-    transition: color 0.3s ease; /* Smooth transition for color change */
-  }
-  
-  /* Change the color and add an underline on hover */
-  .clickable-text:hover {
-    color: #00BF63; /* Slightly darker color for emphasis */
-    text-decoration: underline; /* Adds an underline to indicate it's clickable */
-  }
+  cursor: pointer;
+  /* Changes the cursor to a pointer to indicate clickability */
+  transition: color 0.3s ease;
+  /* Smooth transition for color change */
+}
+
+/* Change the color and add an underline on hover */
+.clickable-text:hover {
+  color: #00BF63;
+  /* Slightly darker color for emphasis */
+  text-decoration: underline;
+  /* Adds an underline to indicate it's clickable */
+}
+
+/* CandidateViewer.css */
 
 .candidate-card {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin-bottom: 20px;
-    transition: transform 0.2s ease-in-out;
-  }
+  background-color: #f0f0f0; /* Light grey background for the whole card */
+  border-radius: 20px; /* Rounded corners for the blob effect */
+  margin-bottom: 20px; /* Space between cards */
+  overflow: hidden; /* Ensure the border radius clips the content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow for depth */
+}
 
-  .candidate-card:hover {
+.candidate-details {
+  padding: 15px; /* Add some padding around the text details */
+  background-color: transparent; /* Ensure the details section doesn't have a different background */
+}
+
+
+.candidate-card:hover {
   transform: translateY(-5px);
 }
 
@@ -460,11 +520,11 @@
 }
 
 .candidate-major {
-    font-size: 1em;
-    font-weight: 500;
-    color: black;
-    margin-bottom: 5px;
-  }
+  font-size: 1em;
+  font-weight: 500;
+  color: black;
+  margin-bottom: 5px;
+}
 
 .candidate-grad-year {
   font-size: 0.9em;
@@ -472,329 +532,428 @@
   color: #666;
 }
 
+.cover-image, .no-video-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* This ensures that the cover image covers the area without stretching */
+}
 
-/* Additional styling for the video wrapper to make it more cohesive with the card design */
 .video-wrapper {
-    position: relative;
-    width: 100%; /* Full width of the card */
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
-    background-color: #000; /* Fallback color */
-    overflow: hidden; /* Hide the parts of the video that are outside the container */
-  }
+  position: relative;
+  width: 100%; /* Ensure the wrapper takes up the full width */
+  padding-top: 56.25%; /* Aspect ratio for 16:9 videos, adjust as needed */
+}
 
-  .react-player, .Player video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Cover the container, cropping the video as necessary */
-  }
+.react-player, .Player video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Cover the container, cropping the video as necessary */
+}
 
-  .candidate-details {
-    background-color: #f9f9f9; /* Light background color for contrast */
-    border-radius: 8px; /* Rounded corners */
-    padding: 15px; /* Padding inside the card */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    margin-bottom: 20px; /* Space between cards */
-  }
+.candidate-details {
+  background-color: #f9f9f9;
+  /* Light background color for contrast */
+  border-radius: 8px;
+  /* Rounded corners */
+  padding: 15px;
+  /* Padding inside the card */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
+  margin-bottom: 20px;
+  /* Space between cards */
+}
 
 .react-player {
-    width: 100%;
-    height: auto; /* Adjust this based on the aspect ratio you want */
+  width: 100%;
+  height: auto;
+  /* Adjust this based on the aspect ratio you want */
 }
 
 
 .button-wide {
-    width: 150px; /* Set a specific width */
-    display: inline-block; /* Ensure buttons respect the width setting */
-    text-align: center; /* Center the button text */
+  width: 150px;
+  /* Set a specific width */
+  display: inline-block;
+  /* Ensure buttons respect the width setting */
+  text-align: center;
+  /* Center the button text */
 }
 
 
 .button-group,
 .navigation-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    min-width: 120px; /* Adjust this value as needed */
-    text-align: center; /* Center the text in the button */
-    flex: 1; /* Makes the buttons share the available space equally */
-    text-align: center; /* Centers the text in the button */
-    margin: 5px; /* Optional: Adjust for spacing around the buttons */
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  min-width: 120px;
+  /* Adjust this value as needed */
+  text-align: center;
+  /* Center the text in the button */
+  flex: 1;
+  /* Makes the buttons share the available space equally */
+  text-align: center;
+  /* Centers the text in the button */
+  margin: 5px;
+  /* Optional: Adjust for spacing around the buttons */
 }
 
 .navigation-spacer {
-    width: 100px; /* Adjust the width to match your button size */
+  width: 100px;
+  /* Adjust the width to match your button size */
 }
 
 .join-message {
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    color: #00BF63; /* Adjust the color as per your design */
-    text-align: center;
-    margin-top: 10px; /* Spacing above the message */
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  color: #00BF63;
+  /* Adjust the color as per your design */
+  text-align: center;
+  margin-top: 10px;
+  /* Spacing above the message */
 }
 
 .join-message a {
-    color: inherit; /* Inherits the green color from the parent */
-    text-decoration: none; /* Removes underline from the link */
+  color: inherit;
+  /* Inherits the green color from the parent */
+  text-decoration: none;
+  /* Removes underline from the link */
 }
 
 .join-message a:hover {
-    text-decoration: underline; /* Optional: Adds underline on hover */
+  text-decoration: underline;
+  /* Optional: Adds underline on hover */
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  /* Centers the button(s) horizontally */
+  margin-top: 20px;
+  /* Space above the button(s) */
+}
+
+.button-group button {
+  padding: 12px 24px;
+  /* Increased padding for a larger button */
+  font-size: 1rem;
+  /* Larger font size for better readability */
+  border-radius: 20px;
+  /* More pronounced rounded corners */
+  margin: 0 10px;
+  /* Space between multiple buttons, if any */
 }
 
 .button-group button,
 .navigation-button {
-    background-color: #00BF63; /* Adjust color as needed */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    margin: 0 10px; /* Spacing around buttons */
-    width: 120px; /* Fixed width */
-    padding: 10px 20px; /* Equal padding for both buttons */
-    margin: 0 5px; /* Equal margin for both buttons */
-    box-sizing: border-box; /* Include padding and border in the width */
-    text-align: center;
-    flex: none; /* Remove flex-grow to avoid automatic resizing */
+  background-color: #00BF63;
+  /* Adjust color as needed */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  margin: 0 10px;
+  /* Spacing around buttons */
+  width: 120px;
+  /* Fixed width */
+  padding: 10px 20px;
+  /* Equal padding for both buttons */
+  margin: 0 5px;
+  /* Equal margin for both buttons */
+  box-sizing: border-box;
+  /* Include padding and border in the width */
+  text-align: center;
+  flex: none;
+  /* Remove flex-grow to avoid automatic resizing */
 }
 
 .navigation-button, .bg-customGreen {
-    /* ... other styles ... */
-    border-radius: 14px; /* Rounded edges like the View Resume button */
+  /* ... other styles ... */
+  border-radius: 14px;
+  /* Rounded edges like the View Resume button */
 }
 
 .bg-customGreen {
-    /* existing styles */
-    border-radius: 14px; /* Ensuring it's the same as the View Resume button */
+  /* existing styles */
+  border-radius: 14px;
+  /* Ensuring it's the same as the View Resume button */
 }
 
 .center-container {
-    display: flex;
-    justify-content: center; /* Centers the child horizontally */
-    align-items: center; /* Centers the child vertically, if needed */
-    width: 100%; /* Ensures the container takes the full width */
+  display: flex;
+  justify-content: center;
+  /* Centers the child horizontally */
+  align-items: center;
+  /* Centers the child vertically, if needed */
+  width: 100%;
+  /* Ensures the container takes the full width */
 }
 
 .profile-value a {
-    color: #00BF63; /* Same green as the buttons */
-    text-decoration: none; /* Optional: Removes underline from links */
+  color: #00BF63;
+  /* Same green as the buttons */
+  text-decoration: none;
+  /* Optional: Removes underline from links */
 }
 
 .profile-value a:hover {
-    color: #009950; /* Darker green for hover, adjust as needed */
+  color: #009950;
+  /* Darker green for hover, adjust as needed */
 }
 
 .bg-gray-400 {
-    background-color: #4a5568; /* Example color, adjust as needed */
-    color: white;
-    border: none;
-    border-radius: 14px; /* Rounded edges as the Draft button */
-    padding: 10px 20px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 5px;
+  background-color: #4a5568;
+  /* Example color, adjust as needed */
+  color: white;
+  border: none;
+  border-radius: 14px;
+  /* Rounded edges as the Draft button */
+  padding: 10px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 5px;
 }
 
 .bg-gray-400:hover {
-    background-color: #2d3748; /* Darker shade for hover, adjust as needed */
+  background-color: #2d3748;
+  /* Darker shade for hover, adjust as needed */
 }
 
 .bg-gray-400, .bg-customGreen {
-    padding: 10px 20px; /* Equal padding */
-    margin: 5px 0; /* Equal vertical margin */
-    box-sizing: border-box; /* Include padding and border in the width */
-    width: auto; /* Default width */
+  padding: 10px 20px;
+  /* Equal padding */
+  margin: 5px 0;
+  /* Equal vertical margin */
+  box-sizing: border-box;
+  /* Include padding and border in the width */
+  width: auto;
+  /* Default width */
 }
 
 .resume-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 600px;
-    height: 80%;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  height: 80%;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 .resume-iframe {
-    flex-grow: 1;
-    border: none;
-    border-radius: 8px 8px 0 0;
+  flex-grow: 1;
+  border: none;
+  border-radius: 8px 8px 0 0;
 }
 
 .close-resume {
-    background-color: #ff6b6b;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 0 0 8px 8px;
-    cursor: pointer;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0 0 8px 8px;
+  cursor: pointer;
 }
 
 .video-resume-container {
-    margin-top: 20px;
-    width: 100%;
-    height: 500px;
-    /* Larger video player */
-    background-color: #000;
-    border-radius: 8px;
-    overflow: hidden;
+  margin-top: 20px;
+  width: 100%;
+  height: 500px;
+  /* Larger video player */
+  background-color: #000;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .verified-icon {
-    width: 32px;
-    /* Adjust size as needed */
-    height: auto;
+  width: 32px;
+  /* Adjust size as needed */
+  height: auto;
 }
 
 .nav-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
-    font-family: 'Poppins', sans-serif;
-    color: black;
-    /* Other styling as needed */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  /* Other styling as needed */
 }
 
 .navigate-pro-link {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .navigate-pro-link a {
-    color: #00BF63;
-    font-weight: bold;
-    text-decoration: none;
-  }
-  
-  .navigate-pro-link a:hover {
-    text-decoration: underline;
-  }
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .nav-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1001;
-    font-family: 'Poppins', sans-serif;
-    color: black;
-    text-align: left; /* Aligns text to the left */
-    font-size: 0.9em; /* Slightly smaller font size */
+.navigate-pro-link a {
+  color: #00BF63;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.navigate-pro-link a:hover {
+  text-decoration: underline;
+}
+
+.nav-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  text-align: left;
+  /* Aligns text to the left */
+  font-size: 0.9em;
+  /* Slightly smaller font size */
 }
 
 .nav-popup h2 {
-    margin-top: 0;
-    color: #333;
+  margin-top: 0;
+  color: #333;
 }
 
 .nav-popup ul {
-    padding-left: 20px; /* Adds indent to list */
-    list-style: none; /* Removes default list styling */
+  padding-left: 20px;
+  /* Adds indent to list */
+  list-style: none;
+  /* Removes default list styling */
 }
 
 .nav-popup li::before {
-    content: "• ";
-    color: #00BF63; /* Custom bullet color */
-    font-weight: bold;
+  content: "• ";
+  color: #00BF63;
+  /* Custom bullet color */
+  font-weight: bold;
 }
 
 .nav-popup button.navigation-button {
-    background-color: #00BF63;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
+  background-color: #00BF63;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
 }
 
 .nav-popup button.navigation-button:hover {
-    background-color: #00BF63;
+  background-color: #00BF63;
 }
 
 .header-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-  
+
 .navigation-buttons-container {
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center; /* Center both buttons */
-    gap: 10px; /* Space between buttons */
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  /* Center both buttons */
+  gap: 10px;
+  /* Space between buttons */
 }
-  
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .main-and-other-videos-container {
+    flex-direction: column;
+    /* Stack elements vertically on smaller screens */
+  }
+
+  .other-videos-container {
+    margin-top: 20px;
+    /* Added space between main and other videos sections */
+  }
+
+  .info-section {
+    grid-template-columns: 1fr;
+    /* Stack information vertically on smaller screens */
+  }
+}
+
 
 @media only screen and (max-width: 600px) {
-    .header-section {
-        flex-direction: column;
-        align-items: center;
-    }
+  .header-section {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .navigation-button {
-        margin: 5px; /* Adjust spacing for mobile */
-        flex-grow: 1;
-    }
+  .navigation-button {
+    margin: 5px;
+    /* Adjust spacing for mobile */
+    flex-grow: 1;
+  }
 
-    .navigation-buttons-container {
-        display: flex;
-        justify-content: space-around; /* This will space out the buttons evenly */
-    }
+  .navigation-buttons-container {
+    display: flex;
+    justify-content: space-around;
+    /* This will space out the buttons evenly */
+  }
 
-    .bg-gray-400, .bg-customGreen {
-        width: 100% !important; /* Full width on mobile, force override */
-        margin: 5px 0 !important; /* Adjust vertical margin, remove horizontal margin, force override */
-    }
+  .bg-gray-400, .bg-customGreen {
+    width: 100% !important;
+    /* Full width on mobile, force override */
+    margin: 5px 0 !important;
+    /* Adjust vertical margin, remove horizontal margin, force override */
+  }
 
-    .bg-customGreen {
-        width: 103% !important; /* Full width on mobile, force override */
-        margin: 5px 0 !important; /* Adjust vertical margin, remove horizontal margin, force override */
-    }
-    
+  .bg-customGreen {
+    width: 103% !important;
+    /* Full width on mobile, force override */
+    margin: 5px 0 !important;
+    /* Adjust vertical margin, remove horizontal margin, force override */
+  }
 
-    .name {
-        text-align: center;
-        font-size: 1.5em; /* Adjust font size for smaller screens */
-    }
 
-    .info-section {
-        grid-template-columns: 1fr; /* Stack information vertically */
-    }
+  .name {
+    text-align: center;
+    font-size: 1.5em;
+    /* Adjust font size for smaller screens */
+  }
 
-    .video-resume-container {
-        height: auto; /* Adjust video container height for mobile */
-    }
+  .info-section {
+    grid-template-columns: 1fr;
+    /* Stack information vertically */
+  }
 
-    /* Add other responsive styles as needed */
+  .video-resume-container {
+    height: auto;
+    /* Adjust video container height for mobile */
+  }
+
+  /* Add other responsive styles as needed */
 }
 
 .profile-value a {
-    word-break: break-all; /* Breaks the link to prevent overflow */
+  word-break: break-all;
+  /* Breaks the link to prevent overflow */
 }
