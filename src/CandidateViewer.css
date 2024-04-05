@@ -18,48 +18,47 @@
 }
 
 .main-video-profile-container {
-  flex-grow: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  /* Added padding for better spacing */
+  flex: 0 0 70%; /* Take up 70% of the container width */
+  max-width: 70%; /* Maximum width */
 }
 
 .video-resume-container {
-  background: #fff;
-  border: 1px solid #ddd;
+  position: relative;
+  width: 100%; /* Full width of its parent */
+  height: 1000px; /* Increased height */
+  background-color: #000; /* Fallback color */
   border-radius: 8px;
-  padding: 20px;
-  /* Increased padding for better framing of the video */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* Increased video size for better visibility */
-  height: 450px;
-  /* Adjust the height as needed */
+  overflow: hidden; /* Ensure nothing spills outside the border-radius */
+  display: flex;
+  justify-content: center; /* Center the video player horizontally */
+  align-items: center; /* Center the video player vertically */
 }
 
+
 .other-videos-container {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-  height: auto;
-  overflow-y: auto;
+  flex: 1; /* Take up the remaining space */
+  max-width: 30%; /* Maximum width */
+  padding: 0 10px; /* Add some padding */
+  overflow-y: auto; /* Enable scroll for many videos */
 }
 
 .other-videos-container .candidate-card {
   margin-bottom: 10px;
-  overflow: hidden;
 }
 
 .other-videos-container .react-player {
   width: 100%;
   height: auto;
+}
+
+.other-videos-container .video-thumbnail-wrapper {
+  width: 100%;
+  overflow: hidden; /* Hide parts of the thumbnail that overflow */
+}
+
+.other-videos-container .video-thumbnail {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
 }
 
 .info-section {
@@ -409,7 +408,11 @@
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensures the video fits within the container without cropping */
 }
+
 
 
 .video-section {
@@ -550,8 +553,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  /* Cover the container, cropping the video as necessary */
 }
 
 .candidate-details {
@@ -882,23 +883,20 @@
   /* Space between buttons */
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .main-and-other-videos-container {
     flex-direction: column;
-    /* Stack elements vertically on smaller screens */
   }
 
-  .other-videos-container {
-    margin-top: 20px;
-    /* Added space between main and other videos sections */
+  .main-video-profile-container, .other-videos-container {
+    max-width: 100%;
   }
 
-  .info-section {
-    grid-template-columns: 1fr;
-    /* Stack information vertically on smaller screens */
+  .video-resume-container {
+    padding-top: 56.25%;
   }
 }
+
 
 
 @media only screen and (max-width: 600px) {
