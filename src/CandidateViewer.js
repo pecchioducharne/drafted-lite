@@ -405,7 +405,6 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   };
 
   // Show grid view of candidates with videos
-  // Show grid view of candidates with videos
   if (showGridView) {
     return (
       <div>
@@ -563,16 +562,8 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
         <div className="main-video-profile-container">
           <div className="video-resume-container">
             {videoUrls[currentVideoIndex] && (
-              // <ReactPlayer
-              //   key={currentVideoIndex}
-              //   url={videoUrls[currentVideoIndex]}
-              //   playing={true}
-              //   controls={true}
-              //   width="100%"
-              //   height="100%"
-              // />
-              <Player>
-                <source src={videoUrls[0]} />
+              <Player key={`${currentIndex}-${currentVideoIndex}`}>
+                <source src={videoUrls[currentVideoIndex]} />
               </Player>
             )}
           </div>
