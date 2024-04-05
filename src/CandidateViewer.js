@@ -413,11 +413,11 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
           {filteredCandidates.map((candidate, index) => (
             <div
               key={candidate.id}
-              className="candidate-card" // Ensure this class is consistent with the styling of cards in the other videos section
+              className="candidate-card"
               onClick={() => handleCandidateSelect(index)}
             >
               <div className="video-wrapper">
-                {/* LazyLoadComponent might be replaced or enhanced with a cover image logic */}
+                {/* Use LazyLoadComponent for lazy loading */}
                 <LazyLoadComponent
                   placeholder={
                     <img src={cover} alt="Cover" className="cover-image" />
@@ -429,8 +429,15 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                       width="100%"
                       height="100%"
                       controls
-                      light={cover} // Use the cover image as a light placeholder
-                      playIcon={<img src={cover} alt="Play" />} // Optional: customize the play icon with the cover image
+                      light={candidate.thumbnail ? candidate.thumbnail : cover} // Use candidate-specific thumbnail if available
+                      playIcon={
+                        <img
+                          src={
+                            candidate.thumbnail ? candidate.thumbnail : cover
+                          }
+                          alt="Play"
+                        />
+                      } // Use candidate-specific thumbnail for play icon if available
                     />
                   ) : (
                     <img
@@ -606,30 +613,40 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
           {filteredCandidates.map((candidate, candidateIndex) => {
             if (candidateIndex === currentIndex) return null; // Skip the current main video
 
-            const videoUrl = [
-              candidate.video1,
-              candidate.video2,
-              candidate.video3,
-            ].find((url) => url);
+            const videoEntry = [
+              { url: candidate.video1, thumbnail: candidate.thumbnail1 },
+              { url: candidate.video2, thumbnail: candidate.thumbnail2 },
+              { url: candidate.video3, thumbnail: candidate.thumbnail3 },
+            ].find((entry) => entry.url); // Find the first video entry with a valid URL
 
-            if (!videoUrl) return null; // Skip if no video is available
+            if (!videoEntry) return null; // Skip if no video is available
 
             return (
               <div
                 key={candidate.id}
                 className="candidate-card"
-                onClick={() => handleCandidateSelect(candidateIndex, videoUrl)}
+                onClick={() =>
+                  handleCandidateSelect(candidateIndex, videoEntry.url)
+                } // Replace this with the logic to play the video
               >
-                <ReactPlayer
-                  url={videoUrl}
-                  width="100%"
-                  height="100%"
-                  controls
-                  light={cover} // Use the cover image as a light placeholder
-                  playIcon={
-                    <img src={cover} alt="Play" className="cover-play-icon" />
-                  } // Customize the play icon with the cover image
-                />
+                {videoEntry.thumbnail ? (
+                  <div className="thumbnail-container">
+                    <img
+                      src={videoEntry.thumbnail}
+                      alt="Thumbnail"
+                      className="video-thumbnail"
+                    />
+                    <button className="play-button" aria-label="Play video">
+                      {/* You can use an SVG or an icon for the play button here */}
+                    </button>
+                  </div>
+                ) : (
+                  <img
+                    src={cover}
+                    alt="No Video Available"
+                    className="no-video-image"
+                  />
+                )}
                 <div className="candidate-details">
                   <h4 className="candidate-name">
                     {candidate.firstName} {candidate.lastName}
