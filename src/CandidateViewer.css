@@ -18,28 +18,40 @@
 }
 
 .main-video-profile-container {
-  flex: 0 0 70%; /* Take up 70% of the container width */
-  max-width: 70%; /* Maximum width */
+  flex: 0 0 70%;
+  /* Take up 70% of the container width */
+  max-width: 70%;
+  /* Maximum width */
 }
 
 .video-resume-container {
   position: relative;
-  width: 100%; /* Full width of its parent */
-  height: 1000px; /* Increased height */
-  background-color: #000; /* Fallback color */
+  width: 100%;
+  /* Full width of its parent */
+  height: 1000px;
+  /* Increased height */
+  background-color: #000;
+  /* Fallback color */
   border-radius: 8px;
-  overflow: hidden; /* Ensure nothing spills outside the border-radius */
+  overflow: hidden;
+  /* Ensure nothing spills outside the border-radius */
   display: flex;
-  justify-content: center; /* Center the video player horizontally */
-  align-items: center; /* Center the video player vertically */
+  justify-content: center;
+  /* Center the video player horizontally */
+  align-items: center;
+  /* Center the video player vertically */
 }
 
 
 .other-videos-container {
-  flex: 1; /* Take up the remaining space */
-  max-width: 30%; /* Maximum width */
-  padding: 0 10px; /* Add some padding */
-  overflow-y: auto; /* Enable scroll for many videos */
+  flex: 1;
+  /* Take up the remaining space */
+  max-width: 30%;
+  /* Maximum width */
+  padding: 0 10px;
+  /* Add some padding */
+  overflow-y: auto;
+  /* Enable scroll for many videos */
 }
 
 .other-videos-container .candidate-card {
@@ -53,12 +65,14 @@
 
 .other-videos-container .video-thumbnail-wrapper {
   width: 100%;
-  overflow: hidden; /* Hide parts of the thumbnail that overflow */
+  overflow: hidden;
+  /* Hide parts of the thumbnail that overflow */
 }
 
 .other-videos-container .video-thumbnail {
   width: 100%;
-  height: auto; /* Maintain aspect ratio */
+  height: auto;
+  /* Maintain aspect ratio */
 }
 
 .info-section {
@@ -119,7 +133,7 @@
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   margin-top: 20px;
@@ -162,7 +176,7 @@
   padding: 5px 15px;
   background-color: #ffffff;
   border: 1px solid #ccc;
-  border-radius: 15px;
+  border-radius: 8px;
   cursor: pointer;
   user-select: none;
   /* Prevent text selection */
@@ -201,27 +215,22 @@
 }
 
 .search-bar {
-  flex-grow: 1;
-  /* Allow the search bar to fill the available space */
-  padding: 8px 12px;
+  width: calc(100% - 40px); /* Adjust based on the total padding/margins */
+  padding: 8px;
+  margin: 0 10px; /* Reduce margin if needed */
   border: 1px solid #ccc;
-  border-radius: 14px;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .search-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: auto;
-  /* Adjust this as needed */
-  margin-bottom: 10px;
-  min-width: 770px;
-  max-width: 1200px;
-  /* Set a max-width for the container */
-  padding: 0 20px;
-  /* Optional: Add padding for visual spacing */
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
-
 
 .search-bar-container {
   display: flex;
@@ -233,11 +242,9 @@
 }
 
 .home-icon {
-  margin-right: 100px;
-  /* Adjust the right margin for spacing between the icon and the search bar */
+  width: 24px;
+  height: 24px;
   cursor: pointer;
-  width: 50px;
-  height: 50px;
 }
 
 .centered-name {
@@ -410,7 +417,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Ensures the video fits within the container without cropping */
+  object-fit: contain;
+  /* Ensures the video fits within the container without cropping */
 }
 
 
@@ -491,18 +499,24 @@
 /* CandidateViewer.css */
 
 .candidate-card {
-  background-color: #f0f0f0; /* Light grey background for the whole card */
-  border-radius: 20px; /* Rounded corners for the blob effect */
-  margin-bottom: 20px; /* Space between cards */
-  overflow: hidden; /* Ensure the border radius clips the content */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add some shadow for depth */
+  background-color: #f0f0f0;
+  /* Light grey background for the whole card */
+  border-radius: 10px;
+  /* Rounded corners for the blob effect */
+  margin-bottom: 20px;
+  /* Space between cards */
+  overflow: hidden;
+  /* Ensure the border radius clips the content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Optional: Add some shadow for depth */
 }
 
 .candidate-details {
-  padding: 15px; /* Add some padding around the text details */
-  background-color: transparent; /* Ensure the details section doesn't have a different background */
+  padding: 15px;
+  /* Add some padding around the text details */
+  background-color: transparent;
+  /* Ensure the details section doesn't have a different background */
 }
-
 
 .candidate-card:hover {
   transform: translateY(-5px);
@@ -538,13 +552,16 @@
 .cover-image, .no-video-image {
   width: 100%;
   height: auto;
-  object-fit: cover; /* This ensures that the cover image covers the area without stretching */
+  object-fit: cover;
+  /* This ensures that the cover image covers the area without stretching */
 }
 
 .video-wrapper {
   position: relative;
-  width: 100%; /* Ensure the wrapper takes up the full width */
-  padding-top: 56.25%; /* Aspect ratio for 16:9 videos, adjust as needed */
+  width: 100%;
+  /* Ensure the wrapper takes up the full width */
+  padding-top: 56.25%;
+  /* Aspect ratio for 16:9 videos, adjust as needed */
 }
 
 .react-player, .Player video {
@@ -642,7 +659,7 @@
   /* Increased padding for a larger button */
   font-size: 1rem;
   /* Larger font size for better readability */
-  border-radius: 20px;
+  border-radius: 8px;
   /* More pronounced rounded corners */
   margin: 0 10px;
   /* Space between multiple buttons, if any */
@@ -676,13 +693,13 @@
 
 .navigation-button, .bg-customGreen {
   /* ... other styles ... */
-  border-radius: 14px;
+  border-radius: 8px;
   /* Rounded edges like the View Resume button */
 }
 
 .bg-customGreen {
   /* existing styles */
-  border-radius: 14px;
+  border-radius: 8px;
   /* Ensuring it's the same as the View Resume button */
 }
 
@@ -713,7 +730,7 @@
   /* Example color, adjust as needed */
   color: white;
   border: none;
-  border-radius: 14px;
+  border-radius: 8px;
   /* Rounded edges as the Draft button */
   padding: 10px 20px;
   font-family: 'Poppins', sans-serif;
@@ -729,6 +746,8 @@
 }
 
 .bg-gray-400, .bg-customGreen {
+  border-radius: 8px;
+  /* Set the border-radius here */
   padding: 10px 20px;
   /* Equal padding */
   margin: 5px 0;
@@ -736,7 +755,6 @@
   box-sizing: border-box;
   /* Include padding and border in the width */
   width: auto;
-  /* Default width */
 }
 
 .resume-popup {
@@ -859,7 +877,7 @@
   color: white;
   border: none;
   padding: 10px 15px;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.9em;
 }
@@ -897,61 +915,93 @@
   }
 }
 
-
-
 @media only screen and (max-width: 600px) {
-  .header-section {
+
+  .search-container {
+    flex-direction: column; /* Stack elements vertically on very narrow screens */
+    padding: 5px;
+  }
+
+  .search-bar {
+    width: 100%; /* Make search bar full width */
+    margin: 10px 0; /* Add some space between search bar and other elements */
+  }
+
+  .home-icon {
+    margin-bottom: 10px; /* Space between icon and search bar */
+  }
+  /* Adjust the suggestions box to be more mobile-friendly */
+  .suggestions {
+    max-height: 150px;
+    /* Limit the maximum height */
+    overflow-y: scroll;
+    /* Allow scrolling within the suggestions box */
+  }
+
+  /* Main video and other videos container adjustments */
+  .main-and-other-videos-container,
+  .main-video-profile-container,
+  .other-videos-container {
     flex-direction: column;
-    align-items: center;
+    max-width: 100%;
+    width: 100%;
+    /* Ensures the containers take full width */
   }
 
-  .navigation-button {
-    margin: 5px;
-    /* Adjust spacing for mobile */
-    flex-grow: 1;
+  /* Adjustments for the main video container to make it taller and maintain aspect ratio */
+  .video-resume-container {
+    position: relative;
+    width: 100%;
+    /* Full width */
+    padding-top: 56.25%;
+    /* Aspect ratio for 16:9, adjust this for a taller video */
+    background-color: #000;
+    /* Fallback color */
+    overflow: hidden;
+    /* Ensures the video fits within the container */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Optional: Adds subtle shadow for depth */
   }
 
-  .navigation-buttons-container {
-    display: flex;
-    justify-content: space-around;
-    /* This will space out the buttons evenly */
+  /* Ensuring the video player fits within the container and covers the area */
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Cover the container, may crop the video but ensures full area coverage */
   }
 
-  .bg-gray-400, .bg-customGreen {
-    width: 100% !important;
-    /* Full width on mobile, force override */
-    margin: 5px 0 !important;
-    /* Adjust vertical margin, remove horizontal margin, force override */
-  }
-
-  .bg-customGreen {
-    width: 103% !important;
-    /* Full width on mobile, force override */
-    margin: 5px 0 !important;
-    /* Adjust vertical margin, remove horizontal margin, force override */
-  }
-
-
-  .name {
+  /* Centering the buttons and text for a cohesive look */
+  .draft-button, .navigation-button, .bg-gray-400, .bg-customGreen,
+  .button-group button, .join-message, .profile-value,
+  .candidate-name, .candidate-university, .candidate-major,
+  .candidate-grad-year, .name, .info-section, .profile-field,
+  .filter-container, .options-container {
     text-align: center;
-    font-size: 1.5em;
-    /* Adjust font size for smaller screens */
+    /* Center align text */
+    width: 100%;
+    /* Full width to align with the video */
+    margin: 10px auto;
+    /* Centering with auto margins */
   }
 
+  /* Stack information vertically in the info section */
   .info-section {
     grid-template-columns: 1fr;
-    /* Stack information vertically */
+    /* Single column layout */
   }
-
-  .video-resume-container {
-    height: auto;
-    /* Adjust video container height for mobile */
-  }
-
-  /* Add other responsive styles as needed */
 }
 
 .profile-value a {
+  word-break: break-all;
+  /* Ensures long links don't overflow */
+}
+
+
+∏∏ .profile-value a {
   word-break: break-all;
   /* Breaks the link to prevent overflow */
 }
