@@ -408,7 +408,39 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   if (showGridView) {
     return (
       <div>
-        <div className="filter-container">{/* Filter Options */}</div>
+        <div className="filter-container">
+          <FilterOptions
+            title="University"
+            options={uniqueUniversities}
+            selectedOptions={filters.university}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                university: selected,
+              }))
+            }
+          />
+          <FilterOptions
+            title="Major"
+            options={uniqueMajors}
+            selectedOptions={filters.major}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
+            }
+          />
+          <FilterOptions
+            title="Graduation Year"
+            options={uniqueGraduationYears}
+            selectedOptions={filters.graduationYear}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                graduationYear: selected,
+              }))
+            }
+          />
+        </div>
+
         <div className="candidates-grid">
           {filteredCandidates.map((candidate, index) => (
             <div
@@ -610,43 +642,28 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
           </div>
         </div>
         <div className="other-videos-container">
-          {filteredCandidates.map((candidate, candidateIndex) => {
-            if (candidateIndex === currentIndex) return null; // Skip the current main video
+          {filteredCandidates.map((candidate, index) => {
+            if (index === currentIndex) return null; // Skip the currently viewed candidate
 
-            const videoEntry = [
-              { url: candidate.video1, thumbnail: candidate.thumbnail1 },
-              { url: candidate.video2, thumbnail: candidate.thumbnail2 },
-              { url: candidate.video3, thumbnail: candidate.thumbnail3 },
-            ].find((entry) => entry.url); // Find the first video entry with a valid URL
-
-            if (!videoEntry) return null; // Skip if no video is available
+            // Determine the thumbnail to use: candidate-specific or default cover
+            const thumbnailSrc = candidate.thumbnail
+              ? candidate.thumbnail
+              : cover;
 
             return (
               <div
                 key={candidate.id}
                 className="candidate-card"
-                onClick={() =>
-                  handleCandidateSelect(candidateIndex, videoEntry.url)
-                } // Replace this with the logic to play the video
+                onClick={() => handleCandidateSelect(index)}
               >
-                {videoEntry.thumbnail ? (
-                  <div className="thumbnail-container">
-                    <img
-                      src={videoEntry.thumbnail}
-                      alt="Thumbnail"
-                      className="video-thumbnail"
-                    />
-                    <button className="play-button" aria-label="Play video">
-                      {/* You can use an SVG or an icon for the play button here */}
-                    </button>
-                  </div>
-                ) : (
+                <div className="video-thumbnail-wrapper">
+                  {/* Display the determined thumbnail */}
                   <img
-                    src={cover}
-                    alt="No Video Available"
-                    className="no-video-image"
+                    src={thumbnailSrc}
+                    alt="Thumbnail"
+                    className="video-thumbnail"
                   />
-                )}
+                </div>
                 <div className="candidate-details">
                   <h4 className="candidate-name">
                     {candidate.firstName} {candidate.lastName}
