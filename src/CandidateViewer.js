@@ -84,6 +84,31 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   };
 
   useEffect(() => {
+    const filterCandidates = () => {
+      const newFilteredCandidates = candidates.filter((candidate) => {
+        const matchesUniversity =
+          filters.university.length === 0 ||
+          filters.university.includes(candidate.university);
+        const matchesMajor =
+          filters.major.length === 0 || filters.major.includes(candidate.major);
+        const matchesGradYear =
+          filters.graduationYear.length === 0 ||
+          filters.graduationYear.includes(candidate.graduationYear.toString());
+
+        return matchesUniversity && matchesMajor && matchesGradYear;
+      });
+
+      shuffleArray(newFilteredCandidates);
+      setFilteredCandidates(newFilteredCandidates);
+
+      // Update the currentIndex to the first filtered candidate or reset if none are found
+      setCurrentIndex(newFilteredCandidates.length > 0 ? 0 : -1);
+    };
+
+    filterCandidates();
+  }, [filters, candidates]);
+
+  useEffect(() => {
     setShowGridView(initialShowGridView);
   }, [initialShowGridView]);
 
@@ -99,7 +124,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
       const candidatesWithAllVideos = candidatesData.filter(
         (candidate) => candidate.video1 && candidate.video2 && candidate.video3
       );
-
+      shuffleArray(candidatesWithAllVideos);
       setCandidates(candidatesWithAllVideos); // Store filtered list of candidates
       setFilteredCandidates(candidatesWithAllVideos); // By default, show only candidates with all videos
     };
@@ -125,6 +150,13 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
 
     return () => observer.disconnect(); // Cleanup the observer when the component unmounts
   }, []); // Empty dependency array ensures this runs once on mount
+
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+      [array[i], array[j]] = [array[j], array[i]]; // swap elements
+    }
+  }
 
   useEffect(() => {
     setShowGridView(initialShowGridView);
@@ -208,6 +240,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
       );
     });
 
+    shuffleArray(newFilteredCandidates);
     setFilteredCandidates(newFilteredCandidates);
     setShowGridView(true); // Show grid view after search
   };
@@ -383,33 +416,25 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
       setCurrentVideoIndex(0); // Optionally loop back to the first video
     }
   };
+
   const handleUniversityClick = (university) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      // Add the university to the array if it's not already there, otherwise keep the array as is
-      university: prevFilters.university.includes(university)
-        ? prevFilters.university
-        : [...prevFilters.university, university],
+      university: [university],
     }));
   };
 
   const handleMajorClick = (major) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      // Add the major to the array if it's not already there, otherwise keep the array as is
-      major: prevFilters.major.includes(major)
-        ? prevFilters.major
-        : [...prevFilters.major, major],
+      major: [major],
     }));
   };
 
   const handleGradYearClick = (gradYear) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      // Add the graduation year to the array if it's not already there, otherwise keep the array as is
-      graduationYear: prevFilters.graduationYear.includes(gradYear)
-        ? prevFilters.graduationYear
-        : [...prevFilters.graduationYear, gradYear],
+      graduationYear: [gradYear],
     }));
   };
 
