@@ -227,7 +227,6 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
     setSearchQuery(query);
 
     if (query.length > 1) {
-      // Collect all unique universities and majors
       const universities = new Set();
       const majors = new Set();
       candidates.forEach((candidate) => {
@@ -239,14 +238,12 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
         }
       });
 
-      // Convert the sets to arrays and combine them for suggestions
       const universitySuggestions = Array.from(universities);
       const majorSuggestions = Array.from(majors);
       const combinedSuggestions = [
         ...universitySuggestions,
         ...majorSuggestions,
-      ].slice(0, 5); // Limit to 5 suggestions
-
+      ].slice(0, 5);
       setSuggestions(combinedSuggestions);
     } else {
       setSuggestions([]);
@@ -254,12 +251,18 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   };
 
   const handleSuggestionSelect = (suggestion) => {
-    // Set the search query to the selected suggestion
+    // Update the search query with the selected suggestion
     setSearchQuery(suggestion);
-    setSuggestions([]); // Clear suggestions
 
-    // Filter candidates based on the selected suggestion
+    // Clear the current suggestions
+    setSuggestions([]);
+
+    // Convert the selected suggestion to lower case for case-insensitive comparison
     const lowerSuggestion = suggestion.toLowerCase();
+
+    // Filter the candidates based on the selected suggestion.
+    // This example checks if the candidate's university, major, or graduation year
+    // includes the suggestion text. Adjust this logic as needed for your application.
     const filtered = candidates.filter(
       (candidate) =>
         candidate.university.toLowerCase().includes(lowerSuggestion) ||
@@ -270,8 +273,13 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
           .includes(lowerSuggestion)
     );
 
-    // Update the state to reflect the filtered candidates and show the grid view
+    // Update the state with the filtered candidates
     setFilteredCandidates(filtered);
+
+    // Optionally, if the search operation is asynchronous (e.g., involves fetching data
+    // from a server), consider adding a loading state to provide user feedback.
+
+    // Show the grid view to display the filtered candidates
     setShowGridView(true);
   };
 
@@ -375,33 +383,34 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
       setCurrentVideoIndex(0); // Optionally loop back to the first video
     }
   };
-
   const handleUniversityClick = (university) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      university: [university], // Set the filter to include only the clicked university
-      major: [], // Optionally clear other filters, or keep them according to your needs
+      // Add the university to the array if it's not already there, otherwise keep the array as is
+      university: prevFilters.university.includes(university)
+        ? prevFilters.university
+        : [...prevFilters.university, university],
     }));
-    setShowGridView(true); // Switch back to grid view to show filtered results
   };
 
   const handleMajorClick = (major) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      major: [major], // Set the filter to include only the clicked major
-      university: [], // Optionally clear other filters, or keep them according to your needs
+      // Add the major to the array if it's not already there, otherwise keep the array as is
+      major: prevFilters.major.includes(major)
+        ? prevFilters.major
+        : [...prevFilters.major, major],
     }));
-    setShowGridView(true); // Switch back to grid view to show filtered results
   };
 
   const handleGradYearClick = (gradYear) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
-      graduationYear: [gradYear], // Adjust this logic as needed
-      university: [],
-      major: [],
+      // Add the graduation year to the array if it's not already there, otherwise keep the array as is
+      graduationYear: prevFilters.graduationYear.includes(gradYear)
+        ? prevFilters.graduationYear
+        : [...prevFilters.graduationYear, gradYear],
     }));
-    setShowGridView(true);
   };
 
   // Show grid view of candidates with videos
@@ -484,9 +493,24 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                 <h4 className="candidate-name">
                   {candidate.firstName} {candidate.lastName}
                 </h4>
-                <p className="candidate-university">{candidate.university}</p>
-                <p className="candidate-major">{candidate.major}</p>
-                <p className="candidate-grad-year">
+                <p
+                  className="candidate-university clickable-filter"
+                  onClick={() => handleUniversityClick(candidate.university)}
+                >
+                  {candidate.university}
+                </p>
+
+                <p
+                  className="candidate-major clickable-filter"
+                  onClick={() => handleMajorClick(candidate.major)}
+                >
+                  {candidate.major}
+                </p>
+
+                <p
+                  className="candidate-grad-year clickable-filter"
+                  onClick={() => handleGradYearClick(candidate.graduationYear)}
+                >
                   Grad Year: {candidate.graduationYear}
                 </p>
               </div>
@@ -563,6 +587,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
             ))}
           </ul>
         )}
+
         <br></br>
         {/* <button onClick={executeSearch} className="navigation-button">
           Search
@@ -668,9 +693,13 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                   <h4 className="candidate-name">
                     {candidate.firstName} {candidate.lastName}
                   </h4>
-                  <p className="candidate-university">{candidate.university}</p>
-                  <p className="candidate-major">{candidate.major}</p>
-                  <p className="candidate-grad-year">
+                  <p className="candidate-university clickable-filter">
+                    {candidate.university}
+                  </p>
+                  <p className="candidate-major clickable-filter">
+                    {candidate.major}
+                  </p>
+                  <p className="candidate-grad-year clickable-filter">
                     Grad Year: {candidate.graduationYear}
                   </p>
                 </div>
