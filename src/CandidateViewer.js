@@ -458,38 +458,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   if (showGridView) {
     return (
       <div>
-        <div className="filter-container">
-          <FilterOptions
-            title="University"
-            options={uniqueUniversities}
-            selectedOptions={filters.university}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                university: selected,
-              }))
-            }
-          />
-          <FilterOptions
-            title="Major"
-            options={uniqueMajors}
-            selectedOptions={filters.major}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
-            }
-          />
-          <FilterOptions
-            title="Graduation Year"
-            options={uniqueGraduationYears}
-            selectedOptions={filters.graduationYear}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                graduationYear: selected,
-              }))
-            }
-          />
-        </div>
+        <div className="filter-container">{/* Filter Options */}</div>
 
         <div className="candidates-grid">
           {filteredCandidates.map((candidate, index) => (
@@ -498,38 +467,19 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
               className="candidate-card"
               onClick={() => handleCandidateSelect(index)}
             >
-              <div className="video-wrapper">
+              <div className="video-thumbnail-wrapper">
                 {/* Use LazyLoadComponent for lazy loading */}
                 <LazyLoadComponent
                   placeholder={
                     <img src={cover} alt="Cover" className="cover-image" />
                   }
                 >
-                  {candidate.video1 ? (
-                    <ReactPlayer
-                      url={candidate.video1}
-                      width="100%"
-                      height="100%"
-                      controls
-                      playing={true}
-                      muted={true} // Mute the video to ensure autoplay works in most browsers
-                      light={candidate.thumbnail ? candidate.thumbnail : cover}
-                      playIcon={
-                        <img
-                          src={
-                            candidate.thumbnail ? candidate.thumbnail : cover
-                          }
-                          alt="Play"
-                        />
-                      }
-                    />
-                  ) : (
-                    <img
-                      src={cover}
-                      alt="No Video Available"
-                      className="no-video-image"
-                    />
-                  )}
+                  {/* Replace ReactPlayer with an img tag for consistency in appearance */}
+                  <img
+                    src={candidate.thumbnail ? candidate.thumbnail : cover}
+                    alt={`${candidate.firstName} ${candidate.lastName}`}
+                    className="video-thumbnail"
+                  />
                 </LazyLoadComponent>
               </div>
               <div className="candidate-details">
@@ -542,14 +492,12 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                 >
                   {candidate.university}
                 </p>
-
                 <p
                   className="candidate-major clickable-filter"
                   onClick={() => handleMajorClick(candidate.major)}
                 >
                   {candidate.major}
                 </p>
-
                 <p
                   className="candidate-grad-year clickable-filter"
                   onClick={() => handleGradYearClick(candidate.graduationYear)}
