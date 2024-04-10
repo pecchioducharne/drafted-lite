@@ -24,6 +24,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showGridView, setShowGridView] = useState(initialShowGridView);
   const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [filters, setFilters] = useState({
     university: [],
     major: [],
@@ -414,6 +415,11 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
     }
   };
 
+  const handleVideoButtonClick = (index) => {
+    setCurrentVideoIndex(index);
+    setIsVideoPlaying(true); // Start playing the video
+  };
+
   const handleVideoEnd = () => {
     // Check if there's another video to play
     if (currentVideoIndex < videoUrls.length) {
@@ -501,7 +507,9 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                       width="100%"
                       height="100%"
                       controls
-                      light={candidate.thumbnail ? candidate.thumbnail : cover} // Use candidate-specific thumbnail if available
+                      playing={true}
+                      muted={true} // Mute the video to ensure autoplay works in most browsers
+                      light={candidate.thumbnail ? candidate.thumbnail : cover}
                       playIcon={
                         <img
                           src={
@@ -509,7 +517,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                           }
                           alt="Play"
                         />
-                      } // Use candidate-specific thumbnail for play icon if available
+                      }
                     />
                   ) : (
                     <img
@@ -657,7 +665,10 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
         <div className="main-video-profile-container">
           <div className="video-resume-container">
             {videoUrls[currentVideoIndex] && (
-              <Player key={`${currentIndex}-${currentVideoIndex}`}>
+              <Player
+                key={`${currentIndex}-${currentVideoIndex}`} // Ensure the player re-renders when the video changes
+                autoPlay={true} // This prop tells the Player to start playing as soon as it can
+              >
                 <source src={videoUrls[currentVideoIndex]} />
               </Player>
             )}
@@ -669,7 +680,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
             {videoQuestions.map((question, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentVideoIndex(index)}
+                onClick={() => handleVideoButtonClick(index)}
                 className={`video-btn ${
                   currentVideoIndex === index ? "active" : ""
                 }`}

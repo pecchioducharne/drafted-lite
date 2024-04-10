@@ -525,7 +525,7 @@
   /* Light grey background, change if needed */
   border: 1px solid #ccc;
   /* Light grey border, change if needed */
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s;
   font-family: 'Poppins', sans-serif;
