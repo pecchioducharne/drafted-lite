@@ -30,6 +30,12 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
     graduationYear: [],
   });
 
+  const videoQuestions = [
+    "Tell us about your story!",
+    "What makes you stand out amongst other candidates?",
+    "Tell us about a time when you overcame a challenge!",
+  ];
+
   const [openFilterCategories, setOpenFilterCategories] = useState([]); // Now an array to track multiple open categories
 
   const FilterOptions = ({ title, options, selectedOptions, onSelect }) => {
@@ -656,6 +662,23 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
               </Player>
             )}
           </div>
+          <div className="candidate-name-display">
+            {candidate.firstName} {candidate.lastName}
+          </div>
+          <div className="video-selection-buttons">
+            {videoQuestions.map((question, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentVideoIndex(index)}
+                className={`video-btn ${
+                  currentVideoIndex === index ? "active" : ""
+                }`}
+              >
+                {question}
+              </button>
+            ))}
+          </div>
+
           <div className="info-section">
             <div className="profile-field">
               <strong>University:</strong> {candidate.university}

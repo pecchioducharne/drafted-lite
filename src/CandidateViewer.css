@@ -215,9 +215,11 @@
 }
 
 .search-bar {
-  width: calc(100% - 40px); /* Adjust based on the total padding/margins */
+  width: calc(100% - 40px);
+  /* Adjust based on the total padding/margins */
   padding: 8px;
-  margin: 0 10px; /* Reduce margin if needed */
+  margin: 0 10px;
+  /* Reduce margin if needed */
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
@@ -373,7 +375,7 @@
   border-top: none;
   border-bottom-right-radius: 14px;
   border-bottom-left-radius: 14px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 100;
   max-height: 200px;
   overflow-y: auto;
@@ -470,11 +472,13 @@
 
 .clickable-filter {
   cursor: pointer;
-  transition: text-decoration 0.3s ease; /* Smooth transition for the underline */
+  transition: text-decoration 0.3s ease;
+  /* Smooth transition for the underline */
 }
 
 .clickable-filter:hover {
-  text-decoration: underline; /* Adds underline on hover */
+  text-decoration: underline;
+  /* Adds underline on hover */
 }
 
 /* Define a class for clickable text elements */
@@ -508,6 +512,46 @@
   /* Optional: Add some shadow for depth */
 }
 
+.video-selection-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.video-btn {
+  padding: 10px 15px;
+  margin: 0 5px;
+  background-color: #f0f0f0;
+  /* Light grey background, change if needed */
+  border: 1px solid #ccc;
+  /* Light grey border, change if needed */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Poppins', sans-serif;
+  /* Assuming 'Poppins' is your theme's font */
+  font-weight: 600;
+  /* Semi-bold font weight */
+  color: black;
+  /* Default text color, change if needed */
+}
+
+
+.video-btn:hover {
+  background-color: #e0e0e0;
+  /* Slightly darker grey on hover, change if needed */
+}
+
+.video-btn.active {
+  background-color: #00BF63;
+  /* Active button background color, matches your theme */
+  color: white;
+  /* Text color for active button */
+  border-color: #00BF63;
+  /* Border color for active button, matches the background */
+}
+
+
 .candidate-details {
   padding: 15px;
   /* Add some padding around the text details */
@@ -517,6 +561,20 @@
 
 .candidate-card:hover {
   transform: translateY(-5px);
+}
+
+.candidate-name-display {
+  font-size: 2em;
+  /* Large font size */
+  font-family: 'Poppins', sans-serif;
+  font-weight: bolder;
+  /* Make the text bold */
+  color: black;
+  /* Use a color that matches your theme, adjust as needed */
+  margin-bottom: 20px;
+  /* Add some space between the name and the video player */
+  text-align: left;
+  /* Center the name above the video player */
 }
 
 .candidate-name {
@@ -915,18 +973,23 @@
 @media only screen and (max-width: 600px) {
 
   .search-container {
-    flex-direction: column; /* Stack elements vertically on very narrow screens */
+    flex-direction: column;
+    /* Stack elements vertically on very narrow screens */
     padding: 5px;
   }
 
   .search-bar {
-    width: 100%; /* Make search bar full width */
-    margin: 10px 0; /* Add some space between search bar and other elements */
+    width: 100%;
+    /* Make search bar full width */
+    margin: 10px 0;
+    /* Add some space between search bar and other elements */
   }
 
   .home-icon {
-    margin-bottom: 10px; /* Space between icon and search bar */
+    margin-bottom: 10px;
+    /* Space between icon and search bar */
   }
+
   /* Adjust the suggestions box to be more mobile-friendly */
   .suggestions {
     max-height: 150px;
