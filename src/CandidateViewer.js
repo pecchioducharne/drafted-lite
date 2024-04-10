@@ -421,11 +421,15 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
   };
 
   const handleVideoEnd = () => {
-    // Check if there's another video to play
-    if (currentVideoIndex < videoUrls.length) {
-      setCurrentVideoIndex(currentVideoIndex + 1); // Move to the next video
+    const nextVideoIndex = currentVideoIndex + 1;
+
+    // Check if there's a next video
+    if (nextVideoIndex < videoUrls.length) {
+      setCurrentVideoIndex(nextVideoIndex); // Update the video index to play the next video
+      setIsVideoPlaying(true); // Ensure the video plays automatically
     } else {
-      setCurrentVideoIndex(0); // Optionally loop back to the first video
+      // Optionally handle the end of the last video (e.g., reset to first video, show a message, etc.)
+      setIsVideoPlaying(false); // Stop playing as it's the last video
     }
   };
 
@@ -666,8 +670,9 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
           <div className="video-resume-container">
             {videoUrls[currentVideoIndex] && (
               <Player
-                key={`${currentIndex}-${currentVideoIndex}`} // Ensure the player re-renders when the video changes
-                autoPlay={true} // This prop tells the Player to start playing as soon as it can
+                key={`${currentIndex}-${currentVideoIndex}`}
+                autoPlay={true}
+                onEnded={handleVideoEnd} // Add the onEnded event handler
               >
                 <source src={videoUrls[currentVideoIndex]} />
               </Player>
