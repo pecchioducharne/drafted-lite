@@ -19,9 +19,9 @@
 
 .main-video-profile-container {
   flex: 0 0 70%;
-  /* Take up 70% of the container width */
   max-width: 70%;
-  /* Maximum width */
+  padding-left: 20px; /* Add left padding to the main video container */
+  padding-right: 20px;
 }
 
 .video-resume-container {
@@ -63,13 +63,27 @@
   height: auto;
 }
 
-.other-videos-container .video-thumbnail-wrapper {
+.video-thumbnail-wrapper {
+  height: 180px; /* Fixed height for thumbnails */
+  width: 100%; /* Ensure the wrapper covers the card width */
+  border-top-left-radius: 10px; /* Round top-left corner */
+  border-top-right-radius: 10px; /* Round top-right corner */
+  overflow: hidden; /* Hide parts of the thumbnail outside the rounded corners */
+}
+
+.video-thumbnail {
+  width: 100%; /* Cover the full width of the wrapper */
+  height: 100%; /* Cover the full height of the wrapper, could stretch the image */
+  object-fit: cover; /* Cover the area without stretching. Might crop parts of the image */
+}
+
+.other-videos-container {
   width: 100%;
   overflow: hidden;
   /* Hide parts of the thumbnail that overflow */
 }
 
-.other-videos-container .video-thumbnail {
+.other-videos-container {
   width: 100%;
   height: auto;
   /* Maintain aspect ratio */
@@ -500,16 +514,14 @@
 /* CandidateViewer.css */
 
 .candidate-card {
-  background-color: #f0f0f0;
-  /* Light grey background for the whole card */
-  border-radius: 10px;
-  /* Rounded corners for the blob effect */
-  margin-bottom: 20px;
-  /* Space between cards */
-  overflow: hidden;
-  /* Ensure the border radius clips the content */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Optional: Add some shadow for depth */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This ensures the content fills the card */
+  height: 100%; /* Make sure the card stretches to full height */
+  background-color: #f0f0f0; /* Adjust the color to match your design */
+  border-radius: 10px; /* Rounded corners for the card */
+  overflow: hidden; /* Ensures the thumbnail respects the border radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
 .video-selection-buttons {
@@ -553,7 +565,7 @@
 
 
 .candidate-details {
-  padding: 15px;
+  padding: 10px;
   /* Add some padding around the text details */
   background-color: transparent;
   /* Ensure the details section doesn't have a different background */

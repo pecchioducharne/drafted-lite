@@ -4,21 +4,30 @@ import CandidateViewer from "./CandidateViewer";
 
 function App() {
   const candidateEmail = "candidate@example.com";
-  const [showGridView, setShowGridView] = useState(true); // State to control the view
+  const [showGridView, setShowGridView] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
 
-  // Function to toggle the grid view
-  const toggleGridView = () => {
-    setShowGridView(true); // Always set to true to go back to grid view
+  const handleLogoClick = () => {
+    setShowGridView(true);
+    //setRefreshKey((oldKey) => oldKey + 1); // Increment the key to force re-render
   };
 
   return (
     <div className="App">
       <br></br>
-      <h1 onClick={toggleGridView} style={{ cursor: "pointer" }}>
+      <h1
+        onClick={() => console.log("Logo clicked")}
+        style={{ cursor: "pointer" }}
+      >
         drafted<span style={{ color: "#53ad7a" }}> beta</span>
         <span style={{ color: "black" }}>.</span>
       </h1>
-      <CandidateViewer email={candidateEmail} showGridView={showGridView} />
+      <CandidateViewer
+        key={refreshKey}
+        email={candidateEmail}
+        showGridView={showGridView}
+        onLogoClick={handleLogoClick}
+      />
     </div>
   );
 }

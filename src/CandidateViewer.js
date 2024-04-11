@@ -13,7 +13,11 @@ import "video-react/dist/video-react.css"; // Import css
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import home from "./home.png";
 
-const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
+const CandidateViewer = ({
+  email,
+  showGridView: initialShowGridView,
+  onLogoClick,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCandidates, setFilteredCandidates] = useState([]);
   const [candidates, setCandidates] = useState([]);
@@ -30,6 +34,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
     major: [],
     graduationYear: [],
   });
+  const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
 
   const videoQuestions = [
     "Tell us about your story!",
@@ -252,14 +257,21 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
     setShowGridView(true); // Show grid view after search
   };
 
+  useEffect(() => {
+    setShowGridView(initialShowGridView);
+  }, [initialShowGridView]); // This will update the local state whenever the prop changes
+
   const handleLogoClick = () => {
-    executeSearch(); // Call with no arguments defaults to an empty string
+    console.log("Logo clicked");
+    setShowGridView(true);
   };
 
   const handleHomeButtonClick = () => {
+    console.log("Home button clicked");
     setSearchQuery(""); // Reset search query
     setFilters({ university: [], major: [], graduationYear: [] }); // Reset all filters
     executeSearch(); // Execute search with reset state to return to "home page" view
+    onLogoClick(); // Call the function when the home icon is clicked
   };
 
   const handleSearchChange = (e) => {
@@ -363,6 +375,7 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
       setCurrentVideoIndex(0);
     }
 
+    window.history.pushState({ showGridView: false }, "");
     setShowGridView(false); // Switch to detailed view
     window.scrollTo(0, 0); // Scroll to top
   };
@@ -454,11 +467,60 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
     }));
   };
 
+  const handleUniversityClickFromVideo = (university) => {
+    setFilters({ university: [university], major: [], graduationYear: [] });
+    setShowGridView(true); // Go back to the grid/homepage view
+    setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
+  };
+
+  const handleMajorClickFromVideo = (major) => {
+    setFilters({ university: [], major: [major], graduationYear: [] });
+    setShowGridView(true); // Go back to the grid/homepage view
+    setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
+  };
+
+  const handleGradYearClickFromVideo = (gradYear) => {
+    setFilters({ university: [], major: [], graduationYear: [gradYear] });
+    setShowGridView(true); // Go back to the grid/homepage view
+    setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
+  };
+
   // Show grid view of candidates with videos
   if (showGridView) {
     return (
       <div>
-        <div className="filter-container">{/* Filter Options */}</div>
+        <div className="filter-container">
+          <FilterOptions
+            title="University"
+            options={uniqueUniversities}
+            selectedOptions={filters.university}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                university: selected,
+              }))
+            }
+          />
+          <FilterOptions
+            title="Major"
+            options={uniqueMajors}
+            selectedOptions={filters.major}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
+            }
+          />
+          <FilterOptions
+            title="Graduation Year"
+            options={uniqueGraduationYears}
+            selectedOptions={filters.graduationYear}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                graduationYear: selected,
+              }))
+            }
+          />
+        </div>
 
         <div className="candidates-grid">
           {filteredCandidates.map((candidate, index) => (
@@ -661,12 +723,21 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
             </div>
             <div className="profile-field">
               <strong>Resume:</strong>
-              <button
-                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={handleToggleResume}
-              >
-                View Resume
-              </button>
+              {candidate.resume ? (
+                <button
+                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={handleToggleResume}
+                >
+                  View Resume
+                </button>
+              ) : (
+                <button
+                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                  onClick={emailDraft} // Reuse the draft function for this button
+                >
+                  No Resume, Draft to Request
+                </button>
+              )}
             </div>
           </div>
           <div className="button-group">
@@ -682,7 +753,6 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
           {filteredCandidates.map((candidate, index) => {
             if (index === currentIndex) return null; // Skip the currently viewed candidate
 
-            // Determine the thumbnail to use: candidate-specific or default cover
             const thumbnailSrc = candidate.thumbnail
               ? candidate.thumbnail
               : cover;
@@ -694,7 +764,6 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                 onClick={() => handleCandidateSelect(index)}
               >
                 <div className="video-thumbnail-wrapper">
-                  {/* Display the determined thumbnail */}
                   <img
                     src={thumbnailSrc}
                     alt="Thumbnail"
@@ -705,13 +774,31 @@ const CandidateViewer = ({ email, showGridView: initialShowGridView }) => {
                   <h4 className="candidate-name">
                     {candidate.firstName} {candidate.lastName}
                   </h4>
-                  <p className="candidate-university clickable-filter">
+                  <p
+                    className="candidate-university clickable-filter"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleUniversityClickFromVideo(candidate.university);
+                    }}
+                  >
                     {candidate.university}
                   </p>
-                  <p className="candidate-major clickable-filter">
+                  <p
+                    className="candidate-major clickable-filter"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleMajorClickFromVideo(candidate.major);
+                    }}
+                  >
                     {candidate.major}
                   </p>
-                  <p className="candidate-grad-year clickable-filter">
+                  <p
+                    className="candidate-grad-year clickable-filter"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleGradYearClickFromVideo(candidate.graduationYear);
+                    }}
+                  >
                     Grad Year: {candidate.graduationYear}
                   </p>
                 </div>
