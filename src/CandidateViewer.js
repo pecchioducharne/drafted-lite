@@ -760,6 +760,16 @@ const CandidateViewer = ({
 
       <div className="main-and-other-videos-container">
         <div className="main-video-profile-container">
+          <div className="navigation-instructions">
+            <p
+              style={{ fontFamily: "Poppins, sans-serif", textAlign: "center" }}
+            >
+              <strong>Next</strong>:{" "}
+              {window.innerWidth <= 768 ? "Swipe right" : "Right arrow key"} |
+              <strong> Previous</strong>:{"  "}
+              {window.innerWidth <= 768 ? "Swipe left" : "Left arrow key"}
+            </p>
+          </div>
           <div className="video-resume-container" {...handlers}>
             {videoUrls[currentVideoIndex] && (
               <ReactPlayer
