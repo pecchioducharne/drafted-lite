@@ -489,6 +489,12 @@ const CandidateViewer = ({
   if (showGridView) {
     return (
       <div>
+        <div className="header">
+          <h1 onClick={handleLogoClick} className="logo-header clickable">
+            drafted<span style={{ color: "#53ad7a" }}> beta</span>
+            <span>.</span>
+          </h1>
+        </div>
         <div className="filter-container">
           <FilterOptions
             title="University"
@@ -606,6 +612,12 @@ const CandidateViewer = ({
 
   return (
     <div className="profile-dashboard">
+      <div className="header">
+        <h1 onClick={handleLogoClick} className="logo-header clickable">
+          drafted<span style={{ color: "#53ad7a" }}> beta</span>
+          <span>.</span>
+        </h1>
+      </div>
       <div className="search-container">
         <img
           src={home} // Use the imported home icon
@@ -691,6 +703,7 @@ const CandidateViewer = ({
           <div className="candidate-name-display">
             {candidate.firstName} {candidate.lastName}
           </div>
+          <div className="video-resume-display">Video Resume</div>
           <div className="video-selection-buttons">
             {videoQuestions.map((question, index) => (
               <button
@@ -704,25 +717,24 @@ const CandidateViewer = ({
               </button>
             ))}
           </div>
-
           <div className="info-section">
             <div className="profile-field">
-              <strong>University:</strong> {candidate.university}
+              <strong>University</strong> {candidate.university}
             </div>
             <div className="profile-field">
-              <strong>Major:</strong> {candidate.major}
+              <strong>Major</strong> {candidate.major}
             </div>
             <div className="profile-field">
-              <strong>LinkedIn:</strong>{" "}
+              <strong>LinkedIn</strong>{" "}
               <a href={candidate.linkedInURL} target="_blank">
                 {candidate.linkedInURL}
               </a>
             </div>
             <div className="profile-field">
-              <strong>Graduation Year:</strong> {candidate.graduationYear}
+              <strong>Graduation Year</strong> {candidate.graduationYear}
             </div>
             <div className="profile-field">
-              <strong>Resume:</strong>
+              <strong>Resume</strong>
               {candidate.resume ? (
                 <button
                   className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
@@ -750,6 +762,7 @@ const CandidateViewer = ({
           </div>
         </div>
         <div className="other-videos-container">
+          <br></br>
           {filteredCandidates.map((candidate, index) => {
             if (index === currentIndex) return null; // Skip the currently viewed candidate
 

@@ -20,26 +20,40 @@
 .main-video-profile-container {
   flex: 0 0 70%;
   max-width: 70%;
-  padding-left: 20px; /* Add left padding to the main video container */
+  padding-left: 20px;
   padding-right: 20px;
+  margin-top: 0; /* Make sure there is no extra top margin */
 }
 
 .video-resume-container {
   position: relative;
-  width: 100%;
-  /* Full width of its parent */
-  height: 1000px;
-  /* Increased height */
-  background-color: #000;
-  /* Fallback color */
+  width: 100%;  /* Full width of its parent */
+  height: 1000px;  /* Increased height */
+  background-color: #000;  /* Fallback color */
   border-radius: 8px;
-  overflow: hidden;
-  /* Ensure nothing spills outside the border-radius */
+  overflow: hidden;  /* Ensure nothing spills outside the border-radius */
   display: flex;
-  justify-content: center;
-  /* Center the video player horizontally */
-  align-items: center;
-  /* Center the video player vertically */
+  justify-content: flex-start;  /* Aligns children to the start (left) horizontally */
+  align-items: flex-start;  /* Aligns children to the start (top) vertically */
+}
+
+logo-header {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700; /* Extra Bold */
+  width: auto;
+  margin: 0;
+  font-size: 2em; /* Adjust the size as needed */
+  text-align: center; /* Align the text to the left */
+  margin-left: 20px; /* Add some left margin if needed */
+  /* Other styles */
+}
+
+.header {
+  width: 100%; /* Ensures the container spans the full width */
+  display: flex;
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically, if needed */
+  text-align: center; /* Ensures text within the container is centered */
 }
 
 .clickable {
@@ -88,9 +102,11 @@
 }
 
 .other-videos-container {
-  width: 100%;
-  height: auto;
-  /* Maintain aspect ratio */
+  flex: 1;
+  max-width: 30%;
+  padding: 0 10px;
+  margin-top: 0; /* Align the top margin with the main video container */
+  overflow-y: auto; /* Keeps existing scroll functionality */
 }
 
 .info-section {
@@ -104,7 +120,10 @@
 }
 
 .profile-field {
+  font-size: 1em;
+  font-weight: 500;
   display: flex;
+  font-family: 'Poppins', sans-serif;
   /* Changed display to flex for better alignment */
   margin-bottom: 10px;
   /* Added margin for spacing between fields */
@@ -112,6 +131,7 @@
 
 .profile-field strong {
   min-width: 150px;
+  font-family: 'Poppins', sans-serif;
   /* Added min-width for consistent alignment */
   color: #333;
   font-weight: 600;
@@ -588,6 +608,20 @@
   color: black;
   /* Use a color that matches your theme, adjust as needed */
   margin-bottom: 20px;
+  /* Add some space between the name and the video player */
+  text-align: left;
+  /* Center the name above the video player */
+}
+
+.video-resume-display {
+  font-size: 1.2em;
+  /* Large font size */
+  font-family: 'Poppins', sans-serif;
+  font-weight: bolder;
+  /* Make the text bold */
+  color: #666;
+  /* Use a color that matches your theme, adjust as needed */
+  /* margin-bottom: 20px; */
   /* Add some space between the name and the video player */
   text-align: left;
   /* Center the name above the video player */

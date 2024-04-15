@@ -15,13 +15,13 @@ function App() {
   return (
     <div className="App">
       <br></br>
-      <h1
+      {/* <h1
         onClick={() => console.log("Logo clicked")}
         style={{ cursor: "pointer" }}
       >
         drafted<span style={{ color: "#53ad7a" }}> beta</span>
         <span style={{ color: "black" }}>.</span>
-      </h1>
+      </h1> */}
       <CandidateViewer
         key={refreshKey}
         email={candidateEmail}
