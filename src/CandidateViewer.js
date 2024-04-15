@@ -495,6 +495,29 @@ const CandidateViewer = ({
             <span>.</span>
           </h1>
         </div>
+        {/* Search Bar - added here to appear in the grid view */}
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search by university, major, grad year..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="search-bar"
+          />
+          {suggestions.length > 0 && (
+            <ul className="suggestions">
+              {suggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleSuggestionSelect(suggestion)}
+                  className="suggestion-item"
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         <div className="filter-container">
           <FilterOptions
             title="University"
