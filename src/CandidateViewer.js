@@ -233,9 +233,9 @@ const CandidateViewer = ({
         case "ArrowLeft":
           handleBack();
           break;
-        case "Shift":
-          setShowResume(!showResume);
-          break;
+        // case "Shift":
+        //   setShowResume(!showResume);
+        //   break;
         // The "Enter" case for emailDraft is removed to prevent it from being called here
         default:
           break;
