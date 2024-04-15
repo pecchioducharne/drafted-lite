@@ -184,24 +184,30 @@ logo-header {
   /* Centers the text within the button */
 }
 
-
 .filter-container {
   display: flex;
   justify-content: space-between;
   padding: 20px;
   background-color: #f3f2ef;
+  width: 100%;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  flex-wrap: wrap; /* Allows for responsive wrapping of filter options */
 }
 
 .filter-option-section {
   flex: 1;
   padding: 0 10px;
+  min-width: 200px; /* Ensures that the filter doesn't become too narrow */
 }
 
 .filter-title {
   font-weight: 600;
   margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .options-container {
@@ -217,7 +223,6 @@ logo-header {
   border-radius: 8px;
   cursor: pointer;
   user-select: none;
-  /* Prevent text selection */
 }
 
 .option-item.selected {
@@ -225,6 +230,7 @@ logo-header {
   color: #ffffff;
   border-color: #0073b1;
 }
+
 
 
 .draft-button {
@@ -251,6 +257,19 @@ logo-header {
   border-bottom: 2px solid #eee;
   padding-bottom: 20px;
 }
+
+.search-and-filter-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.search-container {
+  width: 100%; /* Ensure full width */
+  margin-bottom: 20px; /* Add some space between search bar and filters */
+}
+
 
 .search-bar {
   width: calc(100% - 40px);

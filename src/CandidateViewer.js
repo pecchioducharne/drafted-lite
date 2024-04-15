@@ -120,6 +120,33 @@ const CandidateViewer = ({
     filterCandidates();
   }, [filters, candidates]);
 
+  // Additional useEffect for handling filter changes
+  useEffect(() => {
+    const filtered = applyFilters();
+    setFilteredCandidates(filtered);
+    if (
+      !filtered.find(
+        (c) => c.id === (filteredCandidates[currentIndex] || {}).id
+      )
+    ) {
+      setCurrentIndex(0); // Reset to the first video if the current one is not in the filtered list
+    }
+  }, [filters, candidates]);
+
+  const applyFilters = () => {
+    return candidates.filter((candidate) => {
+      const matchesUniversity =
+        !filters.university.length ||
+        filters.university.includes(candidate.university);
+      const matchesMajor =
+        !filters.major.length || filters.major.includes(candidate.major);
+      const matchesGradYear =
+        !filters.graduationYear.length ||
+        filters.graduationYear.includes(candidate.graduationYear.toString());
+      return matchesUniversity && matchesMajor && matchesGradYear;
+    });
+  };
+
   useEffect(() => {
     setShowGridView(initialShowGridView);
   }, [initialShowGridView]);
@@ -625,6 +652,13 @@ const CandidateViewer = ({
     if (candidate.video3) uniqueVideoUrls.add(candidate.video3);
   });
 
+  const handleFilterChange = (filterType, selectedOptions) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: selectedOptions,
+    }));
+  };
+
   filteredCandidates.forEach((candidate) => {
     [candidate.video1, candidate.video2, candidate.video3].forEach(
       (videoUrl) => {
@@ -662,26 +696,7 @@ const CandidateViewer = ({
           onChange={handleSearchChange}
           className="search-bar"
         />
-        {suggestions.length > 0 && (
-          <ul className="suggestions">
-            {suggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                onClick={() => handleSuggestionSelect(suggestion)}
-                className="suggestion-item"
-              >
-                {suggestion}
-              </li>
-            ))}
-          </ul>
-        )}
-
-        <br></br>
-        {/* <button onClick={executeSearch} className="navigation-button">
-          Search
-        </button> */}
       </div>
-
       {showNavPopup && (
         <div className="nav-popup">
           <h2>Welcome to Drafted!</h2>
@@ -709,6 +724,31 @@ const CandidateViewer = ({
           </button>
         </div>
       )}
+
+      <div className="filter-container">
+        <FilterOptions
+          title="University"
+          options={Array.from(new Set(candidates.map((c) => c.university)))}
+          selectedOptions={filters.university}
+          onSelect={(selected) => handleFilterChange("university", selected)}
+        />
+        <FilterOptions
+          title="Major"
+          options={Array.from(new Set(candidates.map((c) => c.major)))}
+          selectedOptions={filters.major}
+          onSelect={(selected) => handleFilterChange("major", selected)}
+        />
+        <FilterOptions
+          title="Graduation Year"
+          options={Array.from(
+            new Set(candidates.map((c) => c.graduationYear.toString()))
+          )}
+          selectedOptions={filters.graduationYear}
+          onSelect={(selected) =>
+            handleFilterChange("graduationYear", selected)
+          }
+        />
+      </div>
 
       <div className="main-and-other-videos-container">
         <div className="main-video-profile-container">
