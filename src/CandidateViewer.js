@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { useSwipeable } from "react-swipeable";
 import "./CandidateViewer.css";
 import recordGif from "./record.gif";
 import ReactPlayer from "react-player";
@@ -35,6 +36,13 @@ const CandidateViewer = ({
     graduationYear: [],
   });
   const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => handleNext(),
+    onSwipedRight: () => handleBack(),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: true,
+  });
 
   const videoQuestions = [
     "Tell us about your story!",
@@ -752,7 +760,7 @@ const CandidateViewer = ({
 
       <div className="main-and-other-videos-container">
         <div className="main-video-profile-container">
-          <div className="video-resume-container">
+          <div className="video-resume-container" {...handlers}>
             {videoUrls[currentVideoIndex] && (
               <ReactPlayer
                 url={videoUrls[currentVideoIndex]}
