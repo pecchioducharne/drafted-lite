@@ -754,15 +754,23 @@ const CandidateViewer = ({
         <div className="main-video-profile-container">
           <div className="video-resume-container">
             {videoUrls[currentVideoIndex] && (
-              <Player
-                key={`${currentIndex}-${currentVideoIndex}`}
-                autoPlay={true}
-                onEnded={handleVideoEnd} // Add the onEnded event handler
-              >
-                <source src={videoUrls[currentVideoIndex]} />
-              </Player>
+              <ReactPlayer
+                url={videoUrls[currentVideoIndex]}
+                playing={true}
+                controls={true}
+                width="100%"
+                height="100%"
+                onEnded={handleVideoEnd}
+                config={{
+                  youtube: {
+                    playerVars: { vq: "small" },
+                  },
+                }}
+                style={{ position: "absolute", top: 0, left: 0 }}
+              />
             )}
           </div>
+
           <div className="candidate-name-display">
             {candidate.firstName} {candidate.lastName}
           </div>
