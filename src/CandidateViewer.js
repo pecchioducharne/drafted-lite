@@ -763,7 +763,7 @@ const CandidateViewer = ({
                 className="candidate-card"
                 onClick={() => handleCandidateSelect(index)}
               >
-                <div className="video-thumbnail-wrapper">
+                <div className="video-thumbnail-wrapper clickable">
                   <img
                     src={thumbnailSrc}
                     alt="Thumbnail"
@@ -771,7 +771,7 @@ const CandidateViewer = ({
                   />
                 </div>
                 <div className="candidate-details">
-                  <h4 className="candidate-name">
+                  <h4 className="candidate-name clickable">
                     {candidate.firstName} {candidate.lastName}
                   </h4>
                   <p

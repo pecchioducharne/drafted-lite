@@ -42,6 +42,10 @@
   /* Center the video player vertically */
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 
 .other-videos-container {
   flex: 1;
