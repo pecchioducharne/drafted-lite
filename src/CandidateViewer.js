@@ -874,8 +874,9 @@ const CandidateViewer = ({
           </div>
           <div className="button-group">
             <button
-              className="bg-customGreen hover:bg-customGreenDark text-white font-bold py-2 px-4 rounded"
+              className="draft-button"
               onClick={emailDraft}
+              aria-label="Draft candidate for interview"
             >
               Draft
             </button>

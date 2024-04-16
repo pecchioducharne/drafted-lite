@@ -913,6 +913,31 @@ logo-header {
   cursor: pointer;
 }
 
+.draft-button {
+  background-color: #4CAF50; /* Green background for visibility */
+  color: white; /* White text for contrast */
+  padding: 12px 24px; /* Ample padding for a better click area */
+  border: none; /* No border for a cleaner look */
+  border-radius: 5px; /* Rounded corners for a modern appearance */
+  cursor: pointer; /* Cursor pointer to indicate clickable */
+  font-family: 'Poppins', sans-serif; /* Stylish font-family */
+  font-size: 1rem; /* Readable text size */
+  font-weight: 600; /* Semi-bold weight for legibility */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Subtle shadow for 3D effect */
+  transition: background-color 0.3s, box-shadow 0.2s; /* Smooth transitions for interactions */
+}
+
+.draft-button:hover, .draft-button:focus {
+  background-color: #45a049; /* Slightly darker green on hover/focus for feedback */
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Larger shadow for elevated effect */
+}
+
+.draft-button:active {
+  background-color: #397239; /* Even darker green for active state */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Smaller shadow to simulate pressing down */
+}
+
+
 .video-resume-container {
   margin-top: 20px;
   width: 100%;
