@@ -808,19 +808,50 @@ const CandidateViewer = ({
           </div>
           <div className="info-section">
             <div className="profile-field">
-              <strong>University</strong> {candidate.university}
+              <strong>University</strong>{" "}
+              <p
+                className="candidate-university clickable-filter"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleUniversityClickFromVideo(candidate.university);
+                }}
+              >
+                {candidate.university}
+              </p>
             </div>
             <div className="profile-field">
-              <strong>Major</strong> {candidate.major}
+              <strong>Major</strong>{" "}
+              <p
+                className="candidate-major clickable-filter"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleMajorClickFromVideo(candidate.major);
+                }}
+              >
+                {candidate.major}
+              </p>
             </div>
             <div className="profile-field">
               <strong>LinkedIn</strong>{" "}
-              <a href={candidate.linkedInURL} className="candidate-major clickable-filter" target="_blank">
+              <a
+                href={candidate.linkedInURL}
+                className="candidate-major clickable-filter"
+                target="_blank"
+              >
                 {candidate.linkedInURL}
               </a>
             </div>
             <div className="profile-field">
-              <strong>Graduation Year</strong> {candidate.graduationYear}
+              <strong>Graduation Year</strong>{" "}
+              <p
+                className="candidate-major clickable-filter"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleGradYearClickFromVideo(candidate.graduationYear);
+                }}
+              >
+                {candidate.graduationYear}
+              </p>
             </div>
             <div className="profile-field">
               <strong>Resume</strong>
