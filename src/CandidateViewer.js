@@ -815,7 +815,7 @@ const CandidateViewer = ({
             </div>
             <div className="profile-field">
               <strong>LinkedIn</strong>{" "}
-              <a href={candidate.linkedInURL} className="clickable" target="_blank">
+              <a href={candidate.linkedInURL} className="candidate-major clickable-filter" target="_blank">
                 {candidate.linkedInURL}
               </a>
             </div>
