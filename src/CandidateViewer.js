@@ -788,7 +788,7 @@ const CandidateViewer = ({
               />
             )}
           </div>
-
+          <br></br>
           <div className="candidate-name-display">
             {candidate.firstName} {candidate.lastName}
           </div>
