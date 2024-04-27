@@ -590,7 +590,7 @@ const CandidateViewer = ({
           {filteredCandidates.map((candidate, index) => (
             <div
               key={candidate.id}
-              className="candidate-card"
+              className="candidate-card clickable"
               onClick={() => handleCandidateSelect(index)}
             >
               <div className="video-thumbnail-wrapper">
