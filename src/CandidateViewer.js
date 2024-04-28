@@ -14,6 +14,7 @@ import "video-react/dist/video-react.css"; // Import css
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import home from "./home.png";
 
+
 const CandidateViewer = ({
   email,
   showGridView: initialShowGridView,

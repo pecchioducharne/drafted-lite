@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 200;
+  font-family: 'Roboto', sans-serif;
+}
+
+option {
+  font-weight: 200;
+  font-family: 'Roboto', sans-serif;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+p {
+  font-size: 14px;
+  font-weight: 200;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+}
+
+p strong {
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+}
+
+label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-family: 'Roboto', sans-serif;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+select {
+  width: 100%; /* Ensure full width */
+  padding: 10px; /* Padding for size */
+  font-size: 16px; /* Font size */
+  border-radius: 4px; /* Rounded corners */
+  border: 1px solid #ccc; /* Border style */
+  background-color: #fff; /* Background color */
+  transition: border-color 0.3s ease;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 200;
+  font-family: 'Roboto', sans-serif;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.async-select__control {
+  width: 100%; /* Match width of input fields */
+  padding: 10px; /* Match padding */
+  font-size: 16px; /* Match font size */
+  border-radius: 4px; /* Match border radius */
+  border: 1px solid #ccc; /* Match border style */
+  background-color: #fff; /* Match background color */
+  /* Add any additional styling to match the input fields */
+}
+
+.custom-university-input {
+  width: 100%; /* Match width */
+  padding: 10px; /* Match padding */
+  font-size: 16px; /* Match font size */
+  border-radius: 4px; /* Match border radius */
+  border: 1px solid #ccc; /* Match border style */
+  background-color: #fff; /* Match background color */
+  /* Add any additional styling to match the AsyncSelect */
+}
+
+.form-container {
+  width: 800px; /* Adjust the width as per your preference */
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 200;
+  font-family: 'Roboto', sans-serif;
+}
+
+.video-container {
+  width: 800px; /* Adjust the width as per your preference */
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-weight: 200;
+  font-family: 'Roboto', sans-serif;
+}
+
+input[type='file'] {
+  display: none;
+}
+
+button {
+  background-color: #00BF63;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  display: block;
+  /* width: 50%; */
+  margin-top: 10px;
+}
+
+button:hover {
+  background: none!;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.label-icons-container {
+  display: flex;
+  align-items: center;
+}
+
+.label-icons-container label {
+  margin-left: 10px;
+}
+
+.label-icons-container img {
+  margin-right: 5px;
+  margin-left: 3px;
+  margin-top: 8px;
+}

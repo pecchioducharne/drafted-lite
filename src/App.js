@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CandidateViewer from "./CandidateViewer";
+import RecruiterSignupForm from "./RecruiterSignupForm";
+import Login from "./Login";
+import { UserProvider } from "./UserContext";
 
-function App() {
+const App = () => {
   const candidateEmail = "candidate@example.com";
   const [showGridView, setShowGridView] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
@@ -13,23 +16,29 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <br></br>
-      {/* <h1
-        onClick={() => console.log("Logo clicked")}
-        style={{ cursor: "pointer" }}
-      >
-        drafted<span style={{ color: "#53ad7a" }}> beta</span>
-        <span style={{ color: "black" }}>.</span>
-      </h1> */}
-      <CandidateViewer
-        key={refreshKey}
-        email={candidateEmail}
-        showGridView={showGridView}
-        onLogoClick={handleLogoClick}
-      />
-    </div>
+    <Router>
+      <UserProvider>
+        <div className="App">
+          <Routes>
+            <Route
+              path="/viewer"
+              element={
+                <CandidateViewer
+                  key={refreshKey}
+                  email={candidateEmail}
+                  showGridView={showGridView}
+                  onLogoClick={handleLogoClick}
+                />
+              }
+            />
+            <Route path="/signup" element={<RecruiterSignupForm />} />
+            <Route path="/" element={<Login />} />
+            {/* Additional routes can be added here as needed */}
+          </Routes>
+        </div>
+      </UserProvider>
+    </Router>
   );
-}
+};
 
 export default App;
