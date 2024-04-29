@@ -130,8 +130,8 @@ const RecruiterSignupForm = () => {
             companyURL: Yup.string(),
           })}
           onSubmit={(values) => {
-            navigate("/viewer");
-            //handleFinalUpload({ ...values, ...setUserInfo });
+            //navigate("/viewer");
+            handleFinalUpload({ ...values, ...setUserInfo });
           }}
         >
           {formik => (

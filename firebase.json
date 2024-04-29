@@ -1,6 +1,6 @@
 {
   "firestore": {
-    "rules": "firebase.json",
+    "rules": "database.rules.json",
     "indexes": "firebase.json"
   },
   "storage": {

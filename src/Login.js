@@ -130,7 +130,7 @@ const Login = () => {
         <label className={styles.label}>Password</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input} />
       </div>
-      <button type="submit" className={styles.button}>Login</button>
+      <button type="submit" onClick={handleSubmit} className={styles.button}>Login</button>
       <br></br>
       <button type="button" onClick={handlePasswordReset} className={styles.button}>Forgot Password?</button>
       <p className={styles.signupLink}>
