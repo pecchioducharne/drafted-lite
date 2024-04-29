@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { auth, db } from "./firebase";
-import { signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import Lottie from "react-lottie";
 import step5Animation from "./step-5.json";
 import astronautAnimation from "./astronaut.json";
-import styles from './Login.module.css';
+import styles from "./Login.module.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -44,21 +48,43 @@ const Login = () => {
         })
         .catch((error) => {
           console.error("Error during auto sign in:", error);
-          setErrorMessage("Failed to log in automatically. Please log in manually.");
+          setErrorMessage(
+            "Failed to log in automatically. Please log in manually."
+          );
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
   }, [auth, navigate]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      navigate("/viewer");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      userCredential.user
+        .getIdTokenResult()
+        .then((idTokenResult) => {
+          if (idTokenResult.claims.recruiter) {
+            // User is confirmed as recruiter, navigate to the appropriate view
+            navigate("/viewer");
+          } else {
+            // If not recruiter, handle accordingly (e.g., show error or redirect)
+            setErrorMessage(
+              "Access Denied: You don't seem to have a recruiter account!"
+            );
+            signOut(auth); // Optional: Sign out the user if not authorized
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user claims:", error);
+          setErrorMessage("Error checking user role, please try again.");
+        });
     } catch (error) {
       console.error("Error signing in:", error);
       setErrorMessage(error.message);
@@ -69,7 +95,9 @@ const Login = () => {
 
   const handlePasswordReset = async () => {
     if (!email) {
-      setErrorMessage("Please enter your email address to reset your password.");
+      setErrorMessage(
+        "Please enter your email address to reset your password."
+      );
       return;
     }
 
@@ -81,7 +109,6 @@ const Login = () => {
       setErrorMessage("Failed to send password reset email. Please try again.");
     }
   };
-
 
   const navigateToSignup = async () => {
     navigate("/signup");
@@ -124,21 +151,41 @@ const Login = () => {
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
       <div className={styles.inputField}>
         <label className={styles.label}>Email</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={styles.input} />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={styles.input}
+        />
       </div>
       <div className={styles.inputField}>
         <label className={styles.label}>Password</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className={styles.input} />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className={styles.input}
+        />
       </div>
-      <button type="submit" onClick={handleSubmit} className={styles.button}>Login</button>
+      <button type="submit" onClick={handleSubmit} className={styles.button}>
+        Login
+      </button>
       <br></br>
-      <button type="button" onClick={handlePasswordReset} className={styles.button}>Forgot Password?</button>
+      <button
+        type="button"
+        onClick={handlePasswordReset}
+        className={styles.button}
+      >
+        Forgot Password?
+      </button>
       <p className={styles.signupLink}>
-        Don't have an account? <a href="#" onClick={navigateToSignup} className={styles.link}><strong>Sign Up</strong></a>
+        Don't have an account?{" "}
+        <a href="#" onClick={navigateToSignup} className={styles.link}>
+          <strong>Sign Up</strong>
+        </a>
       </p>
     </div>
   );
-  
 };
 
 export default Login;

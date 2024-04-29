@@ -1,9 +1,19 @@
-const functions = require("firebase-functions");
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.setRecruiterClaims = functions.https.onCall((data, context) => {
+  // Check if request is made by an authenticated user
+  if (!context.auth) {
+    throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can set custom claims');
+  }
+
+  const userId = data.userId;
+  return admin.auth().setCustomUserClaims(userId, { recruiter: true })
+    .then(() => {
+      return { message: 'Custom claims set for recruiter' };
+    })
+    .catch(error => {
+      throw new functions.https.HttpsError('internal', 'Unable to set custom claims: ' + error.message);
+    });
+});

@@ -12,6 +12,7 @@ import ReactGA4 from "react-ga4";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import "./RecruiterSignupForm.css";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 const buttonStyles = {
   borderRadius: "8px",
@@ -45,14 +46,14 @@ const RecruiterSignupForm = () => {
 
   const handleFinalUpload = async (values) => {
     try {
-      console.log("Attempting to create account with:", values);
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       if (user) {
+        // Call the cloud function to set recruiter claims
+        const functions = getFunctions();
+        const setRecruiterClaims = httpsCallable(functions, 'setRecruiterClaims');
+        await setRecruiterClaims({ userId: user.uid });
+  
         const formData = {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -62,12 +63,11 @@ const RecruiterSignupForm = () => {
         };
         const userDataRef = doc(db, "recruiter-accounts", user.email);
         await setDoc(userDataRef, formData);
-        console.log("User created and data saved:", formData);
         navigate("/viewer"); // Navigate to the dashboard or any other route
       }
     } catch (error) {
       console.error("Error creating user:", error);
-      throw error; // Re-throw to be caught by Formik's error handling
+      throw error;
     }
   };
 
