@@ -11,7 +11,7 @@ import { auth, db } from "./firebase";
 import ReactGA4 from "react-ga4";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import './RecruiterSignupForm.css'; 
+import "./RecruiterSignupForm.css";
 
 const buttonStyles = {
   borderRadius: "8px",
@@ -40,21 +40,34 @@ const RecruiterSignupForm = () => {
   const navigate = useNavigate();
   const { setUserInfo } = useContext(UserContext);
   const [step, setStep] = useState(1);
+  const [email, setEmail] = useState(''); // Global email state
+  const [password, setPassword] = useState(''); // Global password state
 
   const handleFinalUpload = async (values) => {
-    const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
-    const user = userCredential.user;
-    if (user) {
-      const formData = {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        companyName: values.companyName,
-        jobTitle: values.jobTitle,
-        companyURL: values.companyURL,
-      };
-      const userDataRef = doc(db, "recruiter-accounts", user.email);
-      await setDoc(userDataRef, formData);
-      navigate("/viewer"); // Navigate to the dashboard or any other route
+    try {
+      console.log("Attempting to create account with:", values);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      if (user) {
+        const formData = {
+          firstName: values.firstName,
+          lastName: values.lastName,
+          companyName: values.companyName,
+          jobTitle: values.jobTitle,
+          companyURL: values.companyURL,
+        };
+        const userDataRef = doc(db, "recruiter-accounts", user.email);
+        await setDoc(userDataRef, formData);
+        console.log("User created and data saved:", formData);
+        navigate("/viewer"); // Navigate to the dashboard or any other route
+      }
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw error; // Re-throw to be caught by Formik's error handling
     }
   };
 
@@ -68,22 +81,43 @@ const RecruiterSignupForm = () => {
         <Formik
           initialValues={{ email: "" }}
           validationSchema={Yup.object({
-            email: Yup.string().email("Invalid email address").required("Company Email is required"),
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Company Email is required"),
           })}
           onSubmit={(values) => {
+            setEmail(values.email);
             setUserInfo({ email: values.email });
             setStep(2);
           }}
         >
-          {formik => (
+          {(formik) => (
             <Form>
-              <Lottie options={{ loop: true, autoplay: true, animationData: step1Animation }} height={100} width={100} />
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: step1Animation,
+                }}
+                height={100}
+                width={100}
+              />
               <h2>Let's find your next hire</h2>
               <h3>Join Drafted's community of recruiters</h3>
-              <p>The best place to find your next best candidate, and build teams lightning fast.</p>
-              <Field style={fieldStyle} name="email" type="email" placeholder="Company Email" />
+              <p>
+                The best place to find your next best candidate, and build teams
+                lightning fast.
+              </p>
+              <Field
+                style={fieldStyle}
+                name="email"
+                type="email"
+                placeholder="Company Email"
+              />
               <ErrorMessage name="email" component="div" style={errorStyle} />
-              <button type="submit" style={buttonStyles}>Next</button>
+              <button type="submit" style={buttonStyles}>
+                Next
+              </button>
             </Form>
           )}
         </Formik>
@@ -92,23 +126,56 @@ const RecruiterSignupForm = () => {
         <Formik
           initialValues={{ password: "", confirmPassword: "" }}
           validationSchema={Yup.object({
-            password: Yup.string().required("Password is required").min(6, "Password must be at least 6 characters"),
-            confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], "Passwords must match").required("Confirm password is required"),
+            password: Yup.string()
+              .required("Password is required")
+              .min(6, "Password must be at least 6 characters"),
+            confirmPassword: Yup.string()
+              .oneOf([Yup.ref("password"), null], "Passwords must match")
+              .required("Confirm password is required"),
           })}
           onSubmit={(values) => {
-            setUserInfo(prev => ({ ...prev, ...values }));
+            setPassword(values.password)
+            setUserInfo((prev) => ({ ...prev, ...values }));
             setStep(3);
           }}
         >
-          {formik => (
+          {(formik) => (
             <Form>
-              <Lottie options={{ loop: true, autoplay: true, animationData: step2Animation }} height={100} width={100} />
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: step2Animation,
+                }}
+                height={100}
+                width={100}
+              />
               <h2>Create your password</h2>
-              <Field style={fieldStyle} name="password" type="password" placeholder="Password" />
-              <ErrorMessage name="password" component="div" style={errorStyle} />
-              <Field style={fieldStyle} name="confirmPassword" type="password" placeholder="Re-enter Password" />
-              <ErrorMessage name="confirmPassword" component="div" style={errorStyle} />
-              <button type="submit" style={buttonStyles}>Next</button>
+              <Field
+                style={fieldStyle}
+                name="password"
+                type="password"
+                placeholder="Password"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                style={errorStyle}
+              />
+              <Field
+                style={fieldStyle}
+                name="confirmPassword"
+                type="password"
+                placeholder="Re-enter Password"
+              />
+              <ErrorMessage
+                name="confirmPassword"
+                component="div"
+                style={errorStyle}
+              />
+              <button type="submit" style={buttonStyles}>
+                Next
+              </button>
             </Form>
           )}
         </Formik>
@@ -129,29 +196,73 @@ const RecruiterSignupForm = () => {
             jobTitle: Yup.string(),
             companyURL: Yup.string(),
           })}
-          onSubmit={(values) => {
-            //navigate("/viewer");
-            handleFinalUpload({ ...values, ...setUserInfo });
-          }}
+          onSubmit={handleFinalUpload}
         >
-          {formik => (
+          {(formik) => (
             <Form>
-              <Lottie options={{ loop: true, autoplay: true, animationData: step2Animation }} height={100} width={100} />
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: step2Animation,
+                }}
+                height={100}
+                width={100}
+              />
               <h2>Tell us about your company</h2>
               <label htmlFor="firstName">First Name * </label>
-              <Field style={fieldStyle} name="firstName" type="text" placeholder="Enter first name" />
-              <ErrorMessage name="firstName" component="div" style={errorStyle} />
+              <Field
+                style={fieldStyle}
+                name="firstName"
+                type="text"
+                placeholder="Enter first name"
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                style={errorStyle}
+              />
               <label htmlFor="lasttName">Last Name * </label>
-              <Field style={fieldStyle} name="lastName" type="text" placeholder="Enter last name" />
-              <ErrorMessage name="lastName" component="div" style={errorStyle} />
+              <Field
+                style={fieldStyle}
+                name="lastName"
+                type="text"
+                placeholder="Enter last name"
+              />
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                style={errorStyle}
+              />
               <label htmlFor="companyName">Company Name * </label>
-              <Field style={fieldStyle} name="companyName" type="text" placeholder="Enter company name" />
-              <ErrorMessage name="companyName" component="div" style={errorStyle} />
+              <Field
+                style={fieldStyle}
+                name="companyName"
+                type="text"
+                placeholder="Enter company name"
+              />
+              <ErrorMessage
+                name="companyName"
+                component="div"
+                style={errorStyle}
+              />
               <label htmlFor="jobTitle">Job Title * </label>
-              <Field style={fieldStyle} name="jobTitle" type="text" placeholder="Enter job title" />
+              <Field
+                style={fieldStyle}
+                name="jobTitle"
+                type="text"
+                placeholder="Enter job title"
+              />
               <label htmlFor="companyURL">Company Website * </label>
-              <Field style={fieldStyle} name="companyURL" type="text" placeholder="Enter company URL" />
-              <button type="submit" onClick={navigateToSignup} style={buttonStyles}>Complete Signup</button>
+              <Field
+                style={fieldStyle}
+                name="companyURL"
+                type="text"
+                placeholder="Enter company URL"
+              />
+              <button type="submit" style={buttonStyles}>
+                Complete Signup
+              </button>
             </Form>
           )}
         </Formik>
