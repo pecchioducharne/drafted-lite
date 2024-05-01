@@ -76,7 +76,7 @@ const Login = () => {
           } else {
             // If not recruiter, handle accordingly (e.g., show error or redirect)
             setErrorMessage(
-              "Access Denied: You don't seem to have a recruiter account!"
+              "Access Denied: You don't seem to have a recruiter account! Log in as job seeker below."
             );
             signOut(auth); // Optional: Sign out the user if not authorized
           }
@@ -113,7 +113,9 @@ const Login = () => {
   const navigateToSignup = async () => {
     navigate("/signup");
   };
-
+  const navigateToCandidateSignin = () => {
+    window.location.href = "https://main--drafted-dashboard.netlify.app/login";
+  };
   if (isLoading) {
     return (
       <div>
@@ -178,10 +180,17 @@ const Login = () => {
       >
         Forgot Password?
       </button>
+      <br></br>
       <p className={styles.signupLink}>
         Don't have an account?{" "}
         <a href="#" onClick={navigateToSignup} className={styles.link}>
           <strong>Sign Up</strong>
+        </a>
+      </p>
+      <p className={styles.signupLink}>
+        Job seeker?{" "}
+        <a href="#" onClick={navigateToCandidateSignin} className={styles.link}>
+          <strong>Sign In</strong>
         </a>
       </p>
     </div>
