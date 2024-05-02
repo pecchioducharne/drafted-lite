@@ -190,7 +190,7 @@ const Login = () => {
       <p className={styles.signupLink}>
         Looking for a job?{" "}
         <a href="#" onClick={navigateToRecruiterSignIn} className={styles.link}>
-          <strong>Sign In</strong>
+          <strong>Click Here</strong>
         </a>
       </p>
     </div>
