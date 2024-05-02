@@ -113,8 +113,8 @@ const Login = () => {
   const navigateToSignup = async () => {
     navigate("/signup");
   };
-  const navigateToRecruiterSignIn = () => {
-    window.location.href = "https://drafted-beta.netlify.app/";
+  const navigateToCandidateSignIn = () => {
+    window.location.href = "https://main--drafted-dashboard.netlify.app/login";
   };
   if (isLoading) {
     return (
@@ -189,7 +189,7 @@ const Login = () => {
       </p>
       <p className={styles.signupLink}>
         Looking for a job?{" "}
-        <a href="#" onClick={navigateToRecruiterSignIn} className={styles.link}>
+        <a href="#" onClick={navigateToCandidateSignIn} className={styles.link}>
           <strong>Click Here</strong>
         </a>
       </p>
