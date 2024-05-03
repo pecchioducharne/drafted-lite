@@ -117,7 +117,7 @@ const Login = () => {
   const navigateToCandidateSignIn = () => {
     window.location.href = "https://main--drafted-dashboard.netlify.app/login";
   };
-  
+
   if (isLoading) {
     return (
       <div>
@@ -150,7 +150,7 @@ const Login = () => {
 
   return (
     <div className={styles.loginContainer}>
-      <h2 className={styles.h2}>Find your next candidate today.</h2>
+      <h2 className={styles.h2}>Let's find your next hire.</h2>
       <Lottie options={welcomeBack} height={100} width={100} />
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
       <div className={styles.inputField}>
