@@ -37,23 +37,36 @@ const errorStyle = {
   marginBottom: "10px",
 };
 
+const signupLink = {
+  fontSize: "large",
+  textAlign: "center",
+  marginTop: "15px",
+};
+
 const RecruiterSignupForm = () => {
   const navigate = useNavigate();
   const { setUserInfo } = useContext(UserContext);
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState(''); // Global email state
-  const [password, setPassword] = useState(''); // Global password state
+  const [email, setEmail] = useState(""); // Global email state
+  const [password, setPassword] = useState(""); // Global password state
 
   const handleFinalUpload = async (values) => {
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       if (user) {
         // Call the cloud function to set recruiter claims
         const functions = getFunctions();
-        const setRecruiterClaims = httpsCallable(functions, 'setRecruiterClaims');
+        const setRecruiterClaims = httpsCallable(
+          functions,
+          "setRecruiterClaims"
+        );
         await setRecruiterClaims({ userId: user.uid });
-  
+
         const formData = {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -71,8 +84,12 @@ const RecruiterSignupForm = () => {
     }
   };
 
-  const navigateToSignup = async () => {
-    navigate("/signup");
+  const navigateToRecruiterSignin = async () => {
+    navigate("/");
+  };
+
+  const navigateToCandidateSignup = () => {
+    window.location.href = "https://drafted-onboarding.netlify.app/";
   };
 
   return (
@@ -118,6 +135,26 @@ const RecruiterSignupForm = () => {
               <button type="submit" style={buttonStyles}>
                 Next
               </button>
+              <p style={signupLink}>
+                Already have an account?{" "}
+                <a
+                  href="#"
+                  onClick={navigateToRecruiterSignin}
+                  className="link"
+                >
+                  <strong>Sign In</strong>
+                </a>
+              </p>
+              <p className="signupLink">
+                Looking for a job?{" "}
+                <a
+                  href="#"
+                  onClick={navigateToCandidateSignup}
+                  className="link"
+                >
+                  <strong>Click Here</strong>
+                </a>
+              </p>
             </Form>
           )}
         </Formik>
@@ -134,7 +171,7 @@ const RecruiterSignupForm = () => {
               .required("Confirm password is required"),
           })}
           onSubmit={(values) => {
-            setPassword(values.password)
+            setPassword(values.password);
             setUserInfo((prev) => ({ ...prev, ...values }));
             setStep(3);
           }}

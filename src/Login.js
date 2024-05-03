@@ -113,9 +113,11 @@ const Login = () => {
   const navigateToSignup = async () => {
     navigate("/signup");
   };
+
   const navigateToCandidateSignIn = () => {
     window.location.href = "https://main--drafted-dashboard.netlify.app/login";
   };
+  
   if (isLoading) {
     return (
       <div>
