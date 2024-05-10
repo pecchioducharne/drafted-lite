@@ -13,7 +13,9 @@ import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // Import css
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import home from "./home.png";
-
+import { auth } from './firebase';  // Adjust the path as necessary
+import { useNavigate } from "react-router-dom";
+import { setPersistence, onAuthStateChanged, signInWithEmailAndPassword, browserSessionPersistence } from "firebase/auth";
 
 const CandidateViewer = ({
   email,
@@ -37,6 +39,9 @@ const CandidateViewer = ({
     graduationYear: [],
   });
   const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
+  const navigate = useNavigate();
+  const [password, setPassword] = useState('');
+
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleNext(),
@@ -44,6 +49,18 @@ const CandidateViewer = ({
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
+
+  // Set the persistence before calling signInWithEmailAndPassword
+  setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+      // Existing sign-in code here
+      return signInWithEmailAndPassword(auth, email, password);
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+    });
 
   const videoQuestions = [
     "Tell us about your story!",
@@ -128,6 +145,21 @@ const CandidateViewer = ({
 
     filterCandidates();
   }, [filters, candidates]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        // User is signed in, navigate to the viewer
+        navigate("/viewer");
+      } else {
+        // User is not signed in, navigate to login
+        navigate("/login");
+      }
+    });
+  
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, [auth, navigate]);
 
   // Additional useEffect for handling filter changes
   useEffect(() => {
