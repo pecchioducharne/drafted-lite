@@ -35,7 +35,11 @@ const CandidateViewer = ({
   const [showNavPopup, setShowNavPopup] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
-  const [showGridView, setShowGridView] = useState(initialShowGridView);
+  const [showGridView, setShowGridView] = useState(() => {
+    const storedView = sessionStorage.getItem('showGridView');
+    return storedView ? JSON.parse(storedView) : initialShowGridView;
+  });
+  
   const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [filters, setFilters] = useState({
@@ -53,6 +57,12 @@ const CandidateViewer = ({
     preventDefaultTouchmoveEvent: true,
     trackMouse: true,
   });
+
+  useEffect(() => {
+    sessionStorage.setItem('showGridView', JSON.stringify(showGridView));
+  }, [showGridView]);
+
+
 
   // Set the persistence before calling signInWithEmailAndPassword
   setPersistence(auth, browserSessionPersistence)
@@ -83,7 +93,6 @@ const CandidateViewer = ({
         onSelect([...selectedOptions, option]);
       }
     };
-
     // Check if this filter category is open
     const showOptions = openFilterCategories.includes(title);
 
