@@ -37,6 +37,8 @@ const Login = () => {
       return urlParams.get(name);
     };
 
+    
+
     const emailParam = getUrlParam("email");
     const passwordParam = getUrlParam("password");
 
@@ -57,6 +59,22 @@ const Login = () => {
         });
     }
   }, [auth, navigate]);
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter") {
+        handleSubmit(event);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [email, password]); // Add dependencies to re-register the event listener if these change
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);

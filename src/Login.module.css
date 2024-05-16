@@ -19,6 +19,7 @@
 .inputField {
   margin-bottom: 20px;
   text-align: left;
+  font-family: inherit; /* Use browser default font */
 }
 
 .label {
@@ -33,6 +34,7 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
+  font-family: inherit; /* Use browser default font */
 }
 
 .button {
