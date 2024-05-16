@@ -297,15 +297,15 @@ const CandidateViewer = ({
 
   const uniqueUniversities = [
     ...new Set(candidates.map((candidate) => candidate.university)),
-  ];
+  ].sort();
   const uniqueMajors = [
     ...new Set(candidates.map((candidate) => candidate.major)),
-  ];
+  ].sort();
   const uniqueGraduationYears = [
     ...new Set(
       candidates.map((candidate) => candidate.graduationYear.toString())
     ),
-  ];
+  ].sort();
 
   const executeSearch = () => {
     const lowerQuery = searchQuery.toLowerCase();
