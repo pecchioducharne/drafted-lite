@@ -178,7 +178,7 @@ const RecruiterSignupForm = () => {
                 options={{
                   loop: true,
                   autoplay: true,
-                  animationData: step2Animation,
+                  animationData: step3Animation,
                 }}
                 height={100}
                 width={100}
@@ -237,7 +237,7 @@ const RecruiterSignupForm = () => {
                 options={{
                   loop: true,
                   autoplay: true,
-                  animationData: step3Animation,
+                  animationData: step1Animation,
                 }}
                 height={100}
                 width={100}
