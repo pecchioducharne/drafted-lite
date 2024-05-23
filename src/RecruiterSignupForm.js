@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Lottie from "react-lottie";
 import step1Animation from "./step-1.json";
-import step2Animation from "./step-2.json"; // Placeholder for the password animation step
+import step2Animation from "./step-2.json";
 import step3Animation from "./step-3.json";
 import { UserContext } from "./UserContext";
 import { auth, db } from "./firebase";
 import ReactGA4 from "react-ga4";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import "./RecruiterSignupForm.css";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { ClipLoader } from "react-spinners";
+import "./RecruiterSignupForm.css";
 
 const buttonStyles = {
   borderRadius: "8px",
@@ -47,24 +48,18 @@ const RecruiterSignupForm = () => {
   const navigate = useNavigate();
   const { setUserInfo } = useContext(UserContext);
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState(""); // Global email state
-  const [password, setPassword] = useState(""); // Global password state
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleFinalUpload = async (values) => {
+    setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       if (user) {
-        // Call the cloud function to set recruiter claims
         const functions = getFunctions();
-        const setRecruiterClaims = httpsCallable(
-          functions,
-          "setRecruiterClaims"
-        );
+        const setRecruiterClaims = httpsCallable(functions, "setRecruiterClaims");
         await setRecruiterClaims({ userId: user.uid });
 
         const formData = {
@@ -76,10 +71,11 @@ const RecruiterSignupForm = () => {
         };
         const userDataRef = doc(db, "recruiter-accounts", user.email);
         await setDoc(userDataRef, formData);
-        navigate("/viewer"); // Navigate to the dashboard or any other route
+        navigate("/viewer");
       }
     } catch (error) {
       console.error("Error creating user:", error);
+      setLoading(false);
       throw error;
     }
   };
@@ -241,7 +237,7 @@ const RecruiterSignupForm = () => {
                 options={{
                   loop: true,
                   autoplay: true,
-                  animationData: step2Animation,
+                  animationData: step3Animation,
                 }}
                 height={100}
                 width={100}
@@ -297,8 +293,15 @@ const RecruiterSignupForm = () => {
                 type="text"
                 placeholder="Enter company URL"
               />
-              <button type="submit" style={buttonStyles}>
-                Complete Signup
+              <button type="submit" style={buttonStyles} disabled={loading}>
+                {loading ? (
+                  <span>
+                    <ClipLoader size={20} color={"#fff"} loading={true} />
+                    {" Completing Signup..."}
+                  </span>
+                ) : (
+                  "Complete Signup"
+                )}
               </button>
             </Form>
           )}
