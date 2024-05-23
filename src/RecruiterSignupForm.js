@@ -7,11 +7,12 @@ import step1Animation from "./step-1.json";
 import step2Animation from "./step-2.json";
 import step3Animation from "./step-3.json";
 import { UserContext } from "./UserContext";
-import { auth, db } from "./firebase";
+import { auth, db, analytics } from "./firebase";
 import ReactGA4 from "react-ga4";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
+import { logEvent } from "firebase/analytics";
 import { ClipLoader } from "react-spinners";
 import "./RecruiterSignupForm.css";
 
@@ -81,7 +82,11 @@ const RecruiterSignupForm = () => {
       alert("There was an error completing the signup process. Please try again.");
       setLoading(false);
     }
-  };  
+  };
+  
+  const logEmailAttempt = (email) => {
+    logEvent(analytics, "attempted_signup", { email });
+  };
 
   const navigateToRecruiterSignin = async () => {
     navigate("/");
@@ -104,6 +109,7 @@ const RecruiterSignupForm = () => {
           onSubmit={(values) => {
             setEmail(values.email);
             setUserInfo({ email: values.email });
+            logEmailAttempt(values.email);
             setStep(2);
           }}
         >
