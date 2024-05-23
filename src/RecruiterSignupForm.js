@@ -84,8 +84,12 @@ const RecruiterSignupForm = () => {
     }
   };
   
-  const logEmailAttempt = (email) => {
-    logEvent(analytics, "attempted_signup", { email });
+  const logAttemptSignup = (email) => {
+    logEvent(analytics, "attempted_recruiter_signup", { email });
+  };
+
+  const logSignupError = (email) => {
+    logEvent(analytics, "recruiter_signup_error", { email });
   };
 
   const navigateToRecruiterSignin = async () => {
@@ -109,7 +113,7 @@ const RecruiterSignupForm = () => {
           onSubmit={(values) => {
             setEmail(values.email);
             setUserInfo({ email: values.email });
-            logEmailAttempt(values.email);
+            logAttemptSignup(values.email);
             setStep(2);
           }}
         >
@@ -245,6 +249,7 @@ const RecruiterSignupForm = () => {
       } catch (error) {
         setSubmitting(false);
         setLoading(false);
+        logSignupError(values.email);
         alert("There was an error during the signup process. Please try again.");
       }
     }}
