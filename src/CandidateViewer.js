@@ -343,6 +343,13 @@ const CandidateViewer = ({
   const handleLogoClick = () => {
     console.log("Logo clicked");
     setShowGridView(true);
+    setSearchQuery("");
+    // Reset all filters
+    setFilters({
+      university: [],
+      major: [],
+      graduationYear: [],
+    });
   };
 
   const handleHomeButtonClick = () => {
@@ -863,7 +870,12 @@ const CandidateViewer = ({
         <div className="main-video-profile-container">
           <div className="navigation-instructions">
             <p
-              style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: "large", textAlign: "center" }}
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                fontWeight: 600,
+                fontSize: "large",
+                textAlign: "center",
+              }}
             >
               <strong>Next</strong>:{" "}
               {window.innerWidth <= 768 ? "Swipe right" : "Right arrow key"} |
