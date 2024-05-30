@@ -36,10 +36,10 @@ const CandidateViewer = ({
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [showGridView, setShowGridView] = useState(() => {
-    const storedView = sessionStorage.getItem('showGridView');
+    const storedView = sessionStorage.getItem("showGridView");
     return storedView ? JSON.parse(storedView) : initialShowGridView;
   });
-  
+
   const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [filters, setFilters] = useState({
@@ -59,10 +59,8 @@ const CandidateViewer = ({
   });
 
   useEffect(() => {
-    sessionStorage.setItem('showGridView', JSON.stringify(showGridView));
+    sessionStorage.setItem("showGridView", JSON.stringify(showGridView));
   }, [showGridView]);
-
-
 
   // Set the persistence before calling signInWithEmailAndPassword
   setPersistence(auth, browserSessionPersistence)
@@ -384,18 +382,10 @@ const CandidateViewer = ({
   };
 
   const handleSuggestionSelect = (suggestion) => {
-    // Update the search query with the selected suggestion
     setSearchQuery(suggestion);
-
-    // Clear the current suggestions
     setSuggestions([]);
 
-    // Convert the selected suggestion to lower case for case-insensitive comparison
     const lowerSuggestion = suggestion.toLowerCase();
-
-    // Filter the candidates based on the selected suggestion.
-    // This example checks if the candidate's university, major, or graduation year
-    // includes the suggestion text. Adjust this logic as needed for your application.
     const filtered = candidates.filter(
       (candidate) =>
         candidate.university.toLowerCase().includes(lowerSuggestion) ||
@@ -406,13 +396,7 @@ const CandidateViewer = ({
           .includes(lowerSuggestion)
     );
 
-    // Update the state with the filtered candidates
     setFilteredCandidates(filtered);
-
-    // Optionally, if the search operation is asynchronous (e.g., involves fetching data
-    // from a server), consider adding a loading state to provide user feedback.
-
-    // Show the grid view to display the filtered candidates
     setShowGridView(true);
   };
 
@@ -617,6 +601,7 @@ const CandidateViewer = ({
             </ul>
           )}
         </div>
+
         <div className="filter-container">
           <FilterOptions
             title="University"
@@ -807,6 +792,19 @@ const CandidateViewer = ({
           onChange={handleSearchChange}
           className="search-bar"
         />
+        {suggestions.length > 0 && (
+          <ul className="suggestions">
+            {suggestions.map((suggestion, index) => (
+              <li
+                key={index}
+                onClick={() => handleSuggestionSelect(suggestion)}
+                className="suggestion-item"
+              >
+                {suggestion}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       {showNavPopup && (
         <div className="nav-popup">
@@ -865,7 +863,7 @@ const CandidateViewer = ({
         <div className="main-video-profile-container">
           <div className="navigation-instructions">
             <p
-              style={{ fontFamily: "Poppins, sans-serif", textAlign: "center" }}
+              style={{ fontFamily: "Poppins, sans-serif", fontWeight: 600, fontSize: "large", textAlign: "center" }}
             >
               <strong>Next</strong>:{" "}
               {window.innerWidth <= 768 ? "Swipe right" : "Right arrow key"} |
