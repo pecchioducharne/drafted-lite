@@ -46,7 +46,7 @@ const Login = () => {
       setIsLoading(true);
       signInWithEmailAndPassword(auth, emailParam, passwordParam)
         .then(() => {
-          navigate("/viewer");
+          navigate("/search");
         })
         .catch((error) => {
           console.error("Error during auto sign in:", error);
@@ -90,7 +90,7 @@ const Login = () => {
         .then((idTokenResult) => {
           if (idTokenResult.claims.recruiter) {
             // User is confirmed as recruiter, navigate to the appropriate view
-            navigate("/viewer");
+            navigate("/search");
           } else {
             // If not recruiter, handle accordingly (e.g., show error or redirect)
             setErrorMessage(

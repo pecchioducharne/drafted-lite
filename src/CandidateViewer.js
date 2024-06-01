@@ -14,7 +14,7 @@ import "video-react/dist/video-react.css"; // Import css
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import home from "./home.png";
 import { auth } from "./firebase"; // Adjust the path as necessary
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   setPersistence,
   onAuthStateChanged,
@@ -351,6 +351,27 @@ const CandidateViewer = ({
       graduationYear: [],
     });
   };
+
+  const location = useLocation();
+  const { state } = location;
+
+  // In CandidateViewer component, useEffect for setting filters from state
+  useEffect(() => {
+    if (state?.filters) {
+      setFilters(state.filters);
+    } else if (state?.searchQuery) {
+      setSearchQuery(state.searchQuery);
+      const lowerQuery = state.searchQuery.toLowerCase();
+      const filtered = candidates.filter(
+        (candidate) =>
+          candidate.university.toLowerCase().includes(lowerQuery) ||
+          candidate.major.toLowerCase().includes(lowerQuery) ||
+          candidate.graduationYear.toString().toLowerCase().includes(lowerQuery)
+      );
+      setFilteredCandidates(filtered);
+      setCurrentIndex(filtered.length > 0 ? 0 : -1); // Reset to first filtered candidate
+    }
+  }, [state, candidates]);
 
   const handleHomeButtonClick = () => {
     console.log("Home button clicked");

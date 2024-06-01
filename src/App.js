@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CandidateViewer from "./CandidateViewer";
 import RecruiterSignupForm from "./RecruiterSignupForm";
+import SearchPage from "./SearchPage";
 import Login from "./Login";
 import { UserProvider } from "./UserContext";
 
@@ -20,6 +21,7 @@ const App = () => {
       <UserProvider>
         <div className="App">
           <Routes>
+            <Route path="/search" element={<SearchPage />} />
             <Route
               path="/viewer"
               element={
