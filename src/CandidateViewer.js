@@ -33,6 +33,7 @@ const CandidateViewer = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showResume, setShowResume] = useState(false);
   const [showNavPopup, setShowNavPopup] = useState(false);
+  const [showPopup, setPopup] = useState(true); // Initialize to true to show popup on load
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [showGridView, setShowGridView] = useState(() => {
@@ -61,6 +62,15 @@ const CandidateViewer = ({
   useEffect(() => {
     sessionStorage.setItem("showGridView", JSON.stringify(showGridView));
   }, [showGridView]);
+
+  useEffect(() => {
+    const hasSeenPopup = localStorage.getItem('hasSeenPopup');
+    if (!hasSeenPopup) {
+      setShowNavPopup(true);
+      localStorage.setItem('hasSeenPopup', 'true');
+    }
+  }, []);
+  
 
   // Set the persistence before calling signInWithEmailAndPassword
   setPersistence(auth, browserSessionPersistence)
@@ -608,6 +618,34 @@ const CandidateViewer = ({
             </ul>
           )}
         </div>
+
+        {showPopup && (
+          <div className="nav-popup">
+            <h2>Welcome to Drafted!</h2>
+            <p>We make it easy and fun to build your team. Fast.</p>
+            <ul>
+              <li>
+                <strong>Filter candidates to find your next hire quickly</strong>
+              </li>
+              <li>
+                <strong>Easily view candidate information</strong>
+              </li>
+              <li>
+                <strong>
+                  Click "Draft" to get pre-filled email directly to candidate to
+                  schedule first interview
+                </strong>
+              </li>
+            </ul>
+            <br></br>
+            <button
+              className="navigation-button"
+              onClick={() => setShowNavPopup(false)}
+            >
+              Close
+            </button>
+          </div>
+        )}
 
         <div className="filter-container">
           <FilterOptions

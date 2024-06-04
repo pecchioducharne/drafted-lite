@@ -642,6 +642,63 @@ logo-header {
   /* Center the name above the video player */
 }
 
+.nav-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  font-family: 'Poppins', sans-serif;
+  color: black;
+  text-align: left;
+  font-size: 0.9em;
+}
+
+.nav-popup h2 {
+  margin-top: 0;
+  font-size: x-large;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: #333;
+}
+
+.nav-popup p {
+  margin-top: 0;
+  font-size: large;
+  color: #333;
+}
+
+.nav-popup ul {
+  padding-left: 20px;
+  font-size: large;
+  list-style: none;
+}
+
+.nav-popup li::before {
+  content: "• ";
+  color: #00BF63;
+  font-weight: bold;
+}
+
+.navigation-button {
+  background-color: #00BF63;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.navigation-button:hover {
+  background-color: #009950;
+}
+
+
 .candidate-name {
   font-size: 1.2em;
   font-weight: 700;
