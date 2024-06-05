@@ -640,7 +640,7 @@ const CandidateViewer = ({
             <br></br>
             <button
               className="navigation-button"
-              onClick={() => setShowNavPopup(false)}
+              onClick={() => setPopup(false)}
             >
               Close
             </button>
