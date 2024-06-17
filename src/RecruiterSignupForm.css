@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -8,12 +5,12 @@ body {
 }
 
 form {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   font-weight: 200;
   font-family: 'Roboto', sans-serif;
 }
@@ -24,23 +21,23 @@ option {
 }
 
 h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 25px;
   font-family: 'Poppins', sans-serif;
 }
 
 h3 {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 600;
   margin-bottom: 20px;
   font-family: 'Poppins', sans-serif;
 }
 
 p {
-  font-size: 14px;
-  font-weight: 200;
-  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
   margin-bottom: 20px;
   font-family: 'Roboto', sans-serif;
 }
@@ -53,7 +50,8 @@ p strong {
 label {
   display: block;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  font-size: 18px;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -62,9 +60,9 @@ input[type='email'],
 input[type='password'],
 select {
   width: 100%; /* Ensure full width */
-  padding: 10px; /* Padding for size */
-  font-size: 16px; /* Font size */
-  border-radius: 4px; /* Rounded corners */
+  padding: 15px; /* Increased Padding */
+  font-size: 18px; /* Larger Font size */
+  border-radius: 6px; /* Rounded corners */
   border: 1px solid #ccc; /* Border style */
   background-color: #fff; /* Background color */
   transition: border-color 0.3s ease;
@@ -78,25 +76,25 @@ select {
 }
 
 .form {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 30px;
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   font-weight: 200;
   font-family: 'Roboto', sans-serif;
 }
 
 .form-field {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .async-select__control {
   width: 100%; /* Match width of input fields */
-  padding: 10px; /* Match padding */
-  font-size: 16px; /* Match font size */
-  border-radius: 4px; /* Match border radius */
+  padding: 15px; /* Match padding */
+  font-size: 18px; /* Match font size */
+  border-radius: 6px; /* Match border radius */
   border: 1px solid #ccc; /* Match border style */
   background-color: #fff; /* Match background color */
   /* Add any additional styling to match the input fields */
@@ -104,9 +102,9 @@ select {
 
 .custom-university-input {
   width: 100%; /* Match width */
-  padding: 10px; /* Match padding */
-  font-size: 16px; /* Match font size */
-  border-radius: 4px; /* Match border radius */
+  padding: 15px; /* Match padding */
+  font-size: 18px; /* Match font size */
+  border-radius: 6px; /* Match border radius */
   border: 1px solid #ccc; /* Match border style */
   background-color: #fff; /* Match background color */
   /* Add any additional styling to match the AsyncSelect */
@@ -141,21 +139,20 @@ button {
   color: white;
   border: none;
   border-radius: 8px;
-  padding: 10px 20px;
-  font-family: 'Poppins', sans-serif;
+  padding: 15px 25px; /* Increased padding */
+  font-size: 18px; /* Larger Font size */
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-align: center;
   display: block;
-  /* width: 50%; */
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .signupLink {
-  font-size: large;
+  font-size: 18px; /* Increased font size */
   text-align: center;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .link {
@@ -169,13 +166,13 @@ button {
 }
 
 button:hover {
-  background: none!;
+  background-color: #008f47;
 }
 
 .error {
   color: red;
-  font-size: 14px;
-  margin-top: 4px;
+  font-size: 16px; /* Increased font size */
+  margin-top: 5px;
 }
 
 .label-icons-container {

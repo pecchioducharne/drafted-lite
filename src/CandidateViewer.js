@@ -64,13 +64,12 @@ const CandidateViewer = ({
   }, [showGridView]);
 
   useEffect(() => {
-    const hasSeenPopup = localStorage.getItem('hasSeenPopup');
+    const hasSeenPopup = localStorage.getItem("hasSeenPopup");
     if (!hasSeenPopup) {
       setShowNavPopup(true);
-      localStorage.setItem('hasSeenPopup', 'true');
+      localStorage.setItem("hasSeenPopup", "true");
     }
   }, []);
-  
 
   // Set the persistence before calling signInWithEmailAndPassword
   setPersistence(auth, browserSessionPersistence)
@@ -625,7 +624,9 @@ const CandidateViewer = ({
             <p>We make it easy and fun to build your team. Fast.</p>
             <ul>
               <li>
-                <strong>Filter candidates to find your next hire quickly</strong>
+                <strong>
+                  Filter candidates to find your next hire quickly
+                </strong>
               </li>
               <li>
                 <strong>Easily view candidate information</strong>
@@ -857,17 +858,20 @@ const CandidateViewer = ({
           <p>We make it easy and fun to find your next hire.</p>
           <ul>
             <li>
-              <strong>Enter:</strong> Draft candidate, creates email thread to
-              schedule first interview.
+              <strong style="color: #00BF63;">Enter:</strong> Draft candidate,
+              creates email thread to schedule first interview.
             </li>
             <li>
-              <strong>Shift:</strong> View candidate resume.
+              <strong style="color: #00BF63;">Shift:</strong> View candidate
+              resume.
             </li>
             <li>
-              <strong>Right arrow:</strong> See next candidate.
+              <strong style="color: #00BF63;">Right arrow:</strong> See next
+              candidate.
             </li>
             <li>
-              <strong>Left arrow:</strong> See previous candidate.
+              <strong style="color: #00BF63;">Left arrow:</strong> See previous
+              candidate.
             </li>
           </ul>
           <button
@@ -915,9 +919,9 @@ const CandidateViewer = ({
                 textAlign: "center",
               }}
             >
-              <strong>Next</strong>:{" "}
+              <strong style={{color: '#00BF63'}}>Next:</strong>{" "}
               {window.innerWidth <= 768 ? "Swipe right" : "Right arrow key"} |
-              <strong> Previous</strong>:{"  "}
+              <strong style={{color: '#00BF63'}}> Previous:</strong>{"  "}
               {window.innerWidth <= 768 ? "Swipe left" : "Left arrow key"}
             </p>
           </div>
