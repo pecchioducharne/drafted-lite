@@ -36,7 +36,11 @@ const VideoViewer = () => {
               candidateData.video3,
             ].filter(Boolean)
           );
-          setVideoQuestions(["Tell us your story!", "What makes you stand out amongst other candidates?", "Tell us about a time when you overcame a challenge!"]); // Example questions, replace with your actual questions
+          setVideoQuestions([
+            "Tell us your story!",
+            "What makes you stand out amongst other candidates?",
+            "Tell us about a time when you overcame a challenge!",
+          ]); // Example questions, replace with your actual questions
         } else {
           console.log("No such document!");
         }
@@ -73,7 +77,9 @@ const VideoViewer = () => {
   };
 
   const emailDraft = () => {
-    // Logic for drafting the candidate via email, if needed
+    const { email, firstName, lastName } = candidate;
+    const mailto = `mailto:${email}?subject=You've Been Drafted!&body=Hi ${firstName},%0D%0A%0D%0AWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.%0D%0A%0D%0ATime:%0D%0ADay:%0D%0AZoom / Hangout link:%0D%0A%0D%0ALet us know if this works. Looking forward!%0D%0A%0D%0ABest,%0D%0A%0D%0A[Your Name]`;
+    window.location.href = mailto;
   };
 
   return (
@@ -87,8 +93,7 @@ const VideoViewer = () => {
               fontSize: "large",
               textAlign: "center",
             }}
-          >
-          </p>
+          ></p>
         </div>
         <div className="video-resume-container">
           {videoUrls[currentVideoIndex] ? (
@@ -192,7 +197,7 @@ const VideoViewer = () => {
             onClick={emailDraft}
             aria-label="Draft candidate for interview"
           >
-            Draft
+            Request Interview
           </button>
         </div>
       </div>
