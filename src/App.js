@@ -17,7 +17,7 @@ const App = () => {
   };
 
   return (
-    <Router>
+    <Router basename="/">
       <UserProvider>
         <div className="App">
           <Routes>
