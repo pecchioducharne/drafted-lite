@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CandidateViewer from "./CandidateViewer";
+import VideoViewer from "./VideoViewer";
 import RecruiterSignupForm from "./RecruiterSignupForm";
 import Login from "./Login";
 import { UserProvider } from "./UserContext";
@@ -32,6 +33,7 @@ const App = () => {
               }
             />
             <Route path="/signup" element={<RecruiterSignupForm />} />
+            <Route path="/candidate/:id" element={<VideoViewer />} />
             <Route path="/" element={<Login />} />
             {/* Additional routes can be added here as needed */}
           </Routes>
