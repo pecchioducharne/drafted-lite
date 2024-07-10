@@ -919,9 +919,10 @@ const CandidateViewer = ({
                 textAlign: "center",
               }}
             >
-              <strong style={{color: '#00BF63'}}>Next:</strong>{" "}
+              <strong style={{ color: "#00BF63" }}>Next:</strong>{" "}
               {window.innerWidth <= 768 ? "Swipe right" : "Right arrow key"} |
-              <strong style={{color: '#00BF63'}}> Previous:</strong>{"  "}
+              <strong style={{ color: "#00BF63" }}> Previous:</strong>
+              {"  "}
               {window.innerWidth <= 768 ? "Swipe left" : "Left arrow key"}
             </p>
           </div>
@@ -945,7 +946,16 @@ const CandidateViewer = ({
           </div>
           <br></br>
           <div className="candidate-name-display">
-            {candidate.firstName} {candidate.lastName}
+            <span className="candidate-name">
+              {candidate.firstName} {candidate.lastName}
+            </span>
+            <button
+              className="draft-button"
+              onClick={emailDraft}
+              aria-label="Draft candidate for interview"
+            >
+              Request Interview
+            </button>
           </div>
           <div className="video-resume-display">Video Resume</div>
           <div className="video-selection-buttons">
@@ -1033,7 +1043,7 @@ const CandidateViewer = ({
               onClick={emailDraft}
               aria-label="Draft candidate for interview"
             >
-              Draft
+              Request Interview
             </button>
           </div>
         </div>

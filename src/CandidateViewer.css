@@ -615,17 +615,15 @@ logo-header {
 }
 
 .candidate-name-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 2em;
-  /* Large font size */
   font-family: 'Poppins', sans-serif;
   font-weight: bolder;
-  /* Make the text bold */
   color: black;
-  /* Use a color that matches your theme, adjust as needed */
-  margin-bottom: 20px;
-  /* Add some space between the name and the video player */
+  margin-bottom: 20px; /* Remove or adjust as needed */
   text-align: left;
-  /* Center the name above the video player */
 }
 
 .video-resume-display {
@@ -967,17 +965,18 @@ logo-header {
 }
 
 .draft-button {
-  background-color: #4CAF50; /* Green background for visibility */
-  color: white; /* White text for contrast */
-  padding: 12px 24px; /* Ample padding for a better click area */
-  border: none; /* No border for a cleaner look */
-  border-radius: 5px; /* Rounded corners for a modern appearance */
-  cursor: pointer; /* Cursor pointer to indicate clickable */
-  font-family: 'Poppins', sans-serif; /* Stylish font-family */
-  font-size: 1rem; /* Readable text size */
-  font-weight: 600; /* Semi-bold weight for legibility */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Subtle shadow for 3D effect */
-  transition: background-color 0.3s, box-shadow 0.2s; /* Smooth transitions for interactions */
+  background-color: #00BF63;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
 }
 
 .draft-button:hover, .draft-button:focus {
