@@ -13,6 +13,7 @@ import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // Import css
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import home from "./home.png";
+import backArrow from "./back-arrow.png";
 import { auth } from "./firebase"; // Adjust the path as necessary
 import { useNavigate } from "react-router-dom";
 import {
@@ -623,20 +624,14 @@ const CandidateViewer = ({
             <h2>Welcome to Drafted!</h2>
             <p>We make it easy and fun to build your team. Fast.</p>
             <ul>
-              <li>
-                <strong>
-                  Filter candidates to find your next hire quickly
-                </strong>
-              </li>
-              <li>
-                <strong>Easily view candidate information</strong>
-              </li>
-              <li>
-                <strong>
+              <p>
+                <li>Filter candidates to find your next hire quickly</li>
+                <li>Easily view candidate information</li>
+                <li>
                   Click "Draft" to get pre-filled email directly to candidate to
                   schedule first interview
-                </strong>
-              </li>
+                </li>
+              </p>
             </ul>
             <br></br>
             <button
@@ -818,6 +813,19 @@ const CandidateViewer = ({
         </h1>
       </div>
       <div className="search-container">
+      <img
+          src={backArrow} // Use the imported home icon
+          alt="Home"
+          className="home-icon"
+          onClick={handleHomeButtonClick}
+          style={{
+            cursor: "pointer",
+            marginRight: "10px", // Reduced margin to bring it closer to the search bar
+            width: "32px", // Small icon size
+            height: "32px", // Match the height with the width
+            alignSelf: "center", // Center the icon vertically within the container
+          }}
+        />
         <img
           src={home} // Use the imported home icon
           alt="Home"
