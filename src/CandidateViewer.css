@@ -49,11 +49,11 @@ logo-header {
 }
 
 .header {
-  width: 100%; /* Ensures the container spans the full width */
   display: flex;
-  justify-content: center; /* Centers content horizontally */
-  align-items: center; /* Centers content vertically, if needed */
-  text-align: center; /* Ensures text within the container is centered */
+  align-items: center;
+  justify-content: center;
+  height: 60px; /* Adjust height as needed */
+  background-color: #ffffff; /* Example background color */
 }
 
 .clickable {
@@ -300,6 +300,14 @@ logo-header {
   width: 24px;
   height: 24px;
   cursor: pointer;
+}
+
+.back-arrow-icon {
+  position: absolute; /* Position absolutely to the left */
+  left: 10px; /* Adjust distance from the left */
+  height: 32px; /* Adjust height of the icon */
+  width: auto; /* Ensure icon scales appropriately */
+  cursor: pointer; /* Add pointer cursor for interaction */
 }
 
 .centered-name {

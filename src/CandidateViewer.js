@@ -789,6 +789,12 @@ const CandidateViewer = ({
   return (
     <div className="profile-dashboard">
       <div className="header">
+        <img
+          src={backArrow} // Use the imported back arrow icon
+          alt="Back"
+          className="back-arrow-icon"
+          onClick={handleHomeButtonClick}
+        />
         <h1 onClick={handleLogoClick} className="logo-header clickable">
           {/* drafted<span style={{ color: "#53ad7a" }}> beta</span>
           <span>.</span> */}
@@ -813,19 +819,6 @@ const CandidateViewer = ({
         </h1>
       </div>
       <div className="search-container">
-      <img
-          src={backArrow} // Use the imported home icon
-          alt="Home"
-          className="home-icon"
-          onClick={handleHomeButtonClick}
-          style={{
-            cursor: "pointer",
-            marginRight: "10px", // Reduced margin to bring it closer to the search bar
-            width: "32px", // Small icon size
-            height: "32px", // Match the height with the width
-            alignSelf: "center", // Center the icon vertically within the container
-          }}
-        />
         <img
           src={home} // Use the imported home icon
           alt="Home"
@@ -927,11 +920,11 @@ const CandidateViewer = ({
                 textAlign: "center",
               }}
             >
-              <strong style={{ color: "#00BF63" }}>Next:</strong>{" "}
+              {/* <strong style={{ color: "#00BF63" }}>Next:</strong>{" "}
               {window.innerWidth <= 768 ? "Swipe right" : "Right arrow key"} |
               <strong style={{ color: "#00BF63" }}> Previous:</strong>
               {"  "}
-              {window.innerWidth <= 768 ? "Swipe left" : "Left arrow key"}
+              {window.innerWidth <= 768 ? "Swipe left" : "Left arrow key"} */}
             </p>
           </div>
           <div className="video-resume-container" {...handlers}>
