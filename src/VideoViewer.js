@@ -116,10 +116,42 @@ const VideoViewer = () => {
           )}
         </div>
         <br />
-        <div className="candidate-name-display">
+        <div className="candidate-name-display" style={{ fontSize: "35px" }}>
           {candidate.firstName || "N/A"} {candidate.lastName || "N/A"}
+          <button
+            className="draft-button"
+            onClick={emailDraft}
+            aria-label="Draft candidate for interview"
+            style={{
+              backgroundColor: "#00BF63",
+              color: "white",
+              padding: "10px 20px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 0 0 20px", // Adjust margin as needed
+              fontSize: "25px",
+              transition: "background-color 0.3s ease", // Add transition for smooth effect
+            }}
+            onMouseOver={(e) => {
+              e.target.style.backgroundColor = "#45a049";
+              e.target.style.boxShadow = "0 6px 12px rgba(0,0,0,0.2)";
+            }}
+            onMouseOut={(e) => {
+              e.target.style.backgroundColor = "#00BF63";
+              e.target.style.boxShadow = "none";
+            }}
+          >
+            Request Interview
+          </button>
         </div>
-        <div className="video-resume-display">Video Resume</div>
+        <div className="video-resume-display" style={{ fontSize: "22px" }}>
+          Video Resume
+        </div>
         <div className="video-selection-buttons">
           {videoQuestions.map((question, index) => (
             <button
@@ -128,51 +160,53 @@ const VideoViewer = () => {
               className={`video-btn ${
                 currentVideoIndex === index ? "active" : ""
               }`}
+              style={{ fontSize: "18px" }}
             >
               {question}
             </button>
           ))}
         </div>
         <div className="info-section">
-          <div className="profile-field">
+          <div className="profile-field" style={{ fontSize: "20px" }}>
             <strong>University</strong>{" "}
             <p
-              className="candidate-university clickable-filter"
+              className="candidate-university"
               onClick={() => handleUniversityClick(candidate.university)}
             >
               {candidate.university || "N/A"}
             </p>
           </div>
-          <div className="profile-field">
+          <div className="profile-field" style={{ fontSize: "20px" }}>
             <strong>Major</strong>{" "}
             <p
-              className="candidate-major clickable-filter"
+              className="candidate-major"
               onClick={() => handleMajorClick(candidate.major)}
             >
               {candidate.major || "N/A"}
             </p>
           </div>
-          <div className="profile-field">
+          <div className="profile-field" style={{ fontSize: "20px" }}>
             <strong>LinkedIn</strong>{" "}
             <a
               href={candidate.linkedInURL || "#"}
               className="candidate-major clickable-filter"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ fontSize: "20px" }}
             >
               {candidate.linkedInURL || "N/A"}
             </a>
           </div>
-          <div className="profile-field">
+          <div className="profile-field" style={{ fontSize: "20px" }}>
             <strong>Graduation Year</strong>{" "}
             <p
-              className="candidate-major clickable-filter"
+              className="candidate-major"
               onClick={() => handleGradYearClick(candidate.graduationYear)}
             >
               {candidate.graduationYear || "N/A"}
             </p>
           </div>
-          <div className="profile-field">
+          <div className="profile-field" style={{ fontSize: "20px" }}>
             <strong>Resume</strong>
             {candidate.resume ? (
               <button
@@ -190,15 +224,6 @@ const VideoViewer = () => {
               </button>
             )}
           </div>
-        </div>
-        <div className="button-group">
-          <button
-            className="draft-button"
-            onClick={emailDraft}
-            aria-label="Draft candidate for interview"
-          >
-            Request Interview
-          </button>
         </div>
       </div>
 
