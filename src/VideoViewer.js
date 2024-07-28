@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
-import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  query,
-  where,
-} from "firebase/firestore"; // Import Firestore modules
+import QuickRecruiterSignup from "./QuickRecruiterSignup"; // Import your QuickRecruiterSignup form
+import { collection, getDocs, query, where } from "firebase/firestore"; // Import Firestore modules
 import { db } from "./firebase"; // Replace with your Firebase setup
 
 const VideoViewer = () => {
@@ -18,6 +12,7 @@ const VideoViewer = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [videoQuestions, setVideoQuestions] = useState([]);
   const [showResume, setShowResume] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false); // State to control the signup modal visibility
 
   useEffect(() => {
     const fetchCandidate = async () => {
@@ -76,6 +71,16 @@ const VideoViewer = () => {
     setShowResume(!showResume);
   };
 
+  const handleRequestInterview = () => {
+    // Logic to show the signup modal
+    setShowSignupModal(true);
+  };
+
+  const closeSignupModal = () => {
+    // Logic to close the signup modal
+    setShowSignupModal(false);
+  };
+
   const emailDraft = () => {
     const { email, firstName, lastName } = candidate;
     const mailto = `mailto:${email}?subject=You've Been Drafted!&body=Hi ${firstName},%0D%0A%0D%0AWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.%0D%0A%0D%0ATime:%0D%0ADay:%0D%0AZoom / Hangout link:%0D%0A%0D%0ALet us know if this works. Looking forward!%0D%0A%0D%0ABest,%0D%0A%0D%0A[Your Name]`;
@@ -120,7 +125,7 @@ const VideoViewer = () => {
           {candidate.firstName || "N/A"} {candidate.lastName || "N/A"}
           <button
             className="draft-button"
-            onClick={emailDraft}
+            onClick={handleRequestInterview}
             aria-label="Draft candidate for interview"
             style={{
               backgroundColor: "#00BF63",
@@ -149,6 +154,17 @@ const VideoViewer = () => {
             Request Interview
           </button>
         </div>
+        {showSignupModal && (
+          <div className="signup-modal-overlay">
+            <div className="signup-modal">
+              <span className="close" onClick={closeSignupModal}>
+                &times;
+              </span>
+              <QuickRecruiterSignup candidateEmail={candidate.email} />{" "}
+              {/* Pass candidate email */}
+            </div>
+          </div>
+        )}
         <div className="video-resume-display" style={{ fontSize: "22px" }}>
           Video Resume
         </div>
@@ -218,9 +234,9 @@ const VideoViewer = () => {
             ) : (
               <button
                 className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={emailDraft}
+                onClick={handleRequestInterview}
               >
-                No Resume, Draft to Request
+                No Resume, Request Interview for Resume
               </button>
             )}
           </div>
