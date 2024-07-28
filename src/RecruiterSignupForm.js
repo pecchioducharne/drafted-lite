@@ -56,13 +56,20 @@ const RecruiterSignupForm = () => {
   const handleFinalUpload = async (values) => {
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
       if (user) {
         const functions = getFunctions();
-        const setRecruiterClaims = httpsCallable(functions, "setRecruiterClaims");
+        const setRecruiterClaims = httpsCallable(
+          functions,
+          "setRecruiterClaims"
+        );
         await setRecruiterClaims({ userId: user.uid });
-  
+
         const formData = {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -72,18 +79,20 @@ const RecruiterSignupForm = () => {
         };
         const userDataRef = doc(db, "recruiter-accounts", user.email);
         await setDoc(userDataRef, formData);
-        
+
         navigate("/viewer");
       } else {
         throw new Error("User creation failed");
       }
     } catch (error) {
       console.error("Error creating user:", error);
-      alert("There was an error completing the signup process. Please try again.");
+      alert(
+        "There was an error completing the signup process. Please try again."
+      );
       setLoading(false);
     }
   };
-  
+
   const logAttemptSignup = (email) => {
     logEvent(analytics, "attempted_recruiter_signup", { email });
   };
@@ -118,7 +127,7 @@ const RecruiterSignupForm = () => {
           }}
         >
           {(formik) => (
-            <Form>
+            <Form style={{ maxWidth: "850px", margin: "0 auto" }}>
               <Lottie
                 options={{
                   loop: true,
@@ -186,7 +195,7 @@ const RecruiterSignupForm = () => {
           }}
         >
           {(formik) => (
-            <Form>
+            <Form style={{ maxWidth: "850px", margin: "0 auto" }}>
               <Lottie
                 options={{
                   loop: true,
@@ -226,111 +235,116 @@ const RecruiterSignupForm = () => {
           )}
         </Formik>
       )}
-{step === 3 && (
-  <Formik
-    initialValues={{
-      firstName: "",
-      lastName: "",
-      companyName: "",
-      jobTitle: "",
-      companyURL: "",
-    }}
-    validationSchema={Yup.object({
-      firstName: Yup.string().required("First Name is required"),
-      lastName: Yup.string().required("Last Name is required"),
-      companyName: Yup.string().required("Company Name is required"),
-      jobTitle: Yup.string(),
-      companyURL: Yup.string(),
-    })}
-    onSubmit={async (values, { setSubmitting }) => {
-      setLoading(true);
-      try {
-        await handleFinalUpload(values);
-      } catch (error) {
-        setSubmitting(false);
-        setLoading(false);
-        logSignupError(values.email);
-        alert("There was an error during the signup process. Please try again.");
-      }
-    }}
-  >
-    {(formik) => (
-      <Form>
-        <Lottie
-          options={{
-            loop: true,
-            autoplay: true,
-            animationData: step1Animation,
+      {step === 3 && (
+        <Formik
+          initialValues={{
+            firstName: "",
+            lastName: "",
+            companyName: "",
+            jobTitle: "",
+            companyURL: "",
           }}
-          height={100}
-          width={100}
-        />
-        <h2>Tell us about your company</h2>
-        <label htmlFor="firstName">First Name * </label>
-        <Field
-          style={fieldStyle}
-          name="firstName"
-          type="text"
-          placeholder="Enter first name"
-        />
-        <ErrorMessage
-          name="firstName"
-          component="div"
-          style={errorStyle}
-        />
-        <label htmlFor="lasttName">Last Name * </label>
-        <Field
-          style={fieldStyle}
-          name="lastName"
-          type="text"
-          placeholder="Enter last name"
-        />
-        <ErrorMessage
-          name="lastName"
-          component="div"
-          style={errorStyle}
-        />
-        <label htmlFor="companyName">Company Name * </label>
-        <Field
-          style={fieldStyle}
-          name="companyName"
-          type="text"
-          placeholder="Enter company name"
-        />
-        <ErrorMessage
-          name="companyName"
-          component="div"
-          style={errorStyle}
-        />
-        <label htmlFor="jobTitle">Job Title * </label>
-        <Field
-          style={fieldStyle}
-          name="jobTitle"
-          type="text"
-          placeholder="Enter job title"
-        />
-        <label htmlFor="companyURL">Company Website * </label>
-        <Field
-          style={fieldStyle}
-          name="companyURL"
-          type="text"
-          placeholder="Enter company URL"
-        />
-        <button type="submit" style={buttonStyles} disabled={loading || formik.isSubmitting}>
-          {loading ? (
-            <span>
-              <ClipLoader size={20} color={"#fff"} loading={true} />
-              {" Completing Signup..."}
-            </span>
-          ) : (
-            "Complete Signup"
+          validationSchema={Yup.object({
+            firstName: Yup.string().required("First Name is required"),
+            lastName: Yup.string().required("Last Name is required"),
+            companyName: Yup.string().required("Company Name is required"),
+            jobTitle: Yup.string(),
+            companyURL: Yup.string(),
+          })}
+          onSubmit={async (values, { setSubmitting }) => {
+            setLoading(true);
+            try {
+              await handleFinalUpload(values);
+            } catch (error) {
+              setSubmitting(false);
+              setLoading(false);
+              logSignupError(values.email);
+              alert(
+                "There was an error during the signup process. Please try again."
+              );
+            }
+          }}
+        >
+          {(formik) => (
+            <Form style={{ maxWidth: "850px", margin: "0 auto" }}>
+              <Lottie
+                options={{
+                  loop: true,
+                  autoplay: true,
+                  animationData: step1Animation,
+                }}
+                height={100}
+                width={100}
+              />
+              <h2>Tell us about your company</h2>
+              <label htmlFor="firstName">First Name * </label>
+              <Field
+                style={fieldStyle}
+                name="firstName"
+                type="text"
+                placeholder="Enter first name"
+              />
+              <ErrorMessage
+                name="firstName"
+                component="div"
+                style={errorStyle}
+              />
+              <label htmlFor="lasttName">Last Name * </label>
+              <Field
+                style={fieldStyle}
+                name="lastName"
+                type="text"
+                placeholder="Enter last name"
+              />
+              <ErrorMessage
+                name="lastName"
+                component="div"
+                style={errorStyle}
+              />
+              <label htmlFor="companyName">Company Name * </label>
+              <Field
+                style={fieldStyle}
+                name="companyName"
+                type="text"
+                placeholder="Enter company name"
+              />
+              <ErrorMessage
+                name="companyName"
+                component="div"
+                style={errorStyle}
+              />
+              <label htmlFor="jobTitle">Job Title * </label>
+              <Field
+                style={fieldStyle}
+                name="jobTitle"
+                type="text"
+                placeholder="Enter job title"
+              />
+              <label htmlFor="companyURL">Company Website * </label>
+              <Field
+                style={fieldStyle}
+                name="companyURL"
+                type="text"
+                placeholder="Enter company URL"
+              />
+              <button
+                type="submit"
+                style={buttonStyles}
+                disabled={loading || formik.isSubmitting}
+              >
+                {loading ? (
+                  <span>
+                    <ClipLoader size={20} color={"#fff"} loading={true} />
+                    {" Completing Signup..."}
+                  </span>
+                ) : (
+                  "Complete Signup"
+                )}
+              </button>
+            </Form>
           )}
-        </button>
-      </Form>
-    )}
-  </Formik>
-)}
-
+        </Formik>
+      )}
     </div>
   );
 };
