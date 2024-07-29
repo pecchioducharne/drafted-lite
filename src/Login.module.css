@@ -1,10 +1,11 @@
 .loginContainer {
   font-family: 'Poppins', sans-serif;
+  font-size: x-large;
   background-color: white;
   color: #333;
   border-radius: 10px;
   padding: 30px;
-  max-width: 400px;
+  max-width: 800px;
   margin: 30px auto;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
@@ -19,6 +20,7 @@
 .inputField {
   margin-bottom: 20px;
   text-align: left;
+  font-size: larger;
   font-family: inherit; /* Use browser default font */
 }
 
@@ -26,6 +28,7 @@
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  font-size: large;
 }
 
 .input {
@@ -34,6 +37,7 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   box-sizing: border-box;
+  font-size: x-large;
   font-family: inherit; /* Use browser default font */
 }
 
@@ -44,6 +48,7 @@
   border-radius: 8px;
   padding: 10px 20px;
   font-family: 'Poppins', sans-serif;
+  font-size: large;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
