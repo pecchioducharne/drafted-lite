@@ -13,6 +13,7 @@ const VideoViewer = () => {
   const [videoQuestions, setVideoQuestions] = useState([]);
   const [showResume, setShowResume] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false); // State to control the signup modal visibility
+  const [videoLoading, setVideoLoading] = useState(true); // State to track video loading
 
   useEffect(() => {
     const fetchCandidate = async () => {
@@ -102,20 +103,36 @@ const VideoViewer = () => {
         </div>
         <div className="video-resume-container">
           {videoUrls[currentVideoIndex] ? (
-            <ReactPlayer
-              url={videoUrls[currentVideoIndex]}
-              controls={true}
-              width="100%"
-              height="100%"
-              autoplay={false}
-              onEnded={handleVideoEnd}
-              config={{
-                youtube: {
-                  playerVars: { vq: "small" },
-                },
-              }}
-              style={{ position: "absolute", top: 0, left: 0 }}
-            />
+            <div className="video-player-wrapper">
+              <ReactPlayer
+                url={videoUrls[currentVideoIndex]}
+                controls={true}
+                width="100%"
+                height="100%"
+                autoplay={false}
+                onEnded={handleVideoEnd}
+                onReady={() => setVideoLoading(false)} // Set loading to false when video is ready
+                config={{
+                  youtube: {
+                    playerVars: { vq: "small" },
+                  },
+                }}
+                style={{ position: "absolute", top: 0, left: 0 }}
+              />
+              {videoLoading && (
+                <div className="video-loading-overlay">
+                  <p>Loading...</p>
+                </div>
+              )}
+              {/* {!videoLoading && (
+                <button
+                  className="play-button"
+                  onClick={() => handleVideoButtonClick(currentVideoIndex)}
+                >
+                  Play Video
+                </button>
+              )} */}
+            </div>
           ) : (
             <p>No video available</p>
           )}
