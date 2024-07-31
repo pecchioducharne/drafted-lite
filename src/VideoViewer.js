@@ -104,10 +104,10 @@ const VideoViewer = () => {
           {videoUrls[currentVideoIndex] ? (
             <ReactPlayer
               url={videoUrls[currentVideoIndex]}
-              playing={true}
               controls={true}
               width="100%"
               height="100%"
+              autoplay={false}
               onEnded={handleVideoEnd}
               config={{
                 youtube: {
