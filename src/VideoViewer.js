@@ -111,7 +111,8 @@ const VideoViewer = () => {
                 height="100%"
                 autoplay={false}
                 onEnded={handleVideoEnd}
-                onReady={() => setVideoLoading(false)} // Set loading to false when video is ready
+                onReady={() => setVideoLoading(false)}
+                playsinline={true} // Add playsinline attribute to prevent full-screen mode on mobile
                 config={{
                   youtube: {
                     playerVars: { vq: "small" },
