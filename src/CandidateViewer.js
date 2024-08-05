@@ -628,7 +628,7 @@ const CandidateViewer = ({
                 <li>Filter candidates to find your next hire quickly</li>
                 <li>Easily view candidate information</li>
                 <li>
-                  Click "Draft" to get pre-filled email directly to candidate to
+                  Click "Request Interview" to get pre-filled email directly to candidate to
                   schedule first interview
                 </li>
               </p>
