@@ -53,6 +53,7 @@ const RecruiterSignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [signupError, setSignupError] = useState("");
 
   // Init email sender
   emailjs.init("1Ot5eCgFqaYhbo0bx");
@@ -93,9 +94,15 @@ const RecruiterSignupForm = () => {
       }
     } catch (error) {
       console.error("Error creating user:", error);
-      alert(
-        "There was an error completing the signup process. Please try again."
-      );
+      if (error.code === "auth/email-already-in-use") {
+        setSignupError(
+          "Email is already in use. Please choose a different one."
+        );
+      } else {
+        setSignupError(
+          "There was an error completing the signup process. Please try again."
+        );
+      }
       setLoading(false);
     }
   };
@@ -372,6 +379,11 @@ const RecruiterSignupForm = () => {
                   "Complete Signup"
                 )}
               </button>
+              {signupError && (
+                <p style={{ color: "red", marginBottom: "10px" }}>
+                  {signupError}
+                </p>
+              )}
             </Form>
           )}
         </Formik>
