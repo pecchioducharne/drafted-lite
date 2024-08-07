@@ -189,10 +189,10 @@ const Login = () => {
           className={styles.input}
         />
       </div>
+      <br></br>
       <button type="submit" onClick={handleSubmit} className={styles.button}>
         Login
       </button>
-      <br></br>
       <button
         type="button"
         onClick={handlePasswordReset}

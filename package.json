@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@vidstack/player-react": "^1.6.0",
     "autoprefixer": "^10.4.16",
+    "emailjs-com": "^3.2.0",
     "firebase": "^10.11.1",
     "formik": "^2.4.6",
     "postcss": "^8.4.32",
