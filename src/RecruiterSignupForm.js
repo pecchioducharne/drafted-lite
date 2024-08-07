@@ -78,7 +78,7 @@ const RecruiterSignupForm = () => {
         const formData = {
           firstName: values.firstName,
           lastName: values.lastName,
-          email: email,
+          email: user.email,
           companyName: values.companyName,
           jobTitle: values.jobTitle,
           companyURL: values.companyURL,
@@ -379,7 +379,7 @@ const RecruiterSignupForm = () => {
                   "Complete Signup"
                 )}
               </button>
-              <br></br>
+              <br>
               {signupError && (
                 <p style={{ color: "red", marginBottom: "10px" }}>
                   {signupError}
