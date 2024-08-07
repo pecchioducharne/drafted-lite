@@ -15,6 +15,7 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 import { logEvent } from "firebase/analytics";
 import { ClipLoader } from "react-spinners";
 import "./RecruiterSignupForm.css";
+import emailjs from "emailjs-com";
 
 const buttonStyles = {
   borderRadius: "8px",
@@ -53,6 +54,9 @@ const RecruiterSignupForm = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Init email sender
+  emailjs.init("1Ot5eCgFqaYhbo0bx");
+
   const handleFinalUpload = async (values) => {
     setLoading(true);
     try {
@@ -73,12 +77,15 @@ const RecruiterSignupForm = () => {
         const formData = {
           firstName: values.firstName,
           lastName: values.lastName,
+          email: values.email,
           companyName: values.companyName,
           jobTitle: values.jobTitle,
           companyURL: values.companyURL,
         };
         const userDataRef = doc(db, "recruiter-accounts", user.email);
         await setDoc(userDataRef, formData);
+
+        await sendWelcomeEmail(user.email);
 
         navigate("/viewer");
       } else {
@@ -107,6 +114,30 @@ const RecruiterSignupForm = () => {
 
   const navigateToCandidateSignup = () => {
     window.location.href = "https://drafted-onboarding.netlify.app/";
+  };
+
+  const sendWelcomeEmail = async (email) => {
+    try {
+      await emailjs.send("drafted_service", "recruiter_template", {
+        to_email: email,
+      });
+
+      // Handle success
+      console.log("Email sent successfully!");
+      console.log("Email: " + email);
+
+      // Optionally track email sent event using GA4
+      ReactGA4.event({
+        category: "Email",
+        action: "Sent Welcome Email",
+        label: "Welcome Email Sent",
+      });
+    } catch (error) {
+      console.error("Error sending email:", error);
+      alert("Failed to send email. Please try again later.");
+    } finally {
+      // setIsLoading(false); // Set loading to false after email attempt
+    }
   };
 
   return (
