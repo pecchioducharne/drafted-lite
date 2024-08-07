@@ -78,7 +78,7 @@ const RecruiterSignupForm = () => {
         const formData = {
           firstName: values.firstName,
           lastName: values.lastName,
-          email: values.email,
+          email: email,
           companyName: values.companyName,
           jobTitle: values.jobTitle,
           companyURL: values.companyURL,
