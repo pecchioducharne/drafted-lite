@@ -48,6 +48,7 @@ const CandidateViewer = ({
     university: [],
     major: [],
     graduationYear: [],
+    skills: [],
   });
   const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
   const navigate = useNavigate();
@@ -153,8 +154,13 @@ const CandidateViewer = ({
         const matchesGradYear =
           filters.graduationYear.length === 0 ||
           filters.graduationYear.includes(candidate.graduationYear.toString());
+        const matchesSkills =
+          filters.skills.length === 0 ||
+          candidate.skills?.some((skill) => filters.skills.includes(skill));
 
-        return matchesUniversity && matchesMajor && matchesGradYear;
+        return (
+          matchesUniversity && matchesMajor && matchesGradYear && matchesSkills
+        );
       });
 
       shuffleArray(newFilteredCandidates);
@@ -205,7 +211,14 @@ const CandidateViewer = ({
       const matchesGradYear =
         !filters.graduationYear.length ||
         filters.graduationYear.includes(candidate.graduationYear.toString());
-      return matchesUniversity && matchesMajor && matchesGradYear;
+      const matchesSkills =
+        !filters.skills.length ||
+        (candidate.skills &&
+          candidate.skills.some((skill) => filters.skills.includes(skill)));
+
+      return (
+        matchesUniversity && matchesMajor && matchesGradYear && matchesSkills
+      );
     });
   };
 
@@ -306,13 +319,19 @@ const CandidateViewer = ({
   const uniqueUniversities = [
     ...new Set(candidates.map((candidate) => candidate.university)),
   ].sort();
+
   const uniqueMajors = [
     ...new Set(candidates.map((candidate) => candidate.major)),
   ].sort();
+
   const uniqueGraduationYears = [
     ...new Set(
       candidates.map((candidate) => candidate.graduationYear.toString())
     ),
+  ].sort();
+
+  const uniqueSkills = [
+    ...new Set(candidates.flatMap((candidate) => candidate.skills || [])),
   ].sort();
 
   const executeSearch = () => {
@@ -322,8 +341,16 @@ const CandidateViewer = ({
       const matchesQuery =
         candidate.university.toLowerCase().includes(lowerQuery) ||
         candidate.major.toLowerCase().includes(lowerQuery) ||
-        candidate.graduationYear.toString().toLowerCase().includes(lowerQuery);
+        candidate.graduationYear
+          .toString()
+          .toLowerCase()
+          .includes(lowerQuery) ||
+        (candidate.skills &&
+          candidate.skills.some((skill) =>
+            skill.toLowerCase().includes(lowerQuery)
+          ));
 
+      // Filter conditions based on selected filters
       const matchesUniversity =
         !filters.university.length ||
         filters.university.includes(candidate.university);
@@ -332,12 +359,17 @@ const CandidateViewer = ({
       const matchesGraduationYear =
         !filters.graduationYear.length ||
         filters.graduationYear.includes(candidate.graduationYear.toString());
+      const matchesSkills =
+        !filters.skills.length ||
+        (candidate.skills &&
+          candidate.skills.some((skill) => filters.skills.includes(skill)));
 
       return (
         matchesQuery &&
         matchesUniversity &&
         matchesMajor &&
-        matchesGraduationYear
+        matchesGraduationYear &&
+        matchesSkills
       );
     });
 
@@ -369,7 +401,6 @@ const CandidateViewer = ({
     executeSearch(); // Execute search with reset state to return to "home page" view
     onLogoClick(); // Call the function when the home icon is clicked
   };
-
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -377,21 +408,38 @@ const CandidateViewer = ({
     if (query.length > 1) {
       const universities = new Set();
       const majors = new Set();
+      const skills = new Set();
+
       candidates.forEach((candidate) => {
+        // Check university
         if (candidate.university.toLowerCase().includes(query.toLowerCase())) {
           universities.add(candidate.university);
         }
+        // Check major
         if (candidate.major.toLowerCase().includes(query.toLowerCase())) {
           majors.add(candidate.major);
         }
+        // Check skills
+        if (candidate.skills) {
+          candidate.skills.forEach((skill) => {
+            if (skill.toLowerCase().includes(query.toLowerCase())) {
+              skills.add(skill);
+            }
+          });
+        }
       });
 
+      // Combine suggestions
       const universitySuggestions = Array.from(universities);
       const majorSuggestions = Array.from(majors);
+      const skillSuggestions = Array.from(skills);
+
       const combinedSuggestions = [
         ...universitySuggestions,
         ...majorSuggestions,
-      ].slice(0, 5);
+        ...skillSuggestions,
+      ].slice(0, 5); // Limit suggestions to 5 items
+
       setSuggestions(combinedSuggestions);
     } else {
       setSuggestions([]);
@@ -403,15 +451,23 @@ const CandidateViewer = ({
     setSuggestions([]);
 
     const lowerSuggestion = suggestion.toLowerCase();
-    const filtered = candidates.filter(
-      (candidate) =>
-        candidate.university.toLowerCase().includes(lowerSuggestion) ||
-        candidate.major.toLowerCase().includes(lowerSuggestion) ||
-        candidate.graduationYear
-          .toString()
-          .toLowerCase()
-          .includes(lowerSuggestion)
-    );
+    const filtered = candidates.filter((candidate) => {
+      const universityMatch = candidate.university
+        .toLowerCase()
+        .includes(lowerSuggestion);
+      const majorMatch = candidate.major
+        .toLowerCase()
+        .includes(lowerSuggestion);
+      const gradYearMatch = candidate.graduationYear
+        .toString()
+        .toLowerCase()
+        .includes(lowerSuggestion);
+      const skillsMatch = candidate.skills?.some((skill) =>
+        skill.toLowerCase().includes(lowerSuggestion)
+      );
+
+      return universityMatch || majorMatch || gradYearMatch || skillsMatch;
+    });
 
     setFilteredCandidates(filtered);
     setShowGridView(true);
@@ -599,7 +655,7 @@ const CandidateViewer = ({
         <div className="search-container">
           <input
             type="text"
-            placeholder="Search by university, major, grad year..."
+            placeholder="Search by university, major, grad year, or skills..."
             value={searchQuery}
             onChange={handleSearchChange}
             className="search-bar"
@@ -671,6 +727,17 @@ const CandidateViewer = ({
               setFilters((prevFilters) => ({
                 ...prevFilters,
                 graduationYear: selected,
+              }))
+            }
+          />
+          <FilterOptions
+            title="Skills"
+            options={uniqueSkills}
+            selectedOptions={filters.skills}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                skills: selected,
               }))
             }
           />
@@ -906,6 +973,14 @@ const CandidateViewer = ({
           onSelect={(selected) =>
             handleFilterChange("graduationYear", selected)
           }
+        />
+        <FilterOptions
+          title="Skills"
+          options={Array.from(
+            new Set(candidates.flatMap((c) => c.skills || []))
+          )}
+          selectedOptions={filters.skills}
+          onSelect={(selected) => handleFilterChange("skills", selected)}
         />
       </div>
 
