@@ -379,7 +379,7 @@ const RecruiterSignupForm = () => {
                   "Complete Signup"
                 )}
               </button>
-              <br>
+              <br></br>
               {signupError && (
                 <p style={{ color: "red", marginBottom: "10px" }}>
                   {signupError}
