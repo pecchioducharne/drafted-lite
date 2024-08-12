@@ -628,8 +628,8 @@ const CandidateViewer = ({
                 <li>Filter candidates to find your next hire quickly</li>
                 <li>Easily view candidate information</li>
                 <li>
-                  Click "Request Interview" to get pre-filled email directly to candidate to
-                  schedule first interview
+                  Click "Request Interview" to get pre-filled email directly to
+                  candidate to schedule first interview
                 </li>
               </p>
             </ul>
@@ -997,11 +997,19 @@ const CandidateViewer = ({
                 {candidate.major}
               </p>
             </div>
+            {candidate.skills && candidate.skills.length > 0 && (
+              <div className="profile-field">
+                <strong>Skills</strong>{" "}
+                <p className="candidate-skills">
+                  {candidate.skills.join(", ")}
+                </p>
+              </div>
+            )}
             <div className="profile-field">
               <strong>LinkedIn</strong>{" "}
               <a
                 href={candidate.linkedInURL}
-                className="candidate-major clickable-filter"
+                className="candidate-linkedin clickable-filter"
                 target="_blank"
               >
                 {candidate.linkedInURL}
@@ -1010,7 +1018,7 @@ const CandidateViewer = ({
             <div className="profile-field">
               <strong>Graduation Year</strong>{" "}
               <p
-                className="candidate-major clickable-filter"
+                className="candidate-grad-year clickable-filter"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleGradYearClickFromVideo(candidate.graduationYear);
@@ -1038,6 +1046,7 @@ const CandidateViewer = ({
               )}
             </div>
           </div>
+
           <div className="button-group">
             <button
               className="draft-button"
