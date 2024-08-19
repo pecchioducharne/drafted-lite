@@ -94,6 +94,7 @@ const CandidateViewer = ({
   const [openFilterCategories, setOpenFilterCategories] = useState([]); // Now an array to track multiple open categories
 
   const FilterOptions = ({ title, options, selectedOptions, onSelect }) => {
+    selectedOptions = selectedOptions || [];
     const handleSelect = (option) => {
       const isSelected = selectedOptions.includes(option);
       if (isSelected) {
@@ -155,8 +156,10 @@ const CandidateViewer = ({
           filters.graduationYear.length === 0 ||
           filters.graduationYear.includes(candidate.graduationYear.toString());
         const matchesSkills =
-          filters.skills.length === 0 ||
-          candidate.skills?.some((skill) => filters.skills.includes(skill));
+          (filters.skills || []).length === 0 ||
+          (candidate.skills || []).some((skill) =>
+            filters.skills.includes(skill)
+          );
 
         return (
           matchesUniversity && matchesMajor && matchesGradYear && matchesSkills
@@ -202,6 +205,8 @@ const CandidateViewer = ({
   }, [filters, candidates]);
 
   const applyFilters = () => {
+    console.log("Filters:", filters); // Add this line to debug
+
     return candidates.filter((candidate) => {
       const matchesUniversity =
         !filters.university.length ||
@@ -212,6 +217,7 @@ const CandidateViewer = ({
         !filters.graduationYear.length ||
         filters.graduationYear.includes(candidate.graduationYear.toString());
       const matchesSkills =
+        !filters.skills ||
         !filters.skills.length ||
         (candidate.skills &&
           candidate.skills.some((skill) => filters.skills.includes(skill)));
@@ -341,26 +347,22 @@ const CandidateViewer = ({
       const matchesQuery =
         candidate.university.toLowerCase().includes(lowerQuery) ||
         candidate.major.toLowerCase().includes(lowerQuery) ||
-        candidate.graduationYear
-          .toString()
-          .toLowerCase()
-          .includes(lowerQuery) ||
-        (candidate.skills &&
-          candidate.skills.some((skill) =>
-            skill.toLowerCase().includes(lowerQuery)
-          ));
+        candidate.graduationYear.toString().toLowerCase().includes(lowerQuery);
 
-      // Filter conditions based on selected filters
       const matchesUniversity =
         !filters.university.length ||
         filters.university.includes(candidate.university);
+
       const matchesMajor =
         !filters.major.length || filters.major.includes(candidate.major);
-      const matchesGraduationYear =
+
+      const matchesGradYear =
         !filters.graduationYear.length ||
         filters.graduationYear.includes(candidate.graduationYear.toString());
+
       const matchesSkills =
-        !filters.skills.length ||
+        !filters.skills ||
+        filters.skills.length === 0 ||
         (candidate.skills &&
           candidate.skills.some((skill) => filters.skills.includes(skill)));
 
@@ -368,14 +370,13 @@ const CandidateViewer = ({
         matchesQuery &&
         matchesUniversity &&
         matchesMajor &&
-        matchesGraduationYear &&
+        matchesGradYear &&
         matchesSkills
       );
     });
 
-    shuffleArray(newFilteredCandidates);
     setFilteredCandidates(newFilteredCandidates);
-    setShowGridView(true); // Show grid view after search
+    setShowGridView(true);
   };
 
   useEffect(() => {
