@@ -1080,16 +1080,33 @@ const CandidateViewer = ({
                 </p>
               </div>
             )}
-            <div className="profile-field">
-              <strong>LinkedIn</strong>{" "}
-              <a
-                href={candidate.linkedInURL}
-                className="candidate-linkedin clickable-filter"
-                target="_blank"
-              >
-                {candidate.linkedInURL}
-              </a>
-            </div>
+            {candidate.linkedInURL && (
+              <div className="profile-field">
+                <strong>LinkedIn</strong>{" "}
+                <a
+                  href={candidate.linkedInURL}
+                  className="candidate-linkedin clickable-filter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {candidate.linkedInURL}
+                </a>
+              </div>
+            )}
+
+            {candidate.gitHubURL && (
+              <div className="profile-field">
+                <strong>GitHub</strong>{" "}
+                <a
+                  href={candidate.gitHubURL}
+                  className="candidate-linkedin clickable-filter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {candidate.gitHubURL}
+                </a>
+              </div>
+            )}
             <div className="profile-field">
               <strong>Graduation Year</strong>{" "}
               <p
