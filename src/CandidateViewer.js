@@ -1012,6 +1012,7 @@ const CandidateViewer = ({
                 width="100%"
                 height="100%"
                 onEnded={handleVideoEnd}
+                playsinline={true} // Add playsinline attribute to prevent full-screen mode on mobile
                 config={{
                   youtube: {
                     playerVars: { vq: "small" },
