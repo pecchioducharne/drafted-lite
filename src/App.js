@@ -38,9 +38,7 @@ const App = () => {
             <Route path="/quick" element={<QuickRecruiterSignup />} />
             <Route path="/candidate/:id" element={<VideoViewer />} />
             <Route path="/code" element={<CodePage />} />{" "}
-            {/* Add route for CodePage */}
             <Route path="/" element={<Login />} />
-            {/* Additional routes can be added here as needed */}
           </Routes>
         </div>
       </UserProvider>
