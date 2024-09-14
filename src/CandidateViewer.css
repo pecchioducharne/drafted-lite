@@ -634,6 +634,81 @@ logo-header {
   text-align: left;
 }
 
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px; /* Increase max-width to fit the email content */
+  position: relative;
+  overflow: auto; /* Ensure that the content can scroll if needed */
+}
+
+.email-address-container,
+.email-content-container {
+  background: #f0f0f0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.email-address {
+  margin: 0;
+  font-weight: bold;
+}
+
+.email-textarea {
+  width: 100%;
+  height: 300px; /* Increase height to accommodate larger emails */
+  border: none;
+  background: #f0f0f0;
+  resize: none;
+}
+
+.copy-button {
+  background: #00BF63;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: block; /* Ensure buttons are on separate lines */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  border: none;
+  width: 40px; /* Set width */
+  height: 40px; /* Set height */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px; /* Set font size to fit */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center; /* Ensure text is centered */
+  z-index: 1000; /* Ensure it is above other content */
+}
+
+
 .video-resume-display {
   font-size: 1.2em;
   /* Large font size */

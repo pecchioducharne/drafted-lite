@@ -37,6 +37,8 @@ const CandidateViewer = ({
   const [showPopup, setPopup] = useState(true); // Initialize to true to show popup on load
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
+  const [showEmailPopup, setEmailPopup] = useState(false);
+  const [emailContent, setEmailContent] = useState("");
   const [showGridView, setShowGridView] = useState(() => {
     const storedView = sessionStorage.getItem("showGridView");
     return storedView ? JSON.parse(storedView) : initialShowGridView;
@@ -103,6 +105,7 @@ const CandidateViewer = ({
         onSelect([...selectedOptions, option]);
       }
     };
+
     // Check if this filter category is open
     const showOptions = openFilterCategories.includes(title);
 
@@ -534,8 +537,9 @@ const CandidateViewer = ({
   const emailDraft = () => {
     if (filteredCandidates.length > 0) {
       const { email, firstName, lastName } = filteredCandidates[currentIndex];
-      const mailto = `mailto:${email}?subject=You've Been Drafted!&body=Hi ${firstName},%0D%0A%0D%0AWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.%0D%0A%0D%0ATime:%0D%0ADay:%0D%0AZoom / Hangout link:%0D%0A%0D%0ALet us know if this works. Looking forward!%0D%0A%0D%0ABest,%0D%0A%0D%0A[Your Name]`;
-      window.location.href = mailto;
+      const content = `Hi ${firstName},\n\nWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.\n\nTime:\nDay:\nZoom / Hangout link:\n\nLet us know if this works. Looking forward!\n\nBest,\n\n[Your Name]`;
+      setEmailContent(content);
+      setEmailPopup(true);
     }
   };
 
@@ -622,6 +626,43 @@ const CandidateViewer = ({
     setFilters({ university: [], major: [], graduationYear: [gradYear] });
     setShowGridView(true); // Go back to the grid/homepage view
     setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
+  };
+
+  const EmailPopup = ({ emailContent, onClose }) => {
+    const { email } = filteredCandidates[currentIndex]; // Assuming you have access to this
+
+    const handleCopy = (text) => {
+      navigator.clipboard.writeText(text);
+    };
+
+    return (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <button className="close-button" onClick={onClose}>
+            X
+          </button>
+          <div className="email-address-container">
+            <p className="email-address">{email}</p>
+          </div>
+          <button className="copy-button" onClick={() => handleCopy(email)}>
+            Copy Email Address
+          </button>
+          <div className="email-content-container">
+            <textarea
+              readOnly
+              value={emailContent}
+              className="email-textarea"
+            />
+          </div>
+          <button
+            className="copy-button"
+            onClick={() => handleCopy(emailContent)}
+          >
+            Copy Email Content
+          </button>
+        </div>
+      </div>
+    );
   };
 
   // Show grid view of candidates with videos
@@ -1208,6 +1249,12 @@ const CandidateViewer = ({
               </div>
             );
           })}
+          {showEmailPopup && (
+            <EmailPopup
+              emailContent={emailContent}
+              onClose={() => setEmailPopup(false)}
+            />
+          )}
         </div>
       </div>
 
