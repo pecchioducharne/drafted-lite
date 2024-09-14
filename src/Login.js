@@ -129,7 +129,7 @@ const Login = () => {
   };
 
   const navigateToSignup = async () => {
-    navigate("/signup");
+    navigate("/code");
   };
 
   const navigateToCandidateSignIn = () => {
