@@ -1,0 +1,14 @@
+/* styles.module.css */
+.container {
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center; /* Centers content vertically */
+    height: 100vh; /* Full viewport height for demonstration */
+  }
+  
+  .input {
+    width: 250px; /* Adjust width as needed */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

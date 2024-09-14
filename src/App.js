@@ -4,8 +4,8 @@ import CandidateViewer from "./CandidateViewer";
 import VideoViewer from "./VideoViewer";
 import RecruiterSignupForm from "./RecruiterSignupForm";
 import QuickRecruiterSignup from "./QuickRecruiterSignup";
-
 import Login from "./Login";
+import CodePage from "./CodePage"; // Import CodePage component
 import { UserProvider } from "./UserContext";
 
 const App = () => {
@@ -37,6 +37,8 @@ const App = () => {
             <Route path="/signup" element={<RecruiterSignupForm />} />
             <Route path="/quick" element={<QuickRecruiterSignup />} />
             <Route path="/candidate/:id" element={<VideoViewer />} />
+            <Route path="/code" element={<CodePage />} />{" "}
+            {/* Add route for CodePage */}
             <Route path="/" element={<Login />} />
             {/* Additional routes can be added here as needed */}
           </Routes>
