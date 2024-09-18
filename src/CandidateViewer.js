@@ -1258,49 +1258,6 @@ const CandidateViewer = ({
         </div>
       </div>
 
-      {/* <div className="info-section">
-        <div className="profile-field">
-          <strong>University:</strong> {candidate.university}
-        </div>
-        <div className="profile-field">
-          <strong>Major:</strong> {candidate.major}
-        </div>
-        <div className="profile-field">
-          <strong>LinkedIn:</strong>{" "}
-          <a href={candidate.linkedInURL} target="_blank">
-            {candidate.linkedInURL}
-          </a>
-        </div>
-        <div className="profile-field">
-          <strong>Graduation Year:</strong> {candidate.graduationYear}
-        </div>
-        <div className="profile-field">
-          <strong>Resume:</strong>
-          <button
-            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
-            onClick={handleToggleResume}
-          >
-            View Resume
-          </button>
-        </div>
-      </div> */}
-
-      {/* <div className="button-group">
-        <button
-          className="bg-customGreen hover:bg-customGreenDark text-white font-bold py-2 px-4 rounded"
-          onClick={emailDraft}
-        >
-          Draft
-        </button>
-      </div> */}
-
-      {/* <div className="join-message">
-        <a href="https://drafted-recruiter.webflow.io/sign-up" target="_blank">
-          Want to discover more candidates and filter by university, major, and
-          grad year? Join Drafted
-        </a>
-      </div> */}
-
       {showResume && (
         <div className="resume-popup">
           <iframe

@@ -14,6 +14,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 import { logEvent } from "firebase/analytics";
 import { ClipLoader } from "react-spinners";
+import { v4 as uuidv4 } from "uuid";
 import "./RecruiterSignupForm.css";
 import emailjs from "emailjs-com";
 
@@ -58,16 +59,23 @@ const RecruiterSignupForm = () => {
   // Init email sender
   emailjs.init("1Ot5eCgFqaYhbo0bx");
 
+  const generateCode = () => {
+    return uuidv4().slice(0, 6).toLowerCase(); // Generates a 6-character code
+  };
+
   const handleFinalUpload = async (values) => {
     setLoading(true);
     try {
+      // Create the user
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
       const user = userCredential.user;
+
       if (user) {
+        // Set recruiter claims
         const functions = getFunctions();
         const setRecruiterClaims = httpsCallable(
           functions,
@@ -75,6 +83,17 @@ const RecruiterSignupForm = () => {
         );
         await setRecruiterClaims({ userId: user.uid });
 
+        // Generate invitation codes
+        const codes = [];
+        for (let i = 0; i < 3; i++) {
+          const code = generateCode();
+          codes.push(code);
+
+          // Save each code in the invitationCodes collection
+          await setDoc(doc(db, "invitationCodes", code), { used: false });
+        }
+
+        // Prepare form data with codes
         const formData = {
           firstName: values.firstName,
           lastName: values.lastName,
@@ -82,10 +101,14 @@ const RecruiterSignupForm = () => {
           companyName: values.companyName,
           jobTitle: values.jobTitle,
           companyURL: values.companyURL,
+          invitationCodes: codes, // Save codes in recruiter-accounts
         };
+
+        // Save the user data
         const userDataRef = doc(db, "recruiter-accounts", user.email);
         await setDoc(userDataRef, formData);
 
+        // Send a welcome email
         await sendWelcomeEmail(user.email);
 
         navigate("/viewer");

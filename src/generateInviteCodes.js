@@ -34,6 +34,7 @@ const generateMultipleCodes = async (count) => {
 
   for (let i = 0; i < count; i++) {
     const code = generateCode();
+    console.log(code + "\n");
     const codeRef = doc(codesCollection, code);
     batch.set(codeRef, { used: false }); // Each code has a `used` field
   }
