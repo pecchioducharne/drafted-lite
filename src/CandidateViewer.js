@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { useSwipeable } from "react-swipeable";
 import "./CandidateViewer.css";
 import recordGif from "./record.gif";
@@ -29,6 +29,9 @@ const CandidateViewer = ({
   onLogoClick,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [user, setUser] = useState(null);
+  const [codes, setCodes] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   const [filteredCandidates, setFilteredCandidates] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -74,6 +77,37 @@ const CandidateViewer = ({
       localStorage.setItem("hasSeenPopup", "true");
     }
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription on unmount
+  }, [auth]);
+
+  useEffect(() => {
+    const fetchCodes = async () => {
+      if (user) {
+        try {
+          const userRef = doc(db, "recruiter-accounts", user.email);
+          const userDoc = await getDoc(userRef);
+          if (userDoc.exists()) {
+            console.log("Invitation codes: " + userDoc.data().invitationCodes);
+            setCodes(userDoc.data().invitationCodes);
+          }
+        } catch (error) {
+          console.error("Error fetching codes:", error);
+        }
+      }
+    };
+
+    fetchCodes();
+  }, [user]);
 
   // Set the persistence before calling signInWithEmailAndPassword
   setPersistence(auth, browserSessionPersistence)
