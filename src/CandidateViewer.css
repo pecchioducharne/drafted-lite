@@ -646,6 +646,33 @@ logo-header {
   align-items: center;
 }
 
+.invite-codes-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.invite-codes-popup h3 {
+  margin-top: 0;
+}
+
+.invite-codes-popup ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.invite-codes-popup li {
+  margin: 5px 0;
+}
+
+
 .popup-content {
   background: white;
   padding: 20px;
@@ -970,6 +997,85 @@ logo-header {
   width: 100%;
   /* Ensures the container takes the full width */
 }
+
+.invite-button,
+.close-button {
+  background-color: #00BF63; /* Adjust color as needed */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  margin: 0 5px; /* Equal margin for both buttons */
+  width: flex; /* Fixed width */
+  box-sizing: border-box; /* Include padding and border in the width */
+  text-align: center;
+  transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+.invite-button:hover,
+.close-button:hover {
+  background-color: #009b4d; /* Darker shade for hover effect */
+}
+
+.invite-codes-popup {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 400px; /* Adjust width as necessary */
+  max-width: 90%; /* Responsive */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.invite-codes-popup h3 {
+  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+.invite-codes-popup p {
+  margin-bottom: 20px;
+  color: #666;
+  font-size: 14px;
+}
+
+.code-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between code blocks */
+}
+
+.code-block {
+  background-color: #f5f5f5; /* Light gray background */
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.copy-button {
+  background-color: #00BF63; /* Same color as other buttons */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.copy-button:hover {
+  background-color: #009b4d; /* Darker shade for hover effect */
+}
+
 
 .profile-value a {
   color: #00BF63;

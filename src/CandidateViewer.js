@@ -40,6 +40,7 @@ const CandidateViewer = ({
   const [showPopup, setPopup] = useState(true); // Initialize to true to show popup on load
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
+  const [showInviteCodes, setShowInviteCodes] = useState(false);
   const [showEmailPopup, setEmailPopup] = useState(false);
   const [emailContent, setEmailContent] = useState("");
   const [showGridView, setShowGridView] = useState(() => {
@@ -58,6 +59,10 @@ const CandidateViewer = ({
   const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
+
+  const toggleInviteCodesPopup = () => {
+    setShowInviteCodes(!showInviteCodes);
+  };
 
   const handlers = useSwipeable({
     onSwipedLeft: () => handleNext(),
@@ -662,6 +667,17 @@ const CandidateViewer = ({
     setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
   };
 
+  const copyCode = (code) => {
+    navigator.clipboard
+      .writeText(code)
+      .then(() => {
+        alert("Invite code copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+  };
+
   const EmailPopup = ({ emailContent, onClose }) => {
     const { email } = filteredCandidates[currentIndex]; // Assuming you have access to this
 
@@ -736,6 +752,13 @@ const CandidateViewer = ({
             onChange={handleSearchChange}
             className="search-bar"
           />
+          <button
+            onClick={toggleInviteCodesPopup}
+            className="navigation-button"
+          >
+            Show Invite Codes
+          </button>
+
           {suggestions.length > 0 && (
             <ul className="suggestions">
               {suggestions.map((suggestion, index) => (
@@ -770,6 +793,35 @@ const CandidateViewer = ({
               className="navigation-button"
               onClick={() => setPopup(false)}
             >
+              Close
+            </button>
+          </div>
+        )}
+
+        {showInviteCodes && (
+          <div className="invite-codes-popup">
+            <h3>
+              <strong>Your Unique Invite Codes</strong>
+            </h3>
+            <p>
+              These are unique, one-use invite codes for other startups to draft
+              candidates using Drafted. Share them wisely!
+            </p>
+            <div className="code-container">
+              {codes.map((code, index) => (
+                <div key={index} className="code-block">
+                  <span>{code}</span>
+                  <button
+                    className="navigation-button"
+                    onClick={() => copyCode(code)}
+                  >
+                    Copy
+                  </button>
+                </div>
+              ))}
+            </div>
+            <br />
+            <button onClick={toggleInviteCodesPopup} className="navigation-button">
               Close
             </button>
           </div>
