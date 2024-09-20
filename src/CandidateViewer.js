@@ -799,7 +799,7 @@ const CandidateViewer = ({
           </div>
         )}
 
-        {showInviteCodes && codes.length > 0 (
+        {showInviteCodes && codes.length > 0  && (
           <div className="invite-codes-popup">
             <h3>
               <strong>Your Unique Invite Codes</strong>
