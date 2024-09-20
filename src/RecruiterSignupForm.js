@@ -172,6 +172,8 @@ const RecruiterSignupForm = () => {
 
   return (
     <div>
+      <br></br>
+      <br></br>
       {step === 1 && (
         <Formik
           initialValues={{ email: "" }}
