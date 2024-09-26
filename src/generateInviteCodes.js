@@ -5,7 +5,6 @@ const {
   doc,
   writeBatch,
 } = require("firebase/firestore");
-const { v4: uuidv4 } = require("uuid");
 
 // Your Firebase configuration
 const firebaseConfig = {

@@ -22,29 +22,40 @@
   max-width: 70%;
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: 0; /* Make sure there is no extra top margin */
+  margin-top: 0;
+  /* Make sure there is no extra top margin */
 }
 
 .video-resume-container {
   position: relative;
-  width: 100%;  /* Full width of its parent */
-  height: 1000px;  /* Increased height */
-  background-color: #000;  /* Fallback color */
+  width: 100%;
+  /* Full width of its parent */
+  height: 1000px;
+  /* Increased height */
+  background-color: #000;
+  /* Fallback color */
   border-radius: 8px;
-  overflow: hidden;  /* Ensure nothing spills outside the border-radius */
+  overflow: hidden;
+  /* Ensure nothing spills outside the border-radius */
   display: flex;
-  justify-content: flex-start;  /* Aligns children to the start (left) horizontally */
-  align-items: flex-start;  /* Aligns children to the start (top) vertically */
+  justify-content: flex-start;
+  /* Aligns children to the start (left) horizontally */
+  align-items: flex-start;
+  /* Aligns children to the start (top) vertically */
 }
 
 logo-header {
   font-family: 'Poppins', sans-serif;
-  font-weight: 700; /* Extra Bold */
+  font-weight: 700;
+  /* Extra Bold */
   width: auto;
   margin: 0;
-  font-size: 2em; /* Adjust the size as needed */
-  text-align: center; /* Align the text to the left */
-  margin-left: 20px; /* Add some left margin if needed */
+  font-size: 2em;
+  /* Adjust the size as needed */
+  text-align: center;
+  /* Align the text to the left */
+  margin-left: 20px;
+  /* Add some left margin if needed */
   /* Other styles */
 }
 
@@ -52,8 +63,10 @@ logo-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px; /* Adjust height as needed */
-  background-color: #ffffff; /* Example background color */
+  height: 60px;
+  /* Adjust height as needed */
+  background-color: #ffffff;
+  /* Example background color */
 }
 
 .clickable {
@@ -82,17 +95,25 @@ logo-header {
 }
 
 .video-thumbnail-wrapper {
-  height: 180px; /* Fixed height for thumbnails */
-  width: 100%; /* Ensure the wrapper covers the card width */
-  border-top-left-radius: 10px; /* Round top-left corner */
-  border-top-right-radius: 10px; /* Round top-right corner */
-  overflow: hidden; /* Hide parts of the thumbnail outside the rounded corners */
+  height: 180px;
+  /* Fixed height for thumbnails */
+  width: 100%;
+  /* Ensure the wrapper covers the card width */
+  border-top-left-radius: 10px;
+  /* Round top-left corner */
+  border-top-right-radius: 10px;
+  /* Round top-right corner */
+  overflow: hidden;
+  /* Hide parts of the thumbnail outside the rounded corners */
 }
 
 .video-thumbnail {
-  width: 100%; /* Cover the full width of the wrapper */
-  height: 100%; /* Cover the full height of the wrapper, could stretch the image */
-  object-fit: cover; /* Cover the area without stretching. Might crop parts of the image */
+  width: 100%;
+  /* Cover the full width of the wrapper */
+  height: 100%;
+  /* Cover the full height of the wrapper, could stretch the image */
+  object-fit: cover;
+  /* Cover the area without stretching. Might crop parts of the image */
 }
 
 .other-videos-container {
@@ -105,8 +126,10 @@ logo-header {
   flex: 1;
   max-width: 30%;
   padding: 0 10px;
-  margin-top: 0; /* Align the top margin with the main video container */
-  overflow-y: auto; /* Keeps existing scroll functionality */
+  margin-top: 0;
+  /* Align the top margin with the main video container */
+  overflow-y: auto;
+  /* Keeps existing scroll functionality */
 }
 
 .info-section {
@@ -192,13 +215,15 @@ logo-header {
   width: 100%;
   border-radius: 8px;
   margin-bottom: 10px;
-  flex-wrap: wrap; /* Allows for responsive wrapping of filter options */
+  flex-wrap: wrap;
+  /* Allows for responsive wrapping of filter options */
 }
 
 .filter-option-section {
   flex: 1;
   padding: 0 10px;
-  min-width: 200px; /* Ensures that the filter doesn't become too narrow */
+  min-width: 200px;
+  /* Ensures that the filter doesn't become too narrow */
 }
 
 .filter-title {
@@ -278,6 +303,7 @@ logo-header {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
 .search-container {
   display: flex;
   align-items: center;
@@ -303,11 +329,16 @@ logo-header {
 }
 
 .back-arrow-icon {
-  position: absolute; /* Position absolutely to the left */
-  left: 10px; /* Adjust distance from the left */
-  height: 32px; /* Adjust height of the icon */
-  width: auto; /* Ensure icon scales appropriately */
-  cursor: pointer; /* Add pointer cursor for interaction */
+  position: absolute;
+  /* Position absolutely to the left */
+  left: 10px;
+  /* Adjust distance from the left */
+  height: 32px;
+  /* Adjust height of the icon */
+  width: auto;
+  /* Ensure icon scales appropriately */
+  cursor: pointer;
+  /* Add pointer cursor for interaction */
 }
 
 .centered-name {
@@ -563,12 +594,18 @@ logo-header {
 .candidate-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* This ensures the content fills the card */
-  height: 100%; /* Make sure the card stretches to full height */
-  background-color: #f0f0f0; /* Adjust the color to match your design */
-  border-radius: 10px; /* Rounded corners for the card */
-  overflow: hidden; /* Ensures the thumbnail respects the border radius */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+  justify-content: space-between;
+  /* This ensures the content fills the card */
+  height: 100%;
+  /* Make sure the card stretches to full height */
+  background-color: #f0f0f0;
+  /* Adjust the color to match your design */
+  border-radius: 10px;
+  /* Rounded corners for the card */
+  overflow: hidden;
+  /* Ensures the thumbnail respects the border radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Optional shadow for depth */
 }
 
 .video-selection-buttons {
@@ -630,7 +667,8 @@ logo-header {
   font-family: 'Poppins', sans-serif;
   font-weight: bolder;
   color: black;
-  margin-bottom: 20px; /* Remove or adjust as needed */
+  margin-bottom: 20px;
+  /* Remove or adjust as needed */
   text-align: left;
 }
 
@@ -656,7 +694,8 @@ logo-header {
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000; /* Ensure it appears above other elements */
+  z-index: 1000;
+  /* Ensure it appears above other elements */
 }
 
 .invite-codes-popup h3 {
@@ -678,9 +717,11 @@ logo-header {
   padding: 20px;
   border-radius: 8px;
   width: 90%;
-  max-width: 800px; /* Increase max-width to fit the email content */
+  max-width: 800px;
+  /* Increase max-width to fit the email content */
   position: relative;
-  overflow: auto; /* Ensure that the content can scroll if needed */
+  overflow: auto;
+  /* Ensure that the content can scroll if needed */
 }
 
 .email-address-container,
@@ -698,7 +739,8 @@ logo-header {
 
 .email-textarea {
   width: 100%;
-  height: 300px; /* Increase height to accommodate larger emails */
+  height: 300px;
+  /* Increase height to accommodate larger emails */
   border: none;
   background: #f0f0f0;
   resize: none;
@@ -712,7 +754,8 @@ logo-header {
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 15px;
-  display: block; /* Ensure buttons are on separate lines */
+  display: block;
+  /* Ensure buttons are on separate lines */
 }
 
 .close-button {
@@ -722,17 +765,22 @@ logo-header {
   background: red;
   color: white;
   border: none;
-  width: 40px; /* Set width */
-  height: 40px; /* Set height */
+  width: 40px;
+  /* Set width */
+  height: 40px;
+  /* Set height */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px; /* Set font size to fit */
+  font-size: 20px;
+  /* Set font size to fit */
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  text-align: center; /* Ensure text is centered */
-  z-index: 1000; /* Ensure it is above other content */
+  text-align: center;
+  /* Ensure text is centered */
+  z-index: 1000;
+  /* Ensure it is above other content */
 }
 
 
@@ -804,6 +852,12 @@ logo-header {
 
 .navigation-button:hover {
   background-color: #009950;
+}
+
+@media (min-width: 600px) {
+  .navigation-button {
+    margin-left: 10px; /* Margin for desktop */
+  }
 }
 
 
@@ -1000,7 +1054,8 @@ logo-header {
 
 .invite-button,
 .close-button {
-  background-color: #00BF63; /* Adjust color as needed */
+  background-color: #00BF63;
+  /* Adjust color as needed */
   color: white;
   padding: 10px 20px;
   border: none;
@@ -1008,16 +1063,21 @@ logo-header {
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  margin: 0 5px; /* Equal margin for both buttons */
-  width: flex; /* Fixed width */
-  box-sizing: border-box; /* Include padding and border in the width */
+  margin: 0 5px;
+  /* Equal margin for both buttons */
+  width: flex;
+  /* Fixed width */
+  box-sizing: border-box;
+  /* Include padding and border in the width */
   text-align: center;
-  transition: background-color 0.3s ease; /* Smooth transition for hover */
+  transition: background-color 0.3s ease;
+  /* Smooth transition for hover */
 }
 
 .invite-button:hover,
 .close-button:hover {
-  background-color: #009b4d; /* Darker shade for hover effect */
+  background-color: #009b4d;
+  /* Darker shade for hover effect */
 }
 
 .invite-codes-popup {
@@ -1025,8 +1085,10 @@ logo-header {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 400px; /* Adjust width as necessary */
-  max-width: 90%; /* Responsive */
+  width: 400px;
+  /* Adjust width as necessary */
+  max-width: 90%;
+  /* Responsive */
   position: fixed;
   top: 50%;
   left: 50%;
@@ -1049,11 +1111,13 @@ logo-header {
 .code-container {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Space between code blocks */
+  gap: 10px;
+  /* Space between code blocks */
 }
 
 .code-block {
-  background-color: #f5f5f5; /* Light gray background */
+  background-color: #f5f5f5;
+  /* Light gray background */
   border-radius: 8px;
   padding: 10px;
   display: flex;
@@ -1063,7 +1127,8 @@ logo-header {
 }
 
 .copy-button {
-  background-color: #00BF63; /* Same color as other buttons */
+  background-color: #00BF63;
+  /* Same color as other buttons */
   color: white;
   border: none;
   border-radius: 5px;
@@ -1073,7 +1138,8 @@ logo-header {
 }
 
 .copy-button:hover {
-  background-color: #009b4d; /* Darker shade for hover effect */
+  background-color: #009b4d;
+  /* Darker shade for hover effect */
 }
 
 
@@ -1169,13 +1235,17 @@ logo-header {
 }
 
 .draft-button:hover, .draft-button:focus {
-  background-color: #45a049; /* Slightly darker green on hover/focus for feedback */
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Larger shadow for elevated effect */
+  background-color: #45a049;
+  /* Slightly darker green on hover/focus for feedback */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  /* Larger shadow for elevated effect */
 }
 
 .draft-button:active {
-  background-color: #397239; /* Even darker green for active state */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Smaller shadow to simulate pressing down */
+  background-color: #397239;
+  /* Even darker green for active state */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Smaller shadow to simulate pressing down */
 }
 
 
@@ -1238,27 +1308,29 @@ logo-header {
   font-family: 'Poppins', sans-serif;
   color: black;
   text-align: left;
-  /* Aligns text to the left */
   font-size: 0.9em;
-  /* Slightly smaller font size */
+  /* Default font size */
+  width: 90%;
+  /* Make it wider on mobile */
+  max-width: 400px;
+  /* Max width to prevent it from getting too large */
 }
 
 .nav-popup h2 {
   margin-top: 0;
   color: #333;
+  font-size: 1.2em;
+  /* Larger title for visibility */
 }
 
 .nav-popup ul {
   padding-left: 20px;
-  /* Adds indent to list */
   list-style: none;
-  /* Removes default list styling */
 }
 
 .nav-popup li::before {
   content: "• ";
   color: #00BF63;
-  /* Custom bullet color */
   font-weight: bold;
 }
 
@@ -1270,11 +1342,34 @@ logo-header {
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.9em;
+  width: 100%;
+  /* Full-width button for better touchability */
 }
 
 .nav-popup button.navigation-button:hover {
   background-color: #00BF63;
 }
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .nav-popup {
+    font-size: 1em;
+    /* Increase font size for better readability */
+    padding: 15px;
+    /* Adjust padding */
+  }
+
+  .nav-popup h2 {
+    font-size: 1.5em;
+    /* Larger title */
+  }
+
+  .nav-popup button.navigation-button {
+    font-size: 1em;
+    /* Larger button text */
+  }
+}
+
 
 .header-section {
   display: flex;

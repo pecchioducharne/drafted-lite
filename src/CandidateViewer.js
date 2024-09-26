@@ -755,7 +755,7 @@ const CandidateViewer = ({
           <button
             onClick={toggleInviteCodesPopup}
             className="navigation-button"
-            style={{ minWidth: "200px", marginLeft: "10px" }} 
+            style={{ minWidth: "200px", marginLeft: "0px" }} 
           >
             Show Invite Codes
           </button>
