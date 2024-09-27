@@ -37,7 +37,10 @@ const CandidateViewer = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showResume, setShowResume] = useState(false);
   const [showNavPopup, setShowNavPopup] = useState(false);
-  const [showPopup, setPopup] = useState(true); // Initialize to true to show popup on load
+  const [showPopup, setPopup] = useState(() => {
+    // Check localStorage to see if the popup was already dismissed
+    return !localStorage.getItem("popupDismissed");
+  });
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [suggestions, setSuggestions] = useState([]);
   const [showInviteCodes, setShowInviteCodes] = useState(false);
@@ -56,6 +59,10 @@ const CandidateViewer = ({
     graduationYear: [],
     skills: [],
   });
+  const handleClosePopup = () => {
+    setPopup(false);
+    localStorage.setItem("popupDismissed", "true"); // Mark as dismissed
+  };
   const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -455,6 +462,8 @@ const CandidateViewer = ({
       major: [],
       graduationYear: [],
     });
+
+    window.location.reload();
   };
 
   const handleHomeButtonClick = () => {
@@ -463,7 +472,10 @@ const CandidateViewer = ({
     setFilters({ university: [], major: [], graduationYear: [] }); // Reset all filters
     executeSearch(); // Execute search with reset state to return to "home page" view
     onLogoClick(); // Call the function when the home icon is clicked
+
+    window.location.reload();
   };
+
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
@@ -809,11 +821,8 @@ const CandidateViewer = ({
                 </li>
               </p>
             </ul>
-            <br></br>
-            <button
-              className="navigation-button"
-              onClick={() => setPopup(false)}
-            >
+            <br />
+            <button className="navigation-button" onClick={handleClosePopup}>
               Close
             </button>
           </div>
