@@ -256,6 +256,15 @@ logo-header {
   border-color: #0073b1;
 }
 
+.selected-options {
+  margin-top: 5px; /* Add some space above */
+  color: black; /* Change color for clarity */
+  font-size: 0.9em; /* Slightly smaller font size */
+  font-weight: bold;
+  display: flex; /* Use flexbox */
+  flex-direction: column; /* Stack items vertically */
+}
+
 
 
 .draft-button {

@@ -135,7 +135,6 @@ const CandidateViewer = ({
   const [openFilterCategories, setOpenFilterCategories] = useState([]); // Now an array to track multiple open categories
 
   const FilterOptions = ({ title, options, selectedOptions, onSelect }) => {
-    selectedOptions = selectedOptions || [];
     const handleSelect = (option) => {
       const isSelected = selectedOptions.includes(option);
       if (isSelected) {
@@ -143,9 +142,18 @@ const CandidateViewer = ({
       } else {
         onSelect([...selectedOptions, option]);
       }
+
+      // Collapse the filter tab after selecting an option
+      setOpenFilterCategories((current) =>
+        current.includes(title) ? current : [...current, title]
+      );
+
+      // Close the filter tab regardless of current state
+      setOpenFilterCategories((current) =>
+        current.filter((category) => category !== title)
+      );
     };
 
-    // Check if this filter category is open
     const showOptions = openFilterCategories.includes(title);
 
     return (
@@ -167,6 +175,18 @@ const CandidateViewer = ({
             <FiChevronDown className="filter-icon" />
           )}
         </div>
+
+        {/* Display selected options in blue */}
+        {selectedOptions.length > 0 && (
+          <div className="selected-options">
+            {selectedOptions.map((option, index) => (
+              <span key={index} className="selected-option">
+                {option}
+              </span>
+            ))}
+          </div>
+        )}
+
         {showOptions && (
           <div className="options-container">
             {options.map((option, index) => (
@@ -755,7 +775,7 @@ const CandidateViewer = ({
           <button
             onClick={toggleInviteCodesPopup}
             className="navigation-button"
-            style={{ minWidth: "200px", marginLeft: "0px" }} 
+            style={{ minWidth: "200px", marginLeft: "0px" }}
           >
             Show Invite Codes
           </button>
@@ -799,7 +819,7 @@ const CandidateViewer = ({
           </div>
         )}
 
-        {showInviteCodes && codes.length > 0  && (
+        {showInviteCodes && codes.length > 0 && (
           <div className="invite-codes-popup">
             <h3>
               <strong>Your Unique Invite Codes</strong>
@@ -822,7 +842,10 @@ const CandidateViewer = ({
               ))}
             </div>
             <br />
-            <button onClick={toggleInviteCodesPopup} className="navigation-button">
+            <button
+              onClick={toggleInviteCodesPopup}
+              className="navigation-button"
+            >
               Close
             </button>
           </div>
