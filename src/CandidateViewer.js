@@ -29,6 +29,8 @@ const CandidateViewer = ({
   onLogoClick,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [displayCount, setDisplayCount] = useState(10);
+  const loadMoreCount = 10; // Number of candidates to load on scroll
   const [user, setUser] = useState(null);
   const [codes, setCodes] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -59,10 +61,15 @@ const CandidateViewer = ({
     graduationYear: [],
     skills: [],
   });
+  const loadMoreCandidates = () => {
+    setDisplayCount((prevCount) => prevCount + loadMoreCount);
+  };
+
   const handleClosePopup = () => {
     setPopup(false);
     localStorage.setItem("popupDismissed", "true"); // Mark as dismissed
   };
+
   const [refreshKey, setRefreshKey] = useState(0); // Add this state to your App component
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -101,6 +108,19 @@ const CandidateViewer = ({
 
     return () => unsubscribe(); // Cleanup subscription on unmount
   }, [auth]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+      if (bottom) {
+        loadMoreCandidates();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const fetchCodes = async () => {
@@ -786,7 +806,7 @@ const CandidateViewer = ({
           />
           <button
             onClick={toggleInviteCodesPopup}
-            className="navigation-button"
+            className="code-button"
             style={{ minWidth: "200px", marginLeft: "0px" }}
           >
             Show Invite Codes
@@ -1155,13 +1175,7 @@ const CandidateViewer = ({
                 fontSize: "large",
                 textAlign: "center",
               }}
-            >
-              {/* <strong style={{ color: "#00BF63" }}>Next:</strong>{" "}
-              {window.innerWidth <= 768 ? "Swipe right" : "Right arrow key"} |
-              <strong style={{ color: "#00BF63" }}> Previous:</strong>
-              {"  "}
-              {window.innerWidth <= 768 ? "Swipe left" : "Left arrow key"} */}
-            </p>
+            ></p>
           </div>
           <div className="video-resume-container" {...handlers}>
             {videoUrls[currentVideoIndex] && (
@@ -1313,7 +1327,7 @@ const CandidateViewer = ({
         </div>
         <div className="other-videos-container">
           <br></br>
-          {filteredCandidates.map((candidate, index) => {
+          {filteredCandidates.slice(0, displayCount).map((candidate, index) => {
             if (index === currentIndex) return null; // Skip the currently viewed candidate
 
             const thumbnailSrc = candidate.thumbnail

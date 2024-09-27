@@ -859,6 +859,20 @@ logo-header {
   font-size: 0.9em;
 }
 
+.code-button {
+  background-color: #00BF63;
+  color: white;
+  border: none;
+  height: 58px; /* Set a fixed height */
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -2px; /* Adjust this value as needed */
+}
+
 .navigation-button:hover {
   background-color: #009950;
 }
