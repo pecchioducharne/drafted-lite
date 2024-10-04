@@ -318,9 +318,16 @@ const CandidateViewer = ({
         !filters.skills.length ||
         (candidate.skills &&
           candidate.skills.some((skill) => filters.skills.includes(skill)));
+      const matchesPosition =
+        !filters.position.length ||
+        filters.position.includes(candidate.position);
 
       return (
-        matchesUniversity && matchesMajor && matchesGradYear && matchesSkills
+        matchesUniversity &&
+        matchesMajor &&
+        matchesGradYear &&
+        matchesSkills &&
+        matchesPosition // Include the position filter
       );
     });
   };
@@ -463,12 +470,17 @@ const CandidateViewer = ({
         (candidate.skills &&
           candidate.skills.some((skill) => filters.skills.includes(skill)));
 
+      const matchesPosition =
+        !filters.position.length ||
+        filters.position.includes(candidate.position);
+
       return (
         matchesQuery &&
         matchesUniversity &&
         matchesMajor &&
         matchesGradYear &&
-        matchesSkills
+        matchesSkills &&
+        matchesPosition // Include the position filter
       );
     });
 
