@@ -60,6 +60,7 @@ const CandidateViewer = ({
     major: [],
     graduationYear: [],
     skills: [],
+    position: [], // Add position filter
   });
   const loadMoreCandidates = () => {
     setDisplayCount((prevCount) => prevCount + loadMoreCount);
@@ -249,9 +250,16 @@ const CandidateViewer = ({
           (candidate.skills || []).some((skill) =>
             filters.skills.includes(skill)
           );
+        const matchesPosition =
+          filters.position.length === 0 ||
+          filters.position.includes(candidate.position);
 
         return (
-          matchesUniversity && matchesMajor && matchesGradYear && matchesSkills
+          matchesUniversity &&
+          matchesMajor &&
+          matchesGradYear &&
+          matchesSkills &&
+          matchesPosition
         );
       });
 
@@ -979,6 +987,11 @@ const CandidateViewer = ({
                 >
                   Grad Year: {candidate.graduationYear}
                 </p>
+                {candidate.position && (
+                  <p className="candidate-position">
+                    Position: {candidate.position}
+                  </p>
+                )}
               </div>
             </div>
           ))}
@@ -1291,6 +1304,19 @@ const CandidateViewer = ({
                   rel="noopener noreferrer"
                 >
                   {candidate.gitHubURL}
+                </a>
+              </div>
+            )}
+            {candidate.position && (
+              <div className="profile-field">
+                <strong>Position</strong>{" "}
+                <a
+                  href={candidate.position}
+                  className="candidate-linkedin clickable-filter"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {candidate.position}
                 </a>
               </div>
             )}
