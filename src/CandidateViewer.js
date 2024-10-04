@@ -922,6 +922,17 @@ const CandidateViewer = ({
               }))
             }
           />
+          <FilterOptions
+            title="Position"
+            options={["Fulltime", "Internship"]}
+            selectedOptions={filters.position}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                position: selected,
+              }))
+            }
+          />
         </div>
 
         <div className="candidates-grid">

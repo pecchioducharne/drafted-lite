@@ -5,6 +5,7 @@ const {
   doc,
   writeBatch,
 } = require("firebase/firestore");
+const { v4: uuidv4 } = require('uuid');
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -23,7 +24,7 @@ const db = getFirestore(app);
 
 // Generate a random alphanumeric code
 const generateCode = () => {
-  return uuidv4().slice(0, 6).toLowerCase(); // Generates a 6-character code
+  return "drafted" + uuidv4().slice(0, 3).toLowerCase(); // Generates a 6-character code
 };
 
 // Generate and store multiple codes
@@ -48,4 +49,4 @@ const generateMultipleCodes = async (count) => {
   }
 };
 
-generateMultipleCodes(20);
+generateMultipleCodes(60);
