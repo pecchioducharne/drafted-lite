@@ -30,7 +30,6 @@ const CodePage = () => {
         setErrorMessage("This code has already been used. Try another one!");
       } else {
         await updateDoc(codeRef, { used: true });
-        // Navigate to the signup page
         window.location.href = "/signup";
       }
     } catch (error) {
@@ -41,6 +40,11 @@ const CodePage = () => {
     }
   };
 
+  const copyEmailToClipboard = () => {
+    navigator.clipboard.writeText("rodrigo@joindrafted.com");
+    alert("Email copied to clipboard!");
+  };
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -49,9 +53,9 @@ const CodePage = () => {
         <h4 className={styles.h4}>
           Enter your exclusive code below to get started.
         </h4>
-        <br></br>
+        <br />
         <Lottie options={welcomeBack} height={100} width={100} />
-        <br></br>
+        <br />
         <input
           type="text"
           placeholder="Enter your invitation code"
@@ -64,6 +68,15 @@ const CodePage = () => {
         </button>
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
       </form>
+      <div className={styles.accessMessage}>
+        <p>
+          Don't have an access code?{" "}
+          <span className={styles.greenEmail}>rodrigo@joindrafted.com</span>{" "}
+          <button className={styles.copyButton} onClick={copyEmailToClipboard}>
+            Copy Email
+          </button>
+        </p>
+      </div>
     </div>
   );
 };
