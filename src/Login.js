@@ -37,8 +37,6 @@ const Login = () => {
       return urlParams.get(name);
     };
 
-    
-
     const emailParam = getUrlParam("email");
     const passwordParam = getUrlParam("password");
 
@@ -73,7 +71,6 @@ const Login = () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
   }, [email, password]); // Add dependencies to re-register the event listener if these change
-
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -148,8 +145,8 @@ const Login = () => {
   function DraftedLogo() {
     return (
       <svg
-        width="115"
-        height="23"
+        width="173"
+        height="35"
         viewBox="0 0 115 23"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -167,7 +164,16 @@ const Login = () => {
   }
 
   return (
-    <div className={styles.loginContainer}>
+    <div className={styles.loginContainer} style={{ marginTop: "100px" }}>
+      <DraftedLogo
+        style={{
+          width: "500px", // Increased size
+          height: "auto",
+          marginTop: "20px", // Top margin
+          marginLeft: "20px", // Left margin
+        }}
+      />
+      <br></br>
       <h2 className={styles.h2}>Let's find your next hire.</h2>
       <Lottie options={welcomeBack} height={100} width={100} />
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
