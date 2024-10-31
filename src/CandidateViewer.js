@@ -856,8 +856,7 @@ const CandidateViewer = ({
                 <li>Filter candidates to find your next hire quickly</li>
                 <li>Easily view candidate information</li>
                 <li>
-                  Click "Request Interview" to get pre-filled email directly to
-                  candidate to schedule first interview
+                  Click "🤝 Meet" to connect.
                 </li>
               </p>
             </ul>
@@ -1242,7 +1241,7 @@ const CandidateViewer = ({
               onClick={emailDraft}
               aria-label="Draft candidate for interview"
             >
-              Request Interview
+              🤝 Meet
             </button>
           </div>
           <div className="video-resume-display">Video Resume</div>
@@ -1370,7 +1369,7 @@ const CandidateViewer = ({
               onClick={emailDraft}
               aria-label="Draft candidate for interview"
             >
-              Request Interview
+              🤝 Meet
             </button>
           </div>
         </div>
