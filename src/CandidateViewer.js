@@ -827,7 +827,7 @@ const CandidateViewer = ({
           <button
             onClick={toggleInviteCodesPopup}
             className="code-button"
-            style={{ minWidth: "200px", marginLeft: "0px" }}
+            style={{ minWidth: "200px", marginLeft: "7px", minHeight: "65px" }}
           >
             Show Invite Codes
           </button>
@@ -855,9 +855,7 @@ const CandidateViewer = ({
               <p>
                 <li>Filter candidates to find your next hire quickly</li>
                 <li>Easily view candidate information</li>
-                <li>
-                  Click "🤝 Meet" to connect.
-                </li>
+                <li>Click "🤝 Meet" to connect.</li>
               </p>
             </ul>
             <br />
@@ -962,13 +960,11 @@ const CandidateViewer = ({
               onClick={() => handleCandidateSelect(index)}
             >
               <div className="video-thumbnail-wrapper">
-                {/* Use LazyLoadComponent for lazy loading */}
                 <LazyLoadComponent
                   placeholder={
                     <img src={cover} alt="Cover" className="cover-image" />
                   }
                 >
-                  {/* Replace ReactPlayer with an img tag for consistency in appearance */}
                   <img
                     src={candidate.thumbnail ? candidate.thumbnail : cover}
                     alt={`${candidate.firstName} ${candidate.lastName}`}
@@ -1002,6 +998,15 @@ const CandidateViewer = ({
                   <p className="candidate-position">
                     Position: {candidate.position}
                   </p>
+                )}
+                {candidate.skills && (
+                  <div className="skills-container">
+                    {candidate.skills.map((skill, index) => (
+                      <span key={index} className="skill-tag">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>

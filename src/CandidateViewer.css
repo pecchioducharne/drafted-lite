@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap');
+
 
 .profile-dashboard {
   display: flex;
@@ -96,24 +98,23 @@ logo-header {
 
 .video-thumbnail-wrapper {
   height: 180px;
-  /* Fixed height for thumbnails */
-  width: 100%;
-  /* Ensure the wrapper covers the card width */
-  border-top-left-radius: 10px;
-  /* Round top-left corner */
-  border-top-right-radius: 10px;
-  /* Round top-right corner */
+  /* Keep the height as is */
+  width: 180px;
+  /* Set width to match height for a circular shape */
+  border-radius: 50%;
+  /* Make the wrapper circular */
   overflow: hidden;
-  /* Hide parts of the thumbnail outside the rounded corners */
+  /* Hide overflow to keep the circle shape */
+  margin: 0 auto;
+  /* Center the circular thumbnail */
+  margin-top: 10px;
 }
 
 .video-thumbnail {
   width: 100%;
-  /* Cover the full width of the wrapper */
   height: 100%;
-  /* Cover the full height of the wrapper, could stretch the image */
   object-fit: cover;
-  /* Cover the area without stretching. Might crop parts of the image */
+  /* Maintain aspect ratio while covering */
 }
 
 .other-videos-container {
@@ -207,11 +208,39 @@ logo-header {
   /* Centers the text within the button */
 }
 
+.skills-container {
+  display: flex;
+  /* Aligns tags in a row */
+  flex-wrap: wrap;
+  /* Allows tags to wrap to the next line if needed */
+  gap: 8px;
+  /* Space between tags */
+}
+
+.skill-tag {
+  font-family: 'Roboto', sans-serif;
+  /* Use the selected font */
+  background-color: #45a049;
+  /* Green background */
+  color: white;
+  /* White text */
+  border-radius: 15px;
+  /* Semi-circular shape */
+  padding: 5px 10px;
+  /* Padding for better appearance */
+  font-size: 12px;
+  /* Adjust font size as needed */
+  font-weight: 600;
+  display: inline-block;
+  /* Allows for padding and margin */
+}
+
+
 .filter-container {
   display: flex;
   justify-content: space-between;
   padding: 20px;
-  background-color: #f3f2ef;
+  background-color: #f9f9f9;
   width: 100%;
   border-radius: 8px;
   margin-bottom: 10px;
@@ -257,29 +286,17 @@ logo-header {
 }
 
 .selected-options {
-  margin-top: 5px; /* Add some space above */
-  color: black; /* Change color for clarity */
-  font-size: 0.9em; /* Slightly smaller font size */
-  font-weight: bold;
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack items vertically */
-}
-
-
-
-.draft-button {
-  background-color: #00BF63;
-  /* YouTube Red */
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-family: 'Poppins', sans-serif;
+  margin-top: 5px;
+  /* Add some space above */
+  color: black;
+  /* Change color for clarity */
+  font-size: 0.9em;
+  /* Slightly smaller font size */
   font-weight: bold;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Use flexbox */
+  flex-direction: column;
+  /* Stack items vertically */
 }
 
 .header-section {
@@ -603,18 +620,16 @@ logo-header {
 .candidate-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  /* This ensures the content fills the card */
-  height: 100%;
-  /* Make sure the card stretches to full height */
-  background-color: #f0f0f0;
-  /* Adjust the color to match your design */
+  align-items: flex-start;
+  justify-content: flex-start; /* Change to flex-start to allow dynamic height */
+  min-height: 300px; /* Set a minimum height */
+  height: auto; /* Let the height adjust based on content */
+  background-color: #f9f9f9;
   border-radius: 10px;
-  /* Rounded corners for the card */
-  overflow: hidden;
-  /* Ensures the thumbnail respects the border radius */
+  overflow: visible; /* Change to visible to avoid cutting off content */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Optional shadow for depth */
+  transition: transform 0.3s ease; /* Add transition for smooth effect */
+  padding: 10px; /* Add padding */
 }
 
 .video-selection-buttons {
@@ -656,16 +671,14 @@ logo-header {
   /* Border color for active button, matches the background */
 }
 
-
 .candidate-details {
-  padding: 10px;
-  /* Add some padding around the text details */
-  background-color: transparent;
-  /* Ensure the details section doesn't have a different background */
+  display: flex; /* Use flexbox for details */
+  flex-direction: column; /* Stack details vertically */
+  width: 100%; /* Ensure full width */
 }
 
 .candidate-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px);
 }
 
 .candidate-name-display {
@@ -863,14 +876,16 @@ logo-header {
   background-color: #00BF63;
   color: white;
   border: none;
-  height: 58px; /* Set a fixed height */
+  height: 58px;
+  /* Set a fixed height */
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.9em;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -2px; /* Adjust this value as needed */
+  margin-top: -2px;
+  /* Adjust this value as needed */
 }
 
 .navigation-button:hover {
@@ -879,7 +894,8 @@ logo-header {
 
 @media (min-width: 600px) {
   .navigation-button {
-    margin-left: 10px; /* Margin for desktop */
+    margin-left: 10px;
+    /* Margin for desktop */
   }
 }
 
@@ -900,7 +916,7 @@ logo-header {
 
 .candidate-major {
   font-size: 1em;
-  font-weight: 500;
+  font-weight: 600;
   color: black;
   margin-bottom: 5px;
 }
@@ -932,19 +948,6 @@ logo-header {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.candidate-details {
-  background-color: #f9f9f9;
-  /* Light background color for contrast */
-  border-radius: 8px;
-  /* Rounded corners */
-  padding: 15px;
-  /* Padding inside the card */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* Subtle shadow for depth */
-  margin-bottom: 20px;
-  /* Space between cards */
 }
 
 .react-player {
@@ -1245,7 +1248,8 @@ logo-header {
 .draft-button {
   background-color: #00BF63;
   color: white;
-  padding: 10px 20px;
+  padding: 15px 30px;
+  /* Increase padding for a larger button */
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -1255,6 +1259,8 @@ logo-header {
   align-items: center;
   justify-content: center;
   margin-top: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  /* Add transition for background and transform */
 }
 
 .draft-button:hover, .draft-button:focus {
@@ -1262,6 +1268,8 @@ logo-header {
   /* Slightly darker green on hover/focus for feedback */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   /* Larger shadow for elevated effect */
+  transform: scale(1.1);
+  /* Enlarge the button */
 }
 
 .draft-button:active {
@@ -1269,7 +1277,10 @@ logo-header {
   /* Even darker green for active state */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   /* Smaller shadow to simulate pressing down */
+  transform: scale(1);
+  /* Return to original size on active */
 }
+
 
 
 .video-resume-container {
