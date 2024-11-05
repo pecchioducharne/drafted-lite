@@ -39,6 +39,8 @@ const CandidateViewer = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showResume, setShowResume] = useState(false);
   const [showNavPopup, setShowNavPopup] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false); // State for play button interaction
   const [showPopup, setPopup] = useState(() => {
     // Check localStorage to see if the popup was already dismissed
     return !localStorage.getItem("popupDismissed");
@@ -64,6 +66,9 @@ const CandidateViewer = ({
   });
   const loadMoreCandidates = () => {
     setDisplayCount((prevCount) => prevCount + loadMoreCount);
+  };
+  const handlePlayClick = () => {
+    setIsPlaying(true); // Start playing when play button is clicked
   };
 
   const handleClosePopup = () => {

@@ -220,7 +220,7 @@ logo-header {
 .skill-tag {
   font-family: 'Roboto', sans-serif;
   /* Use the selected font */
-  background-color: #45a049;
+  background-color: #A9A9A9;
   /* Green background */
   color: white;
   /* White text */
@@ -228,9 +228,9 @@ logo-header {
   /* Semi-circular shape */
   padding: 5px 10px;
   /* Padding for better appearance */
-  font-size: 12px;
+  font-size: 15px;
   /* Adjust font size as needed */
-  font-weight: 600;
+  font-weight: 500;
   display: inline-block;
   /* Allows for padding and margin */
 }
@@ -901,23 +901,23 @@ logo-header {
 
 
 .candidate-name {
-  font-size: 1.2em;
+  font-size: 1.5em;
   font-weight: 700;
   margin-bottom: 5px;
-  color: #333;
+  color: #00BF63;
 }
 
 .candidate-university {
-  font-size: 1em;
-  font-weight: 600;
-  color: #00BF63;
+  font-size: 1.2em;
+  font-weight: 300;
+  color: black;
   margin-bottom: 5px;
 }
 
 .candidate-major {
-  font-size: 1em;
-  font-weight: 600;
-  color: black;
+  font-size: 1.2em;
+  font-weight: 200;
+  color: #666;
   margin-bottom: 5px;
 }
 
