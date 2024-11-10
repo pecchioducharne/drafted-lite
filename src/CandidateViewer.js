@@ -1305,7 +1305,11 @@ const CandidateViewer = ({
               <div className="profile-field">
                 <strong>LinkedIn</strong>{" "}
                 <a
-                  href={candidate.linkedInURL}
+                  href={
+                    candidate.linkedInURL.startsWith("http")
+                      ? candidate.linkedInURL
+                      : `https://${candidate.linkedInURL}`
+                  }
                   className="candidate-linkedin clickable-filter"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -1314,12 +1318,15 @@ const CandidateViewer = ({
                 </a>
               </div>
             )}
-
             {candidate.gitHubURL && (
               <div className="profile-field">
                 <strong>GitHub</strong>{" "}
                 <a
-                  href={candidate.gitHubURL}
+                  href={
+                    candidate.gitHubURL.startsWith("http")
+                      ? candidate.gitHubURL
+                      : `https://${candidate.gitHubURL}`
+                  }
                   className="candidate-linkedin clickable-filter"
                   target="_blank"
                   rel="noopener noreferrer"

@@ -220,7 +220,7 @@ logo-header {
 .skill-tag {
   font-family: 'Roboto', sans-serif;
   /* Use the selected font */
-  background-color: #A9A9A9;
+  background-color: #D3D3D3;
   /* Green background */
   color: white;
   /* White text */
@@ -689,6 +689,7 @@ logo-header {
   font-family: 'Poppins', sans-serif;
   font-weight: bolder;
   color: black;
+  margin-top: 10px;
   margin-bottom: 20px;
   /* Remove or adjust as needed */
   text-align: left;
