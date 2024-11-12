@@ -772,21 +772,30 @@ const CandidateViewer = ({
             <p className="email-address">{email}</p>
           </div>
           <button className="copy-button" onClick={() => handleCopy(email)}>
-            Copy Email Address
+            {/* Copy Email Address */}
+            📧 Email
           </button>
-          <div className="email-content-container">
+          {/* <div className="email-content-container">
             <textarea
               readOnly
               value={emailContent}
               className="email-textarea"
             />
-          </div>
-          <button
+          </div> */}
+          <button className="copy-button" onClick={() => handleCopy(email)}>
+            {/* Copy Email Address */}
+            💬 Chat
+          </button>
+          <button className="copy-button" onClick={() => handleCopy(email)}>
+            {/* Copy Email Address */}
+            🪣 Save
+          </button>
+          {/* <button
             className="copy-button"
             onClick={() => handleCopy(emailContent)}
           >
             Copy Email Content
-          </button>
+          </button> */}
         </div>
       </div>
     );

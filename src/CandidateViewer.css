@@ -757,7 +757,7 @@ logo-header {
 
 .email-address {
   margin: 0;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 .email-textarea {
@@ -1162,6 +1162,8 @@ logo-header {
   cursor: pointer;
   padding: 5px 10px;
   transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
 }
 
 .copy-button:hover {
