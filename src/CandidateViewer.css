@@ -209,30 +209,21 @@ logo-header {
 }
 
 .skills-container {
+  margin-top: 8px;
   display: flex;
-  /* Aligns tags in a row */
   flex-wrap: wrap;
-  /* Allows tags to wrap to the next line if needed */
-  gap: 8px;
-  /* Space between tags */
+  gap: 6px;
 }
 
 .skill-tag {
-  font-family: 'Roboto', sans-serif;
-  /* Use the selected font */
-  background-color: #D3D3D3;
-  /* Green background */
-  color: white;
-  /* White text */
-  border-radius: 15px;
-  /* Semi-circular shape */
-  padding: 5px 10px;
-  /* Padding for better appearance */
-  font-size: 15px;
-  /* Adjust font size as needed */
-  font-weight: 500;
   display: inline-block;
-  /* Allows for padding and margin */
+  padding: 4px 12px;
+  margin: 4px 4px 4px 0;
+  border-radius: 16px;
+  font-size: 13px;
+  background-color: #22A65A; /* Darker version of our theme green */
+  color: white;
+  font-weight: 550;
 }
 
 
@@ -1054,7 +1045,7 @@ logo-header {
   font-size: 1.5em;
   font-weight: 700;
   margin-bottom: 5px;
-  color: #00BF63;
+  color: #22A65A;
 }
 
 .candidate-university {
