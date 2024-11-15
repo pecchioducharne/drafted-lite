@@ -1396,3 +1396,31 @@ logo-header {
 .copy-button:hover {
   background-color: #45a049;
 }
+
+.drafted-logo {
+  height: 40px;
+  cursor: pointer;
+  margin: 20px;
+  transition: opacity 0.2s ease;
+}
+
+.drafted-logo:hover {
+  opacity: 0.8;
+}
+
+.drafted-logo-container {
+  padding: 20px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  display: inline-block; /* Makes the container only as wide as the logo */
+}
+
+.drafted-logo-container:hover {
+  opacity: 0.8;
+}
+
+.drafted-logo-container svg {
+  cursor: pointer;
+  height: 23px; /* Match the SVG viewBox height */
+  width: 115px; /* Match the SVG viewBox width */
+}
