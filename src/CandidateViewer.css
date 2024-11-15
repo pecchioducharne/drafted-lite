@@ -237,66 +237,169 @@ logo-header {
 
 
 .filter-container {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  background-color: #f9f9f9;
   width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-  /* Allows for responsive wrapping of filter options */
+  margin: 20px 0;
+}
+
+.filter-row {
+  display: flex;
+  gap: 8px; /* Small gap between filters */
+  justify-content: space-between;
+  width: 100%;
 }
 
 .filter-option-section {
-  flex: 1;
-  padding: 0 10px;
-  min-width: 200px;
-  /* Ensures that the filter doesn't become too narrow */
+  flex: 1; /* Make each filter take equal space */
+  min-width: 0; /* Prevent overflow */
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative; /* Add this for proper dropdown positioning */
 }
 
 .filter-title {
-  font-weight: 600;
-  margin-bottom: 10px;
-  cursor: pointer;
+  position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.filter-title:hover {
+  background-color: #f8f8f8;
+}
+
+.filter-icon {
+  color: #666;
+  transition: transform 0.2s ease;
 }
 
 .options-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  position: absolute;
+  top: 100%; /* Position right below the title */
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 8px 0;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .option-item {
-  padding: 5px 15px;
-  background-color: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.option-item.selected {
-  background-color: #0073b1;
-  color: #ffffff;
-  border-color: #0073b1;
-}
-
-.selected-options {
-  margin-top: 5px;
-  /* Add some space above */
-  color: black;
-  /* Change color for clarity */
-  font-size: 0.9em;
-  /* Slightly smaller font size */
-  font-weight: bold;
   display: flex;
-  /* Use flexbox */
-  flex-direction: column;
-  /* Stack items vertically */
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.option-item:hover {
+  background-color: #f8f8f8;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.option-item.selected .checkbox {
+  background-color: #00BF63;
+  border-color: #00BF63;
+}
+
+.checkmark {
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.option-text {
+  color: #333;
+  font-size: 14px;
+}
+
+.selected-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 16px;
+  border-top: 1px solid #eee;
+}
+
+.selected-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: #e8f7f0;
+  color: #00BF63;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.remove-filter {
+  background: none;
+  border: none;
+  color: #00BF63;
+  margin-left: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-filter:hover {
+  color: #009e52;
+}
+
+/* Scrollbar styling */
+.options-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.options-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.options-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.options-container::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* Animation for dropdown */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.options-container {
+  animation: slideDown 0.2s ease-out;
 }
 
 .header-section {
@@ -1314,43 +1417,11 @@ logo-header {
   z-index: 1001;
   font-family: 'Poppins', sans-serif;
   color: black;
-  /* Other styling as needed */
-}
-
-.navigate-pro-link {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.navigate-pro-link a {
-  color: #00BF63;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.navigate-pro-link a:hover {
-  text-decoration: underline;
-}
-
-.nav-popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-  font-family: 'Poppins', sans-serif;
-  color: black;
   text-align: left;
   font-size: 0.9em;
-  /* Default font size */
   width: 90%;
-  /* Make it wider on mobile */
   max-width: 400px;
-  /* Max width to prevent it from getting too large */
+  padding: 15px;
 }
 
 .nav-popup h2 {
@@ -1546,4 +1617,71 @@ logo-header {
 
 .social-links img:hover {
   opacity: 1;
+}
+
+/* Add these new styles */
+.filter-search {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  background: white;
+}
+
+.filter-search-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.filter-search-input:focus {
+  border-color: #00BF63;
+  box-shadow: 0 0 0 2px rgba(0, 191, 99, 0.1);
+}
+
+.filter-search-input::placeholder {
+  color: #999;
+}
+
+.no-results {
+  padding: 12px 16px;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Update existing styles */
+.options-container {
+  position: absolute;
+  top: calc(100% + 40px); /* Adjust for search bar height */
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.filter-option-section {
+  flex: 1;
+  min-width: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Animation for search focus */
+@keyframes searchFocus {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+.filter-search-input:focus {
+  animation: searchFocus 0.2s ease;
 }

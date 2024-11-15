@@ -167,7 +167,14 @@ const CandidateViewer = ({
 
   const [openFilterCategories, setOpenFilterCategories] = useState([]); // Now an array to track multiple open categories
 
-  const FilterOptions = ({ title, options, selectedOptions, onSelect }) => {
+  const FilterOptions = ({ title, options, selectedOptions, onSelect, isOpen, onToggle }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    // Filter options based on search query
+    const filteredOptions = options.filter(option => 
+      option.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     const handleSelect = (option) => {
       const isSelected = selectedOptions.includes(option);
       if (isSelected) {
@@ -175,63 +182,70 @@ const CandidateViewer = ({
       } else {
         onSelect([...selectedOptions, option]);
       }
-
-      // Collapse the filter tab after selecting an option
-      setOpenFilterCategories((current) =>
-        current.includes(title) ? current : [...current, title]
-      );
-
-      // Close the filter tab regardless of current state
-      setOpenFilterCategories((current) =>
-        current.filter((category) => category !== title)
-      );
+      setSearchQuery(''); // Clear search after selection
     };
-
-    const showOptions = openFilterCategories.includes(title);
 
     return (
       <div className="filter-option-section">
-        <div
-          className="filter-title"
-          onClick={() => {
-            setOpenFilterCategories((current) =>
-              current.includes(title)
-                ? current.filter((category) => category !== title)
-                : [...current, title]
-            );
-          }}
-        >
-          {title}
-          {showOptions ? (
+        <div className="filter-title" onClick={onToggle}>
+          <span>{title}</span>
+          {isOpen ? (
             <FiChevronUp className="filter-icon" />
           ) : (
             <FiChevronDown className="filter-icon" />
           )}
         </div>
 
-        {/* Display selected options in blue */}
-        {selectedOptions.length > 0 && (
-          <div className="selected-options">
-            {selectedOptions.map((option, index) => (
-              <span key={index} className="selected-option">
-                {option}
-              </span>
-            ))}
-          </div>
+        {isOpen && (
+          <>
+            <div className="filter-search">
+              <input
+                type="text"
+                placeholder={`Search ${title.toLowerCase()}...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onClick={(e) => e.stopPropagation()}
+                className="filter-search-input"
+              />
+            </div>
+            <div className="options-container">
+              {filteredOptions.length > 0 ? (
+                filteredOptions.map((option, index) => (
+                  <div
+                    key={index}
+                    className={`option-item ${
+                      selectedOptions.includes(option) ? "selected" : ""
+                    }`}
+                    onClick={() => handleSelect(option)}
+                  >
+                    <div className="checkbox">
+                      {selectedOptions.includes(option) && <span className="checkmark">✓</span>}
+                    </div>
+                    <span className="option-text">{option}</span>
+                  </div>
+                ))
+              ) : (
+                <div className="no-results">No matches found</div>
+              )}
+            </div>
+          </>
         )}
 
-        {showOptions && (
-          <div className="options-container">
-            {options.map((option, index) => (
-              <div
-                key={index}
-                className={`option-item ${
-                  selectedOptions.includes(option) ? "selected" : ""
-                }`}
-                onClick={() => handleSelect(option)}
-              >
+        {selectedOptions.length > 0 && (
+          <div className="selected-filters">
+            {selectedOptions.map((option, index) => (
+              <span key={index} className="selected-filter-tag">
                 {option}
-              </div>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleSelect(option);
+                  }}
+                  className="remove-filter"
+                >
+                  ×
+                </button>
+              </span>
             ))}
           </div>
         )}
@@ -903,58 +917,100 @@ const CandidateViewer = ({
         )}
 
         <div className="filter-container">
-          <FilterOptions
-            title="University"
-            options={uniqueUniversities}
-            selectedOptions={filters.university}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                university: selected,
-              }))
-            }
-          />
-          <FilterOptions
-            title="Major"
-            options={uniqueMajors}
-            selectedOptions={filters.major}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
-            }
-          />
-          <FilterOptions
-            title="Graduation Year"
-            options={uniqueGraduationYears}
-            selectedOptions={filters.graduationYear}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                graduationYear: selected,
-              }))
-            }
-          />
-          <FilterOptions
-            title="Skills"
-            options={uniqueSkills}
-            selectedOptions={filters.skills}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                skills: selected,
-              }))
-            }
-          />
-          <FilterOptions
-            title="Position"
-            options={["Fulltime", "Internship"]}
-            selectedOptions={filters.position}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                position: selected,
-              }))
-            }
-          />
+          <div className="filter-row">
+            <FilterOptions
+              title="University"
+              options={uniqueUniversities}
+              selectedOptions={filters.university}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  university: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('University')}
+              onToggle={() => {
+                setOpenFilterCategories(current => 
+                  current.includes('University') 
+                    ? [] // Clear all when closing
+                    : ['University'] // Only open this one
+                );
+              }}
+            />
+            <FilterOptions
+              title="Major"
+              options={uniqueMajors}
+              selectedOptions={filters.major}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
+              }
+              isOpen={openFilterCategories.includes('Major')}
+              onToggle={() => {
+                setOpenFilterCategories(current => 
+                  current.includes('Major') 
+                    ? []
+                    : ['Major']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Graduation Year"
+              options={uniqueGraduationYears}
+              selectedOptions={filters.graduationYear}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  graduationYear: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('Graduation Year')}
+              onToggle={() => {
+                setOpenFilterCategories(current => 
+                  current.includes('Graduation Year') 
+                    ? []
+                    : ['Graduation Year']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Skills"
+              options={uniqueSkills}
+              selectedOptions={filters.skills}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  skills: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('Skills')}
+              onToggle={() => {
+                setOpenFilterCategories(current => 
+                  current.includes('Skills') 
+                    ? []
+                    : ['Skills']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Position"
+              options={["Fulltime", "Internship"]}
+              selectedOptions={filters.position}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  position: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('Position')}
+              onToggle={() => {
+                setOpenFilterCategories(current => 
+                  current.includes('Position') 
+                    ? []
+                    : ['Position']
+                );
+              }}
+            />
+          </div>
         </div>
 
         <div className="candidates-grid">
@@ -1178,36 +1234,100 @@ const CandidateViewer = ({
       )}
 
       <div className="filter-container">
-        <FilterOptions
-          title="University"
-          options={Array.from(new Set(candidates.map((c) => c.university)))}
-          selectedOptions={filters.university}
-          onSelect={(selected) => handleFilterChange("university", selected)}
-        />
-        <FilterOptions
-          title="Major"
-          options={Array.from(new Set(candidates.map((c) => c.major)))}
-          selectedOptions={filters.major}
-          onSelect={(selected) => handleFilterChange("major", selected)}
-        />
-        <FilterOptions
-          title="Graduation Year"
-          options={Array.from(
-            new Set(candidates.map((c) => c.graduationYear.toString()))
-          )}
-          selectedOptions={filters.graduationYear}
-          onSelect={(selected) =>
-            handleFilterChange("graduationYear", selected)
-          }
-        />
-        <FilterOptions
-          title="Skills"
-          options={Array.from(
-            new Set(candidates.flatMap((c) => c.skills || []))
-          )}
-          selectedOptions={filters.skills}
-          onSelect={(selected) => handleFilterChange("skills", selected)}
-        />
+        <div className="filter-row">
+          <FilterOptions
+            title="University"
+            options={uniqueUniversities}
+            selectedOptions={filters.university}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                university: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('University')}
+            onToggle={() => {
+              setOpenFilterCategories(current => 
+                current.includes('University') 
+                  ? [] // Clear all when closing
+                  : ['University'] // Only open this one
+              );
+            }}
+          />
+          <FilterOptions
+            title="Major"
+            options={uniqueMajors}
+            selectedOptions={filters.major}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
+            }
+            isOpen={openFilterCategories.includes('Major')}
+            onToggle={() => {
+              setOpenFilterCategories(current => 
+                current.includes('Major') 
+                  ? []
+                  : ['Major']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Graduation Year"
+            options={uniqueGraduationYears}
+            selectedOptions={filters.graduationYear}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                graduationYear: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Graduation Year')}
+            onToggle={() => {
+              setOpenFilterCategories(current => 
+                current.includes('Graduation Year') 
+                  ? []
+                  : ['Graduation Year']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Skills"
+            options={uniqueSkills}
+            selectedOptions={filters.skills}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                skills: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Skills')}
+            onToggle={() => {
+              setOpenFilterCategories(current => 
+                current.includes('Skills') 
+                  ? []
+                  : ['Skills']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Position"
+            options={["Fulltime", "Internship"]}
+            selectedOptions={filters.position}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                position: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Position')}
+            onToggle={() => {
+              setOpenFilterCategories(current => 
+                current.includes('Position') 
+                  ? []
+                  : ['Position']
+              );
+            }}
+          />
+        </div>
       </div>
 
       <div className="main-and-other-videos-container">
@@ -1251,7 +1371,7 @@ const CandidateViewer = ({
               onClick={emailDraft}
               aria-label="Draft candidate for interview"
             >
-              🤝 Meet
+              🤝 Meet {candidate.firstName}
             </button>
           </div>
           <div className="video-resume-display">Video Resume</div>
@@ -1386,7 +1506,7 @@ const CandidateViewer = ({
               onClick={emailDraft}
               aria-label="Draft candidate for interview"
             >
-              🤝 Meet
+              🤝 Meet {candidate.firstName}
             </button>
           </div>
         </div>
