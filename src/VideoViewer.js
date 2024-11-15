@@ -222,7 +222,7 @@ const VideoViewer = () => {
               e.target.style.boxShadow = "none";
             }}
           >
-            🤝 Meet
+            🤝 Meet {candidate.firstName}
           </button>
         </div>
         {showSignupModal && (
