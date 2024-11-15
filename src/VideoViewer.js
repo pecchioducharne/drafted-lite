@@ -6,6 +6,8 @@ import { collection, getDocs, query, where } from "firebase/firestore"; // Impor
 import { db } from "./firebase"; // Replace with your Firebase setup
 import linkedinIcon from './linkedin.svg';
 import githubIcon from './github.svg';
+import { auth } from "./firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const VideoViewer = () => {
   const { id } = useParams(); // Assuming id here is the email
@@ -16,6 +18,9 @@ const VideoViewer = () => {
   const [showResume, setShowResume] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false); // State to control the signup modal visibility
   const [videoLoading, setVideoLoading] = useState(true); // State to track video loading
+  const [user] = useAuthState(auth);
+  const [emailPopup, setEmailPopup] = useState(false);
+  const [emailContent, setEmailContent] = useState('');
 
   useEffect(() => {
     const fetchCandidate = async () => {
@@ -75,7 +80,18 @@ const VideoViewer = () => {
   };
 
   const handleRequestInterview = () => {
-    // Logic to show the signup modal
+    // Comment out the previous authentication logic
+    /*
+    if (user) {
+      // If user is logged in, directly show email draft
+      emailDraft();
+    } else {
+      // If user is not logged in, show signup modal
+      setShowSignupModal(true);
+    }
+    */
+
+    // Always show the signup modal
     setShowSignupModal(true);
   };
 
@@ -85,9 +101,44 @@ const VideoViewer = () => {
   };
 
   const emailDraft = () => {
-    const { email, firstName, lastName } = candidate;
-    const mailto = `mailto:${email}?subject=You've Been Drafted!&body=Hi ${firstName},%0D%0A%0D%0AWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.%0D%0A%0D%0ATime:%0D%0ADay:%0D%0AZoom / Hangout link:%0D%0A%0D%0ALet us know if this works. Looking forward!%0D%0A%0D%0ABest,%0D%0A%0D%0A[Your Name]`;
-    window.location.href = mailto;
+    if (candidate) {
+      const { email, firstName, lastName } = candidate;
+      const content = `Hi ${firstName},\n\nWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.\n\nTime:\nDay:\nZoom / Hangout link:\n\nLet us know if this works. Looking forward!\n\nBest,\n\n[Your Name]`;
+      setEmailContent(content);
+      setEmailPopup(true);
+    }
+  };
+
+  const EmailPopup = ({ emailContent, onClose }) => {
+    const { email } = candidate;
+
+    const handleCopy = (text) => {
+      navigator.clipboard.writeText(text);
+    };
+
+    return (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <button className="close-button" onClick={onClose}>X</button>
+          <div className="email-address-container">
+            <p className="email-address">{email}</p>
+          </div>
+          <button className="copy-button" onClick={() => handleCopy(email)}>
+            Copy Email Address
+          </button>
+          <div className="email-content-container">
+            <textarea
+              readOnly
+              value={emailContent}
+              className="email-textarea"
+            />
+          </div>
+          <button className="copy-button" onClick={() => handleCopy(emailContent)}>
+            Copy Email Content
+          </button>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -145,7 +196,7 @@ const VideoViewer = () => {
           {candidate.firstName || "N/A"} {candidate.lastName || "N/A"}
           <button
             className="draft-button"
-            onClick={handleRequestInterview}
+            onClick={emailDraft}
             aria-label="Draft candidate for interview"
             style={{
               backgroundColor: "#00BF63",
@@ -158,9 +209,9 @@ const VideoViewer = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              margin: "0 0 0 20px", // Adjust margin as needed
+              margin: "0 0 0 20px",
               fontSize: "25px",
-              transition: "background-color 0.3s ease", // Add transition for smooth effect
+              transition: "background-color 0.3s ease",
             }}
             onMouseOver={(e) => {
               e.target.style.backgroundColor = "#45a049";
@@ -171,7 +222,7 @@ const VideoViewer = () => {
               e.target.style.boxShadow = "none";
             }}
           >
-            Request Interview
+            🤝 Meet
           </button>
         </div>
         {showSignupModal && (
@@ -221,7 +272,7 @@ const VideoViewer = () => {
               {candidate.major || "N/A"}
             </p>
           </div>
-          <div className="profile-field" style={{ fontSize: "20px" }}>
+          <div className="profile-field social-field" style={{ fontSize: "20px" }}>
             <strong>Social</strong>{" "}
             <div className="social-links">
               {candidate.linkedInURL && (
@@ -231,7 +282,7 @@ const VideoViewer = () => {
                   rel="noopener noreferrer"
                   className="social-link"
                 >
-                  <img src={linkedinIcon} alt="LinkedIn" width="24" height="24" />
+                  <img src={linkedinIcon} alt="LinkedIn" width="32" height="32" />
                 </a>
               )}
               {candidate.gitHubURL && (
@@ -241,7 +292,7 @@ const VideoViewer = () => {
                   rel="noopener noreferrer"
                   className="social-link"
                 >
-                  <img src={githubIcon} alt="GitHub" width="24" height="24" />
+                  <img src={githubIcon} alt="GitHub" width="32" height="32" />
                 </a>
               )}
             </div>
@@ -287,6 +338,12 @@ const VideoViewer = () => {
             Close Resume
           </button>
         </div>
+      )}
+      {emailPopup && (
+        <EmailPopup
+          emailContent={emailContent}
+          onClose={() => setEmailPopup(false)}
+        />
       )}
     </div>
   );
