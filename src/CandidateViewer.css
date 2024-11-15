@@ -840,7 +840,6 @@ logo-header {
   color: black;
   margin-top: 10px;
   margin-bottom: 20px;
-  /* Remove or adjust as needed */
   text-align: left;
 }
 
@@ -1051,6 +1050,7 @@ logo-header {
 
 
 .candidate-name {
+  margin-top: 10px;
   font-size: 1.5em;
   font-weight: 700;
   margin-bottom: 5px;

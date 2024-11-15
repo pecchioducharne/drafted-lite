@@ -848,7 +848,7 @@ const CandidateViewer = ({
             className="code-button"
             style={{ minWidth: "200px", marginLeft: "7px", minHeight: "65px" }}
           >
-            Invite Codes
+            Show Invite Codes
           </button>
 
           {suggestions.length > 0 && (
