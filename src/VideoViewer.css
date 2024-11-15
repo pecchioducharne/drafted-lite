@@ -1409,18 +1409,24 @@ logo-header {
 }
 
 .drafted-logo-container {
+  display: inline-flex;
+  align-items: center;
   padding: 20px;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-  display: inline-block; /* Makes the container only as wide as the logo */
+  cursor: pointer !important;
+  transition: all 0.2s ease;
 }
 
 .drafted-logo-container:hover {
   opacity: 0.8;
+  transform: scale(1.02);
 }
 
 .drafted-logo-container svg {
-  cursor: pointer;
-  height: 23px; /* Match the SVG viewBox height */
-  width: 115px; /* Match the SVG viewBox width */
+  cursor: pointer !important;
+  height: 23px;
+  width: 115px;
+}
+
+.drafted-logo-container svg path {
+  cursor: pointer !important;
 }
