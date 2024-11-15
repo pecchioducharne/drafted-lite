@@ -1532,3 +1532,18 @@ logo-header {
   word-break: break-all;
   /* Breaks the link to prevent overflow */
 }
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.social-links img {
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.social-links img:hover {
+  opacity: 1;
+}

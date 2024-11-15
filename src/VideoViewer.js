@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import QuickRecruiterSignup from "./QuickRecruiterSignup"; // Import your QuickRecruiterSignup form
 import { collection, getDocs, query, where } from "firebase/firestore"; // Import Firestore modules
 import { db } from "./firebase"; // Replace with your Firebase setup
+import linkedinIcon from './linkedin.svg';
+import githubIcon from './github.svg';
 
 const VideoViewer = () => {
   const { id } = useParams(); // Assuming id here is the email
@@ -220,16 +222,29 @@ const VideoViewer = () => {
             </p>
           </div>
           <div className="profile-field" style={{ fontSize: "20px" }}>
-            <strong>LinkedIn</strong>{" "}
-            <a
-              href={candidate.linkedInURL || "#"}
-              className="candidate-major clickable-filter"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ fontSize: "20px" }}
-            >
-              {candidate.linkedInURL || "N/A"}
-            </a>
+            <strong>Social Links</strong>{" "}
+            <div className="social-links">
+              {candidate.linkedInURL && (
+                <a
+                  href={candidate.linkedInURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link"
+                >
+                  <img src={linkedinIcon} alt="LinkedIn" width="24" height="24" />
+                </a>
+              )}
+              {candidate.gitHubURL && (
+                <a
+                  href={candidate.gitHubURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link"
+                >
+                  <img src={githubIcon} alt="GitHub" width="24" height="24" />
+                </a>
+              )}
+            </div>
           </div>
           <div className="profile-field" style={{ fontSize: "20px" }}>
             <strong>Graduation Year</strong>{" "}

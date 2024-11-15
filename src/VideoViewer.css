@@ -1249,3 +1249,26 @@ logo-header {
   word-break: break-all;
   /* Breaks the link to prevent overflow */
 }
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+
+.social-link:hover {
+  opacity: 0.8;
+}
+
+.social-link img {
+  vertical-align: middle;
+}
