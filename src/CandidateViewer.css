@@ -420,17 +420,62 @@ logo-header {
 }
 
 .search-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px auto;
+  max-width: 1200px;
+  padding: 0 20px;
   position: relative;
-  width: 100%;
-  max-width: 800px;
-  margin: auto;
 }
 
 .search-bar {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  flex: 1;
+  height: 56px;
+  padding: 0 24px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: white;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #22A65A;
+  box-shadow: 0 2px 8px rgba(34, 166, 90, 0.1);
+}
+
+.search-bar::placeholder {
+  color: #757575;
+}
+
+.code-button {
+  height: 56px;
+  padding: 0 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #22A65A, #8DC255);
+  cursor: pointer;
+  transition: all 0.3s ease; /* Slightly longer transition for smoother effect */
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+}
+
+.code-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
+  background: linear-gradient(to right, #1a8046, #74a346); /* Darker gradient on hover */
+}
+
+.code-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  background: linear-gradient(to right, #156c3a, #618c3a); /* Even darker when clicked */
 }
 
 .search-container {
@@ -587,37 +632,38 @@ logo-header {
 
 .suggestions {
   position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  top: 64px;
+  left: 20px;
+  right: calc(20px + 200px + 16px);
   background: white;
-  border: 1px solid #ccc;
-  border-top: none;
-  z-index: 10;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  max-height: 200px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 300px;
   overflow-y: auto;
+  border: 1px solid #e0e0e0;
 }
 
 .suggestion-item {
-  padding: 8px;
+  padding: 12px 24px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #333;
+  font-size: 14px;
 }
 
 .suggestion-item:hover {
-  background-color: #f0f0f0;
+  background-color: #f5f9f7;
+}
+
+.suggestion-item:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .suggestion-item:last-child {
-  border-bottom: none;
-  border-bottom-right-radius: 14px;
-  border-bottom-left-radius: 14px;
-}
-
-.suggestion-item:hover {
-  background-color: #f7f7f7;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
 
