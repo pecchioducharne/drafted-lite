@@ -222,7 +222,7 @@ const VideoViewer = () => {
             </p>
           </div>
           <div className="profile-field" style={{ fontSize: "20px" }}>
-            <strong>Social Links</strong>{" "}
+            <strong>Social</strong>{" "}
             <div className="social-links">
               {candidate.linkedInURL && (
                 <a
