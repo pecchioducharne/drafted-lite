@@ -169,11 +169,6 @@ const CandidateViewer = ({
 
   const FilterOptions = ({ title, options, selectedOptions, onSelect, isOpen, onToggle }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    
-    // Filter options based on search query
-    const filteredOptions = options.filter(option => 
-      option.toLowerCase().includes(searchQuery.toLowerCase())
-    );
 
     const handleSelect = (option) => {
       const isSelected = selectedOptions.includes(option);
@@ -182,7 +177,8 @@ const CandidateViewer = ({
       } else {
         onSelect([...selectedOptions, option]);
       }
-      setSearchQuery(''); // Clear search after selection
+      setSearchQuery(''); // Clear search
+      onToggle(); // Close dropdown after selection
     };
 
     return (
@@ -209,13 +205,14 @@ const CandidateViewer = ({
               />
             </div>
             <div className="options-container">
-              {filteredOptions.length > 0 ? (
-                filteredOptions.map((option, index) => (
+              {options
+                .filter(option => 
+                  option.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .map((option, index) => (
                   <div
                     key={index}
-                    className={`option-item ${
-                      selectedOptions.includes(option) ? "selected" : ""
-                    }`}
+                    className={`option-item ${selectedOptions.includes(option) ? "selected" : ""}`}
                     onClick={() => handleSelect(option)}
                   >
                     <div className="checkbox">
@@ -223,10 +220,7 @@ const CandidateViewer = ({
                     </div>
                     <span className="option-text">{option}</span>
                   </div>
-                ))
-              ) : (
-                <div className="no-results">No matches found</div>
-              )}
+                ))}
             </div>
           </>
         )}
@@ -846,9 +840,14 @@ const CandidateViewer = ({
           <button
             onClick={toggleInviteCodesPopup}
             className="code-button"
-            style={{ minWidth: "200px", marginLeft: "7px", minHeight: "65px" }}
           >
             Invite Codes
+          </button>
+          <button
+            onClick={() => {/* Add your saved handler here */}}
+            className="code-button"
+          >
+            Saved
           </button>
 
           {suggestions.length > 0 && (
