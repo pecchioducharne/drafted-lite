@@ -8,6 +8,7 @@ import Login from "./Login";
 import CodePage from "./CodePage"; // Import CodePage component
 import { UserProvider } from "./UserContext";
 import ChatComponent from "./ChatComponent";
+import SavedCandidates from "./SavedCandidates";
 
 const App = () => {
   const candidateEmail = "candidate@example.com";
@@ -36,6 +37,7 @@ const App = () => {
               }
             />
             <Route path="/signup" element={<RecruiterSignupForm />} />
+            <Route path="/saved" element={<SavedCandidates />} />
             <Route path="/quick" element={<QuickRecruiterSignup />} />
             <Route path="/candidate/:id" element={<VideoViewer />} />
             <Route path="/chat" element={<ChatComponent />} />

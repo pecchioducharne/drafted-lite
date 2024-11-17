@@ -97,24 +97,28 @@ logo-header {
 }
 
 .video-thumbnail-wrapper {
-  height: 180px;
-  /* Keep the height as is */
-  width: 180px;
-  /* Set width to match height for a circular shape */
+  width: 280px;
+  height: 280px;
+  margin-bottom: 16px;
   border-radius: 50%;
-  /* Make the wrapper circular */
   overflow: hidden;
-  /* Hide overflow to keep the circle shape */
-  margin: 0 auto;
-  /* Center the circular thumbnail */
-  margin-top: 10px;
+  border: 4px solid #f0f0f0;
+  transition: all 0.2s ease;
 }
 
 .video-thumbnail {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Maintain aspect ratio while covering */
+  transition: transform 0.2s ease;
+}
+
+.candidate-card:hover .video-thumbnail-wrapper {
+  border-color: #22A65A;
+}
+
+.candidate-card:hover .video-thumbnail {
+  transform: scale(1.05);
 }
 
 .other-videos-container {
@@ -229,70 +233,106 @@ logo-header {
 
 .filter-container {
   width: 100%;
-  margin: 20px 0;
+  margin: 12px 0;
+  padding: 0 12px;
 }
 
 .filter-row {
   display: flex;
-  gap: 8px; /* Small gap between filters */
-  justify-content: space-between;
+  flex-wrap: wrap; /* Allow filters to wrap on mobile */
+  gap: 8px;
   width: 100%;
 }
 
 .filter-option-section {
-  flex: 1; /* Make each filter take equal space */
-  min-width: 0; /* Prevent overflow */
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  position: relative; /* Add this for proper dropdown positioning */
+  flex: 1 1 calc(50% - 8px); /* Two filters per row on mobile */
+  min-width: 140px; /* Minimum width to prevent squishing */
 }
 
 .filter-title {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  cursor: pointer;
-  font-weight: 500;
-  color: #333;
-  border-bottom: 1px solid #eee;
+  padding: 12px;
+  font-size: 14px; /* Slightly smaller font on mobile */
 }
 
-.filter-title:hover {
-  background-color: #f8f8f8;
-}
-
-.filter-icon {
-  color: #666;
-  transition: transform 0.2s ease;
-}
-
-.options-container {
-  position: absolute;
-  top: 100%; /* Position right below the title */
-  left: 0;
-  right: 0;
-  background: white;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  padding: 8px 0;
-  max-height: 300px;
-  overflow-y: auto;
+.filter-search-input {
+  padding: 12px;
+  font-size: 14px;
 }
 
 .option-item {
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  padding: 12px; /* Larger touch target */
+  min-height: 44px; /* Minimum height for touch targets */
 }
 
-.option-item:hover {
-  background-color: #f8f8f8;
+.selected-filter-tag {
+  margin: 4px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.remove-filter {
+  padding: 4px 8px;
+  margin-left: 6px;
+  font-size: 16px; /* Larger × for better touch target */
+}
+
+/* Tablet and up */
+@media screen and (min-width: 768px) {
+  .filter-container {
+    padding: 0 20px;
+    margin: 20px 0;
+  }
+
+  .filter-row {
+    gap: 12px;
+  }
+
+  .filter-option-section {
+    flex: 1 1 auto; /* Equal width filters on desktop */
+    min-width: 160px;
+  }
+
+  .filter-title {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .option-item {
+    padding: 10px 16px;
+    min-height: 40px;
+  }
+}
+
+/* Desktop and up */
+@media screen and (min-width: 1024px) {
+  .filter-row {
+    flex-wrap: nowrap; /* Prevent wrapping on desktop */
+  }
+
+  .filter-option-section {
+    min-width: 180px;
+  }
+}
+
+/* Ensure dropdown is always visible */
+.options-container {
+  max-height: 300px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  position: absolute;
+  width: 100%;
+  min-width: 200px;
+}
+
+/* Prevent body scroll when dropdown is open */
+.body-scroll-lock {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
 
 .checkbox {
@@ -1808,4 +1848,136 @@ logo-header {
 /* Add hover state */
 .option-label:hover {
   background-color: #f5f9f7;
+}
+
+.meet-popup {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.meet-popup h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  font-size: 20px;
+  color: #333;
+}
+
+.meet-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.meet-option-button {
+  width: 100%;
+  height: 56px;
+  padding: 0 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #22A65A, #8DC255);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.meet-option-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
+  background: linear-gradient(to right, #1a8046, #74a346);
+}
+
+.meet-option-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  background: linear-gradient(to right, #156c3a, #618c3a);
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  color: #333;
+  background: #f5f5f5;
+}
+
+.meet-button {
+  height: 56px;
+  padding: 0 32px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #22A65A, #8DC255);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  min-width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.meet-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
+  background: linear-gradient(to right, #1a8046, #74a346);
+}
+
+.meet-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  background: linear-gradient(to right, #156c3a, #618c3a);
+}
+
+/* If you need to adjust the container */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.button-group button {
+  flex: 1;
+  max-width: 300px; /* Prevent buttons from getting too wide */
 }

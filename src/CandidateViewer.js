@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
+import { doc, getDoc, collection, getDocs, arrayUnion, updateDoc } from "firebase/firestore";
 import { useSwipeable } from "react-swipeable";
 import "./CandidateViewer.css";
 import recordGif from "./record.gif";
@@ -22,6 +22,64 @@ import {
   signInWithEmailAndPassword,
   browserSessionPersistence,
 } from "firebase/auth";
+
+// Add this new component
+const MeetOptionsPopup = ({ onClose, onEmail, onSave, candidateName }) => {
+  return (
+    <div className="popup-overlay">
+      <div className="meet-popup">
+        <button className="close-button" onClick={onClose}>×</button>
+        <h3>Meet {candidateName}</h3>
+        <div className="meet-options">
+          <button 
+            className="meet-option-button"
+            onClick={onEmail}
+          >
+            📩 Email
+          </button>
+          <button 
+            className="meet-option-button"
+            onClick={onSave}
+          >
+            🪣 Save
+          </button>
+          <button 
+            className="meet-option-button"
+            onClick={() => alert("Coming soon 🏗️")}
+          >
+            💬 Chat
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Add new component for the confirmation popup
+const SaveConfirmationPopup = ({ onClose, onViewSaved, candidateName }) => {
+  return (
+    <div className="popup-overlay">
+      <div className="meet-popup">
+        <button className="close-button" onClick={onClose}>×</button>
+        <h3>Candidate saved to bucket!</h3>
+        <div className="meet-options">
+          <button 
+            className="meet-option-button"
+            onClick={onViewSaved}
+          >
+            See saved
+          </button>
+          <button 
+            className="meet-option-button"
+            onClick={onClose}
+          >
+            Keep drafting
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const CandidateViewer = ({
   email,
@@ -54,6 +112,11 @@ const CandidateViewer = ({
     const storedView = sessionStorage.getItem("showGridView");
     return storedView ? JSON.parse(storedView) : initialShowGridView;
   });
+  const [showSavedPopup, setShowSavedPopup] = useState(false);
+  // Update your component to include the new state
+  const [showMeetOptions, setShowMeetOptions] = useState(false);
+  // Add new state
+  const [showSaveConfirmation, setShowSaveConfirmation] = useState(false);
 
   const [playingCandidateId, setPlayingCandidateId] = useState(null); // New state to track the id of the candidate being played
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -170,6 +233,24 @@ const CandidateViewer = ({
   const FilterOptions = ({ title, options, selectedOptions, onSelect, isOpen, onToggle }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
+    // Add body scroll lock when dropdown is open on mobile
+    useEffect(() => {
+      if (isOpen && window.innerWidth < 768) {
+        document.body.classList.add('body-scroll-lock');
+      } else {
+        document.body.classList.remove('body-scroll-lock');
+      }
+      
+      return () => {
+        document.body.classList.remove('body-scroll-lock');
+      };
+    }, [isOpen]);
+
+    // Handle touch events
+    const handleTouchStart = (e) => {
+      e.stopPropagation();
+    };
+
     const handleSelect = (option) => {
       const isSelected = selectedOptions.includes(option);
       if (isSelected) {
@@ -182,7 +263,10 @@ const CandidateViewer = ({
     };
 
     return (
-      <div className="filter-option-section">
+      <div 
+        className="filter-option-section"
+        onTouchStart={handleTouchStart}
+      >
         <div className="filter-title" onClick={onToggle}>
           <span>{title}</span>
           {isOpen ? (
@@ -752,6 +836,10 @@ const CandidateViewer = ({
     setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
   };
 
+  const handleSavedClick = () => {
+    navigate('/saved');
+  };
+
   const copyCode = (code) => {
     navigator.clipboard
       .writeText(code)
@@ -844,7 +932,7 @@ const CandidateViewer = ({
             Invite Codes
           </button>
           <button
-            onClick={() => {/* Add your saved handler here */}}
+            onClick={handleSavedClick}
             className="code-button"
           >
             Saved
@@ -1134,6 +1222,42 @@ const CandidateViewer = ({
     );
   }
 
+
+  // Update your meet button handler
+  const handleMeetClick = () => {
+    setShowMeetOptions(true);
+  };
+
+  // Add these handlers
+  const handleEmailOption = () => {
+    setShowMeetOptions(false);
+    setEmailPopup(true); // Your existing email popup state
+  };
+
+  const saveCandidate = async (candidate) => {
+    try {
+      const recruiterRef = doc(db, "recruiter-accounts", user.email);
+      await updateDoc(recruiterRef, {
+        savedCandidates: arrayUnion(candidate.id)
+      });
+      setShowSavedPopup(true);
+      setTimeout(() => setShowSavedPopup(false), 2000);
+    } catch (error) {
+      console.error("Error saving candidate:", error);
+    }
+  };
+
+  const handleSaveOption = async () => {
+    await saveCandidate(filteredCandidates[currentIndex]);
+    setShowMeetOptions(false);
+    setShowSaveConfirmation(true);
+  };
+
+  // Add navigation handler
+  const handleViewSaved = () => {
+    navigate('/saved');
+  };
+
   return (
     <div className="profile-dashboard">
       <div className="header">
@@ -1367,7 +1491,7 @@ const CandidateViewer = ({
             </span>
             <button
               className="draft-button"
-              onClick={emailDraft}
+              onClick={() => setShowMeetOptions(true)}
               aria-label="Draft candidate for interview"
             >
               🤝 Meet {candidate.firstName}
@@ -1502,7 +1626,7 @@ const CandidateViewer = ({
           <div className="button-group">
             <button
               className="draft-button"
-              onClick={emailDraft}
+              onClick={() => setShowMeetOptions(true)}
               aria-label="Draft candidate for interview"
             >
               🤝 Meet {candidate.firstName}
@@ -1586,6 +1710,24 @@ const CandidateViewer = ({
             Close Resume
           </button>
         </div>
+      )}
+      {showMeetOptions && (
+        <MeetOptionsPopup
+          onClose={() => setShowMeetOptions(false)}
+          onEmail={() => {
+            setShowMeetOptions(false);
+            emailDraft(); // Your existing email function
+          }}
+          onSave={handleSaveOption}
+          candidateName={filteredCandidates[currentIndex].firstName}
+        />
+      )}
+      {showSaveConfirmation && (
+        <SaveConfirmationPopup
+          onClose={() => setShowSaveConfirmation(false)}
+          onViewSaved={handleViewSaved}
+          candidateName={filteredCandidates[currentIndex].firstName}
+        />
       )}
     </div>
   );
