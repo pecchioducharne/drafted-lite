@@ -62,16 +62,17 @@ const CodePage = () => {
           value={code}
           onChange={(e) => setCode(e.target.value)}
           className={styles.input}
-        />
+        /><br />
+        <br />
         <button type="submit" className={styles.button} disabled={isSubmitting}>
-          {isSubmitting ? "Checking..." : "Submit Code"}
+          {isSubmitting ? "Checking..." : "Start Drafting"}
         </button>
         {errorMessage && <p className={styles.error}>{errorMessage}</p>}
       </form>
       <div className={styles.accessMessage}>
         <p>
           Don't have an access code?{" "}
-          <span className={styles.greenEmail}>rodrigo@joindrafted.com</span>{" "}
+          <span className={styles.greenEmail}>andrew@joindrafted.com</span>{" "}
           <button className={styles.copyButton} onClick={copyEmailToClipboard}>
             Copy Email
           </button>

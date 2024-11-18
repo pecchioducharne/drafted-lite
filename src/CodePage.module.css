@@ -39,3 +39,42 @@
   max-width: 600px; /* Keep the max width */
   margin: 0 auto; /* Center the form */
 }
+
+.button {
+  height: 56px;
+  padding: 0 32px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #22A65A, #8DC255);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  width: 100%; /* Full width */
+  max-width: 300px; /* Maximum width */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto; /* Center in container */
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
+  background: linear-gradient(to right, #1a8046, #74a346);
+}
+
+.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  background: linear-gradient(to right, #156c3a, #618c3a);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
