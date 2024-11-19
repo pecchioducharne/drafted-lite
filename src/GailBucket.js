@@ -123,7 +123,7 @@ const GailBucket = () => {
         <h2 style={{
           margin: '12px 0 32px 0',
           fontSize: '36px',
-          fontWeight: 600,
+          fontWeight: 700,
           letterSpacing: '-0.5px',
           lineHeight: 1.2,
           textAlign: 'left',
@@ -132,7 +132,8 @@ const GailBucket = () => {
           backgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           color: 'transparent',
-          display: 'inline-block'
+          display: 'inline-block',
+          fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         }}>
           Engineering Candidates for GAIL
         </h2>
