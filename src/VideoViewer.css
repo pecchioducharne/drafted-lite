@@ -609,13 +609,13 @@ logo-header {
 .video-btn {
   padding: 10px 15px;
   margin: 0 5px;
-  background-color: #f0f0f0;
-  /* Light grey background, change if needed */
-  border: 1px solid #ccc;
-  /* Light grey border, change if needed */
+  background: linear-gradient(to right, #22A65A, #8DC255) !important;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
   border-radius: 10px;
   cursor: pointer;
-  transition: background-color 0.3s;
   font-family: 'Poppins', sans-serif;
   /* Assuming 'Poppins' is your theme's font */
   font-weight: 600;
@@ -624,21 +624,27 @@ logo-header {
   /* Default text color, change if needed */
 }
 
-
 .video-btn:hover {
-  background-color: #e0e0e0;
-  /* Slightly darker grey on hover, change if needed */
+  background: linear-gradient(to right, #1a8046, #74a346) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
+}
+
+.video-btn:active {
+  background: linear-gradient(to right, #156c3a, #618c3a) !important;
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
 }
 
 .video-btn.active {
-  background-color: #00BF63;
-  /* Active button background color, matches your theme */
+  background: linear-gradient(to right, #22A65A, #8DC255) !important;
   color: white;
-  /* Text color for active button */
-  border-color: #00BF63;
-  /* Border color for active button, matches the background */
+  border-color: transparent;
 }
 
+.video-btn.active:hover {
+  background: linear-gradient(to right, #1a8046, #74a346) !important;
+}
 
 .candidate-details {
   padding: 10px;

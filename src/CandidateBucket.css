@@ -81,21 +81,11 @@
 }
 
 .university {
-  margin: 0 !important;
-  flex: 1;
-  font-weight: 600;
-  color: #333;
-}
-
-.major {
   font-weight: 500;
-  color: #444;
-  margin: 6px 0;
 }
 
 .grad-year {
-  color: #666;
-  font-weight: normal;
+  color: #888;
 }
 
 .loading {
@@ -145,25 +135,4 @@
 
 .drafted-logo-container:hover {
   opacity: 0.8;
-}
-
-.university-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-}
-
-.university-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.university {
-  margin: 0 !important;
-  flex: 1;
-  font-weight: 600;
-  color: #333;
 } 

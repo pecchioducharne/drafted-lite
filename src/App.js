@@ -9,6 +9,7 @@ import CodePage from "./CodePage"; // Import CodePage component
 import { UserProvider } from "./UserContext";
 import ChatComponent from "./ChatComponent";
 import SavedCandidates from "./SavedCandidates";
+import CandidateBucket from "./CandidateBucket";
 
 const App = () => {
   const candidateEmail = "candidate@example.com";
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/quick" element={<QuickRecruiterSignup />} />
             <Route path="/candidate/:id" element={<VideoViewer />} />
             <Route path="/chat" element={<ChatComponent />} />
+            <Route path="/bucket" element={<CandidateBucket />} />
             <Route path="/code" element={<CodePage />} />{" "}
             <Route path="/" element={<Login />} />
           </Routes>
