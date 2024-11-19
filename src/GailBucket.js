@@ -14,9 +14,12 @@ const GailLogo = () => {
       style={{
         height: '40px',
         objectFit: 'contain',
-        marginLeft: '20px',
+        marginLeft: '10px',
         filter: 'brightness(0)',
+        cursor: 'pointer',
+        marginRight: '20px'
       }}
+      onClick={() => window.open('https://meetgail.com', '_blank')}
     />
   );
 };
