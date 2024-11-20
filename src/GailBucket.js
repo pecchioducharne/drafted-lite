@@ -13,11 +13,14 @@ const GailLogo = () => {
       alt="GAIL Logo"
       style={{
         height: '40px',
+        minHeight: '24px',
+        maxWidth: '120px',
         objectFit: 'contain',
-        marginLeft: '10px',
+        marginLeft: '20px',
+        marginRight: '20px',
         filter: 'brightness(0)',
         cursor: 'pointer',
-        marginRight: '20px'
+        flexShrink: 1,
       }}
       onClick={() => window.open('https://meetgail.com', '_blank')}
     />
@@ -106,25 +109,79 @@ const GailBucket = () => {
   if (loading) return <div className="loading">Loading...</div>;
 
   return (
-    <div className="saved-candidates-page">
-      <div className="top-bar">
-        <div className="back-button" onClick={() => navigate('/')}>
-          <FiArrowLeft size={24} />
-          <span>Back</span>
+    <div className="saved-candidates-page" style={{
+      minHeight: '100vh',
+      backgroundColor: '#f9f9f9',
+      width: '100%',
+      boxSizing: 'border-box',
+    }}>
+      <div className="top-bar" style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '12px 16px',
+        background: 'white',
+        borderBottom: '1px solid #eee',
+        width: '100%',
+        boxSizing: 'border-box',
+        position: 'relative',
+      }}>
+        <div className="back-button" style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          cursor: 'pointer',
+          padding: '8px',
+          borderRadius: '8px',
+        }} onClick={() => navigate('/')}>
+          <FiArrowLeft size={20} />
+          <span style={{ fontSize: '14px' }}>Back</span>
         </div>
-        <div className="logos-container">
-          <div className="drafted-logo-container" onClick={handleLogoClick}>
-            <DraftedLogo />
+        <div className="logos-container" style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          paddingRight: '16px',
+        }}>
+          <div className="drafted-logo-container" 
+            onClick={handleLogoClick} 
+            style={{ 
+              height: '28px',
+              display: 'flex',
+              alignItems: 'center',
+            }}>
+            <DraftedLogo style={{
+              height: '100%',
+              width: 'auto',
+              maxWidth: '100px',
+            }} />
           </div>
-          <GailLogo />
+          <img 
+            src="https://cdn.prod.website-files.com/654e8cc9e6600e2ca74c97f0/66a98406261c90d0918b878a_GAIL%20white%20new-p-500.png"
+            alt="GAIL Logo"
+            style={{
+              height: '28px',
+              width: 'auto',
+              maxWidth: '80px',
+              objectFit: 'contain',
+              filter: 'brightness(0)',
+              cursor: 'pointer',
+            }}
+            onClick={() => window.open('https://meetgail.com', '_blank')}
+          />
         </div>
       </div>
-      <div className="saved-candidates-container">
+      <div className="saved-candidates-container" style={{
+        padding: '16px',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        boxSizing: 'border-box',
+      }}>
         <h2 style={{
-          margin: '12px 0 32px 0',
-          fontSize: '36px',
+          margin: '12px 0 24px 0',
+          fontSize: 'clamp(28px, 5vw, 42px)',
           fontWeight: 700,
-          letterSpacing: '-0.5px',
+          letterSpacing: '-1px',
           lineHeight: 1.2,
           textAlign: 'left',
           background: 'linear-gradient(to right, #E8642D, #9678C3)',
