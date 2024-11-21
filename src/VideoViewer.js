@@ -285,26 +285,29 @@ const VideoViewer = () => {
           <div className="profile-field social-field" style={{ fontSize: "20px" }}>
             <strong>Social</strong>{" "}
             <div className="social-links">
-              {candidate.linkedInURL && (
-                <a
-                  href={candidate.linkedInURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                >
-                  <img src={linkedinIcon} alt="LinkedIn" width="32" height="32" />
-                </a>
-              )}
-              {candidate.gitHubURL && (
-                <a
-                  href={candidate.gitHubURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                >
-                  <img src={githubIcon} alt="GitHub" width="32" height="32" />
-                </a>
-              )}
+            {candidate.linkedInURL && (
+              <a
+                href={candidate.linkedInURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link"
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={linkedinIcon} alt="LinkedIn" width="32" height="32" />
+              </a>
+            )}
+
+            {candidate.gitHubURL && (
+              <a
+                href={candidate.gitHubURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link"
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={githubIcon} alt="GitHub" width="32" height="32" />
+              </a>
+            )}
             </div>
           </div>
           <div className="profile-field" style={{ fontSize: "20px" }}>
