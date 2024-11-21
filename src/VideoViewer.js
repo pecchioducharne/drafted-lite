@@ -341,14 +341,53 @@ const VideoViewer = () => {
       </div>
 
       {showResume && (
-        <div className="resume-popup">
+        <div className="resume-popup" style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '95vw', // 95% of viewport width
+          maxWidth: '1800px', // Much larger maximum width
+          height: '90vh', // 90% of viewport height
+          backgroundColor: 'white',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+          borderRadius: '12px',
+          zIndex: 1000,
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '24px', // Slightly larger padding
+        }}>
           <iframe
             src={candidate.resume || "#"}
             title="Resume"
-            className="resume-iframe"
-          ></iframe>
-          <button className="close-resume" onClick={handleToggleResume}>
-            Close Resume
+            style={{
+              width: '100%',
+              height: '100%',
+              border: 'none',
+              borderRadius: '8px',
+            }}
+          />
+          <button 
+            onClick={handleToggleResume}
+            style={{
+              position: 'absolute',
+              top: '24px',
+              right: '24px',
+              padding: '10px 20px',
+              borderRadius: '8px',
+              border: 'none',
+              backgroundColor: '#333',
+              color: 'white',
+              cursor: 'pointer',
+              fontSize: '15px',
+              fontWeight: '500',
+              transition: 'all 0.2s ease',
+              zIndex: 1001, // Ensure button is above iframe
+            }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#444'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#333'}
+          >
+            Close
           </button>
         </div>
       )}
