@@ -126,7 +126,7 @@ const Login = () => {
   };
 
   const navigateToSignup = async () => {
-    navigate("/code");
+    navigate("/signup");
   };
 
   const navigateToCandidateSignIn = () => {
