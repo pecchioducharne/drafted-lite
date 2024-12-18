@@ -2141,3 +2141,215 @@ logo-header {
     white-space: normal;
   }
 }
+
+/* Search and top buttons */
+.search-container {
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 16px;
+}
+
+.code-button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  background-color: #00875A;
+  color: white;
+  border: none;
+  font-weight: 500;
+}
+
+/* Filter container and options */
+.filter-container {
+  width: 100%;
+  padding: 0 12px;
+  margin-bottom: 20px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 768px) {
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-bar {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .code-button {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .filter-container {
+    padding: 0 12px;
+  }
+
+  .filter-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Filter dropdown improvements */
+  .options-container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-height: 80vh;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .filter-option {
+    padding: 16px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .filter-title {
+    font-size: 16px;
+    padding: 12px;
+    white-space: normal;
+  }
+
+  .option-item {
+    padding: 16px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  .option-text {
+    font-size: 16px;
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .checkbox {
+    min-width: 24px;
+    min-height: 24px;
+    margin-right: 16px;
+  }
+}
+
+/* Search dropdown styles */
+.searchDropdown {
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.searchSuggestion {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.searchSuggestion:hover {
+  background-color: #f5f5f5;
+}
+
+/* Mobile optimizations */
+@media screen and (max-width: 768px) {
+  .searchDropdown {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    max-height: 60vh;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    padding-bottom: env(safe-area-inset-bottom); /* For iPhone notch */
+  }
+
+  .searchSuggestion {
+    padding: 16px;
+    font-size: 16px;
+    min-height: 48px; /* Better touch target */
+    display: flex;
+    align-items: center;
+  }
+
+  /* Prevent body scroll when dropdown is open */
+  body.dropdown-open {
+    overflow: hidden;
+  }
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 768px) {
+  .suggestions-mobile {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-height: 60vh;
+    width: 100%;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    overflow-y: auto;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .suggestion-item-mobile {
+    padding: 16px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+
+  .selected-filters-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    margin-top: 8px;
+  }
+
+  .filter-tag-mobile {
+    background-color: #00875A;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+  }
+}
+

@@ -617,44 +617,26 @@ const CandidateViewer = ({
     const query = e.target.value;
     setSearchQuery(query);
 
-    if (query.length > 1) {
-      const universities = new Set();
-      const majors = new Set();
-      const skills = new Set();
-
+    // On mobile, show all options immediately
+    if (window.innerWidth <= 768) {
+      const allSuggestions = new Set();
+      
       candidates.forEach((candidate) => {
-        // Check university
-        if (candidate.university.toLowerCase().includes(query.toLowerCase())) {
-          universities.add(candidate.university);
-        }
-        // Check major
-        if (candidate.major.toLowerCase().includes(query.toLowerCase())) {
-          majors.add(candidate.major);
-        }
-        // Check skills
+        allSuggestions.add(candidate.university);
+        allSuggestions.add(candidate.major);
         if (candidate.skills) {
-          candidate.skills.forEach((skill) => {
-            if (skill.toLowerCase().includes(query.toLowerCase())) {
-              skills.add(skill);
-            }
-          });
+          candidate.skills.forEach(skill => allSuggestions.add(skill));
         }
       });
 
-      // Combine suggestions
-      const universitySuggestions = Array.from(universities);
-      const majorSuggestions = Array.from(majors);
-      const skillSuggestions = Array.from(skills);
-
-      const combinedSuggestions = [
-        ...universitySuggestions,
-        ...majorSuggestions,
-        ...skillSuggestions,
-      ].slice(0, 5); // Limit suggestions to 5 items
-
-      setSuggestions(combinedSuggestions);
+      setSuggestions(Array.from(allSuggestions));
     } else {
-      setSuggestions([]);
+      // Desktop behavior - only show filtered suggestions
+      if (query.length > 1) {
+        // ... your existing suggestion filtering logic ...
+      } else {
+        setSuggestions([]);
+      }
     }
   };
 
@@ -939,17 +921,20 @@ const CandidateViewer = ({
           </button>
 
           {suggestions.length > 0 && (
-            <ul className="suggestions">
+            <div className="suggestions-mobile">
               {suggestions.map((suggestion, index) => (
-                <li
+                <div
                   key={index}
-                  onClick={() => handleSuggestionSelect(suggestion)}
-                  className="suggestion-item"
+                  className="suggestion-item-mobile"
+                  onClick={() => {
+                    handleSuggestionSelect(suggestion);
+                    document.activeElement.blur(); // Hide mobile keyboard
+                  }}
                 >
                   {suggestion}
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </div>
 
@@ -1009,18 +994,22 @@ const CandidateViewer = ({
               title="University"
               options={uniqueUniversities}
               selectedOptions={filters.university}
-              onSelect={(selected) =>
+              onSelect={(selected) => {
                 setFilters((prevFilters) => ({
                   ...prevFilters,
                   university: selected,
-                }))
-              }
+                }));
+                // Close dropdown after selection on mobile
+                if (window.innerWidth <= 768) {
+                  setOpenFilterCategories([]);
+                }
+              }}
               isOpen={openFilterCategories.includes('University')}
               onToggle={() => {
                 setOpenFilterCategories(current => 
                   current.includes('University') 
-                    ? [] // Clear all when closing
-                    : ['University'] // Only open this one
+                    ? [] 
+                    : ['University']
                 );
               }}
             />
@@ -1099,6 +1088,28 @@ const CandidateViewer = ({
             />
           </div>
         </div>
+
+        {/* Add this right after your filter-container div to show selected filters */}
+        {Object.entries(filters).some(([_, values]) => values.length > 0) && (
+          <div className="selected-filters-mobile">
+            {Object.entries(filters).map(([category, values]) =>
+              values.map((value) => (
+                <button
+                  key={`${category}-${value}`}
+                  className="filter-tag-mobile"
+                  onClick={() => {
+                    setFilters(prev => ({
+                      ...prev,
+                      [category]: prev[category].filter(v => v !== value)
+                    }));
+                  }}
+                >
+                  {value} ×
+                </button>
+              ))
+            )}
+          </div>
+        )}
 
         <div className="candidates-grid">
           {filteredCandidates.map((candidate, index) => (
@@ -1312,17 +1323,20 @@ const CandidateViewer = ({
           className="search-bar"
         />
         {suggestions.length > 0 && (
-          <ul className="suggestions">
+          <div className="suggestions-mobile">
             {suggestions.map((suggestion, index) => (
-              <li
+              <div
                 key={index}
-                onClick={() => handleSuggestionSelect(suggestion)}
-                className="suggestion-item"
+                className="suggestion-item-mobile"
+                onClick={() => {
+                  handleSuggestionSelect(suggestion);
+                  document.activeElement.blur(); // Hide mobile keyboard
+                }}
               >
                 {suggestion}
-              </li>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
       {showNavPopup && (
@@ -1362,18 +1376,22 @@ const CandidateViewer = ({
             title="University"
             options={uniqueUniversities}
             selectedOptions={filters.university}
-            onSelect={(selected) =>
+            onSelect={(selected) => {
               setFilters((prevFilters) => ({
                 ...prevFilters,
                 university: selected,
-              }))
-            }
+              }));
+              // Close dropdown after selection on mobile
+              if (window.innerWidth <= 768) {
+                setOpenFilterCategories([]);
+              }
+            }}
             isOpen={openFilterCategories.includes('University')}
             onToggle={() => {
               setOpenFilterCategories(current => 
                 current.includes('University') 
-                  ? [] // Clear all when closing
-                  : ['University'] // Only open this one
+                  ? [] 
+                  : ['University']
               );
             }}
           />
@@ -1452,6 +1470,28 @@ const CandidateViewer = ({
           />
         </div>
       </div>
+
+      {/* Add this right after your filter-container div to show selected filters */}
+      {Object.entries(filters).some(([_, values]) => values.length > 0) && (
+        <div className="selected-filters-mobile">
+          {Object.entries(filters).map(([category, values]) =>
+            values.map((value) => (
+              <button
+                key={`${category}-${value}`}
+                className="filter-tag-mobile"
+                onClick={() => {
+                  setFilters(prev => ({
+                    ...prev,
+                    [category]: prev[category].filter(v => v !== value)
+                  }));
+                }}
+              >
+                {value} ×
+              </button>
+            ))
+          )}
+        </div>
+      )}
 
       <div className="main-and-other-videos-container">
         <div className="main-video-profile-container">
