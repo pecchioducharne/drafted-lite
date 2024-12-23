@@ -59,9 +59,9 @@ const VideoViewer = () => {
   }, [id]);
 
   const containerStyle = {
-    maxWidth: '1400px',
+    maxWidth: window.innerWidth <= 768 ? '100%' : '1400px',
     margin: '0 auto',
-    padding: '2rem',
+    padding: window.innerWidth <= 768 ? '1rem' : '2rem',
     backgroundColor: 'white',
     minHeight: '100vh',
   };
@@ -70,7 +70,7 @@ const VideoViewer = () => {
     position: 'relative',
     background: 'white',
     borderRadius: '30px',
-    padding: '3rem',
+    padding: window.innerWidth <= 768 ? '1.5rem' : '3rem',
     marginTop: '1rem',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.03)',
     overflow: 'hidden',
@@ -90,7 +90,7 @@ const VideoViewer = () => {
   const videoContainerStyle = {
     position: 'relative',
     width: '100%',
-    height: '600px',
+    height: window.innerWidth <= 768 ? '300px' : '600px',
     borderRadius: '20px',
     overflow: 'hidden',
     boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
@@ -100,12 +100,14 @@ const VideoViewer = () => {
 
   const nameDisplayStyle = {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+    alignItems: window.innerWidth <= 768 ? 'flex-start' : 'center',
+    justifyContent: window.innerWidth <= 768 ? 'flex-start' : 'space-between',
+    gap: window.innerWidth <= 768 ? '1rem' : '0',
     padding: '1.5rem 0',
     margin: '1rem 0 2rem 0',
     borderBottom: '2px solid rgba(0, 191, 99, 0.1)',
-    fontSize: '3rem',
+    fontSize: window.innerWidth <= 768 ? '2rem' : '3rem',
     fontWeight: 'bold',
   };
 
@@ -127,15 +129,15 @@ const VideoViewer = () => {
 
   const videoButtonsStyle = {
     display: 'flex',
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
     gap: '1rem',
     margin: '1.5rem 0 2.5rem 0',
-    flexWrap: 'nowrap',
-    justifyContent: 'space-between',
     width: '100%',
+    justifyContent: window.innerWidth <= 768 ? 'stretch' : 'space-between',
   };
 
   const videoButtonStyle = (isActive) => ({
-    padding: '1rem 1.5rem',
+    padding: window.innerWidth <= 768 ? '1rem' : '1rem 1.5rem',
     background: isActive ? '#00BF63' : 'white',
     color: isActive ? 'white' : '#00BF63',
     border: '2px solid #00BF63',
@@ -143,15 +145,16 @@ const VideoViewer = () => {
     fontWeight: '600',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
-    minWidth: '200px',
-    fontSize: '1.2rem',
+    width: window.innerWidth <= 768 ? '100%' : 'auto',
+    minWidth: window.innerWidth <= 768 ? 'auto' : '200px',
+    fontSize: window.innerWidth <= 768 ? '1rem' : '1.2rem',
   });
 
   const infoSectionStyle = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '2.5rem',
-    padding: '2.5rem',
+    gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: window.innerWidth <= 768 ? '1.5rem' : '2.5rem',
+    padding: window.innerWidth <= 768 ? '1.5rem' : '2.5rem',
     background: 'rgba(255, 255, 255, 0.8)',
     backdropFilter: 'blur(10px)',
     borderRadius: '20px',
@@ -254,21 +257,24 @@ Best regards,`;
 
   const buttonContainerStyle = {
     display: 'flex',
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
     justifyContent: 'center',
-    gap: '2rem',
+    alignItems: 'stretch',
+    gap: window.innerWidth <= 768 ? '1rem' : '2rem',
     marginTop: '2rem',
     padding: '1rem',
   };
 
   const actionButtonStyle = {
-    padding: '1rem 2rem',
+    padding: window.innerWidth <= 768 ? '1rem' : '1rem 2rem',
     borderRadius: '12px',
-    fontSize: '1.2rem',
+    fontSize: window.innerWidth <= 768 ? '1.1rem' : '1.2rem',
     fontWeight: '600',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     border: '2px solid #00BF63',
-    minWidth: '250px',
+    width: window.innerWidth <= 768 ? '100%' : 'auto',
+    minWidth: window.innerWidth <= 768 ? 'auto' : '250px',
     textAlign: 'center',
     textDecoration: 'none',
     background: 'white',
@@ -296,6 +302,16 @@ Best regards,`;
     setMessageCopied(true);
     setTimeout(() => setMessageCopied(false), 2000);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Force re-render on window resize
+      setVideoLoading(videoLoading);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [videoLoading]);
 
   return (
     <div style={containerStyle}>
