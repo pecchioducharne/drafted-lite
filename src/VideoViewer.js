@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
-import { useParams } from "react-router-dom";
-import QuickRecruiterSignup from "./QuickRecruiterSignup"; // Import your QuickRecruiterSignup form
-import { collection, getDocs, query, where } from "firebase/firestore"; // Import Firestore modules
-import { db } from "./firebase"; // Replace with your Firebase setup
+import { useParams, useNavigate } from "react-router-dom";
+import QuickRecruiterSignup from "./QuickRecruiterSignup";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "./firebase";
 import linkedinIcon from './linkedin.svg';
 import githubIcon from './github.svg';
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const VideoViewer = () => {
-  const { id } = useParams(); // Assuming id here is the email
+  const { id } = useParams();
   const [candidate, setCandidate] = useState({});
   const [videoUrls, setVideoUrls] = useState([]);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [videoQuestions, setVideoQuestions] = useState([]);
   const [showResume, setShowResume] = useState(false);
-  const [showSignupModal, setShowSignupModal] = useState(false); // State to control the signup modal visibility
-  const [videoLoading, setVideoLoading] = useState(true); // State to track video loading
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(true);
   const [user] = useAuthState(auth);
   const [emailPopup, setEmailPopup] = useState(false);
   const [emailContent, setEmailContent] = useState('');
+  const [emailCopied, setEmailCopied] = useState(false);
+  const [messageCopied, setMessageCopied] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCandidate = async () => {
@@ -43,7 +46,7 @@ const VideoViewer = () => {
             "Tell us your story!",
             "What makes you stand out amongst other candidates?",
             "Tell us about a time when you overcame a challenge!",
-          ]); // Example questions, replace with your actual questions
+          ]);
         } else {
           console.log("No such document!");
         }
@@ -55,24 +58,173 @@ const VideoViewer = () => {
     fetchCandidate();
   }, [id]);
 
+  const containerStyle = {
+    maxWidth: '1400px',
+    margin: '0 auto',
+    padding: '2rem',
+    backgroundColor: 'white',
+    minHeight: '100vh',
+  };
+
+  const mainContainerStyle = {
+    position: 'relative',
+    background: 'white',
+    borderRadius: '30px',
+    padding: '3rem',
+    marginTop: '1rem',
+    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.03)',
+    overflow: 'hidden',
+  };
+
+  const blobStyle = {
+    position: 'absolute',
+    top: '-50%',
+    right: '-50%',
+    width: '100%',
+    height: '100%',
+    background: 'radial-gradient(circle at center, rgba(0, 191, 99, 0.03) 0%, rgba(0, 191, 99, 0.01) 50%, transparent 70%)',
+    borderRadius: '50%',
+    zIndex: 0,
+  };
+
+  const videoContainerStyle = {
+    position: 'relative',
+    width: '100%',
+    height: '600px',
+    borderRadius: '20px',
+    overflow: 'hidden',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
+    backgroundColor: '#000',
+    marginBottom: '2rem',
+  };
+
+  const nameDisplayStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '1.5rem 0',
+    margin: '1rem 0 2rem 0',
+    borderBottom: '2px solid rgba(0, 191, 99, 0.1)',
+    fontSize: '3rem',
+    fontWeight: 'bold',
+  };
+
+  const draftButtonStyle = {
+    background: 'linear-gradient(135deg, #00BF63 0%, #00a857 100%)',
+    color: 'white',
+    padding: '1rem 2rem',
+    borderRadius: '16px',
+    fontWeight: '600',
+    fontSize: '1.5rem',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.75rem',
+    boxShadow: '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)',
+    transition: 'all 0.2s ease',
+  };
+
+  const videoButtonsStyle = {
+    display: 'flex',
+    gap: '1rem',
+    margin: '1.5rem 0 2.5rem 0',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between',
+    width: '100%',
+  };
+
+  const videoButtonStyle = (isActive) => ({
+    padding: '1rem 1.5rem',
+    background: isActive ? '#00BF63' : 'white',
+    color: isActive ? 'white' : '#00BF63',
+    border: '2px solid #00BF63',
+    borderRadius: '12px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    minWidth: '200px',
+    fontSize: '1.2rem',
+  });
+
+  const infoSectionStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '2.5rem',
+    padding: '2.5rem',
+    background: 'rgba(255, 255, 255, 0.8)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '20px',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.5)',
+    margin: '1rem 0',
+    position: 'relative',
+    zIndex: 1,
+  };
+
+  const profileFieldStyle = {
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.75rem',
+    padding: '1.5rem',
+    background: 'white',
+    borderRadius: '16px',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02)',
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+  };
+
+  const socialLinksStyle = {
+    display: 'flex',
+    gap: '1.5rem',
+  };
+
+  const socialLinkStyle = {
+    padding: '1rem',
+    background: '#f8f9fa',
+    borderRadius: '16px',
+    transition: 'all 0.2s ease',
+    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+  };
+
+  const resumePopupStyle = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '95vw',
+    maxWidth: '1800px',
+    height: '90vh',
+    backgroundColor: 'white',
+    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+    borderRadius: '12px',
+    zIndex: 1000,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '24px',
+  };
+
+  const closeResumeButtonStyle = {
+    position: 'absolute',
+    top: '24px',
+    right: '24px',
+    padding: '10px 20px',
+    borderRadius: '8px',
+    border: 'none',
+    backgroundColor: '#333',
+    color: 'white',
+    cursor: 'pointer',
+    fontSize: '15px',
+    fontWeight: '500',
+    transition: 'all 0.2s ease',
+    zIndex: 1001,
+  };
+
   const handleVideoButtonClick = (index) => {
     setCurrentVideoIndex(index);
   };
 
   const handleVideoEnd = () => {
-    // Logic for what happens when video ends, if needed
-  };
-
-  const handleUniversityClick = (university) => {
-    // Handle click on university name, if needed
-  };
-
-  const handleMajorClick = (major) => {
-    // Handle click on major name, if needed
-  };
-
-  const handleGradYearClick = (graduationYear) => {
-    // Handle click on graduation year, if needed
+    // Logic for what happens when video ends
   };
 
   const handleToggleResume = () => {
@@ -80,93 +232,83 @@ const VideoViewer = () => {
   };
 
   const handleRequestInterview = () => {
-    // Comment out the previous authentication logic
-    /*
-    if (user) {
-      // If user is logged in, directly show email draft
-      emailDraft();
-    } else {
-      // If user is not logged in, show signup modal
-      setShowSignupModal(true);
-    }
-    */
-
-    // Always show the signup modal
     setShowSignupModal(true);
   };
 
-  const closeSignupModal = () => {
-    // Logic to close the signup modal
-    setShowSignupModal(false);
-  };
-
   const emailDraft = () => {
-    if (candidate) {
-      const { email, firstName, lastName } = candidate;
-      const content = `Hi ${firstName},\n\nWe think you are a great candidate for [Company Name], we would like to get to know you better and schedule an initial call.\n\nTime:\nDay:\nZoom / Hangout link:\n\nLet us know if this works. Looking forward!\n\nBest,\n\n[Your Name]`;
-      setEmailContent(content);
-      setEmailPopup(true);
-    }
-  };
+    const emailTemplate = `Hi ${candidate.firstName},
 
-  const EmailPopup = ({ emailContent, onClose }) => {
-    const { email } = candidate;
+I came across your video resume and I'm impressed with your background. I'd love to schedule some time to chat about potential opportunities.
 
-    const handleCopy = (text) => {
-      navigator.clipboard.writeText(text);
-    };
+Could you let me know your availability for a brief call this week?
 
-    return (
-      <div className="popup-overlay">
-        <div className="popup-content">
-          <button className="close-button" onClick={onClose}>X</button>
-          <div className="email-address-container">
-            <p className="email-address">{email}</p>
-          </div>
-          <button className="copy-button" onClick={() => handleCopy(email)}>
-            Copy Email Address
-          </button>
-          <div className="email-content-container">
-            <textarea
-              readOnly
-              value={emailContent}
-              className="email-textarea"
-            />
-          </div>
-          <button className="copy-button" onClick={() => handleCopy(emailContent)}>
-            Copy Email Content
-          </button>
-        </div>
-      </div>
-    );
+Best regards,`;
+
+    setEmailContent(emailTemplate);
+    setEmailPopup(true);
   };
 
   const handleLogoClick = () => {
     window.open('https://drafted.webflow.io/', '_blank');
   };
 
+  const buttonContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '2rem',
+    marginTop: '2rem',
+    padding: '1rem',
+  };
+
+  const actionButtonStyle = {
+    padding: '1rem 2rem',
+    borderRadius: '12px',
+    fontSize: '1.2rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    border: '2px solid #00BF63',
+    minWidth: '250px',
+    textAlign: 'center',
+    textDecoration: 'none',
+    background: 'white',
+    color: '#00BF63',
+  };
+
+  const handleMeetClick = () => {
+    if (!user) {
+      navigate('/recruiter-signup');
+    } else {
+      emailDraft();
+    }
+  };
+
+  const copyEmail = () => {
+    if (candidate.email) {
+      navigator.clipboard.writeText(candidate.email);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    }
+  };
+
+  const copyMessage = () => {
+    navigator.clipboard.writeText(emailContent);
+    setMessageCopied(true);
+    setTimeout(() => setMessageCopied(false), 2000);
+  };
+
   return (
-    <div className="profile-dashboard">
+    <div style={containerStyle}>
       <div className="drafted-logo-container" onClick={handleLogoClick}>
-        <br />
-        <br />
         <DraftedLogo />
-        <br /><br />
       </div>
-      <div className="main-video-profile-container">
-        <div className="navigation-instructions">
-          <p
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: 600,
-              fontSize: "large",
-              textAlign: "center",
-            }}
-          ></p>
-        </div>
-        <div className="video-resume-container">
+      
+      <div style={mainContainerStyle}>
+        <div style={blobStyle} />
+        
+        <div style={videoContainerStyle}>
           {videoUrls[currentVideoIndex] ? (
-            <div className="video-player-wrapper">
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <ReactPlayer
                 url={videoUrls[currentVideoIndex]}
                 controls={true}
@@ -175,195 +317,221 @@ const VideoViewer = () => {
                 autoplay={false}
                 onEnded={handleVideoEnd}
                 onReady={() => setVideoLoading(false)}
-                playsinline={true} // Add playsinline attribute to prevent full-screen mode on mobile
+                playsinline={true}
                 config={{
-                  youtube: {
-                    playerVars: { vq: "small" },
-                  },
+                  youtube: { playerVars: { vq: "small" } },
                 }}
-                style={{ position: "absolute", top: 0, left: 0 }}
               />
               {videoLoading && (
-                <div className="video-loading-overlay">
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  background: 'rgba(0, 0, 0, 0.7)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                }}>
                   <p>Loading...</p>
                 </div>
               )}
-              {/* {!videoLoading && (
-                <button
-                  className="play-button"
-                  onClick={() => handleVideoButtonClick(currentVideoIndex)}
-                >
-                  Play Video
-                </button>
-              )} */}
             </div>
           ) : (
             <p>No video available</p>
           )}
         </div>
-        <br />
-        <div className="candidate-name-display" style={{ fontSize: "35px" }}>
-          {candidate.firstName || "N/A"} {candidate.lastName || "N/A"}
+
+        <div style={nameDisplayStyle}>
+          <span>{candidate.firstName || "N/A"} {candidate.lastName || "N/A"}</span>
           <button
-            className="draft-button"
-            onClick={emailDraft}
-            aria-label="Draft candidate for interview"
-            style={{
-              backgroundColor: "#00BF63",
-              color: "white",
-              padding: "10px 20px",
-              borderRadius: "8px",
-              cursor: "pointer",
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 0 0 20px",
-              fontSize: "25px",
-              transition: "background-color 0.3s ease",
-            }}
+            onClick={handleMeetClick}
+            style={draftButtonStyle}
             onMouseOver={(e) => {
-              e.target.style.backgroundColor = "#45a049";
-              e.target.style.boxShadow = "0 6px 12px rgba(0,0,0,0.2)";
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 191, 99, 0.3)';
             }}
             onMouseOut={(e) => {
-              e.target.style.backgroundColor = "#00BF63";
-              e.target.style.boxShadow = "none";
+              e.currentTarget.style.transform = 'none';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)';
             }}
           >
-            🤝 Meet {candidate.firstName}
+            Meet {candidate.firstName}
           </button>
         </div>
-        {showSignupModal && (
-          <div className="signup-modal-overlay">
-            <div className="signup-modal">
-              <span className="close" onClick={closeSignupModal}>
-                &times;
-              </span>
-              <QuickRecruiterSignup candidateEmail={candidate.email} />{" "}
-              {/* Pass candidate email */}
-            </div>
-          </div>
-        )}
-        <div className="video-resume-display" style={{ fontSize: "22px" }}>
-          Video Resume
-        </div>
-        <div className="video-selection-buttons">
+
+        <div style={videoButtonsStyle}>
           {videoQuestions.map((question, index) => (
             <button
               key={index}
               onClick={() => handleVideoButtonClick(index)}
-              className={`video-btn ${
-                currentVideoIndex === index ? "active" : ""
-              }`}
-              style={{ fontSize: "18px" }}
+              style={videoButtonStyle(currentVideoIndex === index)}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'none';
+              }}
             >
               {question}
             </button>
           ))}
         </div>
-        <div className="info-section">
-          <div className="profile-field" style={{ fontSize: "20px" }}>
-            <strong>University</strong>{" "}
-            <p
-              className="candidate-university"
-              onClick={() => handleUniversityClick(candidate.university)}
-            >
+
+        <div style={infoSectionStyle}>
+          <div style={profileFieldStyle}>
+            <strong style={{ 
+              color: '#555', 
+              fontSize: '1.3rem',
+              textTransform: 'uppercase', 
+              letterSpacing: '0.5px' 
+            }}>
+              University
+            </strong>
+            <p style={{ fontSize: '1.5rem', margin: 0 }}>
               {candidate.university || "N/A"}
             </p>
           </div>
-          <div className="profile-field" style={{ fontSize: "20px" }}>
-            <strong>Major</strong>{" "}
-            <p
-              className="candidate-major"
-              onClick={() => handleMajorClick(candidate.major)}
-            >
+
+          <div style={profileFieldStyle}>
+            <strong style={{ 
+              color: '#555', 
+              fontSize: '1.3rem',
+              textTransform: 'uppercase', 
+              letterSpacing: '0.5px' 
+            }}>
+              Major
+            </strong>
+            <p style={{ fontSize: '1.5rem', margin: 0 }}>
               {candidate.major || "N/A"}
             </p>
           </div>
-          <div className="profile-field social-field" style={{ fontSize: "20px" }}>
-            <strong>Social</strong>{" "}
-            <div className="social-links">
-            {candidate.linkedInURL && (
-                <a
-                  href={
-                    candidate.linkedInURL.startsWith('http')
-                      ? candidate.linkedInURL
-                      : `https://${candidate.linkedInURL}`
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  style={{ cursor: 'pointer' }}
-                >
-                  <img src={linkedinIcon} alt="LinkedIn" width="32" height="32" />
-                </a>
-              )}
-              {candidate.gitHubURL && (
-                <a
-                  href={
-                    candidate.gitHubURL.startsWith('http')
-                      ? candidate.gitHubURL
-                      : `https://${candidate.gitHubURL}`
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  style={{ cursor: 'pointer' }}
-                >
-                  <img src={githubIcon} alt="GitHub" width="32" height="32" />
-                </a>
-              )}
+
+          {(candidate.linkedInURL || candidate.gitHubURL) && (
+            <div style={profileFieldStyle}>
+              <strong style={{ 
+                color: '#555', 
+                fontSize: '1.3rem',
+                textTransform: 'uppercase', 
+                letterSpacing: '0.5px' 
+              }}>
+                Social
+              </strong>
+              <div style={socialLinksStyle}>
+                {candidate.linkedInURL && (
+                  <a
+                    href={candidate.linkedInURL.startsWith('http') ? candidate.linkedInURL : `https://${candidate.linkedInURL}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={socialLinkStyle}
+                  >
+                    <img src={linkedinIcon} alt="LinkedIn" style={{ width: '32px', height: '32px' }} />
+                  </a>
+                )}
+                {candidate.gitHubURL && (
+                  <a
+                    href={candidate.gitHubURL.startsWith('http') ? candidate.gitHubURL : `https://${candidate.gitHubURL}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={socialLinkStyle}
+                  >
+                    <img src={githubIcon} alt="GitHub" style={{ width: '32px', height: '32px' }} />
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="profile-field" style={{ fontSize: "20px" }}>
-            <strong>Graduation Year</strong>{" "}
-            <p
-              className="candidate-major"
-              onClick={() => handleGradYearClick(candidate.graduationYear)}
-            >
+          )}
+
+          <div style={profileFieldStyle}>
+            <strong style={{ 
+              color: '#555', 
+              fontSize: '1.3rem',
+              textTransform: 'uppercase', 
+              letterSpacing: '0.5px' 
+            }}>
+              Graduation Year
+            </strong>
+            <p style={{ fontSize: '1.5rem', margin: 0 }}>
               {candidate.graduationYear || "N/A"}
             </p>
           </div>
-          <div className="profile-field" style={{ fontSize: "20px" }}>
-            <strong>Resume</strong>
-            {candidate.resume ? (
-              <button
-                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={handleToggleResume}
-              >
-                View Resume
-              </button>
-            ) : (
-              <button
-                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
-                onClick={handleRequestInterview}
-              >
-                No Resume, Request Interview for Resume
-              </button>
-            )}
+
+          <div style={profileFieldStyle}>
+            <strong style={{ 
+              color: '#555', 
+              fontSize: '1.3rem',
+              textTransform: 'uppercase', 
+              letterSpacing: '0.5px' 
+            }}>
+              Resume
+            </strong>
+            <button
+              onClick={candidate.resume ? handleToggleResume : handleRequestInterview}
+              style={{
+                background: '#4a5568',
+                color: 'white',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '12px',
+                fontWeight: '600',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                fontSize: '1.2rem',
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.background = '#2d3748';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.background = '#4a5568';
+                e.currentTarget.style.transform = 'none';
+              }}
+            >
+              {candidate.resume ? 'View Resume' : 'No Resume, Request Interview for Resume'}
+            </button>
           </div>
         </div>
       </div>
 
+      <div style={buttonContainerStyle}>
+        <a
+          href="https://joindrafted.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={actionButtonStyle}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.15)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'none';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          WHAT'S DRAFTED?
+        </a>
+        <a
+          href="https://drafted-beta.netlify.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={actionButtonStyle}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.15)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'none';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          FOR MORE CANDIDATES, SIGN UP
+        </a>
+      </div>
+
       {showResume && (
-        <div className="resume-popup" style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '95vw', // 95% of viewport width
-          maxWidth: '1800px', // Much larger maximum width
-          height: '90vh', // 90% of viewport height
-          backgroundColor: 'white',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
-          borderRadius: '12px',
-          zIndex: 1000,
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '24px', // Slightly larger padding
-        }}>
+        <div style={resumePopupStyle}>
           <iframe
             src={candidate.resume || "#"}
             title="Resume"
@@ -376,33 +544,158 @@ const VideoViewer = () => {
           />
           <button 
             onClick={handleToggleResume}
-            style={{
-              position: 'absolute',
-              top: '24px',
-              right: '24px',
-              padding: '10px 20px',
-              borderRadius: '8px',
-              border: 'none',
-              backgroundColor: '#333',
-              color: 'white',
-              cursor: 'pointer',
-              fontSize: '15px',
-              fontWeight: '500',
-              transition: 'all 0.2s ease',
-              zIndex: 1001, // Ensure button is above iframe
+            style={closeResumeButtonStyle}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#444';
             }}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#444'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#333'}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#333';
+            }}
           >
             Close
           </button>
         </div>
       )}
+
       {emailPopup && (
-        <EmailPopup
-          emailContent={emailContent}
-          onClose={() => setEmailPopup(false)}
-        />
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: 'white',
+          padding: '2.5rem',
+          borderRadius: '16px',
+          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
+          zIndex: 1000,
+          width: '90%',
+          maxWidth: '600px',
+        }}>
+          <div style={{ marginBottom: '2rem' }}>
+            <div style={{ 
+              background: '#f8f9fa',
+              padding: '1.25rem',
+              borderRadius: '12px',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.5rem'
+              }}>
+                <span style={{ 
+                  fontSize: '0.9rem', 
+                  color: '#666',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  fontWeight: '600'
+                }}>
+                  Student Email
+                </span>
+                <button
+                  onClick={copyEmail}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: emailCopied ? '#4CAF50' : '#00BF63',
+                    color: 'white',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  {emailCopied ? '✓ Copied!' : 'Copy Email'}
+                </button>
+              </div>
+              <div style={{ 
+                fontSize: '1.1rem',
+                color: '#333',
+                fontWeight: '500'
+              }}>
+                {candidate.email}
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '1rem' }}>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.75rem'
+              }}>
+                <span style={{ 
+                  fontSize: '0.9rem', 
+                  color: '#666',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  fontWeight: '600'
+                }}>
+                  Email Message
+                </span>
+                <button
+                  onClick={copyMessage}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                    background: messageCopied ? '#4CAF50' : '#00BF63',
+                    color: 'white',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem',
+                    transition: 'all 0.2s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem'
+                  }}
+                >
+                  {messageCopied ? '✓ Copied!' : 'Copy Message'}
+                </button>
+              </div>
+              <textarea
+                value={emailContent}
+                readOnly
+                style={{
+                  width: '100%',
+                  minHeight: '200px',
+                  padding: '1rem',
+                  borderRadius: '12px',
+                  border: '1px solid #e0e0e0',
+                  fontSize: '1rem',
+                  lineHeight: '1.5',
+                  resize: 'vertical',
+                  fontFamily: 'inherit'
+                }}
+              />
+            </div>
+          </div>
+          <button
+            onClick={() => setEmailPopup(false)}
+            style={{
+              padding: '0.75rem 1.5rem',
+              borderRadius: '8px',
+              border: 'none',
+              backgroundColor: '#333',
+              color: 'white',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              transition: 'all 0.2s ease',
+              width: '100%'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#444';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#333';
+            }}
+          >
+            Close
+          </button>
+        </div>
       )}
     </div>
   );
