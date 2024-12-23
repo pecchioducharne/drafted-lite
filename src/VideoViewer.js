@@ -497,7 +497,7 @@ Best regards,`;
 
       <div style={buttonContainerStyle}>
         <a
-          href="https://joindrafted.com"
+          href="https://drafted.webflow.io/drafted-recruiter-landing"
           target="_blank"
           rel="noopener noreferrer"
           style={actionButtonStyle}
@@ -510,10 +510,10 @@ Best regards,`;
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          WHAT'S DRAFTED?
+          GO HOME
         </a>
         <a
-          href="https://drafted-beta.netlify.app/"
+          href="https://drafted-beta.netlify.app/signup#"
           target="_blank"
           rel="noopener noreferrer"
           style={actionButtonStyle}
