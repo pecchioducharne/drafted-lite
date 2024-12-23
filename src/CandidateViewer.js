@@ -22,6 +22,7 @@ import {
   signInWithEmailAndPassword,
   browserSessionPersistence,
 } from "firebase/auth";
+import shareArrow from './share-arrow.png';  // Add this import
 
 // Add this new component
 const MeetOptionsPopup = ({ onClose, onEmail, onSave, candidateName }) => {
@@ -1671,6 +1672,45 @@ const CandidateViewer = ({
             >
               🤝 Meet {candidate.firstName}
             </button>
+          </div>
+          <div className="button-group">
+          <div 
+              className="share-profile"
+              onClick={() => {
+                const profileUrl = `https://drafted-beta.netlify.app/candidate/${candidate.email}`;
+                navigator.clipboard.writeText(profileUrl)
+                  .then(() => {
+                    alert("Profile URL copied");  // Updated alert message
+                  })
+                  .catch(err => {
+                    console.error('Failed to copy URL:', err);
+                    alert("Failed to copy URL");
+                  });
+              }}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',  // Reduced from 8px
+                cursor: 'pointer',
+                marginBottom: '12px'
+              }}
+            >
+              <img 
+                src={shareArrow}  // Use the imported image
+                alt="Share"
+                style={{
+                  width: '32px',  // Increased from 28px
+                  height: '32px'  // Increased from 28px
+                }}
+              />
+              <span style={{
+                color: '#666',
+                fontWeight: 600,
+                fontSize: '12px'  // Reduced from 14px
+              }}>
+                SHARE PROFILE LINK
+              </span>
+            </div>
           </div>
         </div>
         <div className="other-videos-container">
