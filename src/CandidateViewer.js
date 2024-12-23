@@ -1699,14 +1699,14 @@ const CandidateViewer = ({
                 src={shareArrow}  // Use the imported image
                 alt="Share"
                 style={{
-                  width: '32px',  // Increased from 28px
-                  height: '32px'  // Increased from 28px
+                  width: '35px',  // Increased from 28px
+                  height: '35px'  // Increased from 28px
                 }}
               />
               <span style={{
                 color: '#666',
                 fontWeight: 600,
-                fontSize: '12px'  // Reduced from 14px
+                fontSize: '17px'  // Reduced from 14px
               }}>
                 SHARE PROFILE LINK
               </span>
