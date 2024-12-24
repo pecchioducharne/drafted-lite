@@ -908,12 +908,12 @@ const CandidateViewer = ({
             onChange={handleSearchChange}
             className="search-bar"
           />
-          <button
+          {/* <button
             onClick={toggleInviteCodesPopup}
             className="code-button"
           >
             Invite Codes
-          </button>
+          </button> */}
           <button
             onClick={handleSavedClick}
             className="code-button"
@@ -1323,6 +1323,12 @@ const CandidateViewer = ({
           onChange={handleSearchChange}
           className="search-bar"
         />
+        <button
+            onClick={handleSavedClick}
+            className="code-button"
+          >
+            Saved
+          </button>
         {suggestions.length > 0 && (
           <div className="suggestions-mobile">
             {suggestions.map((suggestion, index) => (
@@ -1530,6 +1536,13 @@ const CandidateViewer = ({
             <span className="candidate-name">
               {candidate.firstName} {candidate.lastName}
             </span>
+            <button
+              className="save-button"
+              onClick={() => handleSaveOption()}
+              aria-label="Draft candidate for interview"
+            >
+              Save
+            </button>
             <button
               className="draft-button"
               onClick={() => setShowMeetOptions(true)}

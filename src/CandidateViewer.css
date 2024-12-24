@@ -952,6 +952,13 @@ logo-header {
   text-align: left;
 }
 
+/* Add this to control button spacing */
+.candidate-name-display .button-group {
+  display: flex;
+  gap: 10px;  /* Small gap between buttons */
+  align-items: center;
+}
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -1272,10 +1279,10 @@ logo-header {
 
 .button-group {
   display: flex;
-  justify-content: center;
-  /* Centers the button(s) horizontally */
-  margin-top: 20px;
-  /* Space above the button(s) */
+  gap: 10px;  /* Small gap between buttons */
+  align-items: center;
+  justify-content: flex-start;  /* Align buttons to the left */
+  margin-top: 5px;
 }
 
 .button-group button {
@@ -1541,8 +1548,6 @@ logo-header {
   transform: scale(1);
   /* Return to original size on active */
 }
-
-
 
 .video-resume-container {
   margin-top: 20px;
@@ -2351,5 +2356,35 @@ logo-header {
     gap: 6px;
     border: none;
   }
+}
+
+.save-button {
+  background-color: white;
+  color: #00BF63;
+  padding: 15px 30px;
+  border: 2px solid #00BF63;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.save-button:hover, .save-button:focus {
+  background-color: #F5F5F5;
+  color: #00BF63;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+
+.save-button:active {
+  background-color: white;
+  color: #00BF63;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: scale(1);
 }
 
