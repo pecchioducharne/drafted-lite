@@ -1534,7 +1534,7 @@ const CandidateViewer = ({
           <br></br>
           <div className="candidate-name-display">
             <span className="candidate-name">
-              {candidate.firstName} {candidate.lastName}
+              {candidate.firstName}{' '}{candidate.lastName}
             </span>
             <button
               className="save-button"
@@ -1750,7 +1750,7 @@ const CandidateViewer = ({
                 </div>
                 <div className="candidate-details">
                   <h4 className="candidate-name clickable">
-                    {candidate.firstName} {candidate.lastName}
+                    {candidate.firstName}{' '}{candidate.lastName}
                   </h4>
                   <p
                     className="candidate-university clickable-filter"
