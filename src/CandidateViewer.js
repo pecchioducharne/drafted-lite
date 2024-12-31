@@ -878,9 +878,12 @@ const CandidateViewer = ({
     return (
       <div>
         <div className="header">
+          <br></br>
+          <br></br>
           <h1 onClick={handleLogoClick} className="logo-header clickable">
             {/* drafted<span style={{ color: "#53ad7a" }}> beta</span>
             <span>.</span> */}
+            <br></br>
             <br></br>
             <svg
               width="115"
@@ -916,6 +919,7 @@ const CandidateViewer = ({
           >
             Invite Codes
           </button> */}
+          <br></br>
           <button
             onClick={handleSavedClick}
             className="code-button"
