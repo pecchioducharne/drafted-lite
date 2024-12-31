@@ -247,7 +247,7 @@ const CandidateViewer = ({
       };
     }, [isOpen]);
 
-    // Handle touch events
+    // Remove or comment out e.stopPropagation in FilterOptions:
     const handleTouchStart = (e) => {
       e.stopPropagation();
     };
@@ -259,8 +259,8 @@ const CandidateViewer = ({
       } else {
         onSelect([...selectedOptions, option]);
       }
-      setSearchQuery(''); // Clear search
-      onToggle(); // Close dropdown after selection
+      setSearchQuery('');
+      onToggle(); // <-- closes dropdown after picking 1 item
     };
 
     return (
