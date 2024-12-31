@@ -26,6 +26,15 @@ import shareArrow from './share-arrow.png';  // Add this import
 import linkedinIcon from './linkedin.svg';
 import githubIcon from './github.svg';
 
+// Add this utility function at the top of your file
+const capitalizeName = (name) => {
+  if (!name) return '';
+  return name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+};
+
 // Add this new component
 const MeetOptionsPopup = ({ onClose, onEmail, onSave, candidateName }) => {
   return (
@@ -1141,7 +1150,7 @@ const CandidateViewer = ({
               </div>
               <div className="candidate-details">
                 <h4 className="candidate-name">
-                  {candidate.firstName} {candidate.lastName}
+                  {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
                 </h4>
                 <p
                   className="candidate-university clickable-filter"
@@ -1533,6 +1542,17 @@ const CandidateViewer = ({
               }}
             ></p>
           </div>
+          <p
+            style={{
+              fontFamily: "Poppins, sans-serif", 
+              fontWeight: 600,
+              fontSize: "large",
+              textAlign: "center",
+              color: "#666"
+            }}
+          >
+            Use ← and → arrow keys to navigate between candidates
+          </p>
           <div className="video-resume-container" {...handlers}>
             {videoUrls[currentVideoIndex] && (
               <ReactPlayer
@@ -1555,7 +1575,7 @@ const CandidateViewer = ({
           <br></br>
           <div className="candidate-name-display">
             <span className="candidate-name">
-              {candidate.firstName}{' '}{candidate.lastName}
+              {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
             </span>
             <button
               className="save-button"
@@ -1569,7 +1589,7 @@ const CandidateViewer = ({
               onClick={() => setShowMeetOptions(true)}
               aria-label="Draft candidate for interview"
             >
-              🤝 Meet {candidate.firstName}
+              🤝 Meet {capitalizeName(candidate.firstName)}
             </button>
           </div>
           <div className="video-resume-display">Video Resume</div>
@@ -1733,7 +1753,7 @@ const CandidateViewer = ({
               onClick={() => setShowMeetOptions(true)}
               aria-label="Draft candidate for interview"
             >
-              🤝 Meet {candidate.firstName}
+              🤝 Meet {capitalizeName(candidate.firstName)}
             </button>
           </div>
           <div className="button-group">
@@ -1800,7 +1820,7 @@ const CandidateViewer = ({
                 </div>
                 <div className="candidate-details">
                   <h4 className="candidate-name clickable">
-                    {candidate.firstName}{' '}{candidate.lastName}
+                    {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
                   </h4>
                   <p
                     className="candidate-university clickable-filter"
@@ -1862,14 +1882,14 @@ const CandidateViewer = ({
             emailDraft(); // Your existing email function
           }}
           onSave={handleSaveOption}
-          candidateName={filteredCandidates[currentIndex].firstName}
+          candidateName={capitalizeName(filteredCandidates[currentIndex].firstName)}
         />
       )}
       {showSaveConfirmation && (
         <SaveConfirmationPopup
           onClose={() => setShowSaveConfirmation(false)}
           onViewSaved={handleViewSaved}
-          candidateName={filteredCandidates[currentIndex].firstName}
+          candidateName={capitalizeName(filteredCandidates[currentIndex].firstName)}
         />
       )}
     </div>
