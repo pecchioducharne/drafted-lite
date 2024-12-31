@@ -23,6 +23,8 @@ import {
   browserSessionPersistence,
 } from "firebase/auth";
 import shareArrow from './share-arrow.png';  // Add this import
+import linkedinIcon from './linkedin.svg';
+import githubIcon from './github.svg';
 
 // Add this new component
 const MeetOptionsPopup = ({ onClose, onEmail, onSave, candidateName }) => {
@@ -1270,6 +1272,20 @@ const CandidateViewer = ({
     navigate('/saved');
   };
 
+  // Add this handler function near your other handlers
+  const handleSkillClickFromCard = (e, skill) => {
+    e.stopPropagation(); // Prevent card selection when clicking skill
+    setFilters({
+      university: [],
+      major: [],
+      graduationYear: [],
+      skills: [skill],
+      position: []
+    });
+    setShowGridView(true);
+    setRefreshKey(oldKey => oldKey + 1);
+  };
+
   return (
     <div className="profile-dashboard">
       <div className="header">
@@ -1598,38 +1614,65 @@ const CandidateViewer = ({
                 </p>
               </div>
             )}
-            {candidate.linkedInURL && (
+            {(candidate.linkedInURL || candidate.gitHubURL) && (
               <div className="profile-field">
-                <strong>LinkedIn</strong>{" "}
-                <a
-                  href={
-                    candidate.linkedInURL.startsWith("http")
-                      ? candidate.linkedInURL
-                      : `https://${candidate.linkedInURL}`
-                  }
-                  className="candidate-linkedin clickable-filter"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {candidate.linkedInURL}
-                </a>
-              </div>
-            )}
-            {candidate.gitHubURL && (
-              <div className="profile-field">
-                <strong>GitHub</strong>{" "}
-                <a
-                  href={
-                    candidate.gitHubURL.startsWith("http")
-                      ? candidate.gitHubURL
-                      : `https://${candidate.gitHubURL}`
-                  }
-                  className="candidate-linkedin clickable-filter"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {candidate.gitHubURL}
-                </a>
+                <strong>Social</strong>{" "}
+                <div className="social-icons" style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px'  // Space between icons
+                }}>
+                  {candidate.linkedInURL && (
+                    <a
+                      href={candidate.linkedInURL.startsWith("http") 
+                        ? candidate.linkedInURL 
+                        : `https://${candidate.linkedInURL}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        transition: 'opacity 0.2s ease',
+                      }}
+                      onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                      onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                    >
+                      <img 
+                        src={linkedinIcon} 
+                        alt="LinkedIn" 
+                        className="social-icon"
+                        style={{
+                          width: '32px',  // Increased from 24px
+                          height: '32px',  // Increased from 24px
+                          cursor: 'pointer'
+                        }}
+                      />
+                    </a>
+                  )}
+                  {candidate.gitHubURL && (
+                    <a
+                      href={candidate.gitHubURL.startsWith("http") 
+                        ? candidate.gitHubURL 
+                        : `https://${candidate.gitHubURL}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        transition: 'opacity 0.2s ease',
+                      }}
+                      onMouseOver={(e) => e.currentTarget.style.opacity = '0.7'}
+                      onMouseOut={(e) => e.currentTarget.style.opacity = '1'}
+                    >
+                      <img 
+                        src={githubIcon} 
+                        alt="GitHub"
+                        className="social-icon"
+                        style={{
+                          width: '32px',  // Increased from 24px
+                          height: '32px',  // Increased from 24px
+                          cursor: 'pointer'
+                        }}
+                      />
+                    </a>
+                  )}
+                </div>
               </div>
             )}
             {candidate.position && (
@@ -1641,7 +1684,9 @@ const CandidateViewer = ({
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {candidate.position}
+                  {typeof candidate.position === 'string' 
+                    ? candidate.position.charAt(0).toUpperCase() + candidate.position.slice(1).toLowerCase()
+                    : candidate.position}
                 </a>
               </div>
             )}
