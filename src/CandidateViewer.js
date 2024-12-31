@@ -904,6 +904,7 @@ const CandidateViewer = ({
             <br></br>
           </h1>
         </div>
+        <br></br>
         {/* Search Bar - added here to appear in the grid view */}
         <div className="search-container">
           <input
