@@ -55,6 +55,7 @@ const GailBucket = () => {
   
   // List of specific emails
   const candidateEmails = [
+    'ssonawan@usc.edu',
     'fjarq005@fiu.edu',
     'osoli009@fiu.edu',
     'jsuri018@fiu.edu',
