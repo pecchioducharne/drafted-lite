@@ -261,6 +261,24 @@ logo-header {
   font-weight: 550;
 }
 
+.culture-container {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.culture-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  margin: 4px 4px 4px 0;
+  border-radius: 16px;
+  font-size: 13px;
+  background-color: #2b82bf; /* A nice blue complementary to green */
+  color: white;
+  font-weight: 550;
+}
+
 
 .filter-container {
   width: 100%;

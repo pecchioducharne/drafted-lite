@@ -138,6 +138,7 @@ const CandidateViewer = ({
     graduationYear: [],
     skills: [],
     position: [], // Add position filter
+    culture: [],
   });
   const loadMoreCandidates = () => {
     setDisplayCount((prevCount) => prevCount + loadMoreCount);
@@ -303,6 +304,7 @@ const CandidateViewer = ({
             <div className="options-container">
               {options
                 .filter(option => 
+                  typeof option === 'string' &&
                   option.toLowerCase().includes(searchQuery.toLowerCase())
                 )
                 .map((option, index) => (
@@ -344,40 +346,49 @@ const CandidateViewer = ({
   };
 
   useEffect(() => {
-    const filterCandidates = () => {
+    function filterCandidates() {
       const newFilteredCandidates = candidates.filter((candidate) => {
         const matchesUniversity =
-          filters.university.length === 0 ||
+          !filters.university.length ||
           filters.university.includes(candidate.university);
+    
         const matchesMajor =
-          filters.major.length === 0 || filters.major.includes(candidate.major);
+          !filters.major.length || filters.major.includes(candidate.major);
+    
         const matchesGradYear =
-          filters.graduationYear.length === 0 ||
+          !filters.graduationYear.length ||
           filters.graduationYear.includes(candidate.graduationYear.toString());
+    
         const matchesSkills =
-          (filters.skills || []).length === 0 ||
-          (candidate.skills || []).some((skill) =>
-            filters.skills.includes(skill)
-          );
+          !filters.skills ||
+          !filters.skills.length ||
+          (candidate.skills || []).some((skill) => filters.skills.includes(skill));
+    
+        const candidateCultureTags = candidate.culture?.cultureTags || [];
+        // Here, candidateCultureTags is guaranteed to be an array (empty if missing).
+        const matchesCulture =
+          !filters.culture ||
+          !filters.culture.length ||
+          candidateCultureTags.some((tag) => filters.culture.includes(tag));
+    
         const matchesPosition =
-          filters.position.length === 0 ||
+          !filters.position.length ||
           filters.position.includes(candidate.position);
-
+    
         return (
           matchesUniversity &&
           matchesMajor &&
           matchesGradYear &&
           matchesSkills &&
-          matchesPosition
+          matchesPosition &&
+          matchesCulture
         );
       });
-
+    
       shuffleArray(newFilteredCandidates);
       setFilteredCandidates(newFilteredCandidates);
-
-      // Update the currentIndex to the first filtered candidate or reset if none are found
       setCurrentIndex(newFilteredCandidates.length > 0 ? 0 : -1);
-    };
+    }
 
     filterCandidates();
   }, [filters, candidates]);
@@ -410,36 +421,45 @@ const CandidateViewer = ({
     }
   }, [filters, candidates]);
 
-  const applyFilters = () => {
-    console.log("Filters:", filters); // Add this line to debug
-
+  function applyFilters() {
     return candidates.filter((candidate) => {
       const matchesUniversity =
         !filters.university.length ||
         filters.university.includes(candidate.university);
+  
       const matchesMajor =
-        !filters.major.length || filters.major.includes(candidate.major);
+        !filters.major.length ||
+        filters.major.includes(candidate.major);
+  
       const matchesGradYear =
         !filters.graduationYear.length ||
-        filters.graduationYear.includes(candidate.graduationYear.toString());
+        filters.graduationYear.includes(candidate.graduationYear?.toString());
+  
       const matchesSkills =
-        !filters.skills ||
-        !filters.skills.length ||
-        (candidate.skills &&
-          candidate.skills.some((skill) => filters.skills.includes(skill)));
+        !filters.skills?.length ||
+        (candidate.skills || []).some((skill) => filters.skills.includes(skill));
+  
+      // IMPORTANT: Use .cultureTags instead of .culture and default to empty array.
+      const candidateCultureTags = candidate.culture?.cultureTags || [];
+  
+      const matchesCulture =
+        !filters.culture?.length ||
+        candidateCultureTags.some((tag) => filters.culture.includes(tag));
+  
       const matchesPosition =
-        !filters.position.length ||
+        !filters.position?.length ||
         filters.position.includes(candidate.position);
-
+  
       return (
         matchesUniversity &&
         matchesMajor &&
         matchesGradYear &&
         matchesSkills &&
-        matchesPosition // Include the position filter
+        matchesPosition &&
+        matchesCulture
       );
     });
-  };
+  }
 
   useEffect(() => {
     setShowGridView(initialShowGridView);
@@ -553,15 +573,29 @@ const CandidateViewer = ({
     ...new Set(candidates.flatMap((candidate) => candidate.skills || [])),
   ].sort();
 
-  const executeSearch = () => {
+  const uniqueCulture = [
+    ...new Set(
+      candidates.flatMap((candidate) => {
+        // candidate.culture might be undefined or missing cultureTags
+        if (!candidate.culture || !Array.isArray(candidate.culture.cultureTags)) {
+          return [];
+        }
+        return candidate.culture.cultureTags; // This should be an array of strings
+      })
+    ),
+  ].sort();
+
+  function executeSearch() {
     const lowerQuery = searchQuery.toLowerCase();
 
     const newFilteredCandidates = candidates.filter((candidate) => {
+      // Basic text matching:
       const matchesQuery =
         candidate.university.toLowerCase().includes(lowerQuery) ||
         candidate.major.toLowerCase().includes(lowerQuery) ||
         candidate.graduationYear.toString().toLowerCase().includes(lowerQuery);
 
+      // Filter checks:
       const matchesUniversity =
         !filters.university.length ||
         filters.university.includes(candidate.university);
@@ -571,17 +605,28 @@ const CandidateViewer = ({
 
       const matchesGradYear =
         !filters.graduationYear.length ||
-        filters.graduationYear.includes(candidate.graduationYear.toString());
+        filters.graduationYear.includes(
+          candidate.graduationYear.toString()
+        );
 
       const matchesSkills =
         !filters.skills ||
         filters.skills.length === 0 ||
         (candidate.skills &&
-          candidate.skills.some((skill) => filters.skills.includes(skill)));
+          candidate.skills.some((skill) =>
+            filters.skills.includes(skill)
+          ));
 
       const matchesPosition =
         !filters.position.length ||
         filters.position.includes(candidate.position);
+
+      // NEW: Add culture filter logic
+      const candidateCultureTags = candidate.culture?.cultureTags || [];
+      const matchesCulture =
+        !filters.culture ||
+        !filters.culture.length ||
+        candidateCultureTags.some((tag) => filters.culture.includes(tag));
 
       return (
         matchesQuery &&
@@ -589,13 +634,14 @@ const CandidateViewer = ({
         matchesMajor &&
         matchesGradYear &&
         matchesSkills &&
-        matchesPosition // Include the position filter
+        matchesPosition &&
+        matchesCulture // Include culture in the final check
       );
     });
 
     setFilteredCandidates(newFilteredCandidates);
     setShowGridView(true);
-  };
+  }
 
   useEffect(() => {
     setShowGridView(initialShowGridView);
@@ -1103,6 +1149,25 @@ const CandidateViewer = ({
           );
         }}
       />
+      <FilterOptions
+        title="Culture"
+        options={uniqueCulture}
+        selectedOptions={filters.culture}
+        onSelect={(selected) =>
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            culture: selected,
+          }))
+        }
+        isOpen={openFilterCategories.includes('Culture')}
+        onToggle={() => {
+          setOpenFilterCategories((current) =>
+            current.includes('Culture')
+              ? current.filter((cat) => cat !== 'Culture')
+              : [...current, 'Culture']
+          );
+        }}
+      />
     </div>
   </div>
 
@@ -1175,11 +1240,20 @@ const CandidateViewer = ({
               Position: {candidate.position}
             </p>
           )}
-          {candidate.skills && (
-            <div className="skills-container">
-              {candidate.skills.map((skill, index) => (
-                <span key={index} className="skill-tag">
-                  {skill}
+          {/* Existing skills container */}
+          <div className="skills-container">
+            {candidate.skills?.map((skill, idx) => (
+              <span key={idx} className="skill-tag">
+                {skill}
+              </span>
+            ))}
+          </div>
+          {/* New culture container */}
+          {candidate.culture?.cultureTags?.length > 0 && (
+            <div className="culture-container">
+              {candidate.culture.cultureTags.map((tag, idx) => (
+                <span key={idx} className="culture-tag">
+                  {tag}
                 </span>
               ))}
             </div>
@@ -1418,7 +1492,7 @@ return (
             ...prevFilters,
             university: selected,
           }));
-              // Close dropdown after selection on mobile
+                // Close dropdown after selection on mobile
           if (window.innerWidth <= 768) {
             setOpenFilterCategories([]);
           }
@@ -1502,6 +1576,25 @@ return (
             current.includes('Position') 
               ? []
               : ['Position']
+          );
+        }}
+      />
+      <FilterOptions
+        title="Culture"
+        options={uniqueCulture}
+        selectedOptions={filters.culture}
+        onSelect={(selected) =>
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            culture: selected,
+          }))
+        }
+        isOpen={openFilterCategories.includes('Culture')}
+        onToggle={() => {
+          setOpenFilterCategories((current) =>
+            current.includes('Culture')
+              ? current.filter((cat) => cat !== 'Culture')
+              : [...current, 'Culture']
           );
         }}
       />
