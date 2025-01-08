@@ -1601,7 +1601,7 @@ return (
     </div>
   </div>
 
-      {/* Add this right after your filter-container div to show selected filters */}
+      {/* Add this right after your filter-container div to show selected filters
       {Object.entries(filters).some(([_, values]) => values.length > 0) && (
         <div className="selected-filters-mobile">
           {Object.entries(filters).map(([category, values]) =>
@@ -1621,7 +1621,7 @@ return (
             ))
           )}
         </div>
-      )}
+      )} */}
 
       <div className="main-and-other-videos-container">
         <div className="main-video-profile-container">
