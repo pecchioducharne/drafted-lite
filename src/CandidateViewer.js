@@ -1131,25 +1131,6 @@ const CandidateViewer = ({
         }}
       />
       <FilterOptions
-        title="Position"
-        options={["Fulltime", "Internship"]}
-        selectedOptions={filters.position}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            position: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Position')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Position') 
-              ? []
-              : ['Position']
-          );
-        }}
-      />
-      <FilterOptions
         title="Culture"
         options={uniqueCulture}
         selectedOptions={filters.culture}
@@ -1165,6 +1146,25 @@ const CandidateViewer = ({
             current.includes('Culture')
               ? current.filter((cat) => cat !== 'Culture')
               : [...current, 'Culture']
+          );
+        }}
+      />
+      <FilterOptions
+        title="Position"
+        options={["Fulltime", "Internship"]}
+        selectedOptions={filters.position}
+        onSelect={(selected) =>
+          setFilters((prevFilters) => ({
+            ...prevFilters,
+            position: selected,
+          }))
+        }
+        isOpen={openFilterCategories.includes('Position')}
+        onToggle={() => {
+          setOpenFilterCategories(current => 
+            current.includes('Position') 
+              ? []
+              : ['Position']
           );
         }}
       />
