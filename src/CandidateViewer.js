@@ -1732,6 +1732,51 @@ return (
                 </p>
             </div>
           )}
+          {candidate.culture?.cultureTags?.length > 0 && (
+            <div className="profile-field">
+              <strong>Culture</strong>{" "}
+              <div className="culture-tags">
+                {candidate.culture.cultureTags.map((tag, index) => (
+                  <div key={index} className="culture-tag-container">
+                    <span 
+                      className="culture-tag"
+                      onMouseEnter={(e) => {
+                        const popup = e.currentTarget.nextElementSibling;
+                        popup.style.display = 'block';
+                      }}
+                      onMouseLeave={(e) => {
+                        const popup = e.currentTarget.nextElementSibling;
+                        popup.style.display = 'none';
+                      }}
+                    >
+                      {tag}
+                    </span>
+                    <div className="culture-description-popup" style={{
+                      display: 'none',
+                      position: 'absolute',
+                      backgroundColor: 'white',
+                      border: '1px solid #ddd',
+                      borderRadius: '4px',
+                      padding: '8px',
+                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      zIndex: 1000,
+                      maxWidth: '200px'
+                    }}>
+                      {candidate.culture.cultureDescriptions?.[index] || 'No description available'}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {candidate.culture.cultureTags && candidate.culture.cultureTags.length > 0 && (
+              <div className="profile-field">
+                <strong>Culture</strong>{" "}
+                <p className="candidate-skills">
+                  {candidate.culture.cultureTags.join(", ")}
+                </p>
+            </div>
+          )}
             {(candidate.linkedInURL || candidate.gitHubURL) && (
               <div className="profile-field">
                 <strong>Social</strong>{" "}
