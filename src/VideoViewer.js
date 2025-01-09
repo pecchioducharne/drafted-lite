@@ -24,6 +24,7 @@ const VideoViewer = () => {
   const [emailCopied, setEmailCopied] = useState(false);
   const [messageCopied, setMessageCopied] = useState(false);
   const navigate = useNavigate();
+  const [selectedCulture, setSelectedCulture] = useState(null);
 
   useEffect(() => {
     const fetchCandidate = async () => {
@@ -303,6 +304,14 @@ Best regards,`;
     setTimeout(() => setMessageCopied(false), 2000);
   };
 
+  const handleCultureTagClick = (tag, description) => {
+    setSelectedCulture({ tag, description });
+  };
+
+  const handleCloseCulturePopup = () => {
+    setSelectedCulture(null);
+  };
+
   useEffect(() => {
     const handleResize = () => {
       // Force re-render on window resize
@@ -508,6 +517,50 @@ Best regards,`;
               {candidate.resume ? 'View Resume' : 'No Resume, Request Interview for Resume'}
             </button>
           </div>
+
+          {candidate.skills && (
+            <div style={profileFieldStyle}>
+              <strong style={{ 
+                color: '#555', 
+                fontSize: '1.3rem',
+                textTransform: 'uppercase', 
+                letterSpacing: '0.5px' 
+              }}>
+                Skills
+              </strong>
+              <div className="tags-container">
+                {candidate.skills.map((skill, index) => (
+                  <span key={index} className="skill-tag">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {candidate.culture?.cultureTags && (
+            <div style={profileFieldStyle}>
+              <strong style={{ 
+                color: '#555', 
+                fontSize: '1.3rem',
+                textTransform: 'uppercase', 
+                letterSpacing: '0.5px' 
+              }}>
+                Culture
+              </strong>
+              <div className="tags-container">
+                {candidate.culture.cultureTags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="culture-tag"
+                    onClick={() => handleCultureTagClick(tag, candidate.culture.cultureDescriptions?.[tag])}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -711,6 +764,29 @@ Best regards,`;
           >
             Close
           </button>
+        </div>
+      )}
+
+      {selectedCulture && (
+        <div className="culture-popup-overlay" onClick={handleCloseCulturePopup}>
+          <div className="culture-description-popup" onClick={(e) => e.stopPropagation()}>
+            <h3 style={{ 
+              fontSize: '1.5rem', 
+              marginTop: 0,
+              color: '#2d3748',
+              fontWeight: '600'
+            }}>
+              {selectedCulture.tag}
+            </h3>
+            <p style={{ 
+              fontSize: '1.1rem',
+              lineHeight: '1.6',
+              color: '#4a5568'
+            }}>
+              {selectedCulture.description || "No description available."}
+            </p>
+            <button className="close-culture-popup" onClick={handleCloseCulturePopup}>×</button>
+          </div>
         </div>
       )}
     </div>

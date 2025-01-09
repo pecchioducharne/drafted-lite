@@ -51,11 +51,13 @@ function DraftedLogo() {
 const GailBucket = () => {
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCulture, setSelectedCulture] = useState(null);
   const navigate = useNavigate();
   
   // List of specific emails
   const candidateEmails = [
     'ssonawan@usc.edu',
+    'ahirs017@fiu.edu',
     'fjarq005@fiu.edu',
     'osoli009@fiu.edu',
     'jsuri018@fiu.edu',
@@ -68,7 +70,6 @@ const GailBucket = () => {
     'grodr358@fiu.edu',
     'hcruz025@fiu.edu',
     'airiz024@fiu.edu',
-    'ahirs017@fiu.edu',
     'acsoteldo01@gmail.com',
     'syuanhew@usc.edu'
   ];
@@ -105,6 +106,20 @@ const GailBucket = () => {
 
   const handleLogoClick = () => {
     window.open('https://drafted.webflow.io/', '_blank');
+  };
+
+  const handleCultureTagClick = (e, tag, description) => {
+    e.stopPropagation(); // Prevent card click
+    setSelectedCulture({ tag, description });
+  };
+
+  const handleCloseCulturePopup = () => {
+    setSelectedCulture(null);
+  };
+
+  const handleSkillTagClick = (e, skill) => {
+    e.stopPropagation(); // Prevent card click
+    // You can add additional handling for skill tags if needed
   };
 
   if (loading) return <div className="loading">Loading...</div>;
@@ -228,11 +243,57 @@ const GailBucket = () => {
                 </div>
                 <p className="major">{candidate.major}</p>
                 <p className="grad-year">{candidate.graduationYear}</p>
+                
+                {/* Add skills tags before culture tags */}
+                {candidate.skills && (
+                  <div className="skills-tags-container">
+                    {candidate.skills.map((skill, index) => (
+                      <span
+                        key={index}
+                        className="skill-tag"
+                        onClick={(e) => handleSkillTagClick(e, skill)}
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Existing culture tags */}
+                {candidate.culture?.cultureTags && (
+                  <div className="culture-tags-container">
+                    {candidate.culture.cultureTags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="culture-tag"
+                        onClick={(e) => handleCultureTagClick(e, tag, candidate.culture.cultureDescriptions?.[tag])}
+                      >
+                        {tag}
+                        {candidate.culture.cultureDescriptions?.[tag] && (
+                          <div className="culture-description-hover">
+                            {candidate.culture.cultureDescriptions[tag]}
+                          </div>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Culture Description Popup */}
+      {selectedCulture && (
+        <div className="culture-popup-overlay" onClick={handleCloseCulturePopup}>
+          <div className="culture-popup" onClick={(e) => e.stopPropagation()}>
+            <h3>{selectedCulture.tag}</h3>
+            <p>{selectedCulture.description || "No description available."}</p>
+            <button className="close-button" onClick={handleCloseCulturePopup}>×</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
