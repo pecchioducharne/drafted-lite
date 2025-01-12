@@ -25,6 +25,8 @@ const VideoViewer = () => {
   const [messageCopied, setMessageCopied] = useState(false);
   const navigate = useNavigate();
   const [selectedCulture, setSelectedCulture] = useState(null);
+  const [showMeetOptions, setShowMeetOptions] = useState(false);
+  const [showEmailPopup, setShowEmailPopup] = useState(false);
 
   useEffect(() => {
     const fetchCandidate = async () => {
@@ -159,7 +161,7 @@ const VideoViewer = () => {
     background: 'rgba(255, 255, 255, 0.8)',
     backdropFilter: 'blur(10px)',
     borderRadius: '20px',
-    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.5)',
+    // boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.5)',
     margin: '1rem 0',
     position: 'relative',
     zIndex: 1,
@@ -240,16 +242,12 @@ const VideoViewer = () => {
   };
 
   const emailDraft = () => {
-    const emailTemplate = `Hi ${candidate.firstName},
-
-I came across your video resume and I'm impressed with your background. I'd love to schedule some time to chat about potential opportunities.
-
-Could you let me know your availability for a brief call this week?
-
-Best regards,`;
-
-    setEmailContent(emailTemplate);
-    setEmailPopup(true);
+    if (candidate) {
+      const content = `Hi ${candidate.firstName},\n\nWe think you are a great candidate for [Company Name]; we'd like to schedule an initial call.\n\nTime:\nDay:\nZoom / Hangout link:\n\nLet us know if this works!\n\nBest,\n[Your Name]`;
+      setEmailContent(content);
+      setShowEmailPopup(true);
+      setShowMeetOptions(false);
+    }
   };
 
   const handleLogoClick = () => {
@@ -283,11 +281,7 @@ Best regards,`;
   };
 
   const handleMeetClick = () => {
-    if (!user) {
-      navigate('/recruiter-signup');
-    } else {
-      emailDraft();
-    }
+    setShowMeetOptions(true);
   };
 
   const copyEmail = () => {
@@ -383,7 +377,7 @@ Best regards,`;
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)';
             }}
           >
-            Meet {candidate.firstName}
+            Meet Candidate
           </button>
         </div>
 
@@ -626,144 +620,40 @@ Best regards,`;
         </div>
       )}
 
-      {emailPopup && (
-        <div style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          backgroundColor: 'white',
-          padding: '2.5rem',
-          borderRadius: '16px',
-          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
-          zIndex: 1000,
-          width: '90%',
-          maxWidth: '600px',
-        }}>
-          <div style={{ marginBottom: '2rem' }}>
-            <div style={{ 
-              background: '#f8f9fa',
-              padding: '1.25rem',
-              borderRadius: '12px',
-              marginBottom: '1.5rem'
-            }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '0.5rem'
-              }}>
-                <span style={{ 
-                  fontSize: '0.9rem', 
-                  color: '#666',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                  fontWeight: '600'
-                }}>
-                  Student Email
-                </span>
-                <button
-                  onClick={copyEmail}
-                  style={{
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    border: 'none',
-                    background: emailCopied ? '#4CAF50' : '#00BF63',
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: '0.9rem',
-                    transition: 'all 0.2s ease',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                  }}
-                >
-                  {emailCopied ? '✓ Copied!' : 'Copy Email'}
-                </button>
-              </div>
-              <div style={{ 
-                fontSize: '1.1rem',
-                color: '#333',
-                fontWeight: '500'
-              }}>
-                {candidate.email}
-              </div>
-            </div>
-
-            <div style={{ marginBottom: '1rem' }}>
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '0.75rem'
-              }}>
-                <span style={{ 
-                  fontSize: '0.9rem', 
-                  color: '#666',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.5px',
-                  fontWeight: '600'
-                }}>
-                  Email Message
-                </span>
-                <button
-                  onClick={copyMessage}
-                  style={{
-                    padding: '0.5rem 1rem',
-                    borderRadius: '8px',
-                    border: 'none',
-                    background: messageCopied ? '#4CAF50' : '#00BF63',
-                    color: 'white',
-                    cursor: 'pointer',
-                    fontSize: '0.9rem',
-                    transition: 'all 0.2s ease',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem'
-                  }}
-                >
-                  {messageCopied ? '✓ Copied!' : 'Copy Message'}
-                </button>
-              </div>
-              <textarea
-                value={emailContent}
-                readOnly
-                style={{
-                  width: '100%',
-                  minHeight: '200px',
-                  padding: '1rem',
-                  borderRadius: '12px',
-                  border: '1px solid #e0e0e0',
-                  fontSize: '1rem',
-                  lineHeight: '1.5',
-                  resize: 'vertical',
-                  fontFamily: 'inherit'
-                }}
-              />
-            </div>
+      {showMeetOptions && (
+        <div className="popup-overlay">
+          <div className="meet-options-popup">
+            <button className="close-button" onClick={() => setShowMeetOptions(false)}>×</button>
+            <button className="meet-option-button" onClick={emailDraft}>
+              Draft Email
+            </button>
           </div>
-          <button
-            onClick={() => setEmailPopup(false)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              borderRadius: '8px',
-              border: 'none',
-              backgroundColor: '#333',
-              color: 'white',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              transition: 'all 0.2s ease',
-              width: '100%'
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#444';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#333';
-            }}
-          >
-            Close
-          </button>
+        </div>
+      )}
+
+      {showEmailPopup && candidate && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <button className="close-button" onClick={() => setShowEmailPopup(false)}>×</button>
+            <div className="email-header">
+              <p className="email-address">To: {candidate.email}</p>
+            </div>
+            <textarea
+              className="email-textarea"
+              value={emailContent}
+              onChange={(e) => setEmailContent(e.target.value)}
+              readOnly
+            />
+            <button
+              className="copy-button"
+              onClick={() => {
+                navigator.clipboard.writeText(emailContent);
+                alert("Email content copied to clipboard!");
+              }}
+            >
+              Copy to Clipboard
+            </button>
+          </div>
         </div>
       )}
 
