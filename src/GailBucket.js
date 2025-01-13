@@ -57,21 +57,9 @@ const GailBucket = () => {
   // List of specific emails
   const candidateEmails = [
     'ssonawan@usc.edu',
-    'ahirs017@fiu.edu',
+    'karthik.gummadi@gwu.edu',
     'fjarq005@fiu.edu',
-    'osoli009@fiu.edu',
-    'jsuri018@fiu.edu',
-    'kbisani@usc.edu',
-    'achang24@usc.edu',
-    'jdiaz651@fiu.edu',
-    'dlaco006@fiu.edu',
-    'dhern388@fiu.edu',
-    'kwrig082@fiu.edu',
-    'grodr358@fiu.edu',
-    'hcruz025@fiu.edu',
-    'airiz024@fiu.edu',
-    'acsoteldo01@gmail.com',
-    'syuanhew@usc.edu'
+    'ahirs017@fiu.edu'
   ];
 
   useEffect(() => {
