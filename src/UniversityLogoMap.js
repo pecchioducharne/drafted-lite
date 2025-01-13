@@ -19,7 +19,8 @@ const universityLogos = new Map([
   ["Virginia Tech", "https://brand.vt.edu/visual-identity/brand-architecture/university-logos.html"],
   ["Wake Forest University", "https://brand.wfu.edu/visual-identity/logos/"],
   ["Florida International University", "https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/FIU_Panthers_logo.svg/320px-FIU_Panthers_logo.svg.png"],
-  ["The University of Texas Permian Basin", "https://www.utpb.edu/assets/images/icons/210602-newutpblogo-color210506cropped.gif"]
+  ["The University of Texas Permian Basin", "https://www.utpb.edu/assets/images/icons/210602-newutpblogo-color210506cropped.gif"],
+  ["George Washington University", "https://cdn.freelogovectors.net/wp-content/uploads/2023/06/gw_george-washington-university_logo-freelogovectors.net_.png"]
 ]);
 
 // Function to get the logo URL by university name, or return the default icon if not found
