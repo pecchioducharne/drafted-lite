@@ -279,7 +279,6 @@ logo-header {
   font-weight: 550;
 }
 
-
 .filter-container {
   width: 100%;
   margin: 12px 0;
@@ -1245,14 +1244,14 @@ logo-header {
 .candidate-major {
   font-size: 1.2em;
   font-weight: 200;
-  color: #666;
+  color: black;
   margin-bottom: 5px;
 }
 
 .candidate-grad-year {
-  font-size: 0.9em;
+  font-size: 1.2em;
   font-weight: 500;
-  color: #666;
+  color: black;
 }
 
 .cover-image, .no-video-image {

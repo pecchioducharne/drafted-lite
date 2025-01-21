@@ -43,19 +43,19 @@ const MeetOptionsPopup = ({ onClose, onEmail, onSave, candidateName }) => {
         <button className="close-button" onClick={onClose}>×</button>
         <h3>Meet {candidateName}</h3>
         <div className="meet-options">
-          <button 
+          <button
             className="meet-option-button"
             onClick={onEmail}
           >
             📩 Email
           </button>
-          <button 
+          <button
             className="meet-option-button"
             onClick={onSave}
           >
             🪣 Save
           </button>
-          <button 
+          <button
             className="meet-option-button"
             onClick={() => alert("Coming soon 🏗️")}
           >
@@ -75,13 +75,13 @@ const SaveConfirmationPopup = ({ onClose, onViewSaved, candidateName }) => {
         <button className="close-button" onClick={onClose}>×</button>
         <h3>Candidate saved to bucket!</h3>
         <div className="meet-options">
-          <button 
+          <button
             className="meet-option-button"
             onClick={onViewSaved}
           >
             See saved
           </button>
-          <button 
+          <button
             className="meet-option-button"
             onClick={onClose}
           >
@@ -253,7 +253,7 @@ const CandidateViewer = ({
       } else {
         document.body.classList.remove('body-scroll-lock');
       }
-      
+
       return () => {
         document.body.classList.remove('body-scroll-lock');
       };
@@ -276,7 +276,7 @@ const CandidateViewer = ({
     };
 
     return (
-      <div 
+      <div
         className="filter-option-section"
         onTouchStart={handleTouchStart}
       >
@@ -303,7 +303,7 @@ const CandidateViewer = ({
             </div>
             <div className="options-container">
               {options
-                .filter(option => 
+                .filter(option =>
                   typeof option === 'string' &&
                   option.toLowerCase().includes(searchQuery.toLowerCase())
                 )
@@ -328,7 +328,7 @@ const CandidateViewer = ({
             {selectedOptions.map((option, index) => (
               <span key={index} className="selected-filter-tag">
                 {option}
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleSelect(option);
@@ -351,30 +351,30 @@ const CandidateViewer = ({
         const matchesUniversity =
           !filters.university.length ||
           filters.university.includes(candidate.university);
-    
+
         const matchesMajor =
           !filters.major.length || filters.major.includes(candidate.major);
-    
+
         const matchesGradYear =
           !filters.graduationYear.length ||
           filters.graduationYear.includes(candidate.graduationYear.toString());
-    
+
         const matchesSkills =
           !filters.skills ||
           !filters.skills.length ||
           (candidate.skills || []).some((skill) => filters.skills.includes(skill));
-    
+
         const candidateCultureTags = candidate.culture?.cultureTags || [];
         // Here, candidateCultureTags is guaranteed to be an array (empty if missing).
         const matchesCulture =
           !filters.culture ||
           !filters.culture.length ||
           candidateCultureTags.some((tag) => filters.culture.includes(tag));
-    
+
         const matchesPosition =
           !filters.position.length ||
           filters.position.includes(candidate.position);
-    
+
         return (
           matchesUniversity &&
           matchesMajor &&
@@ -384,7 +384,7 @@ const CandidateViewer = ({
           matchesCulture
         );
       });
-    
+
       shuffleArray(newFilteredCandidates);
       setFilteredCandidates(newFilteredCandidates);
       setCurrentIndex(newFilteredCandidates.length > 0 ? 0 : -1);
@@ -426,30 +426,30 @@ const CandidateViewer = ({
       const matchesUniversity =
         !filters.university.length ||
         filters.university.includes(candidate.university);
-  
+
       const matchesMajor =
         !filters.major.length ||
         filters.major.includes(candidate.major);
-  
+
       const matchesGradYear =
         !filters.graduationYear.length ||
         filters.graduationYear.includes(candidate.graduationYear?.toString());
-  
+
       const matchesSkills =
         !filters.skills?.length ||
         (candidate.skills || []).some((skill) => filters.skills.includes(skill));
-  
+
       // IMPORTANT: Use .cultureTags instead of .culture and default to empty array.
       const candidateCultureTags = candidate.culture?.cultureTags || [];
-  
+
       const matchesCulture =
         !filters.culture?.length ||
         candidateCultureTags.some((tag) => filters.culture.includes(tag));
-  
+
       const matchesPosition =
         !filters.position?.length ||
         filters.position.includes(candidate.position);
-  
+
       return (
         matchesUniversity &&
         matchesMajor &&
@@ -678,7 +678,7 @@ const CandidateViewer = ({
     // On mobile, show all options immediately
     if (window.innerWidth <= 768) {
       const allSuggestions = new Set();
-      
+
       candidates.forEach((candidate) => {
         allSuggestions.add(candidate.university);
         allSuggestions.add(candidate.major);
@@ -949,26 +949,26 @@ const CandidateViewer = ({
             >
               <path
                 d="M0.784 14.16C0.784 12.5547 1.08267 11.1453 1.68 9.932C2.296 8.71867 3.12667 7.78533 4.172 7.132C5.21733 6.47867 6.384 6.152 7.672 6.152C8.69867 6.152 9.632 6.36667 10.472 6.796C11.3307 7.22533 12.0027 7.804 12.488 8.532V1.28H17.276V22H12.488V19.76C12.04 20.5067 11.396 21.104 10.556 21.552C9.73467 22 8.77333 22.224 7.672 22.224C6.384 22.224 5.21733 21.8973 4.172 21.244C3.12667 20.572 2.296 19.6293 1.68 18.416C1.08267 17.184 0.784 15.7653 0.784 14.16ZM12.488 14.188C12.488 12.9933 12.152 12.0507 11.48 11.36C10.8267 10.6693 10.024 10.324 9.072 10.324C8.12 10.324 7.308 10.6693 6.636 11.36C5.98267 12.032 5.656 12.9653 5.656 14.16C5.656 15.3547 5.98267 16.3067 6.636 17.016C7.308 17.7067 8.12 18.052 9.072 18.052C10.024 18.052 10.8267 17.7067 11.48 17.016C12.152 16.3253 12.488 15.3827 12.488 14.188ZM25.5279 8.98C26.0879 8.12133 26.7879 7.44933 27.6279 6.964C28.4679 6.46 29.4012 6.208 30.4279 6.208V11.276H29.1119C27.9172 11.276 27.0212 11.5373 26.4239 12.06C25.8266 12.564 25.5279 13.46 25.5279 14.748V22H20.7399V6.376H25.5279V8.98ZM31.7645 14.16C31.7645 12.5547 32.0631 11.1453 32.6605 9.932C33.2765 8.71867 34.1071 7.78533 35.1525 7.132C36.1978 6.47867 37.3645 6.152 38.6525 6.152C39.7538 6.152 40.7151 6.376 41.5365 6.824C42.3765 7.272 43.0205 7.86 43.4685 8.588V6.376H48.2565V22H43.4685V19.788C43.0018 20.516 42.3485 21.104 41.5085 21.552C40.6871 22 39.7258 22.224 38.6245 22.224C37.3551 22.224 36.1978 21.8973 35.1525 21.244C34.1071 20.572 33.2765 19.6293 32.6605 18.416C32.0631 17.184 31.7645 15.7653 31.7645 14.16ZM43.4685 14.188C43.4685 12.9933 43.1325 12.0507 42.4605 11.36C41.8071 10.6693 41.0045 10.324 40.0525 10.324C39.1005 10.324 38.2885 10.6693 37.6165 11.36C36.9631 12.032 36.6365 12.9653 36.6365 14.16C36.6365 15.3547 36.9631 16.3067 37.6165 17.016C38.2885 17.7067 39.1005 18.052 40.0525 18.052C41.0045 18.052 41.8071 17.7067 42.4605 17.016C43.1325 16.3253 43.4685 15.3827 43.4685 14.188ZM59.5604 10.352H56.9844V22H52.1964V10.352H50.4604V6.376H52.1964V5.928C52.1964 4.00533 52.747 2.54933 53.8484 1.56C54.9497 0.551999 56.5644 0.0479989 58.6924 0.0479989C59.047 0.0479989 59.3084 0.0573321 59.4764 0.0759985V4.136C58.5617 4.08 57.9177 4.21067 57.5444 4.528C57.171 4.84533 56.9844 5.41467 56.9844 6.236V6.376H59.5604V10.352ZM70.5182 17.94V22H68.0822C66.3462 22 64.9929 21.58 64.0222 20.74C63.0516 19.8813 62.5662 18.4907 62.5662 16.568V10.352H60.6622V6.376H62.5662V2.568H67.3542V6.376H70.4902V10.352H67.3542V16.624C67.3542 17.0907 67.4662 17.4267 67.6902 17.632C67.9142 17.8373 68.2876 17.94 68.8102 17.94H70.5182ZM87.9132 13.936C87.9132 14.384 87.8852 14.8507 87.8292 15.336H76.9932C77.0679 16.3067 77.3759 17.0533 77.9172 17.576C78.4772 18.08 79.1586 18.332 79.9612 18.332C81.1559 18.332 81.9866 17.828 82.4532 16.82H87.5492C87.2879 17.8467 86.8119 18.7707 86.1212 19.592C85.4492 20.4133 84.5999 21.0573 83.5732 21.524C82.5466 21.9907 81.3986 22.224 80.1292 22.224C78.5986 22.224 77.2359 21.8973 76.0412 21.244C74.8466 20.5907 73.9132 19.6573 73.2412 18.444C72.5692 17.2307 72.2332 15.812 72.2332 14.188C72.2332 12.564 72.5599 11.1453 73.2132 9.932C73.8852 8.71867 74.8186 7.78533 76.0132 7.132C77.2079 6.47867 78.5799 6.152 80.1292 6.152C81.6412 6.152 82.9852 6.46933 84.1612 7.104C85.3372 7.73867 86.2519 8.644 86.9052 9.82C87.5772 10.996 87.9132 12.368 87.9132 13.936ZM83.0132 12.676C83.0132 11.8547 82.7332 11.2013 82.1732 10.716C81.6132 10.2307 80.9132 9.988 80.0732 9.988C79.2706 9.988 78.5892 10.2213 78.0292 10.688C77.4879 11.1547 77.1519 11.8173 77.0212 12.676H83.0132ZM89.4871 14.16C89.4871 12.5547 89.7858 11.1453 90.3831 9.932C90.9991 8.71867 91.8298 7.78533 92.8751 7.132C93.9205 6.47867 95.0871 6.152 96.3751 6.152C97.4018 6.152 98.3351 6.36667 99.1751 6.796C100.034 7.22533 100.706 7.804 101.191 8.532V1.28H105.979V22H101.191V19.76C100.743 20.5067 100.099 21.104 99.2591 21.552C98.4378 22 97.4765 22.224 96.3751 22.224C95.0871 22.224 93.9205 21.8973 92.8751 21.244C91.8298 20.572 90.9991 19.6293 90.3831 18.416C89.7858 17.184 89.4871 15.7653 89.4871 14.16ZM101.191 14.188C101.191 12.9933 100.855 12.0507 100.183 11.36C99.5298 10.6693 98.7271 10.324 97.7751 10.324C96.8231 10.324 96.0111 10.6693 95.3391 11.36C94.6858 12.032 94.3591 12.9653 94.3591 14.16C94.3591 15.3547 94.6858 16.3067 95.3391 17.016C96.0111 17.7067 96.8231 18.052 97.7751 18.052C98.7271 18.052 99.5298 17.7067 100.183 17.016C100.855 16.3253 101.191 15.3827 101.191 14.188Z"
-              fill="black"
-            />
-            <path
-              d="M111.683 22.224C110.843 22.224 110.152 21.9813 109.611 21.496C109.088 20.992 108.827 20.376 108.827 19.648C108.827 18.9013 109.088 18.276 109.611 17.772C110.152 17.268 110.843 17.016 111.683 17.016C112.504 17.016 113.176 17.268 113.699 17.772C114.24 18.276 114.511 18.9013 114.511 19.648C114.511 20.376 114.24 20.992 113.699 21.496C113.176 21.9813 112.504 22.224 111.683 22.224Z"
-              fill="#53AD7A"
-            />
-          </svg>
+                fill="black"
+              />
+              <path
+                d="M111.683 22.224C110.843 22.224 110.152 21.9813 109.611 21.496C109.088 20.992 108.827 20.376 108.827 19.648C108.827 18.9013 109.088 18.276 109.611 17.772C110.152 17.268 110.843 17.016 111.683 17.016C112.504 17.016 113.176 17.268 113.699 17.772C114.24 18.276 114.511 18.9013 114.511 19.648C114.511 20.376 114.24 20.992 113.699 21.496C113.176 21.9813 112.504 22.224 111.683 22.224Z"
+                fill="#53AD7A"
+              />
+            </svg>
             <br></br>
-        </h1>
-      </div>
+          </h1>
+        </div>
         <br></br>
         {/* Search Bar - added here to appear in the grid view */}
-      <div className="search-container">
-        <input
-          type="text"
+        <div className="search-container">
+          <input
+            type="text"
             placeholder="Search by university, major, grad year, or skills..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-          className="search-bar"
-        />
+            value={searchQuery}
+            onChange={handleSearchChange}
+            className="search-bar"
+          />
           {/* <button
             onClick={toggleInviteCodesPopup}
           className="code-button"
@@ -976,200 +976,200 @@ const CandidateViewer = ({
             Invite Codes
           </button> */}
           <br></br>
-    <button
-      onClick={handleSavedClick}
-      className="code-button"
-    >
-      Saved
-    </button>
-
-    {suggestions.length > 0 && (
-      <div className="suggestions-mobile">
-        {suggestions.map((suggestion, index) => (
-          <div
-            key={index}
-            className="suggestion-item-mobile"
-            onClick={() => {
-              handleSuggestionSelect(suggestion);
-                    document.activeElement.blur(); // Hide mobile keyboard
-            }}
+          <button
+            onClick={handleSavedClick}
+            className="code-button"
           >
-            {suggestion}
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
+            Saved
+          </button>
 
-  {showPopup && (
-    <div className="nav-popup">
-      <h2>Welcome to Drafted!</h2>
-      <p>We make it easy and fun to build your team. Fast.</p>
-      <ul>
-        <p>
-          <li>Filter candidates to find your next hire quickly</li>
-          <li>Easily view candidate information</li>
-          <li>Click "🤝 Meet" to connect.</li>
-        </p>
-      </ul>
-      <br />
-      <button className="navigation-button" onClick={handleClosePopup}>
-        Close
-      </button>
-    </div>
-  )}
+          {suggestions.length > 0 && (
+            <div className="suggestions-mobile">
+              {suggestions.map((suggestion, index) => (
+                <div
+                  key={index}
+                  className="suggestion-item-mobile"
+                  onClick={() => {
+                    handleSuggestionSelect(suggestion);
+                    document.activeElement.blur(); // Hide mobile keyboard
+                  }}
+                >
+                  {suggestion}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
-  {showInviteCodes && codes != null && codes.length > 0 && (
-    <div className="invite-codes-popup">
-      <h3>
-        <strong>Your Unique Invite Codes</strong>
-      </h3>
-      <p>
-        These are unique, one-use invite codes for other startups to draft
-        candidates using Drafted. Share them wisely!
-      </p>
-      <div className="code-container">
-        {codes.map((code, index) => (
-          <div key={index} className="code-block">
-            <span>{code}</span>
-            <button
-              className="navigation-button"
-              onClick={() => copyCode(code)}
-            >
-              Copy
+        {showPopup && (
+          <div className="nav-popup">
+            <h2>Welcome to Drafted!</h2>
+            <p>We make it easy and fun to build your team. Fast.</p>
+            <ul>
+              <p>
+                <li>Filter candidates to find your next hire quickly</li>
+                <li>Easily view candidate information</li>
+                <li>Click "🤝 Meet" to connect.</li>
+              </p>
+            </ul>
+            <br />
+            <button className="navigation-button" onClick={handleClosePopup}>
+              Close
             </button>
           </div>
-        ))}
-      </div>
-      <br />
-      <button
-        onClick={toggleInviteCodesPopup}
-        className="navigation-button"
-      >
-        Close
-      </button>
-    </div>
-  )}
+        )}
 
-  <div className="filter-container">
-    <div className="filter-row">
-      <FilterOptions
-        title="University"
-        options={uniqueUniversities}
-        selectedOptions={filters.university}
-        onSelect={(selected) => {
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            university: selected,
-          }));
+        {showInviteCodes && codes != null && codes.length > 0 && (
+          <div className="invite-codes-popup">
+            <h3>
+              <strong>Your Unique Invite Codes</strong>
+            </h3>
+            <p>
+              These are unique, one-use invite codes for other startups to draft
+              candidates using Drafted. Share them wisely!
+            </p>
+            <div className="code-container">
+              {codes.map((code, index) => (
+                <div key={index} className="code-block">
+                  <span>{code}</span>
+                  <button
+                    className="navigation-button"
+                    onClick={() => copyCode(code)}
+                  >
+                    Copy
+                  </button>
+                </div>
+              ))}
+            </div>
+            <br />
+            <button
+              onClick={toggleInviteCodesPopup}
+              className="navigation-button"
+            >
+              Close
+            </button>
+          </div>
+        )}
+
+        <div className="filter-container">
+          <div className="filter-row">
+            <FilterOptions
+              title="University"
+              options={uniqueUniversities}
+              selectedOptions={filters.university}
+              onSelect={(selected) => {
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  university: selected,
+                }));
                 // Close dropdown after selection on mobile
-          if (window.innerWidth <= 768) {
-            setOpenFilterCategories([]);
-          }
-        }}
-        isOpen={openFilterCategories.includes('University')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('University') 
-              ? [] 
-              : ['University']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Major"
-        options={uniqueMajors}
-        selectedOptions={filters.major}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
-        }
-        isOpen={openFilterCategories.includes('Major')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Major') 
-              ? []
-              : ['Major']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Graduation Year"
-        options={uniqueGraduationYears}
-        selectedOptions={filters.graduationYear}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            graduationYear: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Graduation Year')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Graduation Year') 
-              ? []
-              : ['Graduation Year']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Skills"
-        options={uniqueSkills}
-        selectedOptions={filters.skills}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            skills: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Skills')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Skills') 
-              ? []
-              : ['Skills']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Culture"
-        options={uniqueCulture}
-        selectedOptions={filters.culture}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            culture: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Culture')}
-        onToggle={() => {
-          setOpenFilterCategories((current) =>
-            current.includes('Culture')
-              ? current.filter((cat) => cat !== 'Culture')
-              : [...current, 'Culture']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Position"
-        options={["Fulltime", "Internship"]}
-        selectedOptions={filters.position}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            position: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Position')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Position') 
-              ? []
-              : ['Position']
-          );
-        }}
-      />
-    </div>
-  </div>
+                if (window.innerWidth <= 768) {
+                  setOpenFilterCategories([]);
+                }
+              }}
+              isOpen={openFilterCategories.includes('University')}
+              onToggle={() => {
+                setOpenFilterCategories(current =>
+                  current.includes('University')
+                    ? []
+                    : ['University']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Major"
+              options={uniqueMajors}
+              selectedOptions={filters.major}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
+              }
+              isOpen={openFilterCategories.includes('Major')}
+              onToggle={() => {
+                setOpenFilterCategories(current =>
+                  current.includes('Major')
+                    ? []
+                    : ['Major']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Graduation Year"
+              options={uniqueGraduationYears}
+              selectedOptions={filters.graduationYear}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  graduationYear: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('Graduation Year')}
+              onToggle={() => {
+                setOpenFilterCategories(current =>
+                  current.includes('Graduation Year')
+                    ? []
+                    : ['Graduation Year']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Skills"
+              options={uniqueSkills}
+              selectedOptions={filters.skills}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  skills: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('Skills')}
+              onToggle={() => {
+                setOpenFilterCategories(current =>
+                  current.includes('Skills')
+                    ? []
+                    : ['Skills']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Culture"
+              options={uniqueCulture}
+              selectedOptions={filters.culture}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  culture: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('Culture')}
+              onToggle={() => {
+                setOpenFilterCategories((current) =>
+                  current.includes('Culture')
+                    ? current.filter((cat) => cat !== 'Culture')
+                    : [...current, 'Culture']
+                );
+              }}
+            />
+            <FilterOptions
+              title="Position"
+              options={["Fulltime", "Internship"]}
+              selectedOptions={filters.position}
+              onSelect={(selected) =>
+                setFilters((prevFilters) => ({
+                  ...prevFilters,
+                  position: selected,
+                }))
+              }
+              isOpen={openFilterCategories.includes('Position')}
+              onToggle={() => {
+                setOpenFilterCategories(current =>
+                  current.includes('Position')
+                    ? []
+                    : ['Position']
+                );
+              }}
+            />
+          </div>
+        </div>
 
         {/* Add this right after your filter-container div to show selected filters */}
         {/* {Object.entries(filters).some(([_, values]) => values.length > 0) && (
@@ -1193,209 +1193,127 @@ const CandidateViewer = ({
           </div>
         )} */}
 
-  <div className="candidates-grid">
-    {filteredCandidates.map((candidate, index) => (
-      <div
-        key={candidate.id}
-        className="candidate-card clickable"
-        onClick={() => handleCandidateSelect(index)}
-      >
-        <div className="video-thumbnail-wrapper">
-          <LazyLoadComponent
-            placeholder={
-              <img src={cover} alt="Cover" className="cover-image" />
-            }
-          >
-            <img
-              src={candidate.thumbnail ? candidate.thumbnail : cover}
-              alt={`${candidate.firstName} ${candidate.lastName}`}
-              className="video-thumbnail"
-            />
-          </LazyLoadComponent>
-        </div>
-        <div className="candidate-details">
-          <h4 className="candidate-name">
-            {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
-          </h4>
-          <p
-            className="candidate-university clickable-filter"
-            onClick={() => handleUniversityClick(candidate.university)}
-          >
-            {candidate.university}
-          </p>
-          <p
-            className="candidate-major clickable-filter"
-            onClick={() => handleMajorClick(candidate.major)}
-          >
-            {candidate.major}
-          </p>
-          <p
-            className="candidate-grad-year clickable-filter"
-            onClick={() => handleGradYearClick(candidate.graduationYear)}
-          >
-            Grad Year: {candidate.graduationYear}
-          </p>
-          {candidate.position && (
-            <p className="candidate-position">
-              Position: {candidate.position}
-            </p>
-          )}
-          {/* Existing skills container */}
-          <div className="skills-container">
-            {candidate.skills?.map((skill, idx) => (
-              <span key={idx} className="skill-tag">
-                {skill}
-              </span>
-            ))}
-          </div>
-          {/* New culture container */}
-          {candidate.culture?.cultureTags?.length > 0 && (
-            <div className="culture-container">
-              {candidate.culture.cultureTags.map((tag, idx) => (
-                <span key={idx} className="culture-tag">
-                  {tag}
-                </span>
-              ))}
+        <div className="candidates-grid">
+          {filteredCandidates.map((candidate, index) => (
+            <div
+              key={candidate.id}
+              className="candidate-card clickable"
+              onClick={() => handleCandidateSelect(index)}
+            >
+              <div className="video-thumbnail-wrapper">
+                <LazyLoadComponent
+                  placeholder={
+                    <img src={cover} alt="Cover" className="cover-image" />
+                  }
+                >
+                  <img
+                    src={candidate.thumbnail ? candidate.thumbnail : cover}
+                    alt={`${candidate.firstName} ${candidate.lastName}`}
+                    className="video-thumbnail"
+                  />
+                </LazyLoadComponent>
+              </div>
+              <div className="candidate-details">
+                <h4 className="candidate-name">
+                  {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
+                </h4>
+                <p
+                  className="candidate-university clickable-filter"
+                  onClick={() => handleUniversityClick(candidate.university)}
+                >
+                  {candidate.university}
+                </p>
+                <p
+                  className="candidate-major clickable-filter"
+                  onClick={() => handleMajorClick(candidate.major)}
+                >
+                  {candidate.major}
+                </p>
+                <p
+                  className="candidate-grad-year clickable-filter"
+                  onClick={() => handleGradYearClick(candidate.graduationYear)}
+                >
+                  Grad Year: {candidate.graduationYear}
+                </p>
+                {candidate.position && (
+                  <p className="candidate-position">
+                    Position: {candidate.position}
+                  </p>
+                )}
+                {/* Existing skills container */}
+                <div className="skills-container">
+                  {candidate.skills?.map((skill, idx) => (
+                    <span key={idx} className="skill-tag">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+                {/* New culture container */}
+                {candidate.culture?.cultureTags?.length > 0 && (
+                  <div className="culture-container">
+                    {candidate.culture.cultureTags.map((tag, idx) => (
+                      <span key={idx} className="culture-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
-    ))}
-  </div>
-</div>
-);
-}
+    );
+  }
 
-if (filteredCandidates.length === 0) {
-  return <div>Loading...</div>;
-}
+  if (filteredCandidates.length === 0) {
+    return <div>Loading...</div>;
+  }
 
-const candidate = filteredCandidates[currentIndex] || {};
-const videoUrls = [
-  candidate.video1,
-  candidate.video2,
-  candidate.video3,
+  const candidate = filteredCandidates[currentIndex] || {};
+  const videoUrls = [
+    candidate.video1,
+    candidate.video2,
+    candidate.video3,
   ].filter((url) => url); // This will exclude falsy values, including empty strings
 
-const otherVideos = filteredCandidates.filter(
-  (_, idx) => idx !== currentIndex
-);
-
-const uniqueVideoUrls = new Set();
-filteredCandidates.forEach((candidate) => {
-  if (candidate.video1) uniqueVideoUrls.add(candidate.video1);
-  if (candidate.video2) uniqueVideoUrls.add(candidate.video2);
-  if (candidate.video3) uniqueVideoUrls.add(candidate.video3);
-});
-
-const handleFilterChange = (filterType, selectedOptions) => {
-  setFilters((prevFilters) => ({
-    ...prevFilters,
-    [filterType]: selectedOptions,
-  }));
-};
-
-filteredCandidates.forEach((candidate) => {
-  [candidate.video1, candidate.video2, candidate.video3].forEach(
-    (videoUrl) => {
-      if (videoUrl) uniqueVideoUrls.add(videoUrl);
-    }
+  const otherVideos = filteredCandidates.filter(
+    (_, idx) => idx !== currentIndex
   );
-});
 
-function DraftedLogo() {
-  return (
-    <svg
-      width="115"
-      height="23"
-      viewBox="0 0 115 23"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M0.784 14.16C0.784 12.5547 1.08267 11.1453 1.68 9.932C2.296 8.71867 3.12667 7.78533 4.172 7.132C5.21733 6.47867 6.384 6.152 7.672 6.152C8.69867 6.152 9.632 6.36667 10.472 6.796C11.3307 7.22533 12.0027 7.804 12.488 8.532V1.28H17.276V22H12.488V19.76C12.04 20.5067 11.396 21.104 10.556 21.552C9.73467 22 8.77333 22.224 7.672 22.224C6.384 22.224 5.21733 21.8973 4.172 21.244C3.12667 20.572 2.296 19.6293 1.68 18.416C1.08267 17.184 0.784 15.7653 0.784 14.16ZM12.488 14.188C12.488 12.9933 12.152 12.0507 11.48 11.36C10.8267 10.6693 10.024 10.324 9.072 10.324C8.12 10.324 7.308 10.6693 6.636 11.36C5.98267 12.032 5.656 12.9653 5.656 14.16C5.656 15.3547 5.98267 16.3067 6.636 17.016C7.308 17.7067 8.12 18.052 9.072 18.052C10.024 18.052 10.8267 17.7067 11.48 17.016C12.152 16.3253 12.488 15.3827 12.488 14.188ZM25.5279 8.98C26.0879 8.12133 26.7879 7.44933 27.6279 6.964C28.4679 6.46 29.4012 6.208 30.4279 6.208V11.276H29.1119C27.9172 11.276 27.0212 11.5373 26.4239 12.06C25.8266 12.564 25.5279 13.46 25.5279 14.748V22H20.7399V6.376H25.5279V8.98ZM31.7645 14.16C31.7645 12.5547 32.0631 11.1453 32.6605 9.932C33.2765 8.71867 34.1071 7.78533 35.1525 7.132C36.1978 6.47867 37.3645 6.152 38.6525 6.152C39.7538 6.152 40.7151 6.376 41.5365 6.824C42.3765 7.272 43.0205 7.86 43.4685 8.588V6.376H48.2565V22H43.4685V19.788C43.0018 20.516 42.3485 21.104 41.5085 21.552C40.6871 22 39.7258 22.224 38.6245 22.224C37.3551 22.224 36.1978 21.8973 35.1525 21.244C34.1071 20.572 33.2765 19.6293 32.6605 18.416C32.0631 17.184 31.7645 15.7653 31.7645 14.16ZM43.4685 14.188C43.4685 12.9933 43.1325 12.0507 42.4605 11.36C41.8071 10.6693 41.0045 10.324 40.0525 10.324C39.1005 10.324 38.2885 10.6693 37.6165 11.36C36.9631 12.032 36.6365 12.9653 36.6365 14.16C36.6365 15.3547 36.9631 16.3067 37.6165 17.016C38.2885 17.7067 39.1005 18.052 40.0525 18.052C41.0045 18.052 41.8071 17.7067 42.4605 17.016C43.1325 16.3253 43.4685 15.3827 43.4685 14.188ZM59.5604 10.352H56.9844V22H52.1964V10.352H50.4604V6.376H52.1964V5.928C52.1964 4.00533 52.747 2.54933 53.8484 1.56C54.9497 0.551999 56.5644 0.0479989 58.6924 0.0479989C59.047 0.0479989 59.3084 0.0573321 59.4764 0.0759985V4.136C58.5617 4.08 57.9177 4.21067 57.5444 4.528C57.171 4.84533 56.9844 5.41467 56.9844 6.236V6.376H59.5604V10.352ZM70.5182 17.94V22H68.0822C66.3462 22 64.9929 21.58 64.0222 20.74C63.0516 19.8813 62.5662 18.4907 62.5662 16.568V10.352H60.6622V6.376H62.5662V2.568H67.3542V6.376H70.4902V10.352H67.3542V16.624C67.3542 17.0907 67.4662 17.4267 67.6902 17.632C67.9142 17.8373 68.2876 17.94 68.8102 17.94H70.5182ZM87.9132 13.936C87.9132 14.384 87.8852 14.8507 87.8292 15.336H76.9932C77.0679 16.3067 77.3759 17.0533 77.9172 17.576C78.4772 18.08 79.1586 18.332 79.9612 18.332C81.1559 18.332 81.9866 17.828 82.4532 16.82H87.5492C87.2879 17.8467 86.8119 18.7707 86.1212 19.592C85.4492 20.4133 84.5999 21.0573 83.5732 21.524C82.5466 21.9907 81.3986 22.224 80.1292 22.224C78.5986 22.224 77.2359 21.8973 76.0412 21.244C74.8466 20.5907 73.9132 19.6573 73.2412 18.444C72.5692 17.2307 72.2332 15.812 72.2332 14.188C72.2332 12.564 72.5599 11.1453 73.2132 9.932C73.8852 8.71867 74.8186 7.78533 76.0132 7.132C77.2079 6.47867 78.5799 6.152 80.1292 6.152C81.6412 6.152 82.9852 6.46933 84.1612 7.104C85.3372 7.73867 86.2519 8.644 86.9052 9.82C87.5772 10.996 87.9132 12.368 87.9132 13.936ZM83.0132 12.676C83.0132 11.8547 82.7332 11.2013 82.1732 10.716C81.6132 10.2307 80.9132 9.988 80.0732 9.988C79.2706 9.988 78.5892 10.2213 78.0292 10.688C77.4879 11.1547 77.1519 11.8173 77.0212 12.676H83.0132ZM89.4871 14.16C89.4871 12.5547 89.7858 11.1453 90.3831 9.932C90.9991 8.71867 91.8298 7.78533 92.8751 7.132C93.9205 6.47867 95.0871 6.152 96.3751 6.152C97.4018 6.152 98.3351 6.36667 99.1751 6.796C100.034 7.22533 100.706 7.804 101.191 8.532V1.28H105.979V22H101.191V19.76C100.743 20.5067 100.099 21.104 99.2591 21.552C98.4378 22 97.4765 22.224 96.3751 22.224C95.0871 22.224 93.9205 21.8973 92.8751 21.244C91.8298 20.572 90.9991 19.6293 90.3831 18.416C89.7858 17.184 89.4871 15.7653 89.4871 14.16ZM101.191 14.188C101.191 12.9933 100.855 12.0507 100.183 11.36C99.5298 10.6693 98.7271 10.324 97.7751 10.324C96.8231 10.324 96.0111 10.6693 95.3391 11.36C94.6858 12.032 94.3591 12.9653 94.3591 14.16C94.3591 15.3547 94.6858 16.3067 95.3391 17.016C96.0111 17.7067 96.8231 18.052 97.7751 18.052C98.7271 18.052 99.5298 17.7067 100.183 17.016C100.855 16.3253 101.191 15.3827 101.191 14.188Z"
-      fill="black"
-    />
-    <path
-      d="M111.683 22.224C110.843 22.224 110.152 21.9813 109.611 21.496C109.088 20.992 108.827 20.376 108.827 19.648C108.827 18.9013 109.088 18.276 109.611 17.772C110.152 17.268 110.843 17.016 111.683 17.016C112.504 17.016 113.176 17.268 113.699 17.772C114.24 18.276 114.511 18.9013 114.511 19.648C114.511 20.376 114.24 20.992 113.699 21.496C113.176 21.9813 112.504 22.224 111.683 22.224Z"
-      fill="#53AD7A"
-    />
-  </svg>
-);
-}
-
-
-  // Update your meet button handler
-const handleMeetClick = () => {
-  setShowMeetOptions(true);
-};
-
-  // Add these handlers
-const handleEmailOption = () => {
-  setShowMeetOptions(false);
-    setEmailPopup(true); // Your existing email popup state
-};
-
-const saveCandidate = async (candidate) => {
-  try {
-    const recruiterRef = doc(db, "recruiter-accounts", user.email);
-    await updateDoc(recruiterRef, {
-      savedCandidates: arrayUnion(candidate.id)
-    });
-    setShowSavedPopup(true);
-    setTimeout(() => setShowSavedPopup(false), 2000);
-  } catch (error) {
-    console.error("Error saving candidate:", error);
-  }
-};
-
-const handleSaveOption = async () => {
-  await saveCandidate(filteredCandidates[currentIndex]);
-  setShowMeetOptions(false);
-  setShowSaveConfirmation(true);
-};
-
-  // Add navigation handler
-const handleViewSaved = () => {
-  navigate('/saved');
-};
-
-  // Add this handler function near your other handlers
-const handleSkillClickFromCard = (e, skill) => {
-    e.stopPropagation(); // Prevent card selection when clicking skill
-  setFilters({
-    university: [],
-    major: [],
-    graduationYear: [],
-    skills: [skill],
-    position: []
+  const uniqueVideoUrls = new Set();
+  filteredCandidates.forEach((candidate) => {
+    if (candidate.video1) uniqueVideoUrls.add(candidate.video1);
+    if (candidate.video2) uniqueVideoUrls.add(candidate.video2);
+    if (candidate.video3) uniqueVideoUrls.add(candidate.video3);
   });
-  setShowGridView(true);
-  setRefreshKey(oldKey => oldKey + 1);
-};
 
-return (
-  <div className="profile-dashboard">
-    <div className="header">
-      <img
-          src={backArrow} // Use the imported back arrow icon
-        alt="Back"
-        className="back-arrow-icon"
-        onClick={handleHomeButtonClick}
-      />
-      <h1 onClick={handleLogoClick} className="logo-header clickable">
-          {/* drafted<span style={{ color: "#53ad7a" }}> beta</span>
-          <span>.</span> */}
-          <br></br>
-        <svg
-          width="115"
-          height="23"
-          viewBox="0 0 115 23"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M0.784 14.16C0.784 12.5547 1.08267 11.1453 1.68 9.932C2.296 8.71867 3.12667 7.78533 4.172 7.132C5.21733 6.47867 6.384 6.152 7.672 6.152C8.69867 6.152 9.632 6.36667 10.472 6.796C11.3307 7.22533 12.0027 7.804 12.488 8.532V1.28H17.276V22H12.488V19.76C12.04 20.5067 11.396 21.104 10.556 21.552C9.73467 22 8.77333 22.224 7.672 22.224C6.384 22.224 5.21733 21.8973 4.172 21.244C3.12667 20.572 2.296 19.6293 1.68 18.416C1.08267 17.184 0.784 15.7653 0.784 14.16ZM12.488 14.188C12.488 12.9933 12.152 12.0507 11.48 11.36C10.8267 10.6693 10.024 10.324 9.072 10.324C8.12 10.324 7.308 10.6693 6.636 11.36C5.98267 12.032 5.656 12.9653 5.656 14.16C5.656 15.3547 5.98267 16.3067 6.636 17.016C7.308 17.7067 8.12 18.052 9.072 18.052C10.024 18.052 10.8267 17.7067 11.48 17.016C12.152 16.3253 12.488 15.3827 12.488 14.188ZM25.5279 8.98C26.0879 8.12133 26.7879 7.44933 27.6279 6.964C28.4679 6.46 29.4012 6.208 30.4279 6.208V11.276H29.1119C27.9172 11.276 27.0212 11.5373 26.4239 12.06C25.8266 12.564 25.5279 13.46 25.5279 14.748V22H20.7399V6.376H25.5279V8.98ZM31.7645 14.16C31.7645 12.5547 32.0631 11.1453 32.6605 9.932C33.2765 8.71867 34.1071 7.78533 35.1525 7.132C36.1978 6.47867 37.3645 6.152 38.6525 6.152C39.7538 6.152 40.7151 6.376 41.5365 6.824C42.3765 7.272 43.0205 7.86 43.4685 8.588V6.376H48.2565V22H43.4685V19.788C43.0018 20.516 42.3485 21.104 41.5085 21.552C40.6871 22 39.7258 22.224 38.6245 22.224C37.3551 22.224 36.1978 21.8973 35.1525 21.244C34.1071 20.572 33.2765 19.6293 32.6605 18.416C32.0631 17.184 31.7645 15.7653 31.7645 14.16ZM43.4685 14.188C43.4685 12.9933 43.1325 12.0507 42.4605 11.36C41.8071 10.6693 41.0045 10.324 40.0525 10.324C39.1005 10.324 38.2885 10.6693 37.6165 11.36C36.9631 12.032 36.6365 12.9653 36.6365 14.16C36.6365 15.3547 36.9631 16.3067 37.6165 17.016C38.2885 17.7067 39.1005 18.052 40.0525 18.052C41.0045 18.052 41.8071 17.7067 42.4605 17.016C43.1325 16.3253 43.4685 15.3827 43.4685 14.188ZM59.5604 10.352H56.9844V22H52.1964V10.352H50.4604V6.376H52.1964V5.928C52.1964 4.00533 52.747 2.54933 53.8484 1.56C54.9497 0.551999 56.5644 0.0479989 58.6924 0.0479989C59.047 0.0479989 59.3084 0.0573321 59.4764 0.0759985V4.136C58.5617 4.08 57.9177 4.21067 57.5444 4.528C57.171 4.84533 56.9844 5.41467 56.9844 6.236V6.376H59.5604V10.352ZM70.5182 17.94V22H68.0822C66.3462 22 64.9929 21.58 64.0222 20.74C63.0516 19.8813 62.5662 18.4907 62.5662 16.568V10.352H60.6622V6.376H62.5662V2.568H67.3542V6.376H70.4902V10.352H67.3542V16.624C67.3542 17.0907 67.4662 17.4267 67.6902 17.632C67.9142 17.8373 68.2876 17.94 68.8102 17.94H70.5182ZM87.9132 13.936C87.9132 14.384 87.8852 14.8507 87.8292 15.336H76.9932C77.0679 16.3067 77.3759 17.0533 77.9172 17.576C78.4772 18.08 79.1586 18.332 79.9612 18.332C81.1559 18.332 81.9866 17.828 82.4532 16.82H87.5492C87.2879 17.8467 86.8119 18.7707 86.1212 19.592C85.4492 20.4133 84.5999 21.0573 83.5732 21.524C82.5466 21.9907 81.3986 22.224 80.1292 22.224C78.5986 22.224 77.2359 21.8973 76.0412 21.244C74.8466 20.5907 73.9132 19.6573 73.2412 18.444C72.5692 17.2307 72.2332 15.812 72.2332 14.188C72.2332 12.564 72.5599 11.1453 73.2132 9.932C73.8852 8.71867 74.8186 7.78533 76.0132 7.132C77.2079 6.47867 78.5799 6.152 80.1292 6.152C81.6412 6.152 82.9852 6.46933 84.1612 7.104C85.3372 7.73867 86.2519 8.644 86.9052 9.82C87.5772 10.996 87.9132 12.368 87.9132 13.936ZM83.0132 12.676C83.0132 11.8547 82.7332 11.2013 82.1732 10.716C81.6132 10.2307 80.9132 9.988 80.0732 9.988C79.2706 9.988 78.5892 10.2213 78.0292 10.688C77.4879 11.1547 77.1519 11.8173 77.0212 12.676H83.0132ZM89.4871 14.16C89.4871 12.5547 89.7858 11.1453 90.3831 9.932C90.9991 8.71867 91.8298 7.78533 92.8751 7.132C93.9205 6.47867 95.0871 6.152 96.3751 6.152C97.4018 6.152 98.3351 6.36667 99.1751 6.796C100.034 7.22533 100.706 7.804 101.191 8.532V1.28H105.979V22H101.191V19.76C100.743 20.5067 100.099 21.104 99.2591 21.552C98.4378 22 97.4765 22.224 96.3751 22.224C95.0871 22.224 93.9205 21.8973 92.8751 21.244C91.8298 20.572 90.9991 19.6293 90.3831 18.416C89.7858 17.184 89.4871 15.7653 89.4871 14.16ZM101.191 14.188C101.191 12.9933 100.855 12.0507 100.183 11.36C99.5298 10.6693 98.7271 10.324 97.7751 10.324C96.8231 10.324 96.0111 10.6693 95.3391 11.36C94.6858 12.032 94.3591 12.9653 94.3591 14.16C94.3591 15.3547 94.6858 16.3067 95.3391 17.016C96.0111 17.7067 96.8231 18.052 97.7751 18.052C98.7271 18.052 99.5298 17.7067 100.183 17.016C100.855 16.3253 101.191 15.3827 101.191 14.188Z"
+  const handleFilterChange = (filterType, selectedOptions) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: selectedOptions,
+    }));
+  };
+
+  filteredCandidates.forEach((candidate) => {
+    [candidate.video1, candidate.video2, candidate.video3].forEach(
+      (videoUrl) => {
+        if (videoUrl) uniqueVideoUrls.add(videoUrl);
+      }
+    );
+  });
+
+  function DraftedLogo() {
+    return (
+      <svg
+        width="115"
+        height="23"
+        viewBox="0 0 115 23"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0.784 14.16C0.784 12.5547 1.08267 11.1453 1.68 9.932C2.296 8.71867 3.12667 7.78533 4.172 7.132C5.21733 6.47867 6.384 6.152 7.672 6.152C8.69867 6.152 9.632 6.36667 10.472 6.796C11.3307 7.22533 12.0027 7.804 12.488 8.532V1.28H17.276V22H12.488V19.76C12.04 20.5067 11.396 21.104 10.556 21.552C9.73467 22 8.77333 22.224 7.672 22.224C6.384 22.224 5.21733 21.8973 4.172 21.244C3.12667 20.572 2.296 19.6293 1.68 18.416C1.08267 17.184 0.784 15.7653 0.784 14.16ZM12.488 14.188C12.488 12.9933 12.152 12.0507 11.48 11.36C10.8267 10.6693 10.024 10.324 9.072 10.324C8.12 10.324 7.308 10.6693 6.636 11.36C5.98267 12.032 5.656 12.9653 5.656 14.16C5.656 15.3547 5.98267 16.3067 6.636 17.016C7.308 17.7067 8.12 18.052 9.072 18.052C10.024 18.052 10.8267 17.7067 11.48 17.016C12.152 16.3253 12.488 15.3827 12.488 14.188ZM25.5279 8.98C26.0879 8.12133 26.7879 7.44933 27.6279 6.964C28.4679 6.46 29.4012 6.208 30.4279 6.208V11.276H29.1119C27.9172 11.276 27.0212 11.5373 26.4239 12.06C25.8266 12.564 25.5279 13.46 25.5279 14.748V22H20.7399V6.376H25.5279V8.98ZM31.7645 14.16C31.7645 12.5547 32.0631 11.1453 32.6605 9.932C33.2765 8.71867 34.1071 7.78533 35.1525 7.132C36.1978 6.47867 37.3645 6.152 38.6525 6.152C39.7538 6.152 40.7151 6.376 41.5365 6.824C42.3765 7.272 43.0205 7.86 43.4685 8.588V6.376H48.2565V22H43.4685V19.788C43.0018 20.516 42.3485 21.104 41.5085 21.552C40.6871 22 39.7258 22.224 38.6245 22.224C37.3551 22.224 36.1978 21.8973 35.1525 21.244C34.1071 20.572 33.2765 19.6293 32.6605 18.416C32.0631 17.184 31.7645 15.7653 31.7645 14.16ZM43.4685 14.188C43.4685 12.9933 43.1325 12.0507 42.4605 11.36C41.8071 10.6693 41.0045 10.324 40.0525 10.324C39.1005 10.324 38.2885 10.6693 37.6165 11.36C36.9631 12.032 36.6365 12.9653 36.6365 14.16C36.6365 15.3547 36.9631 16.3067 37.6165 17.016C38.2885 17.7067 39.1005 18.052 40.0525 18.052C41.0045 18.052 41.8071 17.7067 42.4605 17.016C43.1325 16.3253 43.4685 15.3827 43.4685 14.188ZM59.5604 10.352H56.9844V22H52.1964V10.352H50.4604V6.376H52.1964V5.928C52.1964 4.00533 52.747 2.54933 53.8484 1.56C54.9497 0.551999 56.5644 0.0479989 58.6924 0.0479989C59.047 0.0479989 59.3084 0.0573321 59.4764 0.0759985V4.136C58.5617 4.08 57.9177 4.21067 57.5444 4.528C57.171 4.84533 56.9844 5.41467 56.9844 6.236V6.376H59.5604V10.352ZM70.5182 17.94V22H68.0822C66.3462 22 64.9929 21.58 64.0222 20.74C63.0516 19.8813 62.5662 18.4907 62.5662 16.568V10.352H60.6622V6.376H62.5662V2.568H67.3542V6.376H70.4902V10.352H67.3542V16.624C67.3542 17.0907 67.4662 17.4267 67.6902 17.632C67.9142 17.8373 68.2876 17.94 68.8102 17.94H70.5182ZM87.9132 13.936C87.9132 14.384 87.8852 14.8507 87.8292 15.336H76.9932C77.0679 16.3067 77.3759 17.0533 77.9172 17.576C78.4772 18.08 79.1586 18.332 79.9612 18.332C81.1559 18.332 81.9866 17.828 82.4532 16.82H87.5492C87.2879 17.8467 86.8119 18.7707 86.1212 19.592C85.4492 20.4133 84.5999 21.0573 83.5732 21.524C82.5466 21.9907 81.3986 22.224 80.1292 22.224C78.5986 22.224 77.2359 21.8973 76.0412 21.244C74.8466 20.5907 73.9132 19.6573 73.2412 18.444C72.5692 17.2307 72.2332 15.812 72.2332 14.188C72.2332 12.564 72.5599 11.1453 73.2132 9.932C73.8852 8.71867 74.8186 7.78533 76.0132 7.132C77.2079 6.47867 78.5799 6.152 80.1292 6.152C81.6412 6.152 82.9852 6.46933 84.1612 7.104C85.3372 7.73867 86.2519 8.644 86.9052 9.82C87.5772 10.996 87.9132 12.368 87.9132 13.936ZM83.0132 12.676C83.0132 11.8547 82.7332 11.2013 82.1732 10.716C81.6132 10.2307 80.9132 9.988 80.0732 9.988C79.2706 9.988 78.5892 10.2213 78.0292 10.688C77.4879 11.1547 77.1519 11.8173 77.0212 12.676H83.0132ZM89.4871 14.16C89.4871 12.5547 89.7858 11.1453 90.3831 9.932C90.9991 8.71867 91.8298 7.78533 92.8751 7.132C93.9205 6.47867 95.0871 6.152 96.3751 6.152C97.4018 6.152 98.3351 6.36667 99.1751 6.796C100.034 7.22533 100.706 7.804 101.191 8.532V1.28H105.979V22H101.191V19.76C100.743 20.5067 100.099 21.104 99.2591 21.552C98.4378 22 97.4765 22.224 96.3751 22.224C95.0871 22.224 93.9205 21.8973 92.8751 21.244C91.8298 20.572 90.9991 19.6293 90.3831 18.416C89.7858 17.184 89.4871 15.7653 89.4871 14.16ZM101.191 14.188C101.191 12.9933 100.855 12.0507 100.183 11.36C99.5298 10.6693 98.7271 10.324 97.7751 10.324C96.8231 10.324 96.0111 10.6693 95.3391 11.36C94.6858 12.032 94.3591 12.9653 94.3591 14.16C94.3591 15.3547 94.6858 16.3067 95.3391 17.016C96.0111 17.7067 96.8231 18.052 97.7751 18.052C98.7271 18.052 99.5298 17.7067 100.183 17.016C100.855 16.3253 101.191 15.3827 101.191 14.188Z"
           fill="black"
         />
         <path
@@ -1403,10 +1321,92 @@ return (
           fill="#53AD7A"
         />
       </svg>
+    );
+  }
+
+
+  // Update your meet button handler
+  const handleMeetClick = () => {
+    setShowMeetOptions(true);
+  };
+
+  // Add these handlers
+  const handleEmailOption = () => {
+    setShowMeetOptions(false);
+    setEmailPopup(true); // Your existing email popup state
+  };
+
+  const saveCandidate = async (candidate) => {
+    try {
+      const recruiterRef = doc(db, "recruiter-accounts", user.email);
+      await updateDoc(recruiterRef, {
+        savedCandidates: arrayUnion(candidate.id)
+      });
+      setShowSavedPopup(true);
+      setTimeout(() => setShowSavedPopup(false), 2000);
+    } catch (error) {
+      console.error("Error saving candidate:", error);
+    }
+  };
+
+  const handleSaveOption = async () => {
+    await saveCandidate(filteredCandidates[currentIndex]);
+    setShowMeetOptions(false);
+    setShowSaveConfirmation(true);
+  };
+
+  // Add navigation handler
+  const handleViewSaved = () => {
+    navigate('/saved');
+  };
+
+  // Add this handler function near your other handlers
+  const handleSkillClickFromCard = (e, skill) => {
+    e.stopPropagation(); // Prevent card selection when clicking skill
+    setFilters({
+      university: [],
+      major: [],
+      graduationYear: [],
+      skills: [skill],
+      position: []
+    });
+    setShowGridView(true);
+    setRefreshKey(oldKey => oldKey + 1);
+  };
+
+  return (
+    <div className="profile-dashboard">
+      <div className="header">
+        <img
+          src={backArrow} // Use the imported back arrow icon
+          alt="Back"
+          className="back-arrow-icon"
+          onClick={handleHomeButtonClick}
+        />
+        <h1 onClick={handleLogoClick} className="logo-header clickable">
+          {/* drafted<span style={{ color: "#53ad7a" }}> beta</span>
+          <span>.</span> */}
           <br></br>
-    </h1>
-  </div>
-  <div className="search-container">
+          <svg
+            width="115"
+            height="23"
+            viewBox="0 0 115 23"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0.784 14.16C0.784 12.5547 1.08267 11.1453 1.68 9.932C2.296 8.71867 3.12667 7.78533 4.172 7.132C5.21733 6.47867 6.384 6.152 7.672 6.152C8.69867 6.152 9.632 6.36667 10.472 6.796C11.3307 7.22533 12.0027 7.804 12.488 8.532V1.28H17.276V22H12.488V19.76C12.04 20.5067 11.396 21.104 10.556 21.552C9.73467 22 8.77333 22.224 7.672 22.224C6.384 22.224 5.21733 21.8973 4.172 21.244C3.12667 20.572 2.296 19.6293 1.68 18.416C1.08267 17.184 0.784 15.7653 0.784 14.16ZM12.488 14.188C12.488 12.9933 12.152 12.0507 11.48 11.36C10.8267 10.6693 10.024 10.324 9.072 10.324C8.12 10.324 7.308 10.6693 6.636 11.36C5.98267 12.032 5.656 12.9653 5.656 14.16C5.656 15.3547 5.98267 16.3067 6.636 17.016C7.308 17.7067 8.12 18.052 9.072 18.052C10.024 18.052 10.8267 17.7067 11.48 17.016C12.152 16.3253 12.488 15.3827 12.488 14.188ZM25.5279 8.98C26.0879 8.12133 26.7879 7.44933 27.6279 6.964C28.4679 6.46 29.4012 6.208 30.4279 6.208V11.276H29.1119C27.9172 11.276 27.0212 11.5373 26.4239 12.06C25.8266 12.564 25.5279 13.46 25.5279 14.748V22H20.7399V6.376H25.5279V8.98ZM31.7645 14.16C31.7645 12.5547 32.0631 11.1453 32.6605 9.932C33.2765 8.71867 34.1071 7.78533 35.1525 7.132C36.1978 6.47867 37.3645 6.152 38.6525 6.152C39.7538 6.152 40.7151 6.376 41.5365 6.824C42.3765 7.272 43.0205 7.86 43.4685 8.588V6.376H48.2565V22H43.4685V19.788C43.0018 20.516 42.3485 21.104 41.5085 21.552C40.6871 22 39.7258 22.224 38.6245 22.224C37.3551 22.224 36.1978 21.8973 35.1525 21.244C34.1071 20.572 33.2765 19.6293 32.6605 18.416C32.0631 17.184 31.7645 15.7653 31.7645 14.16ZM43.4685 14.188C43.4685 12.9933 43.1325 12.0507 42.4605 11.36C41.8071 10.6693 41.0045 10.324 40.0525 10.324C39.1005 10.324 38.2885 10.6693 37.6165 11.36C36.9631 12.032 36.6365 12.9653 36.6365 14.16C36.6365 15.3547 36.9631 16.3067 37.6165 17.016C38.2885 17.7067 39.1005 18.052 40.0525 18.052C41.0045 18.052 41.8071 17.7067 42.4605 17.016C43.1325 16.3253 43.4685 15.3827 43.4685 14.188ZM59.5604 10.352H56.9844V22H52.1964V10.352H50.4604V6.376H52.1964V5.928C52.1964 4.00533 52.747 2.54933 53.8484 1.56C54.9497 0.551999 56.5644 0.0479989 58.6924 0.0479989C59.047 0.0479989 59.3084 0.0573321 59.4764 0.0759985V4.136C58.5617 4.08 57.9177 4.21067 57.5444 4.528C57.171 4.84533 56.9844 5.41467 56.9844 6.236V6.376H59.5604V10.352ZM70.5182 17.94V22H68.0822C66.3462 22 64.9929 21.58 64.0222 20.74C63.0516 19.8813 62.5662 18.4907 62.5662 16.568V10.352H60.6622V6.376H62.5662V2.568H67.3542V6.376H70.4902V10.352H67.3542V16.624C67.3542 17.0907 67.4662 17.4267 67.6902 17.632C67.9142 17.8373 68.2876 17.94 68.8102 17.94H70.5182ZM87.9132 13.936C87.9132 14.384 87.8852 14.8507 87.8292 15.336H76.9932C77.0679 16.3067 77.3759 17.0533 77.9172 17.576C78.4772 18.08 79.1586 18.332 79.9612 18.332C81.1559 18.332 81.9866 17.828 82.4532 16.82H87.5492C87.2879 17.8467 86.8119 18.7707 86.1212 19.592C85.4492 20.4133 84.5999 21.0573 83.5732 21.524C82.5466 21.9907 81.3986 22.224 80.1292 22.224C78.5986 22.224 77.2359 21.8973 76.0412 21.244C74.8466 20.5907 73.9132 19.6573 73.2412 18.444C72.5692 17.2307 72.2332 15.812 72.2332 14.188C72.2332 12.564 72.5599 11.1453 73.2132 9.932C73.8852 8.71867 74.8186 7.78533 76.0132 7.132C77.2079 6.47867 78.5799 6.152 80.1292 6.152C81.6412 6.152 82.9852 6.46933 84.1612 7.104C85.3372 7.73867 86.2519 8.644 86.9052 9.82C87.5772 10.996 87.9132 12.368 87.9132 13.936ZM83.0132 12.676C83.0132 11.8547 82.7332 11.2013 82.1732 10.716C81.6132 10.2307 80.9132 9.988 80.0732 9.988C79.2706 9.988 78.5892 10.2213 78.0292 10.688C77.4879 11.1547 77.1519 11.8173 77.0212 12.676H83.0132ZM89.4871 14.16C89.4871 12.5547 89.7858 11.1453 90.3831 9.932C90.9991 8.71867 91.8298 7.78533 92.8751 7.132C93.9205 6.47867 95.0871 6.152 96.3751 6.152C97.4018 6.152 98.3351 6.36667 99.1751 6.796C100.034 7.22533 100.706 7.804 101.191 8.532V1.28H105.979V22H101.191V19.76C100.743 20.5067 100.099 21.104 99.2591 21.552C98.4378 22 97.4765 22.224 96.3751 22.224C95.0871 22.224 93.9205 21.8973 92.8751 21.244C91.8298 20.572 90.9991 19.6293 90.3831 18.416C89.7858 17.184 89.4871 15.7653 89.4871 14.16ZM101.191 14.188C101.191 12.9933 100.855 12.0507 100.183 11.36C99.5298 10.6693 98.7271 10.324 97.7751 10.324C96.8231 10.324 96.0111 10.6693 95.3391 11.36C94.6858 12.032 94.3591 12.9653 94.3591 14.16C94.3591 15.3547 94.6858 16.3067 95.3391 17.016C96.0111 17.7067 96.8231 18.052 97.7751 18.052C98.7271 18.052 99.5298 17.7067 100.183 17.016C100.855 16.3253 101.191 15.3827 101.191 14.188Z"
+              fill="black"
+            />
+            <path
+              d="M111.683 22.224C110.843 22.224 110.152 21.9813 109.611 21.496C109.088 20.992 108.827 20.376 108.827 19.648C108.827 18.9013 109.088 18.276 109.611 17.772C110.152 17.268 110.843 17.016 111.683 17.016C112.504 17.016 113.176 17.268 113.699 17.772C114.24 18.276 114.511 18.9013 114.511 19.648C114.511 20.376 114.24 20.992 113.699 21.496C113.176 21.9813 112.504 22.224 111.683 22.224Z"
+              fill="#53AD7A"
+            />
+          </svg>
+          <br></br>
+        </h1>
+      </div>
+      <div className="search-container">
         <img
           src={home} // Use the imported home icon
           alt="Home"
@@ -1420,186 +1420,186 @@ return (
             alignSelf: "center", // Center the icon vertically within the container
           }}
         />
-    <input
-      type="text"
-      placeholder="Search by university, major, grad year..."
-      value={searchQuery}
-      onChange={handleSearchChange}
-      className="search-bar"
-    />
-    <button
-      onClick={handleSavedClick}
-      className="code-button"
-    >
-      Saved
-    </button>
-    {suggestions.length > 0 && (
-      <div className="suggestions-mobile">
-        {suggestions.map((suggestion, index) => (
-          <div
-            key={index}
-            className="suggestion-item-mobile"
-            onClick={() => {
-              handleSuggestionSelect(suggestion);
+        <input
+          type="text"
+          placeholder="Search by university, major, grad year..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          className="search-bar"
+        />
+        <button
+          onClick={handleSavedClick}
+          className="code-button"
+        >
+          Saved
+        </button>
+        {suggestions.length > 0 && (
+          <div className="suggestions-mobile">
+            {suggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                className="suggestion-item-mobile"
+                onClick={() => {
+                  handleSuggestionSelect(suggestion);
                   document.activeElement.blur(); // Hide mobile keyboard
-            }}
-          >
-            {suggestion}
+                }}
+              >
+                {suggestion}
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
-    )}
-  </div>
-  {showNavPopup && (
-    <div className="nav-popup">
-      <h2>Welcome to Drafted!</h2>
-      <p>We make it easy and fun to find your next hire.</p>
-      <ul>
-        <li>
+      {showNavPopup && (
+        <div className="nav-popup">
+          <h2>Welcome to Drafted!</h2>
+          <p>We make it easy and fun to find your next hire.</p>
+          <ul>
+            <li>
               <strong style="color: #00BF63;">Enter:</strong> Draft candidate,
               creates email thread to schedule first interview.
-        </li>
-        <li>
+            </li>
+            <li>
               <strong style="color: #00BF63;">Shift:</strong> View candidate
-          resume.
-        </li>
-        <li>
+              resume.
+            </li>
+            <li>
               <strong style="color: #00BF63;">Right arrow:</strong> See next
-          candidate.
-        </li>
-        <li>
+              candidate.
+            </li>
+            <li>
               <strong style="color: #00BF63;">Left arrow:</strong> See previous
-          candidate.
-        </li>
-      </ul>
-      <button
-        className="navigation-button"
-        onClick={() => setShowNavPopup(false)}
-      >
-        Close
-      </button>
-    </div>
-  )}
+              candidate.
+            </li>
+          </ul>
+          <button
+            className="navigation-button"
+            onClick={() => setShowNavPopup(false)}
+          >
+            Close
+          </button>
+        </div>
+      )}
 
-  <div className="filter-container">
-    <div className="filter-row">
-      <FilterOptions
-        title="University"
-        options={uniqueUniversities}
-        selectedOptions={filters.university}
-        onSelect={(selected) => {
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            university: selected,
-          }));
-                // Close dropdown after selection on mobile
-          if (window.innerWidth <= 768) {
-            setOpenFilterCategories([]);
-          }
-        }}
-        isOpen={openFilterCategories.includes('University')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('University') 
-              ? [] 
-              : ['University']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Major"
-        options={uniqueMajors}
-        selectedOptions={filters.major}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
-        }
-        isOpen={openFilterCategories.includes('Major')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Major') 
-              ? []
-              : ['Major']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Graduation Year"
-        options={uniqueGraduationYears}
-        selectedOptions={filters.graduationYear}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            graduationYear: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Graduation Year')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Graduation Year') 
-              ? []
-              : ['Graduation Year']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Skills"
-        options={uniqueSkills}
-        selectedOptions={filters.skills}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            skills: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Skills')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Skills') 
-              ? []
-              : ['Skills']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Position"
-        options={["Fulltime", "Internship"]}
-        selectedOptions={filters.position}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            position: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Position')}
-        onToggle={() => {
-          setOpenFilterCategories(current => 
-            current.includes('Position') 
-              ? []
-              : ['Position']
-          );
-        }}
-      />
-      <FilterOptions
-        title="Culture"
-        options={uniqueCulture}
-        selectedOptions={filters.culture}
-        onSelect={(selected) =>
-          setFilters((prevFilters) => ({
-            ...prevFilters,
-            culture: selected,
-          }))
-        }
-        isOpen={openFilterCategories.includes('Culture')}
-        onToggle={() => {
-          setOpenFilterCategories((current) =>
-            current.includes('Culture')
-              ? current.filter((cat) => cat !== 'Culture')
-              : [...current, 'Culture']
-          );
-        }}
-      />
-    </div>
-  </div>
+      <div className="filter-container">
+        <div className="filter-row">
+          <FilterOptions
+            title="University"
+            options={uniqueUniversities}
+            selectedOptions={filters.university}
+            onSelect={(selected) => {
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                university: selected,
+              }));
+              // Close dropdown after selection on mobile
+              if (window.innerWidth <= 768) {
+                setOpenFilterCategories([]);
+              }
+            }}
+            isOpen={openFilterCategories.includes('University')}
+            onToggle={() => {
+              setOpenFilterCategories(current =>
+                current.includes('University')
+                  ? []
+                  : ['University']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Major"
+            options={uniqueMajors}
+            selectedOptions={filters.major}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({ ...prevFilters, major: selected }))
+            }
+            isOpen={openFilterCategories.includes('Major')}
+            onToggle={() => {
+              setOpenFilterCategories(current =>
+                current.includes('Major')
+                  ? []
+                  : ['Major']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Graduation Year"
+            options={uniqueGraduationYears}
+            selectedOptions={filters.graduationYear}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                graduationYear: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Graduation Year')}
+            onToggle={() => {
+              setOpenFilterCategories(current =>
+                current.includes('Graduation Year')
+                  ? []
+                  : ['Graduation Year']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Skills"
+            options={uniqueSkills}
+            selectedOptions={filters.skills}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                skills: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Skills')}
+            onToggle={() => {
+              setOpenFilterCategories(current =>
+                current.includes('Skills')
+                  ? []
+                  : ['Skills']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Position"
+            options={["Fulltime", "Internship"]}
+            selectedOptions={filters.position}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                position: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Position')}
+            onToggle={() => {
+              setOpenFilterCategories(current =>
+                current.includes('Position')
+                  ? []
+                  : ['Position']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Culture"
+            options={uniqueCulture}
+            selectedOptions={filters.culture}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                culture: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Culture')}
+            onToggle={() => {
+              setOpenFilterCategories((current) =>
+                current.includes('Culture')
+                  ? current.filter((cat) => cat !== 'Culture')
+                  : [...current, 'Culture']
+              );
+            }}
+          />
+        </div>
+      </div>
 
       {/* Add this right after your filter-container div to show selected filters
       {Object.entries(filters).some(([_, values]) => values.length > 0) && (
@@ -1637,7 +1637,7 @@ return (
           </div>
           <p
             style={{
-              fontFamily: "Poppins, sans-serif", 
+              fontFamily: "Poppins, sans-serif",
               fontWeight: 600,
               fontSize: "large",
               textAlign: "center",
@@ -1669,7 +1669,7 @@ return (
           <div className="candidate-name-display">
             <span className="candidate-name">
               {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
-                </span>
+            </span>
             <button
               className="save-button"
               onClick={() => handleSaveOption()}
@@ -1677,52 +1677,51 @@ return (
             >
               Save
             </button>
-    <button
+            <button
               className="draft-button"
               onClick={() => setShowMeetOptions(true)}
               aria-label="Draft candidate for interview"
-    >
+            >
               🤝 Meet {capitalizeName(candidate.firstName)}
-    </button>
+            </button>
           </div>
           <div className="video-resume-display">Video Resume</div>
           <div className="video-selection-buttons">
             {videoQuestions.map((question, index) => (
-      <button
+              <button
                 key={index}
                 onClick={() => handleVideoButtonClick(index)}
-                className={`video-btn ${
-                  currentVideoIndex === index ? "active" : ""
-                }`}
+                className={`video-btn ${currentVideoIndex === index ? "active" : ""
+                  }`}
               >
                 {question}
-      </button>
+              </button>
             ))}
-    </div>
+          </div>
           <div className="info-section">
             <div className="profile-field">
               <strong>University</strong>{" "}
-          <p
-            className="candidate-university clickable-filter"
+              <p
+                className="candidate-university clickable-filter"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleUniversityClickFromVideo(candidate.university);
                 }}
-          >
-            {candidate.university}
-          </p>
+              >
+                {candidate.university}
+              </p>
             </div>
             <div className="profile-field">
               <strong>Major</strong>{" "}
-          <p
-            className="candidate-major clickable-filter"
+              <p
+                className="candidate-major clickable-filter"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleMajorClickFromVideo(candidate.major);
                 }}
-          >
-            {candidate.major}
-          </p>
+              >
+                {candidate.major}
+              </p>
             </div>
             {candidate.skills && candidate.skills.length > 0 && (
               <div className="profile-field">
@@ -1730,45 +1729,45 @@ return (
                 <p className="candidate-skills">
                   {candidate.skills.join(", ")}
                 </p>
-            </div>
-          )}
-          {candidate.culture?.cultureTags?.length > 0 && (
-            <div className="profile-field">
-              <strong>Culture</strong>{" "}
-              <div className="culture-tags">
-                {candidate.culture.cultureTags.map((tag, index) => (
-                  <div key={index} className="culture-tag-container">
-                    <span 
-                      className="culture-tag"
-                      onMouseEnter={(e) => {
-                        const popup = e.currentTarget.nextElementSibling;
-                        popup.style.display = 'block';
-                      }}
-                      onMouseLeave={(e) => {
-                        const popup = e.currentTarget.nextElementSibling;
-                        popup.style.display = 'none';
-                      }}
-                    >
-                      {tag}
-                    </span>
-                    <div className="culture-description-popup" style={{
-                      display: 'none',
-                      position: 'absolute',
-                      backgroundColor: 'white',
-                      border: '1px solid #ddd',
-                      borderRadius: '4px',
-                      padding: '8px',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                      zIndex: 1000,
-                      maxWidth: '200px'
-                    }}>
-                      {candidate.culture.cultureDescriptions?.[index] || 'No description available'}
-                    </div>
-                  </div>
-                ))}
               </div>
-            </div>
-          )}
+            )}
+            {candidate.culture?.cultureTags?.length > 0 && (
+              <div className="profile-field">
+                <strong>Culture</strong>{" "}
+                <div className="culture-tags">
+                  {candidate.culture.cultureTags.map((tag, index) => (
+                    <div key={index} className="culture-tag-container">
+                      <span
+                        className="culture-tag"
+                        onMouseEnter={(e) => {
+                          const popup = e.currentTarget.nextElementSibling;
+                          popup.style.display = 'block';
+                        }}
+                        onMouseLeave={(e) => {
+                          const popup = e.currentTarget.nextElementSibling;
+                          popup.style.display = 'none';
+                        }}
+                      >
+                        {tag}
+                      </span>
+                      <div className="culture-description-popup" style={{
+                        display: 'none',
+                        position: 'absolute',
+                        backgroundColor: 'white',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        padding: '8px',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                        zIndex: 1000,
+                        maxWidth: '200px'
+                      }}>
+                        {candidate.culture.cultureDescriptions?.[index] || 'No description available'}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {candidate.position && (
               <div className="profile-field">
                 <strong>Position</strong>{" "}
@@ -1778,16 +1777,16 @@ return (
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {typeof candidate.position === 'string' 
+                  {typeof candidate.position === 'string'
                     ? candidate.position.charAt(0).toUpperCase() + candidate.position.slice(1).toLowerCase()
                     : candidate.position}
                 </a>
-    </div>
-  )}
+              </div>
+            )}
             <div className="profile-field">
               <strong>Graduation Year</strong>{" "}
-          <p
-            className="candidate-grad-year clickable-filter"
+              <p
+                className="candidate-grad-year clickable-filter"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleGradYearClickFromVideo(candidate.graduationYear);
@@ -1806,27 +1805,27 @@ return (
                   View Resume
                 </button>
               ) : (
-    <button
+                <button
                   className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
                   onClick={emailDraft} // Reuse the draft function for this button
-    >
+                >
                   No Resume, Draft to Request
-    </button>
+                </button>
               )}
+            </div>
           </div>
-  </div>
 
           <div className="button-group">
-      <button
+            <button
               className="draft-button"
               onClick={() => setShowMeetOptions(true)}
               aria-label="Draft candidate for interview"
-      >
+            >
               🤝 Meet {capitalizeName(candidate.firstName)}
-      </button>
-    </div>
+            </button>
+          </div>
           <div className="button-group">
-          <div 
+            <div
               className="share-profile"
               onClick={() => {
                 const profileUrl = `https://drafted-beta.netlify.app/candidate/${candidate.email}`;
@@ -1847,7 +1846,7 @@ return (
                 marginBottom: '12px'
               }}
             >
-              <img 
+              <img
                 src={shareArrow}  // Use the imported image
                 alt="Share"
                 style={{
@@ -1862,8 +1861,8 @@ return (
               }}>
                 SHARE PROFILE LINK
               </span>
-    </div>
-  </div>
+            </div>
+          </div>
         </div>
         <div className="other-videos-container">
           <br></br>
@@ -1875,50 +1874,50 @@ return (
               : cover;
 
             return (
-      <div
-        key={candidate.id}
+              <div
+                key={candidate.id}
                 className="candidate-card"
-        onClick={() => handleCandidateSelect(index)}
-      >
+                onClick={() => handleCandidateSelect(index)}
+              >
                 <div className="video-thumbnail-wrapper clickable">
                   <img
                     src={thumbnailSrc}
                     alt="Thumbnail"
-              className="video-thumbnail"
-            />
-        </div>
-        <div className="candidate-details">
+                    className="video-thumbnail"
+                  />
+                </div>
+                <div className="candidate-details">
                   <h4 className="candidate-name clickable">
-            {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
-          </h4>
-          <p
-            className="candidate-university clickable-filter"
+                    {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
+                  </h4>
+                  <p
+                    className="candidate-university clickable-filter"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleUniversityClickFromVideo(candidate.university);
                     }}
-          >
-            {candidate.university}
-          </p>
-          <p
-            className="candidate-major clickable-filter"
+                  >
+                    {candidate.university}
+                  </p>
+                  <p
+                    className="candidate-major clickable-filter"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleMajorClickFromVideo(candidate.major);
                     }}
-          >
-            {candidate.major}
-          </p>
-          <p
-            className="candidate-grad-year clickable-filter"
+                  >
+                    {candidate.major}
+                  </p>
+                  <p
+                    className="candidate-grad-year clickable-filter"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleGradYearClickFromVideo(candidate.graduationYear);
                     }}
-          >
-            Grad Year: {candidate.graduationYear}
-          </p>
-            </div>
+                  >
+                    Grad Year: {candidate.graduationYear}
+                  </p>
+                </div>
               </div>
             );
           })}
@@ -1941,7 +1940,7 @@ return (
           <button className="close-resume" onClick={() => setShowResume(false)}>
             Close Resume
           </button>
-  </div>
+        </div>
       )}
       {showMeetOptions && (
         <MeetOptionsPopup
@@ -1961,8 +1960,8 @@ return (
           candidateName={capitalizeName(filteredCandidates[currentIndex].firstName)}
         />
       )}
-</div>
-);
+    </div>
+  );
 };
 
 export default CandidateViewer;
