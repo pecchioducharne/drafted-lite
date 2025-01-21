@@ -1600,29 +1600,6 @@ const CandidateViewer = ({
           />
         </div>
       </div>
-
-      {/* Add this right after your filter-container div to show selected filters
-      {Object.entries(filters).some(([_, values]) => values.length > 0) && (
-        <div className="selected-filters-mobile">
-          {Object.entries(filters).map(([category, values]) =>
-            values.map((value) => (
-              <button
-                key={`${category}-${value}`}
-                className="filter-tag-mobile"
-                onClick={() => {
-                  setFilters(prev => ({
-                    ...prev,
-                    [category]: prev[category].filter(v => v !== value)
-                  }));
-                }}
-              >
-                {value} ×
-              </button>
-            ))
-          )}
-        </div>
-      )} */}
-
       <div className="main-and-other-videos-container">
         <div className="main-video-profile-container">
           <div className="navigation-instructions">
@@ -1726,9 +1703,30 @@ const CandidateViewer = ({
             {candidate.skills && candidate.skills.length > 0 && (
               <div className="profile-field">
                 <strong>Skills</strong>{" "}
-                <p className="candidate-skills">
-                  {candidate.skills.join(", ")}
-                </p>
+                <div className="skills-tags">
+                  {candidate.skills.map((skill, index) => (
+                    <div key={index} className="skill-tag-container">
+                      <span
+                        className="skill-tag"
+                      >
+                        {skill}
+                      </span>
+                      <div className="culture-description-popup" style={{
+                        display: 'none',
+                        position: 'absolute',
+                        backgroundColor: 'white',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        padding: '8px',
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                        zIndex: 1000,
+                        maxWidth: '200px'
+                      }}>
+                        {candidate.skillDescriptions?.[index] || 'No description available'}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             {candidate.culture?.cultureTags?.length > 0 && (

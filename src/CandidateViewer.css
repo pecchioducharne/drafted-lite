@@ -182,10 +182,9 @@ logo-header {
   font-size: 1em;
   font-weight: 500;
   display: flex;
+  flex-direction: column;  /* Changed to column to stack elements */
   font-family: 'Poppins', sans-serif;
-  /* Changed display to flex for better alignment */
   margin-bottom: 10px;
-  /* Added margin for spacing between fields */
 }
 
 .profile-field strong {
@@ -194,6 +193,7 @@ logo-header {
   font-size: 18px;
   color: #333;
   font-weight: 600;
+  margin-bottom: 4px;  /* Add space between title and content */
 }
 
 .profile-value {
@@ -1634,9 +1634,6 @@ logo-header {
   color: black;
   text-align: left;
   font-size: 0.9em;
-  width: 90%;
-  max-width: 400px;
-  padding: 15px;
 }
 
 .nav-popup h2 {
@@ -2491,6 +2488,27 @@ logo-header {
     min-width: 24px;
     min-height: 24px;
     margin-right: 16px;
+  }
+}
+
+/* Add new subtitle style */
+.culture-subtitle {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+/* Mobile optimization */
+@media screen and (max-width: 768px) {
+  .profile-field {
+    text-align: left;  /* Keep text left-aligned on mobile */
+  }
+  
+  .culture-subtitle {
+    font-size: 11px;  /* Slightly smaller on mobile */
+    margin-bottom: 6px;
   }
 }
 
