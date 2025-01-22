@@ -1929,16 +1929,69 @@ const CandidateViewer = ({
       </div>
 
       {showResume && (
-        <div className="resume-popup">
-          <iframe
-            src={candidate.resume}
-            title="Resume"
-            className="resume-iframe"
-          ></iframe>
-          <button className="close-resume" onClick={() => setShowResume(false)}>
-            Close Resume
-          </button>
-        </div>
+        <>
+          <div 
+            className="resume-overlay" 
+            onClick={() => setShowResume(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              zIndex: 999
+            }}
+          />
+          <div className="resume-popup" style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '90vw',
+            maxWidth: '1200px',
+            height: '85vh',
+            backgroundColor: 'white',
+            zIndex: 1000,
+            padding: '20px',
+            boxShadow: '0 5px 15px rgba(0,0,0,0.3)',
+            borderRadius: '8px',
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+            <iframe
+              src={candidate.resume}
+              title="Resume"
+              style={{
+                width: '100%',
+                height: 'calc(100% - 50px)',
+                border: 'none',
+                borderRadius: '4px'
+              }}
+            ></iframe>
+            <button 
+              className="close-resume" 
+              onClick={() => setShowResume(false)}
+              style={{
+                marginTop: '10px',
+                padding: '8px 16px',
+                backgroundColor: '#53ad7a', // Changed to green
+                color: 'white', // Added white text
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                alignSelf: 'center',
+                fontWeight: '500',
+                transition: 'background-color 0.2s ease',
+                hover: {
+                  backgroundColor: '#46a067'
+                }
+              }}
+            >
+              Close Resume
+            </button>
+          </div>
+        </>
       )}
       {showMeetOptions && (
         <MeetOptionsPopup
