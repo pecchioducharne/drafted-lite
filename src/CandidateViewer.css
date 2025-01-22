@@ -1012,13 +1012,25 @@ logo-header {
   margin-top: 10px;
   margin-bottom: 20px;
   text-align: left;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0; /* Added grey horizontal line */
 }
 
-/* Add this to control button spacing */
+/* Update button spacing */
+.candidate-name-display .save-button {
+  margin-right: 8px; /* Reduced from previous value */
+}
+
+.candidate-name-display .draft-button {
+  margin-left: 0; /* Remove any left margin */
+}
+
+/* Ensure buttons are grouped together */
 .candidate-name-display .button-group {
   display: flex;
-  gap: 10px;  /* Small gap between buttons */
   align-items: center;
+  gap: 8px; /* Small gap between buttons */
+  margin: 0; /* Remove any margin from button group */
 }
 
 .popup-overlay {
@@ -1364,7 +1376,7 @@ logo-header {
 }
 
 .draft-button {
-  background-color: #00BF63;
+  background: linear-gradient(to right, #22A65A, #8DC255);
   color: white;
   padding: 15px 30px;
   border: none;
@@ -1375,8 +1387,21 @@ logo-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: 0; /* Remove any left margin */
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-left: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+}
+
+.draft-button:hover {
+  background: linear-gradient(to right, #1a8046, #74a346);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
+}
+
+.draft-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  background: linear-gradient(to right, #156c3a, #618c3a);
 }
 
 .navigation-button, .bg-customGreen {
@@ -1431,7 +1456,7 @@ logo-header {
 
 .invite-codes-popup {
   background-color: white;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 400px;
@@ -1574,7 +1599,6 @@ logo-header {
   background-color: #00BF63;
   color: white;
   padding: 15px 30px;
-  /* Increase padding for a larger button */
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -1584,26 +1608,20 @@ logo-header {
   align-items: center;
   justify-content: center;
   margin-top: 5px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  /* Add transition for background and transform */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
 }
 
-.draft-button:hover, .draft-button:focus {
-  background-color: #45a049;
-  /* Slightly darker green on hover/focus for feedback */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  /* Larger shadow for elevated effect */
-  transform: scale(1.1);
-  /* Enlarge the button */
+.draft-button:hover {
+  background: linear-gradient(to right, #1a8046, #74a346);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
 }
 
 .draft-button:active {
-  background-color: #397239;
-  /* Even darker green for active state */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  /* Smaller shadow to simulate pressing down */
-  transform: scale(1);
-  /* Return to original size on active */
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(34, 166, 90, 0.2);
+  background: linear-gradient(to right, #156c3a, #618c3a);
 }
 
 .video-resume-container {
@@ -2432,7 +2450,6 @@ logo-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 5px;
   transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
 }
 
