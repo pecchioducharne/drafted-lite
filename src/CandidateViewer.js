@@ -1562,25 +1562,6 @@ const CandidateViewer = ({
             }}
           />
           <FilterOptions
-            title="Position"
-            options={["Fulltime", "Internship"]}
-            selectedOptions={filters.position}
-            onSelect={(selected) =>
-              setFilters((prevFilters) => ({
-                ...prevFilters,
-                position: selected,
-              }))
-            }
-            isOpen={openFilterCategories.includes('Position')}
-            onToggle={() => {
-              setOpenFilterCategories(current =>
-                current.includes('Position')
-                  ? []
-                  : ['Position']
-              );
-            }}
-          />
-          <FilterOptions
             title="Culture"
             options={uniqueCulture}
             selectedOptions={filters.culture}
@@ -1596,6 +1577,25 @@ const CandidateViewer = ({
                 current.includes('Culture')
                   ? current.filter((cat) => cat !== 'Culture')
                   : [...current, 'Culture']
+              );
+            }}
+          />
+          <FilterOptions
+            title="Position"
+            options={["Fulltime", "Internship"]}
+            selectedOptions={filters.position}
+            onSelect={(selected) =>
+              setFilters((prevFilters) => ({
+                ...prevFilters,
+                position: selected,
+              }))
+            }
+            isOpen={openFilterCategories.includes('Position')}
+            onToggle={() => {
+              setOpenFilterCategories(current =>
+                current.includes('Position')
+                  ? []
+                  : ['Position']
               );
             }}
           />
@@ -1657,20 +1657,40 @@ const CandidateViewer = ({
                 }} 
               />
             </span>
-            <button
-              className="save-button"
-              onClick={() => handleSaveOption()}
-              aria-label="Draft candidate for interview"
-            >
-              Save
-            </button>
-            <button
-              className="draft-button"
-              onClick={() => setShowMeetOptions(true)}
-              aria-label="Draft candidate for interview"
-            >
-              🤝 Meet {capitalizeName(candidate.firstName)}
-            </button>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}> {/* Reduced gap to 5px */}
+              <button
+                className="draft-button"
+                onClick={() => setShowMeetOptions(true)}
+                aria-label="Draft candidate for interview"
+                style={{ 
+                  height: '54px', // Increased height
+                  padding: '0 24px',
+                  boxSizing: 'border-box',
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '280px', // Increased width
+                  fontSize: '16px' // Slightly larger text
+                }}
+              >
+                🤝 Meet {capitalizeName(candidate.firstName)}
+              </button>
+              <button
+                className="save-button"
+                onClick={() => handleSaveOption()}
+                aria-label="Draft candidate for interview"
+                style={{ 
+                  height: '54px', // Increased height
+                  padding: '0 24px',
+                  boxSizing: 'border-box',
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '280px', // Increased width
+                  fontSize: '16px' // Slightly larger text
+                }}
+              >
+                Save candidate
+              </button>
+            </div>
           </div>
           <div className="video-resume-display">Video Resume</div>
           <div className="video-selection-buttons">
