@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 
 .profile-dashboard {
@@ -901,7 +902,7 @@ logo-header {
 
 .candidate-card {
   background: white;
-  border-radius: 24px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
@@ -915,7 +916,7 @@ logo-header {
   aspect-ratio: 1 / 1;
   position: relative;
   overflow: hidden;
-  border-radius: 24px;
+  border-radius: 12px;
 }
 
 .video-thumbnail {
@@ -923,7 +924,7 @@ logo-header {
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 24px;
+  border-radius: 12px;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1232,7 +1233,7 @@ logo-header {
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   margin-bottom: 5px;
-  color: #22A65A;
+  color: #00ab59;
 }
 
 .candidate-university {

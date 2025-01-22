@@ -25,6 +25,7 @@ import {
 import shareArrow from './share-arrow.png';  // Add this import
 import linkedinIcon from './linkedin.svg';
 import githubIcon from './github.svg';
+import verified from './verified.png';
 
 // Add this utility function at the top of your file
 const capitalizeName = (name) => {
@@ -1644,8 +1645,17 @@ const CandidateViewer = ({
           </div>
           <br></br>
           <div className="candidate-name-display">
-            <span className="candidate-name">
+            <span className="candidate-name" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
+              <img 
+                src={verified} 
+                alt="Verified" 
+                style={{ 
+                  width: '50px', 
+                  height: '50px',
+                  objectFit: 'contain'
+                }} 
+              />
             </span>
             <button
               className="save-button"
@@ -1731,7 +1741,7 @@ const CandidateViewer = ({
             )}
             {candidate.culture?.cultureTags?.length > 0 && (
               <div className="profile-field">
-                <strong>Culture</strong>{" "}
+                <strong>Culture (hover for description)</strong>{" "}
                 <div className="culture-tags">
                   {candidate.culture.cultureTags.map((tag, index) => (
                     <div key={index} className="culture-tag-container">
