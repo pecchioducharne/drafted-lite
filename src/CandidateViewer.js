@@ -106,6 +106,7 @@ const CandidateViewer = ({
   const [codes, setCodes] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [filteredCandidates, setFilteredCandidates] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState([]);
   const [candidates, setCandidates] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showResume, setShowResume] = useState(false);
@@ -247,24 +248,6 @@ const CandidateViewer = ({
   const FilterOptions = ({ title, options, selectedOptions, onSelect, isOpen, onToggle }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
-    // Add body scroll lock when dropdown is open on mobile
-    useEffect(() => {
-      if (isOpen && window.innerWidth < 768) {
-        document.body.classList.add('body-scroll-lock');
-      } else {
-        document.body.classList.remove('body-scroll-lock');
-      }
-
-      return () => {
-        document.body.classList.remove('body-scroll-lock');
-      };
-    }, [isOpen]);
-
-    // Remove or comment out e.stopPropagation in FilterOptions:
-    const handleTouchStart = (e) => {
-      e.stopPropagation();
-    };
-
     const handleSelect = (option) => {
       const isSelected = selectedOptions.includes(option);
       if (isSelected) {
@@ -273,73 +256,41 @@ const CandidateViewer = ({
         onSelect([...selectedOptions, option]);
       }
       setSearchQuery('');
-      onToggle(); // <-- closes dropdown after picking 1 item
+      onToggle(); // Close the dropdown after selection
     };
 
     return (
-      <div
-        className="filter-option-section"
-        onTouchStart={handleTouchStart}
-      >
+      <div className="filter-option-section">
         <div className="filter-title" onClick={onToggle}>
           <span>{title}</span>
-          {isOpen ? (
-            <FiChevronUp className="filter-icon" />
-          ) : (
-            <FiChevronDown className="filter-icon" />
-          )}
+          {isOpen ? <FiChevronUp className="filter-icon" /> : <FiChevronDown className="filter-icon" />}
         </div>
 
         {isOpen && (
-          <>
+          <div className="options-container">
             <div className="filter-search">
               <input
                 type="text"
                 placeholder={`Search ${title.toLowerCase()}...`}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onClick={(e) => e.stopPropagation()}
                 className="filter-search-input"
               />
             </div>
-            <div className="options-container">
-              {options
-                .filter(option =>
-                  typeof option === 'string' &&
-                  option.toLowerCase().includes(searchQuery.toLowerCase())
-                )
-                .map((option, index) => (
-                  <div
-                    key={index}
-                    className={`option-item ${selectedOptions.includes(option) ? "selected" : ""}`}
-                    onClick={() => handleSelect(option)}
-                  >
-                    <div className="checkbox">
-                      {selectedOptions.includes(option) && <span className="checkmark">✓</span>}
-                    </div>
-                    <span className="option-text">{option}</span>
-                  </div>
-                ))}
-            </div>
-          </>
-        )}
-
-        {selectedOptions.length > 0 && (
-          <div className="selected-filters">
-            {selectedOptions.map((option, index) => (
-              <span key={index} className="selected-filter-tag">
-                {option}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleSelect(option);
-                  }}
-                  className="remove-filter"
+            {options
+              .filter(option => option.toLowerCase().includes(searchQuery.toLowerCase()))
+              .map((option, index) => (
+                <div
+                  key={index}
+                  className={`option-item ${selectedOptions.includes(option) ? "selected" : ""}`}
+                  onClick={() => handleSelect(option)}
                 >
-                  ×
-                </button>
-              </span>
-            ))}
+                  <div className="checkbox">
+                    {selectedOptions.includes(option) && <span className="checkmark">✓</span>}
+                  </div>
+                  <span className="option-text">{option}</span>
+                </div>
+              ))}
           </div>
         )}
       </div>
@@ -676,8 +627,7 @@ const CandidateViewer = ({
     const query = e.target.value;
     setSearchQuery(query);
 
-    // On mobile, show all options immediately
-    if (window.innerWidth <= 768) {
+    if (query.length > 1) {
       const allSuggestions = new Set();
 
       candidates.forEach((candidate) => {
@@ -688,14 +638,13 @@ const CandidateViewer = ({
         }
       });
 
-      setSuggestions(Array.from(allSuggestions));
+      const filteredSuggestions = Array.from(allSuggestions).filter(suggestion =>
+        suggestion.toLowerCase().includes(query.toLowerCase())
+      );
+
+      setSuggestions(filteredSuggestions);
     } else {
-      // Desktop behavior - only show filtered suggestions
-      if (query.length > 1) {
-        // ... your existing suggestion filtering logic ...
-      } else {
-        setSuggestions([]);
-      }
+      setSuggestions([]);
     }
   };
 
@@ -711,19 +660,30 @@ const CandidateViewer = ({
       const majorMatch = candidate.major
         .toLowerCase()
         .includes(lowerSuggestion);
-      const gradYearMatch = candidate.graduationYear
-        .toString()
-        .toLowerCase()
-        .includes(lowerSuggestion);
       const skillsMatch = candidate.skills?.some((skill) =>
         skill.toLowerCase().includes(lowerSuggestion)
       );
 
-      return universityMatch || majorMatch || gradYearMatch || skillsMatch;
+      return universityMatch || majorMatch || skillsMatch;
     });
 
     setFilteredCandidates(filtered);
     setShowGridView(true);
+
+    // Update selected filters
+    setSelectedFilters((prevFilters) => {
+      const newFilters = { ...prevFilters };
+      if (filtered.some(candidate => candidate.university.toLowerCase() === lowerSuggestion)) {
+        newFilters.university = [suggestion];
+      }
+      if (filtered.some(candidate => candidate.major.toLowerCase() === lowerSuggestion)) {
+        newFilters.major = [suggestion];
+      }
+      if (filtered.some(candidate => candidate.skills?.includes(suggestion))) {
+        newFilters.skills = [suggestion];
+      }
+      return newFilters;
+    });
   };
 
   const executeSearchWithQuery = (query) => {
@@ -1577,8 +1537,8 @@ const CandidateViewer = ({
                 current.includes('Culture')
                   ? current.filter((cat) => cat !== 'Culture')
                   : [...current, 'Culture']
-              );
-            }}
+                );
+              }}
           />
           <FilterOptions
             title="Position"
