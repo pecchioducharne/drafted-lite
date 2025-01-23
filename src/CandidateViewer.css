@@ -278,6 +278,7 @@ logo-header {
   background-color: #2b82bf; /* A nice blue complementary to green */
   color: white;
   font-weight: 550;
+  cursor: pointer;
 }
 
 .filter-container {
