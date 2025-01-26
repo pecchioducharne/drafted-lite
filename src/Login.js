@@ -136,8 +136,29 @@ const Login = () => {
   if (isLoading) {
     return (
       <div>
-        <Lottie options={defaultOptions5} height={100} width={100} />
-        <p>Loading...</p>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <Lottie
+          options={defaultOptions5}
+          height={300}
+          width={300}
+          className={styles.lottieAnimation}
+        />
       </div>
     );
   }
@@ -197,46 +218,46 @@ const Login = () => {
       </div>
       <br></br>
       <button
-          type="submit"
-          className={`${styles.button} ${styles.loginBtn}`}
-          onClick={handleSubmit}
-          style={{ 
-            width: "100%", // Match the width of the login button
-            padding: "18px 28px",
-            fontSize: "18px",
-            fontWeight: "600",
-            borderRadius: "6px",
-            border: "none",
-            
-            cursor: "pointer",
-          }} // Spacing between input and button
-        >
+        type="submit"
+        className={`${styles.button} ${styles.loginBtn}`}
+        onClick={handleSubmit}
+        style={{
+          width: "100%", // Match the width of the login button
+          padding: "18px 28px",
+          fontSize: "18px",
+          fontWeight: "600",
+          borderRadius: "6px",
+          border: "none",
+
+          cursor: "pointer",
+        }} // Spacing between input and button
+      >
         Login
       </button>
       <button
-onc          type="button"
-          style={{
-            width: "100%", // Match the width of the login button
-            padding: "18px 28px",
-            fontSize: "18px",
-            fontWeight: "600",
-            color: "#333", // Default text color for the button
-            borderRadius: "6px",
-            border: "none",
-            cursor: "pointer",
-            backgroundColor: "#e5e5e5", // Light gray background color
-            transition: "background-color 0.3s ease, color 0.3s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.backgroundColor = "#b0b0b0"; // Even darker gray on hover
-            e.target.style.color = "#fff"; // White text on hover
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.backgroundColor = "#e5e5e5"; // Light gray
-            e.target.style.color = "#333"; // Dark text color
-          }}
-          onClick={handlePasswordReset}
-        >
+        onc type="button"
+        style={{
+          width: "100%", // Match the width of the login button
+          padding: "18px 28px",
+          fontSize: "18px",
+          fontWeight: "600",
+          color: "#333", // Default text color for the button
+          borderRadius: "6px",
+          border: "none",
+          cursor: "pointer",
+          backgroundColor: "#e5e5e5", // Light gray background color
+          transition: "background-color 0.3s ease, color 0.3s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = "#b0b0b0"; // Even darker gray on hover
+          e.target.style.color = "#fff"; // White text on hover
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = "#e5e5e5"; // Light gray
+          e.target.style.color = "#333"; // Dark text color
+        }}
+        onClick={handlePasswordReset}
+      >
         Forgot Password?
       </button>
       <br></br>
