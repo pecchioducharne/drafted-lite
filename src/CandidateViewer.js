@@ -1194,7 +1194,7 @@ const CandidateViewer = ({
                   className="candidate-grad-year clickable-filter"
                   onClick={() => handleGradYearClick(candidate.graduationYear)}
                 >
-                  Grad Year: {candidate.graduationYear}
+                  Class of {candidate.graduationYear}
                 </p>
                 {candidate.position && (
                   <p className="candidate-position">
@@ -1903,7 +1903,7 @@ const CandidateViewer = ({
                       handleGradYearClickFromVideo(candidate.graduationYear);
                     }}
                   >
-                    Grad Year: {candidate.graduationYear}
+                    Class of {candidate.graduationYear}
                   </p>
                 </div>
               </div>
