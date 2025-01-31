@@ -245,21 +245,20 @@ logo-header {
 }
 
 .skills-container {
-  margin-top: 8px;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 8px;
 }
 
 .skill-tag {
   display: inline-block;
-  padding: 4px 12px;
+  padding: 8px 16px;
   margin: 4px 4px 4px 0;
-  border-radius: 16px;
-  font-size: 13px;
-  background-color: #22A65A; /* Darker version of our theme green */
+  border-radius: 50px;
+  font-size: 0.9rem;
+  background: linear-gradient(135deg, #22A65A 0%, #27C76C 100%);
   color: white;
-  font-weight: 550;
+  font-weight: 500;
 }
 
 .culture-container {
@@ -2678,6 +2677,146 @@ logo-header {
   .culture-subtitle {
     font-size: 11px;  /* Slightly smaller on mobile */
     margin-bottom: 6px;
+  }
+}
+
+/* Add new culture tags styling to match InfoBlob */
+.culture-tags-blob {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #F8F9FF;
+}
+
+.culture-tags-header {
+  margin-bottom: 16px;
+}
+
+.culture-tags-header h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.ai-note {
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.culture-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.culture-tag {
+  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.culture-tag:hover {
+  background-color: #E0E7FF;
+  transform: translateY(-1px);
+}
+
+/* Add popup styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.culture-popup {
+  background-color: #F8F9FF;
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 90%;
+  width: 400px;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.2);
+}
+
+.culture-popup-content {
+  text-align: left;
+}
+
+.culture-popup-tag {
+  color: #6366F1;
+  font-size: 1.2rem;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.culture-popup-description {
+  color: #4B5563;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.culture-popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.culture-popup-close:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .culture-tags-blob {
+    padding: 15px;
+  }
+  
+  .culture-tag {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+
+  .culture-popup {
+    width: 85%;
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .culture-popup-tag {
+    font-size: 1.1rem;
+  }
+  
+  .culture-popup-description {
+    font-size: 0.9rem;
   }
 }
 
