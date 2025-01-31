@@ -945,11 +945,11 @@ const CandidateViewer = ({
           </button>
 
           {suggestions.length > 0 && (
-            <div className="suggestions-mobile">
+            <div className="suggestions-dropdown">
               {suggestions.map((suggestion, index) => (
                 <div
                   key={index}
-                  className="suggestion-item-mobile"
+                  className="suggestion-item"
                   onClick={() => {
                     handleSuggestionSelect(suggestion);
                     document.activeElement.blur(); // Hide mobile keyboard
@@ -1368,22 +1368,9 @@ const CandidateViewer = ({
         </h1>
       </div>
       <div className="search-container">
-        <img
-          src={home} // Use the imported home icon
-          alt="Home"
-          className="home-icon"
-          onClick={handleHomeButtonClick}
-          style={{
-            cursor: "pointer",
-            marginRight: "10px", // Reduced margin to bring it closer to the search bar
-            width: "32px", // Small icon size
-            height: "32px", // Match the height with the width
-            alignSelf: "center", // Center the icon vertically within the container
-          }}
-        />
         <input
           type="text"
-          placeholder="Search by university, major, grad year..."
+          placeholder="Search by university, major, grad year, or skills..."
           value={searchQuery}
           onChange={handleSearchChange}
           className="search-bar"
@@ -1394,12 +1381,13 @@ const CandidateViewer = ({
         >
           Saved
         </button>
+
         {suggestions.length > 0 && (
-          <div className="suggestions-mobile">
+          <div className="suggestions-dropdown">
             {suggestions.map((suggestion, index) => (
               <div
                 key={index}
-                className="suggestion-item-mobile"
+                className="suggestion-item"
                 onClick={() => {
                   handleSuggestionSelect(suggestion);
                   document.activeElement.blur(); // Hide mobile keyboard

@@ -696,7 +696,7 @@ logo-header {
 }
 
 .search-bar {
-  flex: 1;
+  width: 100%;
   height: 56px;
   padding: 0 24px;
   font-size: 16px;
@@ -1031,14 +1031,38 @@ logo-header {
 /* CandidateViewer.css */
 
 .candidate-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+  background: #ffffff;
+  border-radius: 48px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+/* Add the same radial gradient effect */
+.candidate-card::before {
+  content: "";
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 191, 99, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.candidate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
 }
 
 .video-thumbnail-wrapper {
@@ -1056,11 +1080,6 @@ logo-header {
   display: block;
   border-radius: 12px;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.candidate-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
 .candidate-details {
@@ -2818,5 +2837,40 @@ logo-header {
   .culture-popup-description {
     font-size: 0.9rem;
   }
+}
+
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 8px;
+  overflow: hidden;
+  max-height: 300px; /* Optional: limit height and make scrollable */
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.suggestion-item:hover {
+  background-color: #f5f9f7;
+}
+
+.suggestion-item:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.suggestion-item:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
 
