@@ -9,6 +9,67 @@ import githubIcon from './github.svg';
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+const EmailPopup = ({ email, onClose }) => {
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 1000,
+    }} onClick={onClose}>
+      <div style={{
+        backgroundColor: '#F8F9FF',
+        borderRadius: '20px',
+        padding: '24px',
+        maxWidth: '90%',
+        width: '400px',
+        position: 'relative',
+        boxShadow: '0 4px 20px rgba(99, 102, 241, 0.2)',
+      }} onClick={(e) => e.stopPropagation()}>
+        <div style={{ textAlign: 'left' }}>
+          <h4 style={{
+            color: '#6366F1',
+            fontSize: '1.2rem',
+            margin: '0 0 12px 0',
+            fontWeight: '600',
+          }}>Candidate Email</h4>
+          <p style={{
+            color: '#4B5563',
+            fontSize: '0.95rem',
+            lineHeight: '1.5',
+            margin: 0,
+          }}>{email}</p>
+          <button style={{
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            background: 'none',
+            border: 'none',
+            fontSize: '24px',
+            color: '#6B7280',
+            cursor: 'pointer',
+            padding: '4px',
+            lineHeight: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '32px',
+            height: '32px',
+            borderRadius: '50%',
+            transition: 'background-color 0.2s ease',
+          }} onClick={onClose}>×</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const VideoViewer = () => {
   const { id } = useParams();
   const [candidate, setCandidate] = useState({});
@@ -306,6 +367,18 @@ const VideoViewer = () => {
     setSelectedCulture(null);
   };
 
+  const handleMeetCandidateClick = () => {
+    if (candidate.email) {
+      setShowEmailPopup(true);
+    } else {
+      alert("Email not available");
+    }
+  };
+
+  const handleCloseEmailPopup = () => {
+    setShowEmailPopup(false);
+  };
+
   useEffect(() => {
     const handleResize = () => {
       // Force re-render on window resize
@@ -366,7 +439,7 @@ const VideoViewer = () => {
         <div style={nameDisplayStyle}>
           <span>{candidate.firstName || "N/A"} {candidate.lastName || "N/A"}</span>
           <button
-            onClick={handleMeetClick}
+            onClick={handleMeetCandidateClick}
             style={draftButtonStyle}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -631,30 +704,11 @@ const VideoViewer = () => {
         </div>
       )}
 
-      {showEmailPopup && candidate && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <button className="close-button" onClick={() => setShowEmailPopup(false)}>×</button>
-            <div className="email-header">
-              <p className="email-address">To: {candidate.email}</p>
-            </div>
-            <textarea
-              className="email-textarea"
-              value={emailContent}
-              onChange={(e) => setEmailContent(e.target.value)}
-              readOnly
-            />
-            <button
-              className="copy-button"
-              onClick={() => {
-                navigator.clipboard.writeText(emailContent);
-                alert("Email content copied to clipboard!");
-              }}
-            >
-              Copy to Clipboard
-            </button>
-          </div>
-        </div>
+      {showEmailPopup && (
+        <EmailPopup
+          email={candidate.email}
+          onClose={handleCloseEmailPopup}
+        />
       )}
 
       {selectedCulture && (
