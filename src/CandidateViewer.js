@@ -1561,7 +1561,7 @@ const CandidateViewer = ({
               }}
             ></p>
           </div>
-          <p
+          {/* <p
             style={{
               fontFamily: "Poppins, sans-serif",
               fontWeight: 600,
@@ -1571,7 +1571,7 @@ const CandidateViewer = ({
             }}
           >
             Use ← and → arrow keys to navigate between candidates
-          </p>
+          </p> */}
           <div className="video-resume-container" {...handlers}>
             {videoUrls[currentVideoIndex] && (
               <ReactPlayer
