@@ -17,6 +17,7 @@ import home from "./home.png";
 import backArrow from "./back-arrow.png";
 import { auth } from "./firebase"; // Adjust the path as necessary
 import { useNavigate } from "react-router-dom";
+import previewImage from './preview.png'; // Adjust the path as needed
 import {
   setPersistence,
   onAuthStateChanged,
@@ -996,17 +997,22 @@ const CandidateViewer = ({
             Copy Email
           </button>
           <div className="email-content-container">
-            <textarea
+            {/* <textarea
               readOnly
               value={formatEmailContent()}
               className="email-textarea"
-            />
+            /> */}
+            <img
+            src={previewImage}
+            alt="Email Preview"
+            style={{ width: '100%', borderRadius: '8px' }}
+          />
           </div>
           <button
             className="meet-option-button"
             onClick={() => handleCopy(formatEmailContent())}
           >
-            Copy Preview
+            Copy Preview Text
           </button>
           <br></br>
           <button
