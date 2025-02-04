@@ -43,6 +43,8 @@ const capitalizeName = (name) => {
     .join(' ');
 };
 
+const clickSound = new Audio('/send_sound.mp3');
+
 // Configure AWS
 // AWS.config.update({
 //   region: 'us-east-1',
@@ -910,6 +912,7 @@ const CandidateViewer = ({
         if (!user) {
           throw new Error("No user logged in");
         }
+        clickSound.play();
 
         const userRef = doc(db, "recruiter-accounts", user.email);
         const userDoc = await getDoc(userRef);
