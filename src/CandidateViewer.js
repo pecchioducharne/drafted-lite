@@ -8,6 +8,7 @@ import ReactPlayer from "react-player";
 import verifiedIcon from "./verified.png";
 import logo from "./logo.svg";
 import cover from "./cover-drafted.jpeg";
+// import AWS from 'aws-sdk';
 import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Import Chevron icons from 'react-icons'
 import { Player } from "video-react";
 import "video-react/dist/video-react.css"; // Import css
@@ -26,6 +27,12 @@ import shareArrow from './share-arrow.png';  // Add this import
 import linkedinIcon from './linkedin.svg';
 import githubIcon from './github.svg';
 import verified from './verified.png';
+import emailjs from 'emailjs-com';
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
+
+// Initialize EmailJS
+emailjs.init("RfdLlpPTsLae8Wd_j");
 
 // Add this utility function at the top of your file
 const capitalizeName = (name) => {
@@ -35,6 +42,17 @@ const capitalizeName = (name) => {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 };
+
+// Configure AWS
+// AWS.config.update({
+//   region: 'us-east-1',
+//   credentials: {
+//     accessKeyId: 'AKIARHA7TKUK23YBTBOR',
+//     secretAccessKey: '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'
+//   }
+// });
+
+// const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 
 // Add this new component
 const MeetOptionsPopup = ({ onClose, onEmail, onSave, candidateName }) => {
@@ -213,7 +231,7 @@ const CandidateViewer = ({
           const userRef = doc(db, "recruiter-accounts", user.email);
           const userDoc = await getDoc(userRef);
           if (userDoc.exists()) {
-            console.log("Invitation codes: " + userDoc.data().invitationCodes);
+            // console.log("Invitation codes: " + userDoc.data().invitationCodes);
             setCodes(userDoc.data().invitationCodes);
           }
         } catch (error) {
@@ -853,10 +871,83 @@ const CandidateViewer = ({
   };
 
   const EmailPopup = ({ emailContent, onClose }) => {
-    const { email } = filteredCandidates[currentIndex]; // Assuming you have access to this
+    const { email, firstName } = filteredCandidates[currentIndex];
+    const [isSending, setIsSending] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [meetingLink, setMeetingLink] = useState(''); // State for meeting link
 
     const handleCopy = (text) => {
       navigator.clipboard.writeText(text);
+    };
+
+    const formatEmailContent = () => {
+      let formattedContent = emailContent;
+      if (selectedDate) {
+        formattedContent = formattedContent.replace(
+          '[DATE]',
+          selectedDate.format('MMMM Do YYYY')
+        );
+      }
+      if (selectedTime) {
+        formattedContent = formattedContent.replace(
+          '[TIME]',
+          selectedTime.format('h:mm a')
+        );
+      }
+      return formattedContent;
+    };
+
+    const handleSendEmail = async () => {
+      if (!selectedDate || !selectedTime || !meetingLink) {
+        alert("Please select a date, a time, and enter a meeting link.");
+        return;
+      }
+
+      setIsSending(true);
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          throw new Error("No user logged in");
+        }
+
+        const userRef = doc(db, "recruiter-accounts", user.email);
+        const userDoc = await getDoc(userRef);
+        const userData = userDoc.data();
+
+
+        // Format the selected date and time
+        const formattedDate = selectedDate.format('MMMM Do YYYY');
+        const formattedTime = selectedTime.format('h:mm a');
+
+        // Send email using EmailJS
+        await emailjs.send(
+          "drafted_service",
+          "company_nudge",
+          {
+            to_name: firstName,
+            to_email: email,
+            cc_email: user.email,
+            bcc_email: "appdrafted@gmail.com",
+            from_name: userData.companyName,
+            company: userData.companyName,
+            message_html: formatEmailContent(),
+            reply_to: user.email,
+            scheduled_date: formattedDate, // Pass date separately
+            scheduled_time: formattedTime, // Pass time separately
+            meeting_link: meetingLink // Pass meeting link
+          }
+        );
+
+        alert("Email sent successfully!");
+        onClose();
+
+      } catch (error) {
+        console.error("Error sending email:", error);
+        alert("Failed to send email. Please try again later.");
+      } finally {
+        setIsSending(false);
+      }
     };
 
     return (
@@ -865,24 +956,62 @@ const CandidateViewer = ({
           <button className="close-button" onClick={onClose}>
             X
           </button>
+          <div className="datetime-picker-overlay">
+            <div className="datetime-picker-container">
+              <label>Select Date:</label>
+              <Datetime
+                value={selectedDate}
+                onChange={setSelectedDate}
+                timeFormat={false} // Disable time selection
+                inputProps={{ placeholder: 'Select Date' }}
+              />
+            </div>
+            <div className="datetime-picker-container">
+              <label>Select Time:</label>
+              <Datetime
+                value={selectedTime}
+                onChange={setSelectedTime}
+                dateFormat={false} // Disable date selection
+                inputProps={{ placeholder: 'Select Time' }}
+              />
+            </div>
+            <div className="datetime-picker-container">
+              <label>Meeting Link:</label>
+              <input
+                type="text"
+                value={meetingLink}
+                onChange={(e) => setMeetingLink(e.target.value)}
+                placeholder="Enter Meeting Link (Zoom, Hangout, etc.)"
+                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #e0e0e0' }}
+              />
+            </div>
+          </div>
           <div className="email-address-container">
             <p className="email-address">{email}</p>
           </div>
-          <button className="copy-button" onClick={() => handleCopy(email)}>
-            Copy Email Address
+          <button className="meet-option-button" onClick={() => handleCopy(email)}>
+            Copy Email
           </button>
           <div className="email-content-container">
             <textarea
               readOnly
-              value={emailContent}
+              value={formatEmailContent()}
               className="email-textarea"
             />
           </div>
           <button
-            className="copy-button"
-            onClick={() => handleCopy(emailContent)}
+            className="meet-option-button"
+            onClick={() => handleCopy(formatEmailContent())}
           >
-            Copy Email Content
+            Copy Preview
+          </button>
+          <br></br>
+          <button
+            className="meet-option-button"
+            onClick={handleSendEmail}
+            disabled={isSending}
+          >
+            {isSending ? 'Sending...' : 'Send Email'}
           </button>
         </div>
       </div>
@@ -1452,7 +1581,7 @@ const CandidateViewer = ({
                 current.includes('University')
                   ? []
                   : ['University']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1468,7 +1597,7 @@ const CandidateViewer = ({
                 current.includes('Major')
                   ? []
                   : ['Major']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1487,7 +1616,7 @@ const CandidateViewer = ({
                 current.includes('Graduation Year')
                   ? []
                   : ['Graduation Year']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1506,7 +1635,7 @@ const CandidateViewer = ({
                 current.includes('Skills')
                   ? []
                   : ['Skills']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1544,7 +1673,7 @@ const CandidateViewer = ({
                 current.includes('Position')
                   ? []
                   : ['Position']
-              );
+                );
             }}
           />
         </div>
