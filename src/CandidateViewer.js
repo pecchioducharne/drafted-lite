@@ -1775,8 +1775,7 @@ const CandidateViewer = ({
               <button
                 key={index}
                 onClick={() => handleVideoButtonClick(index)}
-                className={`video-btn ${currentVideoIndex === index ? "active" : ""
-                  }`}
+                className={`video-btn ${currentVideoIndex === index ? "active" : "not-selected"}`}
               >
                 {question}
               </button>
