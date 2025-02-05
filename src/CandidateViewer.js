@@ -46,15 +46,6 @@ const capitalizeName = (name) => {
 
 const clickSound = new Audio('/send_sound.mp3');
 
-// Configure AWS
-// AWS.config.update({
-//   region: 'us-east-1',
-//   credentials: {
-//     accessKeyId: 'AKIARHA7TKUK23YBTBOR',
-//     secretAccessKey: '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'
-//   }
-// });
-
 // const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 
 // Add this new component
