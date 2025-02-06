@@ -1407,7 +1407,7 @@ logo-header {
 
 .candidate-university {
   font-size: 1.2em;
-  font-weight: 700;
+  font-weight: 600;
   font-family: 'Poppins', sans-serif;
   color: black;
   margin-bottom: 5px;
@@ -1423,7 +1423,7 @@ logo-header {
 
 .candidate-grad-year {
   font-size: 1.2em;
-  font-weight: 400;
+  font-weight: 600;
   font-family: 'Poppins', sans-serif;
   color: black;
 }

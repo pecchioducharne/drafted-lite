@@ -134,6 +134,8 @@ const CandidateViewer = ({
   const [showInviteCodes, setShowInviteCodes] = useState(false);
   const [showEmailPopup, setEmailPopup] = useState(false);
   const [emailContent, setEmailContent] = useState("");
+  const [showCulturePopup, setShowCulturePopup] = useState(false);
+  const [popupContent, setPopupContent] = useState({ tag: '', description: '' });
   const [showGridView, setShowGridView] = useState(() => {
     const storedView = sessionStorage.getItem("showGridView");
     return storedView ? JSON.parse(storedView) : initialShowGridView;
@@ -1464,6 +1466,12 @@ const CandidateViewer = ({
     setRefreshKey(oldKey => oldKey + 1);
   };
 
+  function handleCultureTagClick(tag, description) {
+    // Logic to show the popup with the tag and description
+    setPopupContent({ tag, description });
+    setShowCulturePopup(true);
+  }
+
   return (
     <div className="profile-dashboard">
       <div className="header">
@@ -1837,19 +1845,14 @@ const CandidateViewer = ({
             )}
             {candidate.culture?.cultureTags?.length > 0 && (
               <div className="profile-field">
-                <strong>Culture (hover for description)</strong>{" "}
+                <strong>Culture (click for description)</strong>{" "}
                 <div className="culture-tags">
                   {candidate.culture.cultureTags.map((tag, index) => (
                     <div key={index} className="culture-tag-container">
                       <span
                         className="culture-tag"
-                        onMouseEnter={(e) => {
-                          const popup = e.currentTarget.nextElementSibling;
-                          popup.style.display = 'block';
-                        }}
-                        onMouseLeave={(e) => {
-                          const popup = e.currentTarget.nextElementSibling;
-                          popup.style.display = 'none';
+                        onClick={(e) => {
+                          handleCultureTagClick(tag, candidate.culture.cultureDescriptions?.[index] || 'No description available')
                         }}
                       >
                         {tag}
@@ -2116,6 +2119,15 @@ const CandidateViewer = ({
           onViewSaved={handleViewSaved}
           candidateName={capitalizeName(filteredCandidates[currentIndex].firstName)}
         />
+      )}
+      {showCulturePopup && (
+        <div className="popup-overlay" onClick={() => setShowCulturePopup(false)}>
+          <div className="culture-popup" onClick={(e) => e.stopPropagation()}>
+            <div className="culture-popup-tag">{popupContent.tag}</div>
+            <div className="culture-popup-description">{popupContent.description}</div>
+            <button className="culture-popup-close" onClick={() => setShowCulturePopup(false)}>×</button>
+          </div>
+        </div>
       )}
     </div>
   );
