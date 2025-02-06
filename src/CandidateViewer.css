@@ -298,6 +298,10 @@ logo-header {
   min-width: 140px; /* Minimum width to prevent squishing */
   width: 100%;
   position: relative;
+  background: #ffffff;
+  border-radius: 12px; /* Match the video container's border radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Match the video container's shadow */
+  margin-bottom: 10px;
 }
 
 .filter-title {
@@ -507,12 +511,12 @@ logo-header {
   left: 0;
   right: 0;
   background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px; /* Match the video container's border radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Match the video container's shadow */
   z-index: 1000;
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
-  border-radius: 4px;
+  padding: 10px; /* Add padding for better spacing */
 }
 
 .option-item {
@@ -565,12 +569,12 @@ logo-header {
   left: 0;
   right: 0;
   background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px; /* Match the video container's border radius */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Match the video container's shadow */
   z-index: 1000;
   max-height: 300px;
   overflow-y: auto;
-  border-radius: 4px;
+  padding: 10px; /* Add padding for better spacing */
 }
 
 .filter-search {

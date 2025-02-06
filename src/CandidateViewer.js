@@ -337,7 +337,7 @@ const CandidateViewer = ({
           !filters.culture.length ||
           candidateCultureTags.some((tag) => filters.culture.includes(tag));
 
-          const matchesPosition =
+        const matchesPosition =
           !filters.position.length || // Ensure this condition is correct
           filters.position.includes(candidate.position); // Check if candidate's position matches the filter    
 
@@ -986,23 +986,25 @@ const CandidateViewer = ({
           <div className="email-address-container">
             <p className="email-address">{email}</p>
           </div>
-          <button className="meet-option-button" onClick={() => handleCopy(email)}>
+          <button className="meet-option-button" onClick={() => handleCopy(email)}
+            style={{
+              fontWeight: 600,
+            }}
+          >
             Copy Email
           </button>
           <div className="email-content-container">
-            {/* <textarea
-              readOnly
-              value={formatEmailContent()}
-              className="email-textarea"
-            /> */}
             <img
-            src={previewImage}
-            alt="Email Preview"
-            style={{ width: '100%', borderRadius: '8px' }}
-          />
+              src={previewImage}
+              alt="Email Preview"
+              style={{ width: '100%', borderRadius: '8px' }}
+            />
           </div>
           <button
             className="meet-option-button"
+            style={{
+              fontWeight: 600,
+            }}
             onClick={() => handleCopy(formatEmailContent())}
           >
             Copy Preview Text
@@ -1010,6 +1012,9 @@ const CandidateViewer = ({
           <br></br>
           <button
             className="meet-option-button"
+            style={{
+              fontWeight: 600,
+            }}
             onClick={handleSendEmail}
             disabled={isSending}
           >
@@ -1589,7 +1594,7 @@ const CandidateViewer = ({
                 current.includes('University')
                   ? []
                   : ['University']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1605,7 +1610,7 @@ const CandidateViewer = ({
                 current.includes('Major')
                   ? []
                   : ['Major']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1624,7 +1629,7 @@ const CandidateViewer = ({
                 current.includes('Graduation Year')
                   ? []
                   : ['Graduation Year']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1643,7 +1648,7 @@ const CandidateViewer = ({
                 current.includes('Skills')
                   ? []
                   : ['Skills']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1662,8 +1667,8 @@ const CandidateViewer = ({
                 current.includes('Culture')
                   ? current.filter((cat) => cat !== 'Culture')
                   : [...current, 'Culture']
-                );
-              }}
+              );
+            }}
           />
           {/* <FilterOptions
             title="Position"
@@ -1732,14 +1737,14 @@ const CandidateViewer = ({
           <div className="candidate-name-display">
             <span className="candidate-name" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               {capitalizeName(candidate.firstName)}{' '}{capitalizeName(candidate.lastName)}
-              <img 
-                src={verified} 
-                alt="Verified" 
-                style={{ 
-                  width: '50px', 
+              <img
+                src={verified}
+                alt="Verified"
+                style={{
+                  width: '50px',
                   height: '50px',
                   objectFit: 'contain'
-                }} 
+                }}
               />
             </span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}> {/* Reduced gap to 5px */}
@@ -1747,7 +1752,7 @@ const CandidateViewer = ({
                 className="draft-button"
                 onClick={() => setShowMeetOptions(true)}
                 aria-label="Draft candidate for interview"
-                style={{ 
+                style={{
                   height: '54px', // Increased height
                   padding: '0 24px',
                   boxSizing: 'border-box',
@@ -1763,7 +1768,7 @@ const CandidateViewer = ({
                 className="save-button"
                 onClick={() => handleSaveOption()}
                 aria-label="Draft candidate for interview"
-                style={{ 
+                style={{
                   height: '54px', // Increased height
                   padding: '0 24px',
                   boxSizing: 'border-box',
@@ -2039,8 +2044,8 @@ const CandidateViewer = ({
 
       {showResume && (
         <>
-          <div 
-            className="resume-overlay" 
+          <div
+            className="resume-overlay"
             onClick={() => setShowResume(false)}
             style={{
               position: 'fixed',
@@ -2078,7 +2083,7 @@ const CandidateViewer = ({
                 borderRadius: '4px'
               }}
             ></iframe>
-            <button 
+            <button
               className="meet-option-button"
               onClick={() => setShowResume(false)}
             >
