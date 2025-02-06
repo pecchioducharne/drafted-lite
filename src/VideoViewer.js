@@ -10,61 +10,99 @@ import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const EmailPopup = ({ email, onClose }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 1000,
-    }} onClick={onClose}>
-      <div style={{
-        backgroundColor: '#F8F9FF',
-        borderRadius: '20px',
-        padding: '24px',
-        maxWidth: '90%',
-        width: '400px',
-        position: 'relative',
-        boxShadow: '0 4px 20px rgba(99, 102, 241, 0.2)',
-      }} onClick={(e) => e.stopPropagation()}>
-        <div style={{ textAlign: 'left' }}>
-          <h4 style={{
-            color: '#6366F1',
-            fontSize: '1.2rem',
-            margin: '0 0 12px 0',
+    <div 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 999
+      }}
+      onClick={onClose}
+    >
+      <div
+        style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          background: 'white',
+          padding: '2rem',
+          borderRadius: '16px',
+          boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
+          zIndex: 1000,
+          maxWidth: '500px',
+          width: '90%'
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h3
+          style={{
+            fontSize: '1.5rem',
+            marginTop: 0,
+            color: '#2d3748',
+            fontWeight: '600'
+          }}
+        >
+          Candidate Email
+        </h3>
+        <p
+          style={{
+            fontSize: '1.1rem',
+            lineHeight: '1.6',
+            color: '#4a5568',
+            margin: '1rem 0'
+          }}
+        >
+          {email}
+        </p>
+        <button
+          style={{
+            width: '100%',
+            padding: '0.75rem',
+            background: copied ? '#48BB78' : '#00BF63',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            fontSize: '1rem',
             fontWeight: '600',
-          }}>Candidate Email</h4>
-          <p style={{
-            color: '#4B5563',
-            fontSize: '0.95rem',
-            lineHeight: '1.5',
-            margin: 0,
-          }}>{email}</p>
-          <button style={{
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            marginTop: '1rem'
+          }}
+          onClick={handleCopy}
+        >
+          {copied ? 'Copied!' : 'Copy Email'}
+        </button>
+        <button
+          style={{
             position: 'absolute',
-            top: '16px',
-            right: '16px',
+            top: '1rem',
+            right: '1rem',
             background: 'none',
             border: 'none',
-            fontSize: '24px',
-            color: '#6B7280',
+            fontSize: '1.5rem',
             cursor: 'pointer',
-            padding: '4px',
-            lineHeight: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '32px',
-            height: '32px',
-            borderRadius: '50%',
-            transition: 'background-color 0.2s ease',
-          }} onClick={onClose}>×</button>
-        </div>
+            color: '#4a5568'
+          }}
+          onClick={onClose}
+        >
+          ×
+        </button>
       </div>
     </div>
   );
@@ -146,7 +184,8 @@ const VideoViewer = () => {
     right: '-50%',
     width: '100%',
     height: '100%',
-    background: 'radial-gradient(circle at center, rgba(0, 191, 99, 0.03) 0%, rgba(0, 191, 99, 0.01) 50%, transparent 70%)',
+    background:
+      'radial-gradient(circle at center, rgba(0, 191, 99, 0.03) 0%, rgba(0, 191, 99, 0.01) 50%, transparent 70%)',
     borderRadius: '50%',
     zIndex: 0,
   };
@@ -189,6 +228,12 @@ const VideoViewer = () => {
     gap: '0.75rem',
     boxShadow: '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)',
     transition: 'all 0.2s ease',
+    margin: '0',
+    width: 'auto',
+    minWidth: 'fit-content',
+    flexShrink: '0',
+    whiteSpace: 'nowrap',
+    alignSelf: 'center'
   };
 
   const videoButtonsStyle = {
@@ -216,13 +261,15 @@ const VideoViewer = () => {
 
   const infoSectionStyle = {
     display: 'grid',
-    gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+    gridTemplateColumns:
+      window.innerWidth <= 768
+        ? '1fr'
+        : 'repeat(auto-fit, minmax(300px, 1fr))',
     gap: window.innerWidth <= 768 ? '1.5rem' : '2.5rem',
     padding: window.innerWidth <= 768 ? '1.5rem' : '2.5rem',
     background: 'rgba(255, 255, 255, 0.8)',
     backdropFilter: 'blur(10px)',
     borderRadius: '20px',
-    // boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06), inset 0 0 0 1px rgba(255, 255, 255, 0.5)',
     margin: '1rem 0',
     position: 'relative',
     zIndex: 1,
@@ -360,7 +407,9 @@ const VideoViewer = () => {
   };
 
   const handleCultureTagClick = (tag, description) => {
-    setSelectedCulture({ tag, description });
+    if (description) {  // Only show popup if there's a description
+      setSelectedCulture({ tag, description });
+    }
   };
 
   const handleCloseCulturePopup = () => {
@@ -368,11 +417,7 @@ const VideoViewer = () => {
   };
 
   const handleMeetCandidateClick = () => {
-    if (candidate.email) {
-      setShowEmailPopup(true);
-    } else {
-      alert("Email not available");
-    }
+    setShowEmailPopup(true);
   };
 
   const handleCloseEmailPopup = () => {
@@ -394,10 +439,10 @@ const VideoViewer = () => {
       <div className="drafted-logo-container" onClick={handleLogoClick}>
         <DraftedLogo />
       </div>
-      
+
       <div style={mainContainerStyle}>
         <div style={blobStyle} />
-        
+
         <div style={videoContainerStyle}>
           {videoUrls[currentVideoIndex] ? (
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -406,12 +451,29 @@ const VideoViewer = () => {
                 controls={true}
                 width="100%"
                 height="100%"
-                autoplay={false}
+                autoplay={true}
                 onEnded={handleVideoEnd}
                 onReady={() => setVideoLoading(false)}
                 playsinline={true}
                 config={{
-                  youtube: { playerVars: { vq: "small" } },
+                  youtube: {
+                    playerVars: {
+                      playsinline: 1,
+                      modestbranding: 1,
+                      rel: 0,
+                      showinfo: 0,
+                      autoplay: 1,
+                      mute: 1,
+                      vq: "small"
+                    }
+                  },
+                  vimeo: {
+                    playerOptions: {
+                      playsinline: true,
+                      autoplay: true,
+                      muted: true
+                    }
+                  }
                 }}
               />
               {videoLoading && (
@@ -439,7 +501,7 @@ const VideoViewer = () => {
         <div style={nameDisplayStyle}>
           <span>{candidate.firstName || "N/A"} {candidate.lastName || "N/A"}</span>
           <button
-            onClick={handleMeetCandidateClick}
+            onClick={() => setShowEmailPopup(true)}
             style={draftButtonStyle}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -450,7 +512,7 @@ const VideoViewer = () => {
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)';
             }}
           >
-            
+            {`Meet ${candidate.firstName || "Candidate"}`}
           </button>
         </div>
 
@@ -474,11 +536,11 @@ const VideoViewer = () => {
 
         <div style={infoSectionStyle}>
           <div style={profileFieldStyle}>
-            <strong style={{ 
-              color: '#555', 
+            <strong style={{
+              color: '#555',
               fontSize: '1.3rem',
-              textTransform: 'uppercase', 
-              letterSpacing: '0.5px' 
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
             }}>
               University
             </strong>
@@ -488,11 +550,11 @@ const VideoViewer = () => {
           </div>
 
           <div style={profileFieldStyle}>
-            <strong style={{ 
-              color: '#555', 
+            <strong style={{
+              color: '#555',
               fontSize: '1.3rem',
-              textTransform: 'uppercase', 
-              letterSpacing: '0.5px' 
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
             }}>
               Major
             </strong>
@@ -503,11 +565,11 @@ const VideoViewer = () => {
 
           {(candidate.linkedInURL || candidate.gitHubURL) && (
             <div style={profileFieldStyle}>
-              <strong style={{ 
-                color: '#555', 
+              <strong style={{
+                color: '#555',
                 fontSize: '1.3rem',
-                textTransform: 'uppercase', 
-                letterSpacing: '0.5px' 
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
               }}>
                 Social
               </strong>
@@ -537,11 +599,11 @@ const VideoViewer = () => {
           )}
 
           <div style={profileFieldStyle}>
-            <strong style={{ 
-              color: '#555', 
+            <strong style={{
+              color: '#555',
               fontSize: '1.3rem',
-              textTransform: 'uppercase', 
-              letterSpacing: '0.5px' 
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
             }}>
               Graduation Year
             </strong>
@@ -551,11 +613,11 @@ const VideoViewer = () => {
           </div>
 
           <div style={profileFieldStyle}>
-            <strong style={{ 
-              color: '#555', 
+            <strong style={{
+              color: '#555',
               fontSize: '1.3rem',
-              textTransform: 'uppercase', 
-              letterSpacing: '0.5px' 
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px'
             }}>
               Resume
             </strong>
@@ -587,11 +649,11 @@ const VideoViewer = () => {
 
           {candidate.skills && (
             <div style={profileFieldStyle}>
-              <strong style={{ 
-                color: '#555', 
+              <strong style={{
+                color: '#555',
                 fontSize: '1.3rem',
-                textTransform: 'uppercase', 
-                letterSpacing: '0.5px' 
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
               }}>
                 Skills
               </strong>
@@ -607,11 +669,11 @@ const VideoViewer = () => {
 
           {candidate.culture?.cultureTags && (
             <div style={profileFieldStyle}>
-              <strong style={{ 
-                color: '#555', 
+              <strong style={{
+                color: '#555',
                 fontSize: '1.3rem',
-                textTransform: 'uppercase', 
-                letterSpacing: '0.5px' 
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
               }}>
                 Culture
               </strong>
@@ -620,7 +682,12 @@ const VideoViewer = () => {
                   <span
                     key={index}
                     className="culture-tag"
-                    onClick={() => handleCultureTagClick(tag, candidate.culture.cultureDescriptions?.[tag])}
+                    onClick={() =>
+                      handleCultureTagClick(
+                        tag,
+                        candidate.culture.cultureDescriptions?.[index]
+                      )
+                    }
                   >
                     {tag}
                   </span>
@@ -678,7 +745,7 @@ const VideoViewer = () => {
               borderRadius: '8px',
             }}
           />
-          <button 
+          <button
             onClick={handleToggleResume}
             style={closeResumeButtonStyle}
             onMouseOver={(e) => {
@@ -712,24 +779,69 @@ const VideoViewer = () => {
       )}
 
       {selectedCulture && (
-        <div className="culture-popup-overlay" onClick={handleCloseCulturePopup}>
-          <div className="culture-description-popup" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ 
-              fontSize: '1.5rem', 
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 999
+          }} 
+          onClick={handleCloseCulturePopup}
+        >
+          <div 
+            style={{
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              background: 'white',
+              padding: '2rem',
+              borderRadius: '16px',
+              boxShadow: '0 4px 24px rgba(0, 0, 0, 0.15)',
+              zIndex: 1000,
+              maxWidth: '500px',
+              width: '90%'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{
+              fontSize: '1.5rem',
               marginTop: 0,
               color: '#2d3748',
               fontWeight: '600'
             }}>
               {selectedCulture.tag}
             </h3>
-            <p style={{ 
+            <p style={{
               fontSize: '1.1rem',
               lineHeight: '1.6',
-              color: '#4a5568'
+              color: '#4a5568',
+              margin: '1rem 0',
+              whiteSpace: 'pre-wrap'
             }}>
-              {selectedCulture.description || "No description available."}
+              {selectedCulture.description}
             </p>
-            <button className="close-culture-popup" onClick={handleCloseCulturePopup}>×</button>
+            <button 
+              style={{
+                position: 'absolute',
+                top: '1rem',
+                right: '1rem',
+                background: 'none',
+                border: 'none',
+                fontSize: '1.5rem',
+                cursor: 'pointer',
+                color: '#4a5568'
+              }}
+              onClick={handleCloseCulturePopup}
+            >
+              ×
+            </button>
           </div>
         </div>
       )}
