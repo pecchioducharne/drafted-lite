@@ -1880,6 +1880,33 @@ const CandidateViewer = ({
                 </div>
               </div>
             )}
+            {candidate.linkedInURL || candidate.gitHubURL ? (
+              <div className="profile-field">
+                <strong>Social</strong>
+                <div className="social-links">
+                  {candidate.linkedInURL && (
+                    <a
+                      href={candidate.linkedInURL.startsWith('http') ? candidate.linkedInURL : `https://${candidate.linkedInURL}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-link"
+                    >
+                      <img src={linkedinIcon} alt="LinkedIn" />
+                    </a>
+                  )}
+                  {candidate.gitHubURL && (
+                    <a
+                      href={candidate.gitHubURL.startsWith('http') ? candidate.gitHubURL : `https://${candidate.gitHubURL}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-link"
+                    >
+                      <img src={githubIcon} alt="GitHub" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ) : null}
             {candidate.position && (
               <div className="profile-field">
                 <strong>Position</strong>{" "}
