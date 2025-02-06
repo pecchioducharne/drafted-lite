@@ -2951,3 +2951,31 @@ logo-header {
   cursor: not-allowed;
 }
 
+.resume-button {
+  background: linear-gradient(to right, #0073b1, #005f8d); /* Blue gradient background */
+  color: white;
+  padding: 10px 20px; /* Reduced padding for smaller width */
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  display: inline-flex; /* Changed to inline-flex to shrink to fit content */
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.resume-button:hover {
+  background: linear-gradient(to right, #005f8d, #004a6b); /* Darker blue gradient on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.resume-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to right, #004a6b, #00354a); /* Even darker gradient on click */
+}
+

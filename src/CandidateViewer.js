@@ -337,9 +337,9 @@ const CandidateViewer = ({
           !filters.culture.length ||
           candidateCultureTags.some((tag) => filters.culture.includes(tag));
 
-        const matchesPosition =
-          !filters.position.length ||
-          filters.position.includes(candidate.position);
+          const matchesPosition =
+          !filters.position.length || // Ensure this condition is correct
+          filters.position.includes(candidate.position); // Check if candidate's position matches the filter    
 
         return (
           matchesUniversity &&
@@ -1241,7 +1241,7 @@ const CandidateViewer = ({
                 );
               }}
             />
-            <FilterOptions
+            {/* <FilterOptions
               title="Position"
               options={["Fulltime", "Internship"]}
               selectedOptions={filters.position}
@@ -1259,7 +1259,7 @@ const CandidateViewer = ({
                     : ['Position']
                 );
               }}
-            />
+            /> */}
           </div>
         </div>
 
@@ -1665,7 +1665,7 @@ const CandidateViewer = ({
                 );
               }}
           />
-          <FilterOptions
+          {/* <FilterOptions
             title="Position"
             options={["Fulltime", "Internship"]}
             selectedOptions={filters.position}
@@ -1683,7 +1683,7 @@ const CandidateViewer = ({
                   : ['Position']
                 );
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className="main-and-other-videos-container">
@@ -1880,7 +1880,7 @@ const CandidateViewer = ({
                 <strong>Position</strong>{" "}
                 <a
                   href={candidate.position}
-                  className="candidate-linkedin clickable-filter"
+                  className="candidate-major clickable-filter"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -1906,14 +1906,14 @@ const CandidateViewer = ({
               <strong>Resume</strong>
               {candidate.resume ? (
                 <button
-                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                  className="resume-button"
                   onClick={handleToggleResume}
                 >
                   View Resume
                 </button>
               ) : (
                 <button
-                  className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+                  className="resume-button"
                   onClick={emailDraft} // Reuse the draft function for this button
                 >
                   No Resume, Draft to Request
@@ -2079,23 +2079,8 @@ const CandidateViewer = ({
               }}
             ></iframe>
             <button 
-              className="close-resume" 
+              className="meet-option-button"
               onClick={() => setShowResume(false)}
-              style={{
-                marginTop: '10px',
-                padding: '8px 16px',
-                backgroundColor: '#53ad7a', // Changed to green
-                color: 'white', // Added white text
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                alignSelf: 'center',
-                fontWeight: '500',
-                transition: 'background-color 0.2s ease',
-                hover: {
-                  backgroundColor: '#46a067'
-                }
-              }}
             >
               Close Resume
             </button>
