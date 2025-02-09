@@ -44,6 +44,12 @@ const capitalizeName = (name) => {
     .join(' ');
 };
 
+// Define the capitalizeFirst function at the top of your file
+const capitalizeFirst = (str) => {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 const clickSound = new Audio('/send_sound.mp3');
 
 // const ses = new AWS.SES({ apiVersion: '2010-12-01' });
@@ -1246,14 +1252,14 @@ const CandidateViewer = ({
                 );
               }}
             />
-            {/* <FilterOptions
+            <FilterOptions
               title="Position"
-              options={["Fulltime", "Internship"]}
-              selectedOptions={filters.position}
+              options={["Fulltime", "Internship"]} // Display capitalized options
+              selectedOptions={filters.position.map(capitalizeFirst)} // Capitalize for display
               onSelect={(selected) =>
                 setFilters((prevFilters) => ({
                   ...prevFilters,
-                  position: selected,
+                  position: selected.map(pos => pos.toLowerCase()), // Store lowercase
                 }))
               }
               isOpen={openFilterCategories.includes('Position')}
@@ -1264,7 +1270,7 @@ const CandidateViewer = ({
                     : ['Position']
                 );
               }}
-            /> */}
+            />
           </div>
         </div>
 
@@ -1334,7 +1340,7 @@ const CandidateViewer = ({
                 </p>
                 {candidate.position && (
                   <p className="candidate-position">
-                    Position: {candidate.position}
+                    Seeking {candidate.position} position
                   </p>
                 )}
                 {/* Existing skills container */}
@@ -1667,17 +1673,17 @@ const CandidateViewer = ({
                 current.includes('Culture')
                   ? current.filter((cat) => cat !== 'Culture')
                   : [...current, 'Culture']
-              );
+                );
             }}
           />
-          {/* <FilterOptions
+          <FilterOptions
             title="Position"
-            options={["Fulltime", "Internship"]}
-            selectedOptions={filters.position}
+            options={["Fulltime", "Internship"]} // Display capitalized options
+            selectedOptions={filters.position.map(capitalizeFirst)} // Capitalize for display
             onSelect={(selected) =>
               setFilters((prevFilters) => ({
                 ...prevFilters,
-                position: selected,
+                position: selected.map(pos => pos.toLowerCase()), // Store lowercase
               }))
             }
             isOpen={openFilterCategories.includes('Position')}
@@ -1686,9 +1692,9 @@ const CandidateViewer = ({
                 current.includes('Position')
                   ? []
                   : ['Position']
-                );
+              );
             }}
-          /> */}
+          />
         </div>
       </div>
       <div className="main-and-other-videos-container">
