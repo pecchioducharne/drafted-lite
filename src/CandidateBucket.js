@@ -99,15 +99,19 @@ const CandidateBucket = () => {
   return (
     <div className="saved-candidates-page">
       <div className="top-bar">
-        <div className="back-button" onClick={() => navigate('/')}>
+        <div className="back-button" onClick={() => window.open('https://drafted-beta.netlify.app/', '_blank')}>
           <FiArrowLeft size={20} />
-          <span>Back</span>
+          <span>Sign up to see all candidates</span>
         </div>
-        <DraftedLogo onClick={() => window.open('https://drafted.webflow.io/', '_blank')} />
+        <a href="https://joindrafted.com" target="_blank" rel="noopener noreferrer">
+          <DraftedLogo />
+        </a>
       </div>
-      
       <div className="saved-candidates-container">
-        <h2>Candidate Pool</h2>
+        <h2>Meet our top candidates.</h2>
+        <h3>
+          Explore by <span className="skill-tag">skills</span> and <span className="culture-tag">culture fit</span> tags.
+        </h3>
         <div className="active-filters">
           {Object.entries(getFiltersFromURL()).map(([key, value]) => (
             <span key={key} className="filter-tag">
