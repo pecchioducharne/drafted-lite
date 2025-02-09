@@ -233,7 +233,9 @@ const VideoViewer = () => {
     minWidth: 'fit-content',
     flexShrink: '0',
     whiteSpace: 'nowrap',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    pointerEvents: 'auto',
+    zIndex: 10,
   };
 
   const videoButtonsStyle = {
@@ -501,8 +503,11 @@ const VideoViewer = () => {
         <div style={nameDisplayStyle}>
           <span>{candidate.firstName || "N/A"} {candidate.lastName || "N/A"}</span>
           <button
-            onClick={() => setShowEmailPopup(true)}
-            style={draftButtonStyle}
+            onClick={() => window.open('https://drafted-beta.netlify.app/', '_blank')}
+            style={{
+              ...draftButtonStyle,
+              pointerEvents: 'auto',
+            }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
               e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 191, 99, 0.3)';
@@ -675,7 +680,7 @@ const VideoViewer = () => {
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
               }}>
-                Culture
+                Culture (click for description)
               </strong>
               <div className="tags-container">
                 {candidate.culture.cultureTags.map((tag, index) => (
