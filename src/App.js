@@ -44,7 +44,7 @@ const App = () => {
             <Route path="/gail-bucket" element={<GailBucket />} />
             <Route path="/candidate/:id" element={<VideoViewer />} />
             <Route path="/chat" element={<ChatComponent />} />
-            <Route path="/engineering-bucket" element={<CandidateBucket />} />
+            <Route path="/bucket" element={<CandidateBucket />} />
             <Route path="/code" element={<CodePage />} />{" "}
             <Route path="/" element={<Login />} />
           </Routes>

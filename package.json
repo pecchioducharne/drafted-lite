@@ -22,7 +22,7 @@
     "react-lazy-load-image-component": "^1.6.0",
     "react-lottie": "^1.2.4",
     "react-player": "^2.14.1",
-    "react-router-dom": "^6.23.0",
+    "react-router-dom": "^6.29.0",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
     "react-swipeable": "^7.0.1",

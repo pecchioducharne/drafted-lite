@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
-import { doc, getDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import './SavedCandidates.css';
 import { getUniversityLogo } from './UniversityLogoMap';
@@ -9,43 +9,47 @@ import { getUniversityLogo } from './UniversityLogoMap';
 const CandidateBucket = () => {
   const [candidates, setCandidates] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCulture, setSelectedCulture] = useState(null);
   const navigate = useNavigate();
-  
-  // List of specific emails
-  const candidateEmails = [
-    'kbisani@usc.edu',
-    'achang24@usc.edu',
-    'jdiaz651@fiu.edu',
-    'dlaco006@fiu.edu',
-    'osoli009@fiu.edu',
-    'dhern388@fiu.edu',
-    'kwrig082@fiu.edu',
-    'grodr358@fiu.edu',
-    'hcruz025@fiu.edu',
-    'airiz024@fiu.edu',
-    'fjarq005@fiu.edu',
-    'ahirs017@fiu.edu',
-    'acsoteldo01@gmail.com',
-    'jsuri018@fiu.edu',
-    'syuanhew@usc.edu'
-  ];
+  const location = useLocation();
+
+  // Parse URL parameters
+  const getFiltersFromURL = () => {
+    const params = new URLSearchParams(location.search);
+    const filters = {};
+    
+    // Add all possible filter parameters here
+    ['major', 'position', 'graduationYear', 'university'].forEach(param => {
+      if (params.has(param)) {
+        filters[param] = params.get(param);
+      }
+    });
+    
+    return filters;
+  };
 
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        // Fetch each candidate's details
-        const candidatesData = await Promise.all(
-          candidateEmails.map(async (email) => {
-            const candidateDoc = await getDoc(doc(db, "drafted-accounts", email));
-            if (candidateDoc.exists()) {
-              return { id: email, ...candidateDoc.data() };
-            }
-            return null;
-          })
-        );
+        const filters = getFiltersFromURL();
         
-        // Filter out any null values (in case some docs don't exist)
-        setCandidates(candidatesData.filter(candidate => candidate !== null));
+        // Build query based on filters
+        let q = collection(db, "drafted-accounts");
+        
+        // Add where clauses based on filters
+        Object.entries(filters).forEach(([key, value]) => {
+          q = query(q, where(key, '==', value));
+        });
+
+        console.log("Query:", q);
+        
+        const querySnapshot = await getDocs(q);
+        const candidatesData = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        
+        setCandidates(candidatesData);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching candidates:", error);
@@ -54,7 +58,7 @@ const CandidateBucket = () => {
     };
 
     fetchCandidates();
-  }, []);
+  }, [location.search]); // Re-fetch when URL parameters change
 
   const handleCandidateClick = (candidateId) => {
     navigate(`/candidate/${candidateId}`);
@@ -87,52 +91,83 @@ const CandidateBucket = () => {
     );
   }
 
+  // Filter candidates to only show those with all 3 videos recorded
+  const filteredCandidates = candidates.filter(candidate => 
+    candidate.video1 && candidate.video2 && candidate.video3
+  );
+
   return (
     <div className="saved-candidates-page">
       <div className="top-bar">
         <div className="back-button" onClick={() => navigate('/')}>
-          <FiArrowLeft size={24} />
-          <span>Sign Up</span>
+          <FiArrowLeft size={20} />
+          <span>Back</span>
         </div>
-        <div className="drafted-logo-container" onClick={handleLogoClick}>
-          <DraftedLogo />
-        </div>
+        <DraftedLogo onClick={() => window.open('https://drafted.webflow.io/', '_blank')} />
       </div>
+      
       <div className="saved-candidates-container">
-        <h2>Top 15 Software Engineer Candidates</h2>
-        <div className="candidates-grid">
-          {candidates.map((candidate) => (
-            <div 
-              key={candidate.id} 
-              className="candidate-card"
-              onClick={() => handleCandidateClick(candidate.id)}
-            >
-              <div className="thumbnail-container">
-                <img
-                  src={candidate.thumbnail || '/default-avatar.png'}
-                  alt={`${candidate.firstName} ${candidate.lastName}`}
-                  className="candidate-thumbnail"
-                />
-              </div>
-              <div className="candidate-info">
-                <h3>{candidate.firstName} {candidate.lastName}</h3>
-                <div className="university-container">
-                  <img
-                    src={getUniversityLogo(candidate.university)}
-                    alt={`${candidate.university} logo`}
-                    className="university-logo"
-                  />
-                  <p className="university">{candidate.university}</p>
-                </div>
-                <p className="major">{candidate.major}</p>
-                <p className="grad-year">{candidate.graduationYear}</p>
-              </div>
-            </div>
+        <h2>Candidate Pool</h2>
+        <div className="active-filters">
+          {Object.entries(getFiltersFromURL()).map(([key, value]) => (
+            <span key={key} className="filter-tag">
+              {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value.charAt(0).toUpperCase() + value.slice(1)}`}
+            </span>
           ))}
         </div>
+        
+        <div className="candidates-grid">
+          {filteredCandidates.map((candidate) => {
+            console.log("Candidate:", candidate); // Debugging: Log candidate data
+            return (
+              <div 
+                key={candidate.id} 
+                className="candidate-card"
+                onClick={() => handleCandidateClick(candidate.id)}
+              >
+                <div className="thumbnail-container">
+                  <img
+                    src={candidate.thumbnail || '/default-avatar.png'}
+                    alt={`${candidate.firstName} ${candidate.lastName}`}
+                    className="candidate-thumbnail"
+                  />
+                </div>
+                <div className="candidate-info">
+                  <h3>{candidate.firstName} {candidate.lastName}</h3>
+                  <div className="university-container">
+                    <img
+                      src={getUniversityLogo(candidate.university)}
+                      alt={`${candidate.university} logo`}
+                      className="university-logo"
+                    />
+                    <p className="university">{candidate.university}</p>
+                  </div>
+                  <p className="major">{candidate.major}</p>
+                  <p className="grad-year">{candidate.graduationYear}</p>
+                  
+                  {/* Skills Tags */}
+                  <div className="skills-tags">
+                    {candidate.skills && candidate.skills.map((skill, index) => (
+                      <span key={index} className="skill-tag">{skill}</span>
+                    ))}
+                  </div>
+
+                  {/* Culture Tags */}
+                  <div className="culture-tags">
+                    {candidate.culture && candidate.culture.cultureTags && candidate.culture.cultureTags.map((tag, index) => (
+                      <span key={index} className="culture-tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
+      
+      {/* Culture popup remains the same */}
     </div>
   );
 };
 
-export default CandidateBucket; 
+export default CandidateBucket;

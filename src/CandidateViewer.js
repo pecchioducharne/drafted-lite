@@ -1483,6 +1483,10 @@ const CandidateViewer = ({
     setShowCulturePopup(true);
   }
 
+  const handleBackClick = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
   return (
     <div className="profile-dashboard">
       <div className="header">
@@ -2152,6 +2156,9 @@ const CandidateViewer = ({
           </div>
         </div>
       )}
+      <button onClick={handleBackClick} style={{ marginBottom: '20px' }}>
+        Back
+      </button>
     </div>
   );
 };

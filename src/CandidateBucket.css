@@ -135,4 +135,30 @@
 
 .drafted-logo-container:hover {
   opacity: 0.8;
+}
+
+.active-filters {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-tag {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 4px;
+  border-radius: 20px;
+  background-color: #e0f7fa;
+  color: #00796b;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: capitalize;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.filter-tag:hover {
+  background-color: #b2ebf2;
+  transform: translateY(-2px);
 } 
