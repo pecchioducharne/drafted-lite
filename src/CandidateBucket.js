@@ -139,12 +139,15 @@ const CandidateBucket = () => {
                 <div className="candidate-info">
                   <h3>{candidate.firstName} {candidate.lastName}</h3>
                   <div className="university-container">
-                    <img
-                      src={getUniversityLogo(candidate.university)}
-                      alt={`${candidate.university} logo`}
-                      className="university-logo"
-                    />
-                    <p className="university">{candidate.university}</p>
+                    {candidate.university && (
+                      <>
+                        <img
+                          src={getUniversityLogo(candidate.university)}
+                          className="university-logo"
+                        />
+                        <p className="university">{candidate.university}</p>
+                      </>
+                    )}
                   </div>
                   <p className="major">{candidate.major}</p>
                   <p className="grad-year">{candidate.graduationYear}</p>

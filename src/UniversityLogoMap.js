@@ -1,9 +1,7 @@
 // UniversityLogoMap.js
 
 import React from 'react';
-
-// Default icon for universities not found in the map
-const defaultUniversityIcon = "https://www.example.com/path/to/default-university-icon.png"; // replace with an actual icon URL
+import schoolIcon from './school-icon.png'; // Adjust the path as necessary
 
 // Map of university names to their logo URLs
 const universityLogos = new Map([
@@ -25,7 +23,7 @@ const universityLogos = new Map([
 
 // Function to get the logo URL by university name, or return the default icon if not found
 export function getUniversityLogo(universityName) {
-  return universityLogos.get(universityName) || defaultUniversityIcon;
+  return universityLogos.get(universityName) || schoolIcon;
 }
 
 export default universityLogos;

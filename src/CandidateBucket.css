@@ -80,8 +80,25 @@
   font-size: 14px;
 }
 
+.university-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.university-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 50%;
+  background-color: #f0f0f0; /* Fallback background color */
+  display: inline-block; /* Ensures space is reserved even if no image is loaded */
+}
+
 .university {
   font-weight: 500;
+  color: #333;
+  margin: 0; /* Ensure no extra margin is added */
 }
 
 .grad-year {
