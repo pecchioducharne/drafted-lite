@@ -925,7 +925,7 @@ const CandidateViewer = ({
 
         // Send email using EmailJS
         await emailjs.send(
-          "drafted_service",
+          "drafted-candidate",
           "company_nudge",
           {
             to_name: firstName,
