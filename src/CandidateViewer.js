@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { db } from "./firebase";
 import { doc, getDoc, collection, getDocs, arrayUnion, updateDoc } from "firebase/firestore";
 import { useSwipeable } from "react-swipeable";
@@ -872,6 +872,70 @@ const CandidateViewer = ({
       });
   };
 
+  const ScrollableTags = ({ tags, type }) => {
+    const scrollRef = useRef(null);
+    const [isScrollable, setIsScrollable] = useState(false);
+    const [showLeftFade, setShowLeftFade] = useState(false);
+    const [showRightFade, setShowRightFade] = useState(false);
+
+    useEffect(() => {
+      const checkScroll = () => {
+        const { current } = scrollRef;
+        if (current) {
+          setIsScrollable(current.scrollWidth > current.clientWidth);
+          setShowLeftFade(current.scrollLeft > 0);
+          setShowRightFade(
+            current.scrollLeft + current.clientWidth < current.scrollWidth
+          );
+        }
+      };
+
+      checkScroll();
+      const ref = scrollRef.current;
+      if (ref) {
+        ref.addEventListener("scroll", checkScroll);
+        window.addEventListener("resize", checkScroll);
+      }
+      return () => {
+        if (ref) {
+          ref.removeEventListener("scroll", checkScroll);
+          window.removeEventListener("resize", checkScroll);
+        }
+      };
+    }, [tags]);
+
+    const containerClass = type === 'skills' ? 'skills-container' : 'culture-container';
+    const tagClass = type === 'skills' ? 'skill-tag' : 'culture-tag';
+
+    return (
+      <div className={`tags-wrapper ${containerClass}`}>
+        {isScrollable && showLeftFade && (
+          <div className="fade-left" />
+        )}
+        <div
+          ref={scrollRef}
+          className="tags-scroll-container"
+        >
+          {tags?.map((tag, index) => (
+            <span
+              key={index}
+              className={tagClass}
+              onClick={(e) => {
+                e.stopPropagation();
+                // Add your tag click handler here if needed
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        {isScrollable && showRightFade && (
+          <div className="fade-right" />
+        )}
+      </div>
+    );
+  };
+
   const EmailPopup = ({ emailContent, onClose }) => {
     const { email, firstName } = filteredCandidates[currentIndex];
     const [isSending, setIsSending] = useState(false);
@@ -1346,23 +1410,19 @@ const CandidateViewer = ({
                     Seeking {candidate.position} position
                   </p>
                 )}
-                {/* Existing skills container */}
-                <div className="skills-container">
-                  {candidate.skills?.map((skill, idx) => (
-                    <span key={idx} className="skill-tag">
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-                {/* New culture container */}
+                {/* Replace the existing skills container with ScrollableTags */}
+                {candidate.skills?.length > 0 && (
+                  <ScrollableTags
+                    tags={candidate.skills}
+                    type="skills"
+                  />
+                )}
+                {/* Replace the existing culture container with ScrollableTags */}
                 {candidate.culture?.cultureTags?.length > 0 && (
-                  <div className="culture-container">
-                    {candidate.culture.cultureTags.map((tag, idx) => (
-                      <span key={idx} className="culture-tag">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                  <ScrollableTags
+                    tags={candidate.culture.cultureTags}
+                    type="culture"
+                  />
                 )}
               </div>
             </div>
@@ -1607,7 +1667,7 @@ const CandidateViewer = ({
                 current.includes('University')
                   ? []
                   : ['University']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1623,7 +1683,7 @@ const CandidateViewer = ({
                 current.includes('Major')
                   ? []
                   : ['Major']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1642,7 +1702,7 @@ const CandidateViewer = ({
                 current.includes('Graduation Year')
                   ? []
                   : ['Graduation Year']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1661,7 +1721,7 @@ const CandidateViewer = ({
                 current.includes('Skills')
                   ? []
                   : ['Skills']
-                );
+              );
             }}
           />
           <FilterOptions
@@ -1680,7 +1740,7 @@ const CandidateViewer = ({
                 current.includes('Culture')
                   ? current.filter((cat) => cat !== 'Culture')
                   : [...current, 'Culture']
-                );
+              );
             }}
           />
           <FilterOptions

@@ -3240,3 +3240,75 @@ logo-header {
     align-items: center;
   }
 }
+
+.tags-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.tags-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding: 4px 0;
+  gap: 8px;
+  background: transparent;
+}
+
+.tags-scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Opera */
+}
+
+.fade-left {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 48px;
+  background: linear-gradient(
+    to right,
+    rgba(248, 249, 255, 1) 0%,
+    rgba(248, 249, 255, 0.9) 15%,
+    rgba(248, 249, 255, 0.6) 30%,
+    rgba(248, 249, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.fade-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 48px;
+  background: linear-gradient(
+    to left,
+    rgba(248, 249, 255, 1) 0%,
+    rgba(248, 249, 255, 0.9) 15%,
+    rgba(248, 249, 255, 0.6) 30%,
+    rgba(248, 249, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Keep your existing skill-tag and culture-tag styles */
+.skill-tag, .culture-tag {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+/* Mobile optimization */
+@media screen and (max-width: 768px) {
+  .fade-left, .fade-right {
+    width: 30px;
+  }
+}
