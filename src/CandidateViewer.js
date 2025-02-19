@@ -839,6 +839,13 @@ const CandidateViewer = ({
     }));
   };
 
+  const handlePositionClick = (position) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      position: [position],
+    }));
+  };
+
   const handleUniversityClickFromVideo = (university) => {
     setFilters({ university: [university], major: [], graduationYear: [] });
     setShowGridView(true); // Go back to the grid/homepage view
@@ -1406,7 +1413,9 @@ const CandidateViewer = ({
                   Class of {candidate.graduationYear}
                 </p>
                 {candidate.position && (
-                  <p className="candidate-position">
+                  <p className="candidate-position clickable-filter"
+                    onClick={() => handlePositionClick(candidate.position)}
+                  >
                     Seeking {candidate.position} position
                   </p>
                 )}

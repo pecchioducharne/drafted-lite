@@ -1406,7 +1406,7 @@ logo-header {
   font-weight: 700;
   font-family: 'Poppins', sans-serif;
   margin-bottom: 5px;
-  color: #00ab59;
+  color: black;
 }
 
 .candidate-university {
@@ -1419,17 +1419,17 @@ logo-header {
 
 .candidate-major {
   font-size: 1.2em;
-  font-weight: 600;
+  font-weight: 500;
   font-family: 'Poppins', sans-serif;
-  color: black;
+  color: #666;
   margin-bottom: 5px;
 }
 
 .candidate-grad-year {
-  font-size: 1.2em;
-  font-weight: 600;
+  font-size: 1.0em;
+  font-weight: 500;
   font-family: 'Poppins', sans-serif;
-  color: black;
+  color: #666;
 }
 
 .cover-image, .no-video-image {
