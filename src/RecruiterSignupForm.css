@@ -66,6 +66,7 @@ select {
   border: 1px solid #ccc; /* Border style */
   background-color: #fff; /* Background color */
   transition: border-color 0.3s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 .container {
