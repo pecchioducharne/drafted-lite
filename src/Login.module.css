@@ -38,7 +38,7 @@
   border-radius: 5px;
   box-sizing: border-box;
   font-size: x-large;
-  font-family: inherit; /* Use browser default font */
+  font-family: 'Inter', sans-serif; /* Use browser default font */
 }
 
 .button {

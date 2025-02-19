@@ -1106,19 +1106,22 @@ const CandidateViewer = ({
 
         {showPopup && (
           <div className="nav-popup">
-            <h2>Welcome to Drafted!</h2>
+            <h2>Let's get drafting.</h2>
             <p>We make it easy and fun to build your team. Fast.</p>
             <ul>
               <p>
-                <li>Filter candidates to find your next hire quickly</li>
-                <li>Easily view candidate information</li>
-                <li>Click "🤝 Meet" to connect.</li>
+                <li>Filter candidates to find your next hire quickly.</li>
+                <li>Easily view candidate information.</li>
+                <li>View personalized culture match tags.</li>
+                <li>Click <strong>🤝 Meet</strong> to schedule interview.</li>
               </p>
             </ul>
             <br />
-            <button className="navigation-button" onClick={handleClosePopup}>
-              Close
-            </button>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <button className="draft-button" onClick={handleClosePopup}>
+                Close
+              </button>
+            </div>
           </div>
         )}
 
@@ -1604,7 +1607,7 @@ const CandidateViewer = ({
                 current.includes('University')
                   ? []
                   : ['University']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1620,7 +1623,7 @@ const CandidateViewer = ({
                 current.includes('Major')
                   ? []
                   : ['Major']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1639,7 +1642,7 @@ const CandidateViewer = ({
                 current.includes('Graduation Year')
                   ? []
                   : ['Graduation Year']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1658,7 +1661,7 @@ const CandidateViewer = ({
                 current.includes('Skills')
                   ? []
                   : ['Skills']
-              );
+                );
             }}
           />
           <FilterOptions

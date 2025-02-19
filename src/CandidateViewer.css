@@ -1338,7 +1338,7 @@ logo-header {
 
 .nav-popup h2 {
   margin-top: 0;
-  font-size: x-large;
+  font-size: xxx-large;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   color: #333;
@@ -1346,7 +1346,7 @@ logo-header {
 
 .nav-popup p {
   margin-top: 0;
-  font-size: large;
+  font-size: x-large;
   color: #333;
 }
 
@@ -1839,7 +1839,7 @@ logo-header {
 .nav-popup h2 {
   margin-top: 0;
   color: #333;
-  font-size: 1.2em;
+  font-size: 1.7em;
   /* Larger title for visibility */
 }
 
