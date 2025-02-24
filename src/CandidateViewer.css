@@ -1574,7 +1574,7 @@ logo-header {
 
 .draft-button:hover {
   background: linear-gradient(to right, #1a8046, #74a346);
-  transform: translateY(-1px);
+  transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(34, 166, 90, 0.3);
 }
 
@@ -1839,7 +1839,14 @@ logo-header {
 .nav-popup h2 {
   margin-top: 0;
   color: #333;
-  font-size: 1.7em;
+  font-size: 2.2em;
+  /* Larger title for visibility */
+}
+
+.nav-popup h3 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.8em;
   /* Larger title for visibility */
 }
 

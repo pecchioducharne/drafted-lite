@@ -864,6 +864,13 @@ const CandidateViewer = ({
     setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
   };
 
+  const handleSearch = () => {
+    // Trigger the same logic as pressing Enter
+    if (searchQuery.trim()) {
+      handleSuggestionSelect(searchQuery);
+    }
+  };
+
   const handleSavedClick = () => {
     navigate('/saved');
   };
@@ -1150,6 +1157,12 @@ const CandidateViewer = ({
             Invite Codes
           </button> */}
           <br></br>
+          <button
+            onClick={handleSearch}
+            className="code-button"
+          >
+            Search
+          </button>
           <button
             onClick={handleSavedClick}
             className="code-button"
