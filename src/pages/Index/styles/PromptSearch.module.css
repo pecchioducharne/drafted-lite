@@ -1,0 +1,39 @@
+@layer components {
+  @tailwind components;
+
+  .glass-card {
+    /* Define your custom styles here */
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.5rem;
+    /* Add any other styles you need */
+  }
+}
+
+.container {
+  @apply mt-4 sm:mt-0;
+}
+
+.searchCard {
+  @apply glass-card p-3 sm:p-4 md:p-6 mx-4;
+}
+
+.inputWrapper {
+  @apply relative flex items-center gap-2;
+}
+
+.searchInput {
+  @apply flex-1 px-4 py-4 sm:py-6 text-base sm:text-lg bg-white/50 transition-all duration-300 ease-in-out rounded;
+}
+
+.searchButton {
+  @apply py-2 px-4 sm:px-6 h-auto min-h-[2.5rem] font-medium whitespace-nowrap;
+}
+
+.promptText {
+  @apply mt-3 sm:mt-4 text-xs sm:text-sm text-gray-500 transition-opacity duration-300 ease-in-out;
+}
+
+.inputWrapper:focus-within+.promptText {
+  @apply opacity-0;
+}

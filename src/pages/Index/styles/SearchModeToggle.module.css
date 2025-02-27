@@ -1,0 +1,15 @@
+.container {
+  @apply flex flex-col sm:flex-row justify-center gap-3 sm:gap-5 px-4 mt-8;
+}
+
+.buttonWrapper {
+  @apply flex-1 sm:flex-none sm:w-44;
+}
+
+.button {
+  @apply w-full px-4 py-2.5 text-sm sm:text-base flex justify-center items-center transition-all duration-200 rounded;
+}
+
+.activeButton {
+  @apply shadow-lg;
+}

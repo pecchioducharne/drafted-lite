@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@tailwind utilities;
+
+.container {
+  @apply flex flex-col items-center justify-center space-y-4 px-4 max-w-4xl mx-auto;
+}
+
+@layer utilities {
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+.titleWrapper {
+  @apply flex flex-col items-center space-y-2;
+}
+
+.mainTitle {
+  @apply text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight font-poppins text-center;
+}
+
+.dynamicText {
+  @apply min-w-[180px] sm:min-w-[220px] md:min-w-[280px] text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight font-poppins;
+}
+
+.dynamicTextInner {
+  @apply text-[#00bf63] block text-center;
+}
+
+.description {
+  @apply flex flex-col sm:flex-row items-center justify-center gap-2 text-base sm:text-lg text-gray-600;
+}
+
+.icon {
+  @apply w-5 h-5 text-primary flex-shrink-0;
+}

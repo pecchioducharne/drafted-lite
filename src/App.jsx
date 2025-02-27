@@ -11,7 +11,7 @@ import ChatComponent from "./ChatComponent";
 import SavedCandidates from "./SavedCandidates";
 import CandidateBucket from "./CandidateBucket";
 import GailBucket from "./GailBucket";
-
+import LandingPage from "./components/LandingPage";
 const App = () => {
   const candidateEmail = "candidate@example.com";
   const [showGridView, setShowGridView] = useState(true);
@@ -44,6 +44,7 @@ const App = () => {
             <Route path="/candidate/:id" element={<VideoViewer />} />
             <Route path="/chat" element={<ChatComponent />} />
             <Route path="/bucket" element={<CandidateBucket />} />
+            <Route path="/search" element={<LandingPage />} />
             <Route path="/code" element={<CodePage />} />
             <Route path="/" element={<Login />} />
           </Routes>
