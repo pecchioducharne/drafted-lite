@@ -357,9 +357,12 @@ const CandidateViewer = ({
         );
       });
 
-      shuffleArray(newFilteredCandidates);
-      setFilteredCandidates(newFilteredCandidates);
-      setCurrentIndex(newFilteredCandidates.length > 0 ? 0 : -1);
+      // Add this line to filter only candidates with video1 recorded
+      let finalFilteredCandidates = newFilteredCandidates.filter(candidate => candidate.video1);
+      
+      shuffleArray(finalFilteredCandidates);
+      setFilteredCandidates(finalFilteredCandidates);
+      setCurrentIndex(finalFilteredCandidates.length > 0 ? 0 : -1);
     }
 
     filterCandidates();
@@ -1109,7 +1112,10 @@ const CandidateViewer = ({
     );
   };
 
-  // Show grid view of candidates with videos
+  // Anywhere after filteredCandidates is created but before it's used for rendering:
+  const displayCandidates = filteredCandidates.filter(candidate => candidate.video1);
+
+  // Then use displayCandidates instead of filteredCandidates in your rendering logic
   if (showGridView) {
     return (
       <div>
@@ -1384,7 +1390,7 @@ const CandidateViewer = ({
         )} */}
 
         <div className="candidates-grid">
-          {filteredCandidates.map((candidate, index) => (
+          {displayCandidates.map((candidate, index) => (
             <div
               key={candidate.id}
               className="candidate-card clickable"
@@ -1454,23 +1460,23 @@ const CandidateViewer = ({
     );
   }
 
-  if (filteredCandidates.length === 0) {
+  if (displayCandidates.length === 0) {
     return <div>Loading...</div>;
   }
 
-  const candidate = filteredCandidates[currentIndex] || {};
+  const candidate = displayCandidates[currentIndex] || {};
   const videoUrls = [
     candidate.video1,
     candidate.video2,
     candidate.video3,
   ].filter((url) => url); // This will exclude falsy values, including empty strings
 
-  const otherVideos = filteredCandidates.filter(
+  const otherVideos = displayCandidates.filter(
     (_, idx) => idx !== currentIndex
   );
 
   const uniqueVideoUrls = new Set();
-  filteredCandidates.forEach((candidate) => {
+  displayCandidates.forEach((candidate) => {
     if (candidate.video1) uniqueVideoUrls.add(candidate.video1);
     if (candidate.video2) uniqueVideoUrls.add(candidate.video2);
     if (candidate.video3) uniqueVideoUrls.add(candidate.video3);
@@ -1483,7 +1489,7 @@ const CandidateViewer = ({
     }));
   };
 
-  filteredCandidates.forEach((candidate) => {
+  displayCandidates.forEach((candidate) => {
     [candidate.video1, candidate.video2, candidate.video3].forEach(
       (videoUrl) => {
         if (videoUrl) uniqueVideoUrls.add(videoUrl);
@@ -1538,7 +1544,7 @@ const CandidateViewer = ({
   };
 
   const handleSaveOption = async () => {
-    await saveCandidate(filteredCandidates[currentIndex]);
+    await saveCandidate(displayCandidates[currentIndex]);
     setShowMeetOptions(false);
     setShowSaveConfirmation(true);
   };
@@ -2100,7 +2106,7 @@ const CandidateViewer = ({
         </div>
         <div className="other-videos-container">
           <br></br>
-          {filteredCandidates.slice(0, displayCount).map((candidate, index) => {
+          {displayCandidates.slice(0, displayCount).map((candidate, index) => {
             if (index === currentIndex) return null; // Skip the currently viewed candidate
 
             const thumbnailSrc = candidate.thumbnail
@@ -2222,14 +2228,14 @@ const CandidateViewer = ({
             emailDraft(); // Your existing email function
           }}
           onSave={handleSaveOption}
-          candidateName={capitalizeName(filteredCandidates[currentIndex].firstName)}
+          candidateName={capitalizeName(displayCandidates[currentIndex].firstName)}
         />
       )}
       {showSaveConfirmation && (
         <SaveConfirmationPopup
           onClose={() => setShowSaveConfirmation(false)}
           onViewSaved={handleViewSaved}
-          candidateName={capitalizeName(filteredCandidates[currentIndex].firstName)}
+          candidateName={capitalizeName(displayCandidates[currentIndex].firstName)}
         />
       )}
       {showCulturePopup && (

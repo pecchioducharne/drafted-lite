@@ -799,9 +799,8 @@ const VideoViewer = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            zIndex: 10000
+            zIndex: 9999
           }}
-          onClick={handleCloseEmailPopup}
         >
           <div 
             style={{
@@ -809,31 +808,18 @@ const VideoViewer = () => {
               borderRadius: '24px',
               width: '90%',
               maxWidth: '450px',
-              boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 24px 60px rgba(0, 0, 0, 0.3)',
               overflow: 'hidden',
-              position: 'relative',
-              animation: 'popIn 0.3s ease-out'
+              position: 'relative'
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div
-              style={{
-                padding: '24px 30px',
-                borderBottom: '1px solid rgba(0, 0, 0, 0.06)',
-                position: 'relative'
-              }}
-            >
-              <h2
-                style={{
-                  margin: 0,
-                  fontSize: '1.5rem',
-                  fontWeight: '600',
-                  color: '#333'
-                }}
-              >
+            <div style={{padding: '24px 30px', borderBottom: '1px solid rgba(0,0,0,0.06)'}}>
+              <h2 style={{margin: 0, fontSize: '1.5rem', fontWeight: 600}}>
                 Connect with {candidate.firstName || "Candidate"}
               </h2>
-              <button
+              <button 
+                onClick={handleCloseEmailPopup}
                 style={{
                   position: 'absolute',
                   top: '20px',
@@ -841,78 +827,53 @@ const VideoViewer = () => {
                   background: 'none',
                   border: 'none',
                   fontSize: '28px',
-                  color: '#999',
-                  cursor: 'pointer',
-                  padding: 0,
-                  lineHeight: 1
+                  cursor: 'pointer'
                 }}
-                onClick={handleCloseEmailPopup}
-              >
-                ×
-              </button>
+              >×</button>
             </div>
             
-            <div
-              style={{
-                padding: '30px',
+            <div style={{padding: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+              <div style={{
+                backgroundColor: 'rgba(0, 191, 99, 0.1)',
+                width: '88px', 
+                height: '88px',
+                borderRadius: '50%',
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-              }}
-            >
-              <div 
-                style={{
-                  backgroundColor: 'rgba(0, 191, 99, 0.1)',
-                  width: '88px',
-                  height: '88px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '24px'
-                }}
-              >
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '24px'
+              }}>
                 <svg viewBox="0 0 24 24" width="64" height="64" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M17 20.5H7C4 20.5 2 19 2 15.5V8.5C2 5 4 3.5 7 3.5H17C20 3.5 22 5 22 8.5V15.5C22 19 20 20.5 17 20.5Z" stroke="#00BF63" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M17 9L13.87 11.5C12.84 12.32 11.15 12.32 10.12 11.5L7 9" stroke="#00BF63" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </div>
               
-              <p
-                style={{
-                  textAlign: 'center',
-                  fontSize: '1.1rem',
-                  color: '#555',
-                  marginBottom: '20px',
-                  lineHeight: 1.5
-                }}
-              >
+              <p style={{textAlign: 'center', fontSize: '1.1rem', marginBottom: '20px'}}>
                 Email {candidate.firstName || "this candidate"} directly to start a conversation:
               </p>
               
-              <div
-                style={{
-                  width: '100%',
-                  backgroundColor: '#f5f7fa',
-                  borderRadius: '12px',
-                  padding: '18px 20px',
-                  marginBottom: '16px',
-                  fontSize: '1.1rem',
-                  color: '#2d3748',
-                  fontWeight: '500',
-                  textAlign: 'center',
-                  border: '1px solid #e2e8f0',
-                  wordBreak: 'break-all'
-                }}
-              >
+              <div style={{
+                width: '100%',
+                background: '#f5f7fa',
+                borderRadius: '12px',
+                padding: '18px 20px',
+                marginBottom: '16px',
+                fontSize: '1.1rem',
+                fontWeight: '500',
+                textAlign: 'center',
+                border: '1px solid #e2e8f0',
+                wordBreak: 'break-all'
+              }}>
                 <span>{candidate.email || "email@example.com"}</span>
               </div>
               
               <button 
+                onClick={handleCopyEmail}
                 style={{
                   width: '100%',
                   padding: '15px 20px',
-                  backgroundColor: emailCopied ? '#38A169' : '#00BF63',
+                  background: emailCopied ? '#38A169' : 'linear-gradient(135deg, #00BF63 0%, #00a857 100%)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '12px',
@@ -923,51 +884,24 @@ const VideoViewer = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '10px',
-                  marginBottom: '24px',
-                  boxShadow: '0 4px 12px rgba(0, 191, 99, 0.15)',
-                  transition: 'all 0.3s ease'
+                  marginBottom: '24px'
                 }}
-                onClick={handleCopyEmail}
               >
-                {emailCopied ? (
-                  <>
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M5 12L10 17L19 8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    Copied!
-                  </>
-                ) : (
-                  <>
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M16 12.9V17.1C16 20.6 14.6 22 11.1 22H6.9C3.4 22 2 20.6 2 17.1V12.9C2 9.4 3.4 8 6.9 8H11.1C14.6 8 16 9.4 16 12.9Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M22 6.9V11.1C22 14.6 20.6 16 17.1 16H16V12.9C16 9.4 14.6 8 11.1 8H8V6.9C8 3.4 9.4 2 12.9 2H17.1C20.6 2 22 3.4 22 6.9Z" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    Copy Email
-                  </>
-                )}
+                {emailCopied ? "Copied!" : "Copy Email"}
               </button>
               
-              <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  alignItems: 'flex-start',
-                  gap: '12px',
-                  backgroundColor: '#f8fafc',
-                  padding: '16px',
-                  borderRadius: '12px',
-                  border: '1px dashed #e2e8f0'
-                }}
-              >
-                <span style={{ fontSize: '20px' }}>💡</span>
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: '0.95rem',
-                    color: '#4a5568',
-                    lineHeight: 1.5
-                  }}
-                >
+              <div style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '12px',
+                background: '#f8fafc',
+                padding: '16px',
+                borderRadius: '12px',
+                border: '1px dashed #e2e8f0'
+              }}>
+                <span>💡</span>
+                <p style={{margin: 0, fontSize: '0.95rem', lineHeight: 1.5}}>
                   Pro tip: Mention where you found them for a higher response rate!
                 </p>
               </div>
