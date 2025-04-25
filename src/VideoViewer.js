@@ -14,7 +14,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import DescriptionIcon from '@mui/icons-material/Description';
 import BuildIcon from '@mui/icons-material/Build';
 import GroupsIcon from '@mui/icons-material/Groups';
-import { Star, BookOpen, Mountain } from 'lucide-react';
+import { Star, BookOpen, Mountain, Coffee } from 'lucide-react';
 
 const EmailPopup = ({ email, onClose }) => {
   const [copied, setCopied] = useState(false);
@@ -576,6 +576,51 @@ const VideoViewer = () => {
       <div style={mainContainerStyle}>
         <div style={blobStyle} />
 
+        <div style={{
+          textAlign: 'left',
+          marginBottom: '24px',
+          fontFamily: "'Poppins', sans-serif",
+          paddingLeft: '8px'
+        }}>
+          <h1 style={{
+            fontSize: '2.5rem',
+            fontWeight: '700',
+            color: '#000',
+            margin: '0',
+            marginBottom: '8px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}>
+            <span style={{ 
+              fontSize: '2.8rem',
+              display: 'inline-block',
+              animation: 'wave 1.5s ease-in-out'
+            }}>👋</span> Hi! I'm {candidate.firstName || ""}
+          </h1>
+          <p style={{
+            fontSize: '1.2rem',
+            color: '#000',
+            margin: '0',
+            fontWeight: '500'
+          }}>
+            {/* Nice to meet you! */}
+          </p>
+        </div>
+
+        <style>
+          {`
+            @keyframes wave {
+              0% { transform: rotate(0deg); }
+              20% { transform: rotate(-10deg); }
+              40% { transform: rotate(10deg); }
+              60% { transform: rotate(-10deg); }
+              80% { transform: rotate(10deg); }
+              100% { transform: rotate(0deg); }
+            }
+          `}
+        </style>
+
         <div style={videoContainerStyle}>
           {videoUrls[currentVideoIndex] ? (
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -663,6 +708,9 @@ const VideoViewer = () => {
             style={{
               ...draftButtonStyle,
               pointerEvents: 'auto',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -673,7 +721,7 @@ const VideoViewer = () => {
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)';
             }}
           >
-            {`${t('meetCandidate')} ${candidate.firstName || "Candidate"}`}
+            <Coffee size={20} /> Let's Chat
           </button>
         </div>
 
@@ -907,7 +955,7 @@ const VideoViewer = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          GO HOME
+          DRAFTED HOME
         </a>
         <a
           href="https://joindrafted.netlify.app/"
@@ -923,7 +971,7 @@ const VideoViewer = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          FOR MORE CANDIDATES, SIGN UP
+          MEET MORE CANDIDATES
         </a>
       </div>
 
@@ -994,7 +1042,7 @@ const VideoViewer = () => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{padding: '24px 30px', borderBottom: '1px solid rgba(0,0,0,0.06)'}}>
+            <div style={{padding: '24px 30px', borderBottom: '1px solid rgba(0,0,0,0.06)', position: 'relative'}}>
               <h2 style={{margin: 0, fontSize: '1.5rem', fontWeight: 600}}>
                 {t('connectWith')} {candidate.firstName || "Candidate"}
               </h2>
@@ -1002,12 +1050,31 @@ const VideoViewer = () => {
                 onClick={handleCloseEmailPopup}
                 style={{
                   position: 'absolute',
-                  top: '20px',
-                  right: '20px',
-                  background: 'none',
+                  top: '16px',
+                  right: '16px',
+                  background: '#f3f4f6',
                   border: 'none',
-                  fontSize: '28px',
-                  cursor: 'pointer'
+                  borderRadius: '50%',
+                  width: '28px',
+                  height: '28px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '20px',
+                  lineHeight: 1,
+                  padding: 0,
+                  color: '#666',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  transform: 'translateY(2px)'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.background = '#e5e7eb';
+                  e.currentTarget.style.color = '#333';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.background = '#f3f4f6';
+                  e.currentTarget.style.color = '#666';
                 }}
               >×</button>
             </div>
