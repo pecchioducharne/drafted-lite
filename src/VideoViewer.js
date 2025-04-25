@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import QuickRecruiterSignup from "./QuickRecruiterSignup";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebase";
@@ -8,6 +8,13 @@ import linkedinIcon from './linkedin.svg';
 import githubIcon from './github.svg';
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
+import SchoolIcon from '@mui/icons-material/School';
+import WorkIcon from '@mui/icons-material/Work';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import DescriptionIcon from '@mui/icons-material/Description';
+import BuildIcon from '@mui/icons-material/Build';
+import GroupsIcon from '@mui/icons-material/Groups';
+import { Star, BookOpen, Mountain } from 'lucide-react';
 
 const EmailPopup = ({ email, onClose }) => {
   const [copied, setCopied] = useState(false);
@@ -110,6 +117,8 @@ const EmailPopup = ({ email, onClose }) => {
 
 const VideoViewer = () => {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const isSpanish = searchParams.has('es');
   const [candidate, setCandidate] = useState({});
   const [videoUrls, setVideoUrls] = useState([]);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
@@ -126,6 +135,62 @@ const VideoViewer = () => {
   const [selectedCulture, setSelectedCulture] = useState(null);
   const [showMeetOptions, setShowMeetOptions] = useState(false);
   const [showEmailPopup, setShowEmailPopup] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [showSpeedOptions, setShowSpeedOptions] = useState(false);
+  const speedOptions = [1, 1.5, 2];
+
+  const translations = {
+    en: {
+      loading: "Loading...",
+      noVideo: "No video available",
+      meetCandidate: "Meet ",
+      viewResume: "View Resume",
+      email: "Email",
+      copyEmail: "Copy Email",
+      emailCopied: "Email copied!",
+      copyMessage: "Copy Message",
+      messageCopied: "Message copied!",
+      close: "Close",
+      speed: "Speed",
+      university: "University",
+      major: "Major",
+      graduationYear: "Graduation Year",
+      skills: "Skills",
+      culture: "Culture",
+      social: "Social",
+      resume: "Resume",
+      draftEmail: "Draft Email",
+      connectWith: "Connect with",
+      emailTip: "Pro tip: Mention where you found them for a higher response rate!"
+    },
+    es: {
+      loading: "Cargando...",
+      noVideo: "No hay video disponible",
+      meetCandidate: "Conocer al Candidato",
+      viewResume: "Ver Currículum",
+      email: "Correo Electrónico",
+      copyEmail: "Copiar Correo",
+      emailCopied: "¡Correo copiado!",
+      copyMessage: "Copiar Mensaje",
+      messageCopied: "¡Mensaje copiado!",
+      close: "Cerrar",
+      speed: "Velocidad",
+      university: "Universidad",
+      major: "Carrera",
+      graduationYear: "Año de Graduación",
+      skills: "Habilidades",
+      culture: "Cultura",
+      social: "Social",
+      resume: "Currículum",
+      draftEmail: "Redactar Correo",
+      connectWith: "Conectar con",
+      emailTip: "¡Consejo: Menciona dónde los encontraste para una mayor tasa de respuesta!"
+    }
+  };
+
+  const t = (key) => {
+    return translations[isSpanish ? 'es' : 'en'][key] || key;
+  };
 
   useEffect(() => {
     const fetchCandidate = async () => {
@@ -145,9 +210,18 @@ const VideoViewer = () => {
             ].filter(Boolean)
           );
           setVideoQuestions([
-            "Tell us your story!",
-            "What makes you stand out amongst other candidates?",
-            "Tell us about a time when you overcame a challenge!",
+            {
+              text: "What makes you stand out amongst other candidates?",
+              icon: <Star className="h-5 w-5 mr-2 flex-shrink-0" />
+            },
+            {
+              text: "Tell us your story!",
+              icon: <BookOpen className="h-5 w-5 mr-2 flex-shrink-0" />
+            },
+            {
+              text: "Tell us about a time when you overcame a challenge!",
+              icon: <Mountain className="h-5 w-5 mr-2 flex-shrink-0" />
+            }
           ]);
         } else {
           console.log("No such document!");
@@ -435,6 +509,54 @@ const VideoViewer = () => {
     }
   };
 
+  const speedControlStyle = {
+    position: 'absolute',
+    bottom: '20px',
+    right: '20px',
+    zIndex: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  };
+
+  const speedButtonStyle = {
+    background: 'rgba(0, 0, 0, 0.7)',
+    color: 'white',
+    border: 'none',
+    borderRadius: '8px',
+    padding: '8px 16px',
+    fontSize: '14px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    transition: 'all 0.2s ease',
+  };
+
+  const speedOptionsStyle = {
+    background: 'rgba(0, 0, 0, 0.7)',
+    borderRadius: '8px',
+    marginTop: '8px',
+    overflow: 'hidden',
+    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+  };
+
+  const speedOptionStyle = (isActive) => ({
+    color: 'white',
+    padding: '8px 16px',
+    cursor: 'pointer',
+    fontSize: '14px',
+    fontWeight: isActive ? '600' : '400',
+    background: isActive ? 'rgba(0, 191, 99, 0.3)' : 'transparent',
+    transition: 'all 0.2s ease',
+  });
+
+  const handleSpeedChange = (speed) => {
+    setPlaybackRate(speed);
+    setShowSpeedOptions(false);
+  };
+
   useEffect(() => {
     const handleResize = () => {
       // Force re-render on window resize
@@ -466,6 +588,7 @@ const VideoViewer = () => {
                 onEnded={handleVideoEnd}
                 onReady={() => setVideoLoading(false)}
                 playsinline={true}
+                playbackRate={playbackRate}
                 config={{
                   youtube: {
                     playerVars: {
@@ -487,6 +610,30 @@ const VideoViewer = () => {
                   }
                 }}
               />
+              <div style={speedControlStyle}>
+                <button
+                  style={speedButtonStyle}
+                  onClick={() => setShowSpeedOptions(!showSpeedOptions)}
+                >
+                  <span>{playbackRate}x</span>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 4L6 8L10 4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+                {showSpeedOptions && (
+                  <div style={speedOptionsStyle}>
+                    {speedOptions.map((speed) => (
+                      <div
+                        key={speed}
+                        style={speedOptionStyle(speed === playbackRate)}
+                        onClick={() => handleSpeedChange(speed)}
+                      >
+                        {speed}x
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
               {videoLoading && (
                 <div style={{
                   position: 'absolute',
@@ -500,12 +647,12 @@ const VideoViewer = () => {
                   justifyContent: 'center',
                   color: 'white',
                 }}>
-                  <p>Loading...</p>
+                  <p>{t('loading')}</p>
                 </div>
               )}
             </div>
           ) : (
-            <p>No video available</p>
+            <p>{t('noVideo')}</p>
           )}
         </div>
 
@@ -526,7 +673,7 @@ const VideoViewer = () => {
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)';
             }}
           >
-            {`Meet ${candidate.firstName || "Candidate"}`}
+            {`${t('meetCandidate')} ${candidate.firstName || "Candidate"}`}
           </button>
         </div>
 
@@ -535,7 +682,12 @@ const VideoViewer = () => {
             <button
               key={index}
               onClick={() => handleVideoButtonClick(index)}
-              style={videoButtonStyle(currentVideoIndex === index)}
+              style={{
+                ...videoButtonStyle(currentVideoIndex === index),
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
               onMouseOver={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
@@ -543,7 +695,8 @@ const VideoViewer = () => {
                 e.currentTarget.style.transform = 'none';
               }}
             >
-              {question}
+              {question.icon}
+              {question.text}
             </button>
           ))}
         </div>
@@ -554,9 +707,13 @@ const VideoViewer = () => {
               color: '#555',
               fontSize: '1.3rem',
               textTransform: 'uppercase',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.5px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}>
-              University
+              <SchoolIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
+              {t('university')}
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
               {candidate.university || "N/A"}
@@ -568,9 +725,13 @@ const VideoViewer = () => {
               color: '#555',
               fontSize: '1.3rem',
               textTransform: 'uppercase',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.5px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}>
-              Major
+              <WorkIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
+              {t('major')}
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
               {candidate.major || "N/A"}
@@ -583,9 +744,12 @@ const VideoViewer = () => {
                 color: '#555',
                 fontSize: '1.3rem',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                letterSpacing: '0.5px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
               }}>
-                Social
+                {t('social')}
               </strong>
               <div style={socialLinksStyle}>
                 {candidate.linkedInURL && (
@@ -617,9 +781,13 @@ const VideoViewer = () => {
               color: '#555',
               fontSize: '1.3rem',
               textTransform: 'uppercase',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.5px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}>
-              Graduation Year
+              <CalendarTodayIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
+              {t('graduationYear')}
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
               {candidate.graduationYear || "N/A"}
@@ -631,9 +799,13 @@ const VideoViewer = () => {
               color: '#555',
               fontSize: '1.3rem',
               textTransform: 'uppercase',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.5px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
             }}>
-              Resume
+              <DescriptionIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
+              {t('resume')}
             </strong>
             <button
               onClick={candidate.resume ? handleToggleResume : handleRequestInterview}
@@ -657,7 +829,7 @@ const VideoViewer = () => {
                 e.currentTarget.style.transform = 'none';
               }}
             >
-              {candidate.resume ? 'View Resume' : 'No Resume, Request Interview for Resume'}
+              {candidate.resume ? t('viewResume') : t('draftEmail')}
             </button>
           </div>
 
@@ -667,9 +839,13 @@ const VideoViewer = () => {
                 color: '#555',
                 fontSize: '1.3rem',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                letterSpacing: '0.5px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
               }}>
-                Skills
+                <BuildIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
+                {t('skills')}
               </strong>
               <div className="tags-container">
                 {candidate.skills.map((skill, index) => (
@@ -687,9 +863,13 @@ const VideoViewer = () => {
                 color: '#555',
                 fontSize: '1.3rem',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                letterSpacing: '0.5px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
               }}>
-                Culture (click for description)
+                <GroupsIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
+                {t('culture')}
               </strong>
               <div className="tags-container">
                 {candidate.culture.cultureTags.map((tag, index) => (
@@ -769,7 +949,7 @@ const VideoViewer = () => {
               e.currentTarget.style.backgroundColor = '#333';
             }}
           >
-            Close
+            {t('close')}
           </button>
         </div>
       )}
@@ -779,7 +959,7 @@ const VideoViewer = () => {
           <div className="meet-options-popup">
             <button className="close-button" onClick={() => setShowMeetOptions(false)}>×</button>
             <button className="meet-option-button" onClick={emailDraft}>
-              Draft Email
+              {t('draftEmail')}
             </button>
           </div>
         </div>
@@ -816,7 +996,7 @@ const VideoViewer = () => {
           >
             <div style={{padding: '24px 30px', borderBottom: '1px solid rgba(0,0,0,0.06)'}}>
               <h2 style={{margin: 0, fontSize: '1.5rem', fontWeight: 600}}>
-                Connect with {candidate.firstName || "Candidate"}
+                {t('connectWith')} {candidate.firstName || "Candidate"}
               </h2>
               <button 
                 onClick={handleCloseEmailPopup}
@@ -850,7 +1030,7 @@ const VideoViewer = () => {
               </div>
               
               <p style={{textAlign: 'center', fontSize: '1.1rem', marginBottom: '20px'}}>
-                Email {candidate.firstName || "this candidate"} directly to start a conversation:
+                {t('email')} {candidate.firstName || "this candidate"} {t('directly')}:
               </p>
               
               <div style={{
@@ -887,7 +1067,7 @@ const VideoViewer = () => {
                   marginBottom: '24px'
                 }}
               >
-                {emailCopied ? "Copied!" : "Copy Email"}
+                {emailCopied ? t('emailCopied') : t('copyEmail')}
               </button>
               
               <div style={{
@@ -902,7 +1082,7 @@ const VideoViewer = () => {
               }}>
                 <span>💡</span>
                 <p style={{margin: 0, fontSize: '0.95rem', lineHeight: 1.5}}>
-                  Pro tip: Mention where you found them for a higher response rate!
+                  {t('emailTip')}
                 </p>
               </div>
             </div>
