@@ -115,7 +115,7 @@ const EmailPopup = ({ email, onClose }) => {
   );
 };
 
-const VideoViewer = () => {
+const VideoViewerSpanish = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const isSpanish = searchParams.has('es');
@@ -138,7 +138,6 @@ const VideoViewer = () => {
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showSpeedOptions, setShowSpeedOptions] = useState(false);
   const speedOptions = [1, 1.5, 2];
-  const speedText = isSpanish ? "x velocidad" : "x speed";
 
   const translations = {
     en: {
@@ -164,10 +163,10 @@ const VideoViewer = () => {
       connectWith: "Connect with",
       emailTip: "Pro tip: Mention where you found them for a higher response rate!"
     },
-    es: {
+    en: {
       loading: "Cargando...",
       noVideo: "No hay video disponible",
-      meetCandidate: "Conocer a ",
+      meetCandidate: "Conocer al Candidato",
       viewResume: "Ver Currículum",
       email: "Correo Electrónico",
       copyEmail: "Copiar Correo",
@@ -428,7 +427,7 @@ const VideoViewer = () => {
 
   const emailDraft = () => {
     if (candidate) {
-      const content = `Hola ${candidate.firstName},\n\nCreemos que eres un excelente candidato para [Nombre de la Empresa]; nos gustaría programar una llamada inicial.\n\nHora:\nDía:\nEnlace de Zoom / Meet:\n\n¡Háznoslo saber si te funciona!\n\nSaludos,\n[Tu Nombre]`;
+      const content = `Hi ${candidate.firstName},\n\nWe think you are a great candidate for [Company Name]; we'd like to schedule an initial call.\n\nTime:\nDay:\nZoom / Hangout link:\n\nLet us know if this works!\n\nBest,\n[Your Name]`;
       setEmailContent(content);
       setShowEmailPopup(true);
       setShowMeetOptions(false);
@@ -605,7 +604,7 @@ const VideoViewer = () => {
             margin: '0',
             fontWeight: '500'
           }}>
-            {/* ¡Encantado de conocerte! */}
+            {/* Nice to meet you! */}
           </p>
         </div>
 
@@ -722,7 +721,7 @@ const VideoViewer = () => {
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)';
             }}
           >
-            <Coffee size={20} /> Conversemos
+            <Coffee size={20} /> Conectemos
           </button>
         </div>
 
@@ -762,10 +761,10 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <SchoolIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              UNIVERSIDAD
+              {t('university')}
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
-              {candidate.university || "No disponible"}
+              {candidate.university || "N/A"}
             </p>
           </div>
 
@@ -780,10 +779,10 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <WorkIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              CARRERA
+              {t('major')}
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
-              {candidate.major || "No disponible"}
+              {candidate.major || "N/A"}
             </p>
           </div>
 
@@ -798,7 +797,7 @@ const VideoViewer = () => {
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                REDES SOCIALES
+                {t('social')}
               </strong>
               <div style={socialLinksStyle}>
                 {candidate.linkedInURL && (
@@ -836,10 +835,10 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <CalendarTodayIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              AÑO DE GRADUACIÓN
+              {t('graduationYear')}
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
-              {candidate.graduationYear || "No disponible"}
+              {candidate.graduationYear || "N/A"}
             </p>
           </div>
 
@@ -854,7 +853,7 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <DescriptionIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              CURRÍCULUM
+              {t('resume')}
             </strong>
             <button
               onClick={candidate.resume ? handleToggleResume : handleRequestInterview}
@@ -878,7 +877,7 @@ const VideoViewer = () => {
                 e.currentTarget.style.transform = 'none';
               }}
             >
-              {candidate.resume ? "Ver Currículum" : "Redactar Correo"}
+              {candidate.resume ? t('viewResume') : t('draftEmail')}
             </button>
           </div>
 
@@ -894,7 +893,7 @@ const VideoViewer = () => {
                 gap: '8px'
               }}>
                 <BuildIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-                HABILIDADES
+                {t('skills')}
               </strong>
               <div className="tags-container">
                 {candidate.skills.map((skill, index) => (
@@ -918,13 +917,13 @@ const VideoViewer = () => {
                 gap: '8px'
               }}>
                 <GroupsIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-                CULTURA <span style={{ 
+                {t('culture')} <span style={{ 
                   fontSize: '0.9rem', 
                   color: '#999', 
                   textTransform: 'none',
                   fontWeight: 'normal',
                   letterSpacing: 'normal'
-                }}>(haz clic para expandir)</span>
+                }}>(click to expand)</span>
               </strong>
               <div className="tags-container">
                 {candidate.culture.cultureTags.map((tag, index) => (
@@ -962,7 +961,7 @@ const VideoViewer = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          INICIO DRAFTED
+          DRAFTED HOME
         </a>
         <a
           href="https://joindrafted.netlify.app/"
@@ -978,7 +977,7 @@ const VideoViewer = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          CONOCE MÁS CANDIDATOS
+          MEET MORE CANDIDATES
         </a>
       </div>
 
@@ -1104,7 +1103,7 @@ const VideoViewer = () => {
               </div>
               
               <p style={{textAlign: 'center', fontSize: '1.1rem', marginBottom: '20px'}}>
-                {t('email')} {candidate.firstName || "this candidate"} {t('directly')}:
+                {t('email')} a {candidate.firstName || "this candidate"} {t('directamente')}:
               </p>
               
               <div style={{
@@ -1256,4 +1255,4 @@ function DraftedLogo() {
   );
 }
 
-export default VideoViewer;
+export default VideoViewerSpanish;

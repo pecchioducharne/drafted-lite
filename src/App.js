@@ -11,6 +11,7 @@ import ChatComponent from "./ChatComponent";
 import SavedCandidates from "./SavedCandidates";
 import CandidateBucket from "./CandidateBucket";
 import GailBucket from "./GailBucket";
+import VideoViewerSpanish from "./VideoViewerSpanish";
 
 const App = () => {
   const candidateEmail = "candidate@example.com";
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/quick" element={<QuickRecruiterSignup />} />
             <Route path="/gail-bucket" element={<GailBucket />} />
             <Route path="/candidate/:id" element={<VideoViewer />} />
+            <Route path="/candidate/:id/es" element={<VideoViewerSpanish />} />
             <Route path="/chat" element={<ChatComponent />} />
             <Route path="/bucket" element={<CandidateBucket />} />
             <Route path="/code" element={<CodePage />} />{" "}
