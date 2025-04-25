@@ -875,8 +875,8 @@ const VideoViewerSpanish = () => {
               style={{
                 background: '#4a5568',
                 color: 'white',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '12px',
+                padding: '0.5rem 1rem',
+                borderRadius: '24px',
                 fontWeight: '600',
                 border: 'none',
                 cursor: 'pointer',
