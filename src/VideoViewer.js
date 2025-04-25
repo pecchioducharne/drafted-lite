@@ -894,7 +894,7 @@ const VideoViewer = () => {
 
       <div style={buttonContainerStyle}>
         <a
-          href="https://drafted.webflow.io/drafted-recruiter-landing"
+          href="https://www.joindrafted.com"
           target="_blank"
           rel="noopener noreferrer"
           style={actionButtonStyle}
@@ -910,7 +910,7 @@ const VideoViewer = () => {
           GO HOME
         </a>
         <a
-          href="https://drafted-beta.netlify.app/signup#"
+          href="https://joindrafted.netlify.app/"
           target="_blank"
           rel="noopener noreferrer"
           style={actionButtonStyle}
