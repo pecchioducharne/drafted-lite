@@ -212,15 +212,15 @@ const VideoViewer = () => {
           );
           setVideoQuestions([
             {
-              text: "¿Qué me hace destacar?",
+              text: "What makes me stand out?",
               icon: <Star className="h-5 w-5 mr-2 flex-shrink-0" />
             },
             {
-              text: "¿Cuál es mi historia?",
+              text: "What's my story?",
               icon: <BookOpen className="h-5 w-5 mr-2 flex-shrink-0" />
             },
             {
-              text: "Un desafío que superé",
+              text: "A challenge I overcame",
               icon: <Mountain className="h-5 w-5 mr-2 flex-shrink-0" />
             }
           ]);
@@ -238,17 +238,18 @@ const VideoViewer = () => {
   const containerStyle = {
     maxWidth: window.innerWidth <= 768 ? '100%' : '1400px',
     margin: '0 auto',
-    padding: window.innerWidth <= 768 ? '1rem' : '2rem',
+    padding: window.innerWidth <= 768 ? '0.75rem' : '2rem',
     backgroundColor: 'white',
     minHeight: '100vh',
+    overflowX: 'hidden',
   };
 
   const mainContainerStyle = {
     position: 'relative',
     background: 'white',
-    borderRadius: '30px',
-    padding: window.innerWidth <= 768 ? '1.5rem' : '3rem',
-    marginTop: '1rem',
+    borderRadius: window.innerWidth <= 768 ? '20px' : '30px',
+    padding: window.innerWidth <= 768 ? '1.25rem' : '3rem',
+    marginTop: window.innerWidth <= 768 ? '0.5rem' : '1rem',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.03)',
     overflow: 'hidden',
   };
@@ -268,12 +269,12 @@ const VideoViewer = () => {
   const videoContainerStyle = {
     position: 'relative',
     width: '100%',
-    height: window.innerWidth <= 768 ? '300px' : '600px',
-    borderRadius: '20px',
+    height: window.innerWidth <= 768 ? '250px' : '600px',
+    borderRadius: window.innerWidth <= 768 ? '15px' : '20px',
     overflow: 'hidden',
     boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
     backgroundColor: '#000',
-    marginBottom: '2rem',
+    marginBottom: window.innerWidth <= 768 ? '1.5rem' : '2rem',
   };
 
   const nameDisplayStyle = {
@@ -281,36 +282,37 @@ const VideoViewer = () => {
     flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
     alignItems: window.innerWidth <= 768 ? 'flex-start' : 'center',
     justifyContent: window.innerWidth <= 768 ? 'flex-start' : 'space-between',
-    gap: window.innerWidth <= 768 ? '1rem' : '0',
-    padding: '1.5rem 0',
-    margin: '1rem 0 2rem 0',
+    gap: window.innerWidth <= 768 ? '0.75rem' : '0',
+    padding: window.innerWidth <= 768 ? '1rem 0' : '1.5rem 0',
+    margin: window.innerWidth <= 768 ? '0.5rem 0 1.5rem 0' : '1rem 0 2rem 0',
     borderBottom: '2px solid rgba(0, 191, 99, 0.1)',
-    fontSize: window.innerWidth <= 768 ? '2rem' : '3rem',
+    fontSize: window.innerWidth <= 768 ? '1.75rem' : '3rem',
     fontWeight: 'bold',
   };
 
   const draftButtonStyle = {
     background: 'linear-gradient(135deg, #00BF63 0%, #00a857 100%)',
     color: 'white',
-    padding: '1rem 2rem',
-    borderRadius: '16px',
+    padding: window.innerWidth <= 768 ? '0.75rem 1.5rem' : '1rem 2rem',
+    borderRadius: window.innerWidth <= 768 ? '12px' : '16px',
     fontWeight: '600',
-    fontSize: '1.5rem',
+    fontSize: window.innerWidth <= 768 ? '1.2rem' : '1.5rem',
     border: 'none',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    gap: '0.75rem',
+    gap: '0.5rem',
     boxShadow: '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)',
     transition: 'all 0.2s ease',
-    margin: '0',
-    width: 'auto',
+    margin: window.innerWidth <= 768 ? '0.25rem 0' : '0',
+    width: window.innerWidth <= 768 ? '100%' : 'auto',
     minWidth: 'fit-content',
     flexShrink: '0',
     whiteSpace: 'nowrap',
-    alignSelf: 'center',
+    alignSelf: window.innerWidth <= 768 ? 'stretch' : 'center',
     pointerEvents: 'auto',
     zIndex: 10,
+    justifyContent: 'center',
   };
 
   const videoButtonsStyle = {
@@ -428,7 +430,7 @@ const VideoViewer = () => {
 
   const emailDraft = () => {
     if (candidate) {
-      const content = `Hola ${candidate.firstName},\n\nCreemos que eres un excelente candidato para [Nombre de la Empresa]; nos gustaría programar una llamada inicial.\n\nHora:\nDía:\nEnlace de Zoom / Meet:\n\n¡Háznoslo saber si te funciona!\n\nSaludos,\n[Tu Nombre]`;
+      const content = `Hi ${candidate.firstName},\n\nWe think you are a great candidate for [Company Name]; we'd like to schedule an initial call.\n\nTime:\nDay:\nZoom / Hangout link:\n\nLet us know if this works!\n\nBest,\n[Your Name]`;
       setEmailContent(content);
       setShowEmailPopup(true);
       setShowMeetOptions(false);
@@ -570,7 +572,10 @@ const VideoViewer = () => {
 
   return (
     <div style={containerStyle}>
-      <div className="drafted-logo-container" onClick={handleLogoClick}>
+      <div className="drafted-logo-container" onClick={handleLogoClick} style={{
+        padding: window.innerWidth <= 768 ? '0.75rem 0' : '1rem 0',
+        marginBottom: window.innerWidth <= 768 ? '0.5rem' : '1rem',
+      }}>
         <DraftedLogo />
       </div>
 
@@ -579,12 +584,12 @@ const VideoViewer = () => {
 
         <div style={{
           textAlign: 'left',
-          marginBottom: '24px',
+          marginBottom: window.innerWidth <= 768 ? '16px' : '24px',
           fontFamily: "'Poppins', sans-serif",
           paddingLeft: '8px'
         }}>
           <h1 style={{
-            fontSize: '2.5rem',
+            fontSize: window.innerWidth <= 768 ? '2rem' : '2.5rem',
             fontWeight: '700',
             color: '#000',
             margin: '0',
@@ -594,18 +599,18 @@ const VideoViewer = () => {
             gap: '12px'
           }}>
             <span style={{ 
-              fontSize: '2.8rem',
+              fontSize: window.innerWidth <= 768 ? '2.2rem' : '2.8rem',
               display: 'inline-block',
               animation: 'wave 1.5s ease-in-out'
-            }}>👋</span> ¡Hola! Soy {candidate.firstName || ""}
+            }}>👋</span> Hi! I'm {candidate.firstName || ""}
           </h1>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: window.innerWidth <= 768 ? '1rem' : '1.2rem',
             color: '#000',
             margin: '0',
             fontWeight: '500'
           }}>
-            {/* ¡Encantado de conocerte! */}
+            {/* Nice to meet you! */}
           </p>
         </div>
 
@@ -618,6 +623,16 @@ const VideoViewer = () => {
               60% { transform: rotate(-10deg); }
               80% { transform: rotate(10deg); }
               100% { transform: rotate(0deg); }
+            }
+            @media (max-width: 768px) {
+              .skill-tag, .culture-tag {
+                font-size: 0.85rem !important;
+                padding: 0.3rem 0.6rem !important;
+                margin: 0.25rem !important;
+              }
+              .tags-container {
+                margin-top: 0.5rem !important;
+              }
             }
           `}
         </style>
@@ -722,7 +737,7 @@ const VideoViewer = () => {
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)';
             }}
           >
-            <Coffee size={20} /> Conversemos
+            <Coffee size={20} /> Let's Chat
           </button>
         </div>
 
@@ -762,10 +777,10 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <SchoolIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              UNIVERSIDAD
+              UNIVERSITY
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
-              {candidate.university || "No disponible"}
+              {candidate.university || "N/A"}
             </p>
           </div>
 
@@ -780,10 +795,10 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <WorkIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              CARRERA
+              MAJOR
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
-              {candidate.major || "No disponible"}
+              {candidate.major || "N/A"}
             </p>
           </div>
 
@@ -798,7 +813,7 @@ const VideoViewer = () => {
                 alignItems: 'center',
                 gap: '8px'
               }}>
-                REDES SOCIALES
+                SOCIAL
               </strong>
               <div style={socialLinksStyle}>
                 {candidate.linkedInURL && (
@@ -836,10 +851,10 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <CalendarTodayIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              AÑO DE GRADUACIÓN
+              GRADUATION YEAR
             </strong>
             <p style={{ fontSize: '1.5rem', margin: 0 }}>
-              {candidate.graduationYear || "No disponible"}
+              {candidate.graduationYear || "N/A"}
             </p>
           </div>
 
@@ -854,7 +869,7 @@ const VideoViewer = () => {
               gap: '8px'
             }}>
               <DescriptionIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-              CURRÍCULUM
+              RESUME
             </strong>
             <button
               onClick={candidate.resume ? handleToggleResume : handleRequestInterview}
@@ -878,7 +893,7 @@ const VideoViewer = () => {
                 e.currentTarget.style.transform = 'none';
               }}
             >
-              {candidate.resume ? "Ver Currículum" : "Redactar Correo"}
+              {candidate.resume ? "View Resume" : "Draft Email"}
             </button>
           </div>
 
@@ -894,7 +909,7 @@ const VideoViewer = () => {
                 gap: '8px'
               }}>
                 <BuildIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-                HABILIDADES
+                SKILLS
               </strong>
               <div className="tags-container">
                 {candidate.skills.map((skill, index) => (
@@ -918,13 +933,13 @@ const VideoViewer = () => {
                 gap: '8px'
               }}>
                 <GroupsIcon style={{ fontSize: '1.5rem', color: '#00BF63' }} />
-                CULTURA <span style={{ 
+                CULTURE <span style={{ 
                   fontSize: '0.9rem', 
                   color: '#999', 
                   textTransform: 'none',
                   fontWeight: 'normal',
                   letterSpacing: 'normal'
-                }}>(haz clic para expandir)</span>
+                }}>(click to expand)</span>
               </strong>
               <div className="tags-container">
                 {candidate.culture.cultureTags.map((tag, index) => (
@@ -947,12 +962,22 @@ const VideoViewer = () => {
         </div>
       </div>
 
-      <div style={buttonContainerStyle}>
+      <div style={{
+        ...buttonContainerStyle,
+        flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+        gap: window.innerWidth <= 768 ? '0.75rem' : '2rem',
+        padding: window.innerWidth <= 768 ? '0.75rem' : '1rem',
+      }}>
         <a
           href="https://www.joindrafted.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={actionButtonStyle}
+          style={{
+            ...actionButtonStyle,
+            width: window.innerWidth <= 768 ? '100%' : 'auto',
+            padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '1rem 2rem',
+            fontSize: window.innerWidth <= 768 ? '1rem' : '1.2rem',
+          }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.15)';
@@ -962,13 +987,18 @@ const VideoViewer = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          INICIO DRAFTED
+          DRAFTED HOME
         </a>
         <a
           href="https://joindrafted.netlify.app/"
           target="_blank"
           rel="noopener noreferrer"
-          style={actionButtonStyle}
+          style={{
+            ...actionButtonStyle,
+            width: window.innerWidth <= 768 ? '100%' : 'auto',
+            padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '1rem 2rem',
+            fontSize: window.innerWidth <= 768 ? '1rem' : '1.2rem',
+          }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.15)';
@@ -978,7 +1008,7 @@ const VideoViewer = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          CONOCE MÁS CANDIDATOS
+          MEET MORE CANDIDATES
         </a>
       </div>
 
@@ -1045,13 +1075,22 @@ const VideoViewer = () => {
               maxWidth: '450px',
               boxShadow: '0 24px 60px rgba(0, 0, 0, 0.3)',
               overflow: 'hidden',
-              position: 'relative'
+              position: 'relative',
+              margin: window.innerWidth <= 768 ? '0 16px' : '0'
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{padding: '24px 30px', borderBottom: '1px solid rgba(0,0,0,0.06)', position: 'relative'}}>
-              <h2 style={{margin: 0, fontSize: '1.5rem', fontWeight: 600}}>
-                {t('connectWith')} {candidate.firstName || "Candidate"}
+            <div style={{
+              padding: window.innerWidth <= 768 ? '20px 24px' : '24px 30px', 
+              borderBottom: '1px solid rgba(0,0,0,0.06)', 
+              position: 'relative'
+            }}>
+              <h2 style={{
+                margin: 0, 
+                fontSize: window.innerWidth <= 768 ? '1.3rem' : '1.5rem', 
+                fontWeight: 600
+              }}>
+                Connect with {candidate.firstName || "Candidate"}
               </h2>
               <button 
                 onClick={handleCloseEmailPopup}

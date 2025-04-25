@@ -237,17 +237,18 @@ const VideoViewerSpanish = () => {
   const containerStyle = {
     maxWidth: window.innerWidth <= 768 ? '100%' : '1400px',
     margin: '0 auto',
-    padding: window.innerWidth <= 768 ? '1rem' : '2rem',
+    padding: window.innerWidth <= 768 ? '0.75rem' : '2rem',
     backgroundColor: 'white',
     minHeight: '100vh',
+    overflowX: 'hidden',
   };
 
   const mainContainerStyle = {
     position: 'relative',
     background: 'white',
-    borderRadius: '30px',
-    padding: window.innerWidth <= 768 ? '1.5rem' : '3rem',
-    marginTop: '1rem',
+    borderRadius: window.innerWidth <= 768 ? '20px' : '30px',
+    padding: window.innerWidth <= 768 ? '1.25rem' : '3rem',
+    marginTop: window.innerWidth <= 768 ? '0.5rem' : '1rem',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 8px rgba(0, 0, 0, 0.03)',
     overflow: 'hidden',
   };
@@ -267,12 +268,12 @@ const VideoViewerSpanish = () => {
   const videoContainerStyle = {
     position: 'relative',
     width: '100%',
-    height: window.innerWidth <= 768 ? '300px' : '600px',
-    borderRadius: '20px',
+    height: window.innerWidth <= 768 ? '250px' : '600px',
+    borderRadius: window.innerWidth <= 768 ? '15px' : '20px',
     overflow: 'hidden',
     boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
     backgroundColor: '#000',
-    marginBottom: '2rem',
+    marginBottom: window.innerWidth <= 768 ? '1.5rem' : '2rem',
   };
 
   const nameDisplayStyle = {
@@ -280,36 +281,37 @@ const VideoViewerSpanish = () => {
     flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
     alignItems: window.innerWidth <= 768 ? 'flex-start' : 'center',
     justifyContent: window.innerWidth <= 768 ? 'flex-start' : 'space-between',
-    gap: window.innerWidth <= 768 ? '1rem' : '0',
-    padding: '1.5rem 0',
-    margin: '1rem 0 2rem 0',
+    gap: window.innerWidth <= 768 ? '0.75rem' : '0',
+    padding: window.innerWidth <= 768 ? '1rem 0' : '1.5rem 0',
+    margin: window.innerWidth <= 768 ? '0.5rem 0 1.5rem 0' : '1rem 0 2rem 0',
     borderBottom: '2px solid rgba(0, 191, 99, 0.1)',
-    fontSize: window.innerWidth <= 768 ? '2rem' : '3rem',
+    fontSize: window.innerWidth <= 768 ? '1.75rem' : '3rem',
     fontWeight: 'bold',
   };
 
   const draftButtonStyle = {
     background: 'linear-gradient(135deg, #00BF63 0%, #00a857 100%)',
     color: 'white',
-    padding: '1rem 2rem',
-    borderRadius: '16px',
+    padding: window.innerWidth <= 768 ? '0.75rem 1.5rem' : '1rem 2rem',
+    borderRadius: window.innerWidth <= 768 ? '12px' : '16px',
     fontWeight: '600',
-    fontSize: '1.5rem',
+    fontSize: window.innerWidth <= 768 ? '1.2rem' : '1.5rem',
     border: 'none',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    gap: '0.75rem',
+    gap: '0.5rem',
     boxShadow: '0 4px 12px rgba(0, 191, 99, 0.2), 0 1px 3px rgba(0, 191, 99, 0.1)',
     transition: 'all 0.2s ease',
-    margin: '0',
-    width: 'auto',
+    margin: window.innerWidth <= 768 ? '0.25rem 0' : '0',
+    width: window.innerWidth <= 768 ? '100%' : 'auto',
     minWidth: 'fit-content',
     flexShrink: '0',
     whiteSpace: 'nowrap',
-    alignSelf: 'center',
+    alignSelf: window.innerWidth <= 768 ? 'stretch' : 'center',
     pointerEvents: 'auto',
     zIndex: 10,
+    justifyContent: 'center',
   };
 
   const videoButtonsStyle = {
@@ -569,7 +571,10 @@ const VideoViewerSpanish = () => {
 
   return (
     <div style={containerStyle}>
-      <div className="drafted-logo-container" onClick={handleLogoClick}>
+      <div className="drafted-logo-container" onClick={handleLogoClick} style={{
+        padding: window.innerWidth <= 768 ? '0.75rem 0' : '1rem 0',
+        marginBottom: window.innerWidth <= 768 ? '0.5rem' : '1rem',
+      }}>
         <DraftedLogo />
       </div>
 
@@ -578,12 +583,12 @@ const VideoViewerSpanish = () => {
 
         <div style={{
           textAlign: 'left',
-          marginBottom: '24px',
+          marginBottom: window.innerWidth <= 768 ? '16px' : '24px',
           fontFamily: "'Poppins', sans-serif",
           paddingLeft: '8px'
         }}>
           <h1 style={{
-            fontSize: '2.5rem',
+            fontSize: window.innerWidth <= 768 ? '2rem' : '2.5rem',
             fontWeight: '700',
             color: '#000',
             margin: '0',
@@ -593,13 +598,13 @@ const VideoViewerSpanish = () => {
             gap: '12px'
           }}>
             <span style={{ 
-              fontSize: '2.8rem',
+              fontSize: window.innerWidth <= 768 ? '2.2rem' : '2.8rem',
               display: 'inline-block',
               animation: 'wave 1.5s ease-in-out'
             }}>👋</span> ¡Hola! Soy {candidate.firstName || ""}
           </h1>
           <p style={{
-            fontSize: '1.2rem',
+            fontSize: window.innerWidth <= 768 ? '1rem' : '1.2rem',
             color: '#000',
             margin: '0',
             fontWeight: '500'
@@ -617,6 +622,16 @@ const VideoViewerSpanish = () => {
               60% { transform: rotate(-10deg); }
               80% { transform: rotate(10deg); }
               100% { transform: rotate(0deg); }
+            }
+            @media (max-width: 768px) {
+              .skill-tag, .culture-tag {
+                font-size: 0.85rem !important;
+                padding: 0.3rem 0.6rem !important;
+                margin: 0.25rem !important;
+              }
+              .tags-container {
+                margin-top: 0.5rem !important;
+              }
             }
           `}
         </style>
@@ -946,12 +961,22 @@ const VideoViewerSpanish = () => {
         </div>
       </div>
 
-      <div style={buttonContainerStyle}>
+      <div style={{
+        ...buttonContainerStyle,
+        flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+        gap: window.innerWidth <= 768 ? '0.75rem' : '2rem',
+        padding: window.innerWidth <= 768 ? '0.75rem' : '1rem',
+      }}>
         <a
           href="https://www.joindrafted.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={actionButtonStyle}
+          style={{
+            ...actionButtonStyle,
+            width: window.innerWidth <= 768 ? '100%' : 'auto',
+            padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '1rem 2rem',
+            fontSize: window.innerWidth <= 768 ? '1rem' : '1.2rem',
+          }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.15)';
@@ -961,13 +986,18 @@ const VideoViewerSpanish = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          DRAFTED HOME
+          INICIO DRAFTED
         </a>
         <a
           href="https://joindrafted.netlify.app/"
           target="_blank"
           rel="noopener noreferrer"
-          style={actionButtonStyle}
+          style={{
+            ...actionButtonStyle,
+            width: window.innerWidth <= 768 ? '100%' : 'auto',
+            padding: window.innerWidth <= 768 ? '0.75rem 1rem' : '1rem 2rem',
+            fontSize: window.innerWidth <= 768 ? '1rem' : '1.2rem',
+          }}
           onMouseOver={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 191, 99, 0.15)';
@@ -977,7 +1007,7 @@ const VideoViewerSpanish = () => {
             e.currentTarget.style.boxShadow = 'none';
           }}
         >
-          MEET MORE CANDIDATES
+          CONOCE MÁS CANDIDATOS
         </a>
       </div>
 
