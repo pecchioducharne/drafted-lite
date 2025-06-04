@@ -149,8 +149,8 @@ const CandidateBucket = () => {
                       </>
                     )}
                   </div>
-                  <p className="major">{candidate.major}</p>
-                  <p className="grad-year">{candidate.graduationYear}</p>
+                  <p className="major">{candidate.major || "N/A"}</p>
+                  <p className="grad-year">{candidate.graduationYear || "N/A"}</p>
                   
                   {/* Skills Tags */}
                   <div className="skills-tags">

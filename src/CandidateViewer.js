@@ -322,14 +322,16 @@ const CandidateViewer = ({
       const newFilteredCandidates = candidates.filter((candidate) => {
         const matchesUniversity =
           !filters.university.length ||
-          filters.university.includes(candidate.university);
+          (candidate.university && filters.university.includes(candidate.university));
 
         const matchesMajor =
-          !filters.major.length || filters.major.includes(candidate.major);
+          !filters.major.length || (candidate.major && filters.major.includes(candidate.major));
 
         const matchesGradYear =
           !filters.graduationYear.length ||
-          filters.graduationYear.includes(candidate.graduationYear.toString());
+          (candidate.graduationYear && filters.graduationYear.includes(
+            candidate.graduationYear.toString()
+          ));
 
         const matchesSkills =
           !filters.skills ||
@@ -400,15 +402,17 @@ const CandidateViewer = ({
     return candidates.filter((candidate) => {
       const matchesUniversity =
         !filters.university.length ||
-        filters.university.includes(candidate.university);
+        (candidate.university && filters.university.includes(candidate.university));
 
       const matchesMajor =
         !filters.major.length ||
-        filters.major.includes(candidate.major);
+        (candidate.major && filters.major.includes(candidate.major));
 
       const matchesGradYear =
         !filters.graduationYear.length ||
-        filters.graduationYear.includes(candidate.graduationYear?.toString());
+        (candidate.graduationYear && filters.graduationYear.includes(
+          candidate.graduationYear.toString()
+        ));
 
       const matchesSkills =
         !filters.skills?.length ||
@@ -531,16 +535,22 @@ const CandidateViewer = ({
   }, [currentIndex, showResume, showGridView]); // Dependencies
 
   const uniqueUniversities = [
-    ...new Set(candidates.map((candidate) => candidate.university)),
+    ...new Set(candidates
+      .filter((candidate) => candidate.university != null)
+      .map((candidate) => candidate.university)),
   ].sort();
 
   const uniqueMajors = [
-    ...new Set(candidates.map((candidate) => candidate.major)),
+    ...new Set(candidates
+      .filter((candidate) => candidate.major != null)
+      .map((candidate) => candidate.major)),
   ].sort();
 
   const uniqueGraduationYears = [
     ...new Set(
-      candidates.map((candidate) => candidate.graduationYear.toString())
+      candidates
+        .filter((candidate) => candidate.graduationYear != null)
+        .map((candidate) => candidate.graduationYear.toString())
     ),
   ].sort();
 
@@ -566,23 +576,23 @@ const CandidateViewer = ({
     const newFilteredCandidates = candidates.filter((candidate) => {
       // Basic text matching:
       const matchesQuery =
-        candidate.university.toLowerCase().includes(lowerQuery) ||
-        candidate.major.toLowerCase().includes(lowerQuery) ||
-        candidate.graduationYear.toString().toLowerCase().includes(lowerQuery);
+        (candidate.university && candidate.university.toLowerCase().includes(lowerQuery)) ||
+        (candidate.major && candidate.major.toLowerCase().includes(lowerQuery)) ||
+        (candidate.graduationYear && candidate.graduationYear.toString().toLowerCase().includes(lowerQuery));
 
       // Filter checks:
       const matchesUniversity =
         !filters.university.length ||
-        filters.university.includes(candidate.university);
+        (candidate.university && filters.university.includes(candidate.university));
 
       const matchesMajor =
-        !filters.major.length || filters.major.includes(candidate.major);
+        !filters.major.length || (candidate.major && filters.major.includes(candidate.major));
 
       const matchesGradYear =
         !filters.graduationYear.length ||
-        filters.graduationYear.includes(
+        (candidate.graduationYear && filters.graduationYear.includes(
           candidate.graduationYear.toString()
-        );
+        ));
 
       const matchesSkills =
         !filters.skills ||
@@ -654,8 +664,12 @@ const CandidateViewer = ({
       const allSuggestions = new Set();
 
       candidates.forEach((candidate) => {
-        allSuggestions.add(candidate.university);
-        allSuggestions.add(candidate.major);
+        if (candidate.university) {
+          allSuggestions.add(candidate.university);
+        }
+        if (candidate.major) {
+          allSuggestions.add(candidate.major);
+        }
         if (candidate.skills) {
           candidate.skills.forEach(skill => allSuggestions.add(skill));
         }
@@ -677,12 +691,10 @@ const CandidateViewer = ({
 
     const lowerSuggestion = suggestion.toLowerCase();
     const filtered = candidates.filter((candidate) => {
-      const universityMatch = candidate.university
-        .toLowerCase()
-        .includes(lowerSuggestion);
-      const majorMatch = candidate.major
-        .toLowerCase()
-        .includes(lowerSuggestion);
+      const universityMatch = candidate.university &&
+        candidate.university.toLowerCase().includes(lowerSuggestion);
+      const majorMatch = candidate.major &&
+        candidate.major.toLowerCase().includes(lowerSuggestion);
       const skillsMatch = candidate.skills?.some((skill) =>
         skill.toLowerCase().includes(lowerSuggestion)
       );
@@ -696,10 +708,10 @@ const CandidateViewer = ({
     // Update selected filters
     setSelectedFilters((prevFilters) => {
       const newFilters = { ...prevFilters };
-      if (filtered.some(candidate => candidate.university.toLowerCase() === lowerSuggestion)) {
+      if (filtered.some(candidate => candidate.university && candidate.university.toLowerCase() === lowerSuggestion)) {
         newFilters.university = [suggestion];
       }
-      if (filtered.some(candidate => candidate.major.toLowerCase() === lowerSuggestion)) {
+      if (filtered.some(candidate => candidate.major && candidate.major.toLowerCase() === lowerSuggestion)) {
         newFilters.major = [suggestion];
       }
       if (filtered.some(candidate => candidate.skills?.includes(suggestion))) {
@@ -713,12 +725,12 @@ const CandidateViewer = ({
     const lowerQuery = query.toLowerCase();
     const filtered = candidates.filter(
       (candidate) =>
-        (candidate.university.toLowerCase().includes(lowerQuery) ||
-          candidate.major.toLowerCase().includes(lowerQuery) ||
-          candidate.graduationYear
+        ((candidate.university && candidate.university.toLowerCase().includes(lowerQuery)) ||
+          (candidate.major && candidate.major.toLowerCase().includes(lowerQuery)) ||
+          (candidate.graduationYear && candidate.graduationYear
             .toString()
             .toLowerCase()
-            .includes(lowerQuery)) &&
+            .includes(lowerQuery))) &&
         candidate.video1 !== "" &&
         candidate.video2 !== "" &&
         candidate.video3 !== ""
@@ -822,6 +834,7 @@ const CandidateViewer = ({
   };
 
   const handleUniversityClick = (university) => {
+    if (!university) return;
     setFilters((prevFilters) => ({
       ...prevFilters,
       university: [university],
@@ -829,6 +842,7 @@ const CandidateViewer = ({
   };
 
   const handleMajorClick = (major) => {
+    if (!major) return;
     setFilters((prevFilters) => ({
       ...prevFilters,
       major: [major],
@@ -836,6 +850,7 @@ const CandidateViewer = ({
   };
 
   const handleGradYearClick = (gradYear) => {
+    if (!gradYear) return;
     setFilters((prevFilters) => ({
       ...prevFilters,
       graduationYear: [gradYear],
@@ -843,6 +858,7 @@ const CandidateViewer = ({
   };
 
   const handlePositionClick = (position) => {
+    if (!position) return;
     setFilters((prevFilters) => ({
       ...prevFilters,
       position: [position],
@@ -850,18 +866,21 @@ const CandidateViewer = ({
   };
 
   const handleUniversityClickFromVideo = (university) => {
+    if (!university) return;
     setFilters({ university: [university], major: [], graduationYear: [] });
     setShowGridView(true); // Go back to the grid/homepage view
     setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
   };
 
   const handleMajorClickFromVideo = (major) => {
+    if (!major) return;
     setFilters({ university: [], major: [major], graduationYear: [] });
     setShowGridView(true); // Go back to the grid/homepage view
     setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
   };
 
   const handleGradYearClickFromVideo = (gradYear) => {
+    if (!gradYear) return;
     setFilters({ university: [], major: [], graduationYear: [gradYear] });
     setShowGridView(true); // Go back to the grid/homepage view
     setRefreshKey((oldKey) => oldKey + 1); // Optionally, force refresh if needed
@@ -1415,21 +1434,24 @@ const CandidateViewer = ({
                 </h4>
                 <p
                   className="candidate-university clickable-filter"
-                  onClick={() => handleUniversityClick(candidate.university)}
+                  onClick={() => candidate.university && handleUniversityClick(candidate.university)}
                 >
-                  {candidate.university}
+                  {candidate.university || "N/A"}
                 </p>
                 <p
                   className="candidate-major clickable-filter"
-                  onClick={() => handleMajorClick(candidate.major)}
+                  onClick={() => candidate.major && handleMajorClick(candidate.major)}
                 >
-                  {candidate.major}
+                  {candidate.major || "N/A"}
                 </p>
                 <p
                   className="candidate-grad-year clickable-filter"
-                  onClick={() => handleGradYearClick(candidate.graduationYear)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    candidate.graduationYear && handleGradYearClickFromVideo(candidate.graduationYear);
+                  }}
                 >
-                  Class of {candidate.graduationYear}
+                  Class of {candidate.graduationYear || "N/A"}
                 </p>
                 {candidate.position && (
                   <p className="candidate-position clickable-filter"
@@ -1695,7 +1717,7 @@ const CandidateViewer = ({
                 current.includes('University')
                   ? []
                   : ['University']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1711,7 +1733,7 @@ const CandidateViewer = ({
                 current.includes('Major')
                   ? []
                   : ['Major']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1730,7 +1752,7 @@ const CandidateViewer = ({
                 current.includes('Graduation Year')
                   ? []
                   : ['Graduation Year']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1749,7 +1771,7 @@ const CandidateViewer = ({
                 current.includes('Skills')
                   ? []
                   : ['Skills']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1768,7 +1790,7 @@ const CandidateViewer = ({
                 current.includes('Culture')
                   ? current.filter((cat) => cat !== 'Culture')
                   : [...current, 'Culture']
-              );
+                );
             }}
           />
           <FilterOptions
@@ -1902,10 +1924,10 @@ const CandidateViewer = ({
                 className="candidate-university clickable-filter"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleUniversityClickFromVideo(candidate.university);
+                  candidate.university && handleUniversityClickFromVideo(candidate.university);
                 }}
               >
-                {candidate.university}
+                {candidate.university || "N/A"}
               </p>
             </div>
             <div className="profile-field">
@@ -1914,10 +1936,10 @@ const CandidateViewer = ({
                 className="candidate-major clickable-filter"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleMajorClickFromVideo(candidate.major);
+                  candidate.major && handleMajorClickFromVideo(candidate.major);
                 }}
               >
-                {candidate.major}
+                {candidate.major || "N/A"}
               </p>
             </div>
             {candidate.skills && candidate.skills.length > 0 && (
@@ -2029,10 +2051,10 @@ const CandidateViewer = ({
                 className="candidate-grad-year clickable-filter"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleGradYearClickFromVideo(candidate.graduationYear);
+                  candidate.graduationYear && handleGradYearClickFromVideo(candidate.graduationYear);
                 }}
               >
-                {candidate.graduationYear}
+                {candidate.graduationYear || "N/A"}
               </p>
             </div>
             <div className="profile-field">
@@ -2137,7 +2159,7 @@ const CandidateViewer = ({
                       handleUniversityClickFromVideo(candidate.university);
                     }}
                   >
-                    {candidate.university}
+                    {candidate.university || "N/A"}
                   </p>
                   <p
                     className="candidate-major clickable-filter"
@@ -2146,7 +2168,7 @@ const CandidateViewer = ({
                       handleMajorClickFromVideo(candidate.major);
                     }}
                   >
-                    {candidate.major}
+                    {candidate.major || "N/A"}
                   </p>
                   <p
                     className="candidate-grad-year clickable-filter"
@@ -2155,7 +2177,7 @@ const CandidateViewer = ({
                       handleGradYearClickFromVideo(candidate.graduationYear);
                     }}
                   >
-                    Class of {candidate.graduationYear}
+                    Class of {candidate.graduationYear || "N/A"}
                   </p>
                 </div>
               </div>

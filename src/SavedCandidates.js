@@ -103,9 +103,9 @@ const SavedCandidates = () => {
               </div>
               <div className="candidate-info">
                 <h3>{candidate.firstName} {candidate.lastName}</h3>
-                <p className="university">{candidate.university}</p>
-                <p className="major">{candidate.major}</p>
-                <p className="grad-year">{candidate.graduationYear}</p>
+                <p className="university">{candidate.university || "N/A"}</p>
+                <p className="major">{candidate.major || "N/A"}</p>
+                <p className="grad-year">{candidate.graduationYear || "N/A"}</p>
               </div>
             </div>
           ))}

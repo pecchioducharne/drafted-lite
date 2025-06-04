@@ -49,9 +49,9 @@ const CandidateDetail = () => {
           <ReactPlayer key={index} url={url} controls />
         ))}
       </div>
-      <p>University: {candidate.university}</p>
-      <p>Major: {candidate.major}</p>
-      <p>Graduation Year: {candidate.graduationYear}</p>
+      <p>University: {candidate.university || "N/A"}</p>
+      <p>Major: {candidate.major || "N/A"}</p>
+      <p>Graduation Year: {candidate.graduationYear || "N/A"}</p>
       <div className="social-links">
         {candidate.linkedInURL && (
           <a href={candidate.linkedInURL} target="_blank" rel="noopener noreferrer">
