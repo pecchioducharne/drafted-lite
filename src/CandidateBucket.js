@@ -99,7 +99,7 @@ const CandidateBucket = () => {
   return (
     <div className="saved-candidates-page">
       <div className="top-bar">
-        <div className="back-button" onClick={() => window.open('https://drafted-beta.netlify.app/', '_blank')}>
+        <div className="back-button" onClick={() => window.open('https://candidate.joindrafted.com/', '_blank')}>
           <FiArrowLeft size={20} />
           <span>Sign up to see all candidates</span>
         </div>

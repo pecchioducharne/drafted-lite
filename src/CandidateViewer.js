@@ -2090,7 +2090,7 @@ const CandidateViewer = ({
             <div
               className="share-profile"
               onClick={() => {
-                const profileUrl = `https://drafted-beta.netlify.app/candidate/${candidate.email}`;
+                const profileUrl = `https://candidate.joindrafted.com/candidate/${candidate.email}`;
                 navigator.clipboard.writeText(profileUrl)
                   .then(() => {
                     alert("Profile URL copied");  // Updated alert message
